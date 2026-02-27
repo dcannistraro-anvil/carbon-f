@@ -236,7 +236,11 @@ const JobsTable = memo(({ data, count, tags }: JobsTableProps) => {
         accessorKey: "quantity",
         header: "Quantity",
         cell: ({ row }) => {
-          if (row.original.status === "Ready") {
+          if (
+            ["Ready", "Paused", "In Progress", "Completed"].includes(
+              row.original.status ?? ""
+            )
+          ) {
             return (
               <BarProgress
                 progress={
