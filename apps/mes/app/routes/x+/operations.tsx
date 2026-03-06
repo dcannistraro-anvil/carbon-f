@@ -243,7 +243,7 @@ export async function loader({ context, request }: LoaderFunctionArgs) {
           title: op.jobReadableId,
           subtitle: op.itemReadableId,
           description: op.description,
-          dueDate: op.jobDueDate,
+          dueDate: op.operationDueDate,
           duration:
             operation.setupDuration +
             Math.max(operation.laborDuration, operation.machineDuration),
