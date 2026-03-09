@@ -135,7 +135,10 @@ function makeItem(
         <div className="flex items-center gap-2 group">
           <h3 className="font-semibold truncate">{itemReadableId}</h3>
           {material.itemId && material.itemType && (
-            <Link to={getLinkToItemDetails(material.itemType, material.itemId)}>
+            <Link
+              to={getLinkToItemDetails(material.itemType, material.itemId)}
+              onClick={(e) => e.stopPropagation()}
+            >
               <LuExternalLink className="h-4 w-4 opacity-0 group-hover:opacity-100" />
             </Link>
           )}
