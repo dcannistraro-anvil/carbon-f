@@ -1,10 +1,10 @@
 import { serve } from "https://deno.land/std@0.175.0/http/server.ts";
 import {
-    getLocalTimeZone,
-    today as getToday,
-    parseDate,
-    startOfWeek,
-    type CalendarDate,
+  getLocalTimeZone,
+  today as getToday,
+  parseDate,
+  startOfWeek,
+  type CalendarDate,
 } from "npm:@internationalized/date";
 import { DB, getConnectionPool, getDatabaseClient } from "../lib/database.ts";
 
@@ -420,7 +420,7 @@ serve(async (req: Request) => {
           leadTimeOffset: node.accumulatedLeadTime,
           replenishmentSystem:
             replenishmentSystem === "Buy and Make"
-              ? "Make"
+              ? "Buy"
               : (replenishmentSystem as "Buy" | "Make"),
           methodType: (treeNode?.methodType ?? "Buy") as
             | "Make"
@@ -543,7 +543,10 @@ serve(async (req: Request) => {
         const periodSupply = locationSupply.get(projection.periodId);
         if (periodSupply) {
           const plannedProduction = periodSupply.get(projection.itemId) ?? 0;
-          netDemand = Math.max(0, projection.forecastQuantity - plannedProduction);
+          netDemand = Math.max(
+            0,
+            projection.forecastQuantity - plannedProduction
+          );
         }
       }
 

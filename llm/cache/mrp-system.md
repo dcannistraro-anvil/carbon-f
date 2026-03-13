@@ -9,11 +9,13 @@ Carbon implements an MRP system for production planning and material requirement
 ### MRP Execution
 
 1. **API Route**: `/api/mrp` - Main API endpoint for triggering MRP calculations
+
    - Located at: `/apps/erp/app/routes/api+/mrp.ts`
    - Requires `update: "inventory"` permission
    - Can run for entire company or specific location
 
 2. **Scheduled Task**: Automated MRP runs every 3 hours
+
    - Located at: `/apps/erp/app/trigger/mrp.ts`
    - Uses Trigger.dev for scheduling
    - Runs MRP for all companies in the system
@@ -29,6 +31,7 @@ Carbon implements an MRP system for production planning and material requirement
 The main production planning interface is located at `/production/planning` and includes:
 
 1. **Production Planning Table** (`ProductionPlanningTable.tsx`):
+
    - Shows items that need production planning
    - Displays planning data across multiple time periods (default 48 weeks)
    - Allows manual MRP recalculation via "Recalculate" button
@@ -72,6 +75,37 @@ The MRP edge function (`/packages/database/supabase/functions/mrp/index.ts`) per
    - Tracks `createdBy` and `updatedBy` using the provided userId
 
 **Note**: The edge function currently runs full MRP regardless of the type parameter (company, location, etc.) as indicated by the TODO comment
+
+### BOM Explosion and "Buy and Make" Handling
+
+During BOM explosion, the MRP engine traverses each item's BOM tree and collects `ItemRequirement` records with both a `replenishmentSystem` ("Buy" or "Make") and a `methodType` ("Make", "Pick", or "Buy").
+
+**"Buy and Make" coercion**: Items with `replenishmentSystem = "Buy and Make"` are coerced to `"Buy"` during BOM explosion (line ~422 of `mrp/index.ts`). This ensures demand for "Buy and Make" components flows to purchasing planning, not production planning.
+
+**Decision matrix for BOM components** (`processRequirement` function):
+
+| methodType | replenishmentSystem | Behavior                                                    |
+| ---------- | ------------------- | ----------------------------------------------------------- |
+| Make       | Make                | Skipped (produced in-line, no independent demand)           |
+| Pick       | Make                | Added to requirements AND BOM recursively expanded          |
+| Pick       | Buy                 | Added to requirements, no recursion (purchased and stocked) |
+| Buy        | Buy                 | Added to requirements, no recursion (purchased)             |
+| Make       | Buy                 | Added to requirements, no recursion                         |
+| Buy        | Make                | Added to requirements, no recursion                         |
+
+### Purchasing vs Production Planning Split
+
+The split between purchasing and production planning is done by two SQL functions:
+
+- **`get_purchasing_planning()`**: Filters items where `replenishmentSystem != 'Make'` (includes "Buy" and "Buy and Make")
+- **`get_production_planning()`**: Filters items where `replenishmentSystem = 'Make'` (only "Make" items)
+
+Both functions are defined in migration `20251205000037_include-reorder-quantity-in-planning.sql`.
+
+### Demand Views
+
+- **`openSalesOrderLines`**: Joins `salesOrderLine` → `item` → `itemReplenishment`. Filters: `salesOrderLineType != 'Service'`, `methodType != 'Make'`, status IN ('To Ship', 'To Ship and Invoice').
+- **`openJobMaterialLines`**: Joins `jobMaterial` → `job` → `item` (material) → `item` (job parent) → `itemReplenishment`. Filters: job status IN ('Planned', 'Ready', 'In Progress', 'Paused'), `methodType != 'Make'`. Note: `replenishmentSystem` comes from the material's item, but `leadTime` comes from the job's parent item.
 
 ## Related Features
 
