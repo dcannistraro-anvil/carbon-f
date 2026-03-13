@@ -40,7 +40,10 @@ import {
 import { usePermissions, useRouteData, useUser } from "~/hooks";
 import type { MethodItemType } from "~/modules/shared/types";
 import { path } from "~/utils/path";
-import { purchasingRfqLineValidator } from "../../purchasing.models";
+import {
+  isRfqLocked,
+  purchasingRfqLineValidator
+} from "../../purchasing.models";
 import type { PurchasingRFQ, PurchasingRFQLine } from "../../types";
 import DeletePurchasingRFQLine from "./DeletePurchasingRFQLine";
 
@@ -69,7 +72,7 @@ const PurchasingRFQLineForm = ({
     rfqSummary: PurchasingRFQ;
   }>(path.to.purchasingRfq(rfqId));
 
-  const isEditable = ["Draft"].includes(routeData?.rfqSummary?.status ?? "");
+  const isLocked = isRfqLocked(routeData?.rfqSummary?.status);
 
   const isEditing = initialValues.id !== undefined;
 
@@ -144,6 +147,7 @@ const PurchasingRFQLineForm = ({
                   : path.to.newPurchasingRFQLine(rfqId)
               }
               className="w-full"
+              isDisabled={isEditing && isLocked}
               onSubmit={() => {
                 if (type === "modal") onClose?.();
               }}
@@ -170,28 +174,27 @@ const PurchasingRFQLineForm = ({
                     )}
                   </ModalCardDescription>
                 </ModalCardHeader>
-                {isEditing && permissions.can("update", "purchasing") && (
-                  <CardAction className="pr-12">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <IconButton
-                          icon={<BsThreeDotsVertical />}
-                          aria-label="More"
-                          variant="ghost"
-                        />
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem
-                          disabled={!isEditable}
-                          onClick={deleteDisclosure.onOpen}
-                        >
-                          <DropdownMenuIcon icon={<LuTrash />} />
-                          Delete Line
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </CardAction>
-                )}
+                {isEditing &&
+                  !isLocked &&
+                  permissions.can("update", "purchasing") && (
+                    <CardAction className="pr-12">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <IconButton
+                            icon={<BsThreeDotsVertical />}
+                            aria-label="More"
+                            variant="ghost"
+                          />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem onClick={deleteDisclosure.onOpen}>
+                            <DropdownMenuIcon icon={<LuTrash />} />
+                            Delete Line
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </CardAction>
+                  )}
               </HStack>
               <ModalCardBody>
                 <Hidden name="id" />
@@ -263,7 +266,7 @@ const PurchasingRFQLineForm = ({
                         name="quantity"
                         label="Quantity"
                         defaults={[1, 25, 50, 100]}
-                        isDisabled={!isEditable}
+                        isDisabled={isLocked}
                       />
                     </div>
                   </div>
@@ -272,7 +275,7 @@ const PurchasingRFQLineForm = ({
               <ModalCardFooter>
                 <Submit
                   isDisabled={
-                    !isEditable ||
+                    isLocked ||
                     (isEditing
                       ? !permissions.can("update", "purchasing")
                       : !permissions.can("create", "purchasing"))

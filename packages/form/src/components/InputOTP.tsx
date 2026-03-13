@@ -11,6 +11,7 @@ import type { ReactNode } from "react";
 import { forwardRef, useEffect } from "react";
 import type { ValidationBehaviorOptions } from "src/internal/getInputProps";
 import { useControlField, useField } from "../hooks";
+import { useFormStateContext } from "../internal/formStateContext";
 
 type FormInputOTPProps = {
   name: string;
@@ -41,6 +42,8 @@ const InputOTP = forwardRef<HTMLInputElement, FormInputOTPProps>(
   ) => {
     const { error } = useField(name);
     const [value, setValue] = useControlField<string>(name);
+    const formState = useFormStateContext();
+    const isDisabled = formState.isDisabled || formState.isReadOnly;
 
     useEffect(() => {
       if (value?.length === maxLength) {
@@ -72,6 +75,7 @@ const InputOTP = forwardRef<HTMLInputElement, FormInputOTPProps>(
           value={value}
           onChange={setValue}
           ref={ref}
+          disabled={isDisabled}
         >
           <InputOTPGroup>
             <InputOTPSlot index={0} />

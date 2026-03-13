@@ -21,15 +21,17 @@ import { HighPriorityIcon } from "~/assets/icons/HighPriorityIcon";
 import { LowPriorityIcon } from "~/assets/icons/LowPriorityIcon";
 import { MediumPriorityIcon } from "~/assets/icons/MediumPriorityIcon";
 import { Hidden, Location, Submit, WorkCenter } from "~/components/Form";
-import { usePermissions, useUser } from "~/hooks";
+import { usePermissions, useRouteData, useUser } from "~/hooks";
 import { getPrivateUrl, path } from "~/utils/path";
 import {
+  isMaintenanceDispatchLocked,
   maintenanceDispatchPriority,
   maintenanceDispatchValidator,
   maintenanceSeverity,
   maintenanceSource,
   oeeImpact
 } from "../../resources.models";
+import type { MaintenanceDispatchDetail } from "../../types";
 import MaintenanceOeeImpact from "./MaintenanceOeeImpact";
 import MaintenanceSeverity from "./MaintenanceSeverity";
 import MaintenanceSource from "./MaintenanceSource";
@@ -65,6 +67,12 @@ const MaintenanceDispatchForm = ({
   const { carbon } = useCarbon();
 
   const isEditing = initialValues.id !== undefined;
+
+  const routeData = useRouteData<{
+    dispatch: MaintenanceDispatchDetail;
+  }>(initialValues.id ? path.to.maintenanceDispatch(initialValues.id) : "");
+  const isLocked = isMaintenanceDispatchLocked(routeData?.dispatch?.status);
+
   const isDisabled = isEditing
     ? !permissions.can("update", "resources")
     : !permissions.can("create", "resources");
@@ -107,6 +115,7 @@ const MaintenanceDispatchForm = ({
         method="post"
         action={path.to.newMaintenanceDispatch}
         defaultValues={initialValues}
+        isDisabled={isEditing && isLocked}
       >
         <CardHeader>
           <CardTitle>

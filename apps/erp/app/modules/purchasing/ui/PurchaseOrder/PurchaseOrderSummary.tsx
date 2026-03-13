@@ -344,9 +344,7 @@ const PurchaseOrderSummary = ({
     supplier: Supplier;
   }>(path.to.purchaseOrder(orderId));
 
-  const isEditable =
-    !isPurchaseOrderLocked(routeData?.purchaseOrder?.status) &&
-    routeData?.purchaseOrder?.status !== "Closed";
+  const isEditable = !isPurchaseOrderLocked(routeData?.purchaseOrder?.status);
 
   const { locale } = useLocale();
   const formatter = useCurrencyFormatter();

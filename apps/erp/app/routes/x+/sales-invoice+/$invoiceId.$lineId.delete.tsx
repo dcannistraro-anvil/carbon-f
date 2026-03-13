@@ -6,8 +6,11 @@ import { redirect, useLoaderData, useNavigate, useParams } from "react-router";
 import { ConfirmDelete } from "~/components/Modals";
 import {
   deleteSalesInvoiceLine,
-  getSalesInvoiceLine
+  getSalesInvoice,
+  getSalesInvoiceLine,
+  isSalesInvoiceLocked
 } from "~/modules/invoicing";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
@@ -17,6 +20,14 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   const { lineId, invoiceId } = params;
   if (!lineId) throw notFound("lineId not found");
   if (!invoiceId) throw notFound("invoiceId not found");
+
+  const invoice = await getSalesInvoice(client, invoiceId);
+  await requireUnlocked({
+    request,
+    isLocked: isSalesInvoiceLocked(invoice.data?.status),
+    redirectTo: path.to.salesInvoiceDetails(invoiceId),
+    message: "Cannot delete lines on a locked sales invoice."
+  });
 
   const salesInvoiceLine = await getSalesInvoiceLine(client, lineId);
   if (salesInvoiceLine.error) {
@@ -40,6 +51,14 @@ export async function action({ request, params }: ActionFunctionArgs) {
   const { lineId, invoiceId } = params;
   if (!lineId) throw notFound("Could not find lineId");
   if (!invoiceId) throw notFound("Could not find invoiceId");
+
+  const invoice = await getSalesInvoice(client, invoiceId);
+  await requireUnlocked({
+    request,
+    isLocked: isSalesInvoiceLocked(invoice.data?.status),
+    redirectTo: path.to.salesInvoiceDetails(invoiceId),
+    message: "Cannot delete lines on a locked sales invoice."
+  });
 
   const { error: deleteTypeError } = await deleteSalesInvoiceLine(
     client,

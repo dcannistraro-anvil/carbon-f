@@ -44,6 +44,7 @@ import { Confirm } from "~/components/Modals";
 import { usePercentFormatter, usePermissions, useRouteData } from "~/hooks";
 import JobStatus from "~/modules/production/ui/Jobs/JobStatus";
 import { getPrivateUrl, path } from "~/utils/path";
+import { isSalesOrderLocked } from "../../sales.models";
 import type {
   Customer,
   Quotation,
@@ -80,9 +81,7 @@ const SalesOrderSummary = ({
     [locale, routeData?.salesOrder?.currencyCode]
   );
 
-  const isEditable = ["Draft", "To Review"].includes(
-    routeData?.salesOrder?.status ?? ""
-  );
+  const isEditable = !isSalesOrderLocked(routeData?.salesOrder?.status);
 
   // Calculate totals
   const subtotal =

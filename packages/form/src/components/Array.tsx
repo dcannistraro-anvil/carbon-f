@@ -13,6 +13,7 @@ import { forwardRef, useRef } from "react";
 import { flushSync } from "react-dom";
 import { IoMdAdd, IoMdClose } from "react-icons/io";
 import { useField } from "../hooks";
+import { useFormStateContext } from "../internal/formStateContext";
 import { useFieldArray } from "../internal/state/fieldArray";
 
 type FormArrayProps = InputProps & {
@@ -23,9 +24,22 @@ type FormArrayProps = InputProps & {
 
 // biome-ignore lint/suspicious/noShadowRestrictedNames: suppressed due to migration
 const Array = forwardRef<HTMLInputElement, FormArrayProps>(
-  ({ name, label, isRequired, ...rest }, ref) => {
+  (
+    {
+      name,
+      label,
+      isRequired,
+      isDisabled: isDisabledProp,
+      isReadOnly: isReadOnlyProp,
+      ...rest
+    },
+    ref
+  ) => {
     const listRef = useRef<HTMLDivElement>(null);
     const [items, { push, remove }, error] = useFieldArray<string>(name);
+    const formState = useFormStateContext();
+    const isDisabled = formState.isDisabled || isDisabledProp;
+    const isReadOnly = formState.isReadOnly || isReadOnlyProp;
     const onAdd = () => {
       flushSync(() => {
         push("");
@@ -47,10 +61,17 @@ const Array = forwardRef<HTMLInputElement, FormArrayProps>(
               name={`${name}[${index}]`}
               ref={index === 0 ? ref : undefined}
               onRemove={() => remove(index)}
+              isDisabled={isDisabled}
+              isReadOnly={isReadOnly}
               {...rest}
             />
           ))}
-          <Button variant="secondary" leftIcon={<IoMdAdd />} onClick={onAdd}>
+          <Button
+            variant="secondary"
+            leftIcon={<IoMdAdd />}
+            onClick={onAdd}
+            isDisabled={isDisabled || isReadOnly}
+          >
             New Option
           </Button>
         </VStack>
@@ -68,7 +89,7 @@ type ArrayInputProps = InputProps & {
 };
 
 const ArrayInput = forwardRef<HTMLInputElement, ArrayInputProps>(
-  ({ name, onRemove, ...rest }, ref) => {
+  ({ name, onRemove, isDisabled, isReadOnly, ...rest }, ref) => {
     const { getInputProps, error } = useField(name);
 
     return (
@@ -80,12 +101,15 @@ const ArrayInput = forwardRef<HTMLInputElement, ArrayInputProps>(
               id: name,
               ...rest
             })}
+            isDisabled={isDisabled}
+            isReadOnly={isReadOnly}
           />
           <IconButton
             variant="ghost"
             aria-label="Remove item"
             icon={<IoMdClose />}
             onClick={onRemove}
+            isDisabled={isDisabled || isReadOnly}
           />
         </HStack>
 

@@ -28,6 +28,7 @@ import { Link, useParams } from "react-router";
 import { CustomerAvatar } from "~/components";
 import { usePercentFormatter, useRouteData, useUser } from "~/hooks";
 import { getPrivateUrl, path } from "~/utils/path";
+import { isQuoteLocked } from "../../sales.models";
 import type {
   Quotation,
   QuotationLine,
@@ -604,9 +605,7 @@ const QuoteSummary = ({
     salesOrderLines: SalesOrderLine[];
   }>(path.to.quote(quoteId));
 
-  const isEditable = ["Draft", "To Review"].includes(
-    routeData?.quote?.status ?? ""
-  );
+  const isEditable = !isQuoteLocked(routeData?.quote?.status);
 
   const { locale } = useLocale();
   const formatter = useMemo(

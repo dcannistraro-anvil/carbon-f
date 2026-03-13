@@ -4,20 +4,39 @@ import { flash } from "@carbon/auth/session.server";
 import { validationError, validator } from "@carbon/form";
 import type { ActionFunctionArgs } from "react-router";
 import { redirect } from "react-router";
-import { salesRfqLineValidator, upsertSalesRFQLine } from "~/modules/sales";
+import {
+  getSalesRFQ,
+  isSalesRfqLocked,
+  salesRfqLineValidator,
+  upsertSalesRFQLine
+} from "~/modules/sales";
 import { setCustomFields } from "~/utils/form";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function action({ request, params }: ActionFunctionArgs) {
   assertIsPost(request);
-  const { client, companyId, userId } = await requirePermissions(request, {
-    create: "sales"
-  });
 
   const { rfqId } = params;
   if (!rfqId) {
     throw new Error("rfqId not found");
   }
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "sales"
+  });
+
+  const rfq = await getSalesRFQ(viewClient, rfqId);
+  await requireUnlocked({
+    request,
+    isLocked: isSalesRfqLocked(rfq.data?.status),
+    redirectTo: path.to.salesRfq(rfqId),
+    message: "Cannot modify a locked RFQ. Reopen it first."
+  });
+
+  const { client, companyId, userId } = await requirePermissions(request, {
+    create: "sales"
+  });
 
   const formData = await request.formData();
   const validation = await validator(salesRfqLineValidator).validate(formData);

@@ -154,6 +154,7 @@ const PurchaseInvoiceForm = ({ initialValues }: PurchaseInvoiceFormProps) => {
       method="post"
       validator={purchaseInvoiceValidator}
       defaultValues={initialValues}
+      isDisabled={isEditing && isLocked}
     >
       <Card>
         <CardHeader>
@@ -268,7 +269,7 @@ const PurchaseInvoiceForm = ({ initialValues }: PurchaseInvoiceFormProps) => {
           <Submit
             isDisabled={
               isEditing
-                ? isLocked || !permissions.can("update", "invoicing")
+                ? !permissions.can("update", "invoicing")
                 : !permissions.can("create", "invoicing")
             }
           >

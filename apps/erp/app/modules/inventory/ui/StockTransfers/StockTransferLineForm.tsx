@@ -17,8 +17,12 @@ import { useFetcher, useParams } from "react-router";
 import type { z } from "zod";
 // biome-ignore lint/suspicious/noShadowRestrictedNames: suppressed due to migration
 import { Hidden, Item, Number, Shelf, Submit } from "~/components/Form";
-import { usePermissions } from "~/hooks";
-import { stockTransferLineValidator } from "~/modules/inventory";
+import { usePermissions, useRouteData } from "~/hooks";
+import {
+  isStockTransferLocked,
+  type StockTransfer,
+  stockTransferLineValidator
+} from "~/modules/inventory";
 import type { MethodItemType } from "~/modules/shared/types";
 import { useItems } from "~/stores/items";
 import { path } from "~/utils/path";
@@ -42,6 +46,9 @@ const StockTransferLineForm = ({
   if (!id) throw new Error("id not found");
 
   const permissions = usePermissions();
+  const routeData = useRouteData<{
+    stockTransfer: StockTransfer;
+  }>(path.to.stockTransfer(id));
   const fetcher = useFetcher<PostgrestResponse<{ id: string }>>();
   const [items] = useItems();
   const [itemId, setItemId] = useState<string | null>(
@@ -98,9 +105,12 @@ const StockTransferLineForm = ({
   }, [fetcher.data, fetcher.state, onClose, type]);
 
   const isEditing = initialValues.id !== undefined;
-  const isDisabled = isEditing
-    ? !permissions.can("update", "inventory")
-    : !permissions.can("create", "inventory");
+  const isLocked = isStockTransferLocked(routeData?.stockTransfer?.status);
+  const isDisabled =
+    isLocked ||
+    (isEditing
+      ? !permissions.can("update", "inventory")
+      : !permissions.can("create", "inventory"));
 
   return (
     <ModalDrawerProvider type={type}>

@@ -34,6 +34,7 @@ import {
 } from "~/modules/purchasing/ui/SupplierInteraction";
 import SupplierInteractionState from "~/modules/purchasing/ui/SupplierInteraction/SupplierInteractionState";
 import { getCustomFields, setCustomFields } from "~/utils/form";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
@@ -100,18 +101,13 @@ export async function action({ request, params }: ActionFunctionArgs) {
   });
 
   // If locked, block all edits (no header changes allowed on locked POs)
-  if (isLocked) {
-    throw redirect(
-      path.to.purchaseOrder(orderId),
-      await flash(
-        request,
-        error(
-          null,
-          "Cannot modify a finalized purchase order. To make changes, please cancel this PO and create a new one."
-        )
-      )
-    );
-  }
+  await requireUnlocked({
+    request,
+    isLocked,
+    redirectTo: path.to.purchaseOrder(orderId),
+    message:
+      "Cannot modify a finalized purchase order. To make changes, please cancel this PO and create a new one."
+  });
 
   const formData = await request.formData();
   const validation = await validator(purchaseOrderValidator).validate(formData);
@@ -219,9 +215,7 @@ export default function PurchaseOrderBasicRoute() {
 
   const { company } = useUser();
 
-  const isReadOnly =
-    isPurchaseOrderLocked(orderData.purchaseOrder.status) ||
-    orderData.purchaseOrder.status === "Closed";
+  const isReadOnly = isPurchaseOrderLocked(orderData.purchaseOrder.status);
 
   return (
     <>

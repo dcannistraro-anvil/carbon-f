@@ -784,3 +784,29 @@ export const selectedLineSchema = z.object({
 });
 
 export const selectedLinesValidator = z.record(z.string(), selectedLineSchema);
+
+// Sales Order Locked Status
+export const SALES_ORDER_LOCKED_STATUSES = [
+  "To Ship and Invoice",
+  "To Ship",
+  "To Invoice",
+  "Completed",
+  "Cancelled",
+  "Closed"
+] as const;
+
+export function isSalesOrderLocked(status: string | null | undefined): boolean {
+  return SALES_ORDER_LOCKED_STATUSES.includes(
+    status as (typeof SALES_ORDER_LOCKED_STATUSES)[number]
+  );
+}
+
+// Sales RFQ Locked Status
+export function isSalesRfqLocked(status: string | null | undefined): boolean {
+  return status !== null && status !== undefined && status !== "Draft";
+}
+
+// Quote Locked Status
+export function isQuoteLocked(status: string | null | undefined): boolean {
+  return status !== null && status !== undefined && status !== "Draft";
+}

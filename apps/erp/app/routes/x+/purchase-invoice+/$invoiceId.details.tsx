@@ -30,6 +30,7 @@ import {
   SupplierInteractionNotes
 } from "~/modules/purchasing/ui/SupplierInteraction";
 import { getCustomFields, setCustomFields } from "~/utils/form";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
@@ -78,15 +79,12 @@ export async function action({ request, params }: ActionFunctionArgs) {
     );
   }
 
-  if (isPurchaseInvoiceLocked(purchaseInvoice.data?.status)) {
-    throw redirect(
-      path.to.purchaseInvoice(id),
-      await flash(
-        request,
-        error(null, "Cannot modify a confirmed purchase invoice.")
-      )
-    );
-  }
+  await requireUnlocked({
+    request,
+    isLocked: isPurchaseInvoiceLocked(purchaseInvoice.data?.status),
+    redirectTo: path.to.purchaseInvoice(id),
+    message: "Cannot modify a confirmed purchase invoice."
+  });
 
   const { client, userId } = await requirePermissions(request, {
     update: "invoicing"

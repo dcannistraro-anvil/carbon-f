@@ -6,11 +6,14 @@ import { useRouteData } from "@carbon/remix";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import { data, redirect, useNavigate, useParams } from "react-router";
 import {
+  getStockTransfer,
+  isStockTransferLocked,
   stockTransferLineValidator,
   upsertStockTransferLine
 } from "~/modules/inventory";
 import type { StockTransfer } from "~/modules/inventory/types";
 import StockTransferLineForm from "~/modules/inventory/ui/StockTransfers/StockTransferLineForm";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 
 import { path } from "~/utils/path";
 
@@ -30,6 +33,17 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
   const { id } = params;
   if (!id) throw notFound("id not found");
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "inventory"
+  });
+  const transfer = await getStockTransfer(viewClient, id);
+  await requireUnlocked({
+    request,
+    isLocked: isStockTransferLocked(transfer.data?.status),
+    redirectTo: path.to.stockTransfer(id),
+    message: "Cannot modify a locked stock transfer. Reopen it first."
+  });
 
   const formData = await request.formData();
 

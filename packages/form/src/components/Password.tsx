@@ -11,6 +11,7 @@ import {
 import { forwardRef, useState } from "react";
 import { BiHide, BiShowAlt } from "react-icons/bi";
 import { useField } from "../hooks";
+import { useFormStateContext } from "../internal/formStateContext";
 
 type FormPasswordProps = InputProps & {
   name: string;
@@ -21,6 +22,9 @@ type FormPasswordProps = InputProps & {
 const Password = forwardRef<HTMLInputElement, FormPasswordProps>(
   ({ name, label, isRequired, ...rest }, ref) => {
     const { getInputProps, error } = useField(name);
+    const formState = useFormStateContext();
+    const isDisabled = formState.isDisabled || rest.isDisabled;
+    const isReadOnly = formState.isReadOnly || rest.isReadOnly;
     const [passwordVisible, setPasswordVisible] = useState(false);
 
     return (
@@ -34,6 +38,8 @@ const Password = forwardRef<HTMLInputElement, FormPasswordProps>(
             })}
             ref={ref}
             type={passwordVisible ? "text" : "password"}
+            isDisabled={isDisabled}
+            isReadOnly={isReadOnly}
           />
           <InputRightElement className="w-[2.75rem]">
             <IconButton

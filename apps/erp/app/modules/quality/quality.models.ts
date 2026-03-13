@@ -35,6 +35,10 @@ export const nonConformanceStatus = [
   "Closed"
 ] as const;
 
+export function isIssueLocked(status: string | null | undefined): boolean {
+  return status === "Closed";
+}
+
 export const nonConformanceTaskStatus = [
   "Pending",
   "In Progress",

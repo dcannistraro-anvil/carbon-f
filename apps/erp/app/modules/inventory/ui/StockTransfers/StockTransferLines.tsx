@@ -41,7 +41,11 @@ import { useLocations } from "~/components/Form/Location";
 import { useUnitOfMeasure } from "~/components/Form/UnitOfMeasure";
 import { ConfirmDelete } from "~/components/Modals";
 import { usePermissions, useRouteData } from "~/hooks";
-import type { StockTransfer, StockTransferLine } from "~/modules/inventory";
+import {
+  isStockTransferLocked,
+  type StockTransfer,
+  type StockTransferLine
+} from "~/modules/inventory";
 import { useItems } from "~/stores";
 import { path } from "~/utils/path";
 
@@ -232,9 +236,13 @@ export default function StockTransferLines() {
     routeData?.stockTransfer?.status ?? ""
   );
 
-  const isEditable = ["Draft", "Released", "In Progress"].includes(
-    routeData?.stockTransfer?.status ?? ""
-  );
+  const isLocked = isStockTransferLocked(routeData?.stockTransfer?.status);
+
+  const isEditable =
+    !isLocked &&
+    ["Draft", "Released", "In Progress"].includes(
+      routeData?.stockTransfer?.status ?? ""
+    );
 
   const [selectedLine, setSelectedLine] = useState<StockTransferLine | null>(
     null

@@ -81,7 +81,6 @@ const PurchaseOrderLineForm = ({
   const isOutsideProcessing =
     routeData?.purchaseOrder?.purchaseOrderType === "Outside Processing";
   const isLocked = isPurchaseOrderLocked(routeData?.purchaseOrder?.status);
-  const isClosed = routeData?.purchaseOrder?.status === "Closed";
 
   const [itemType, setItemType] = useState<MethodItemType>(
     initialValues.purchaseOrderLineType as MethodItemType
@@ -175,12 +174,9 @@ const PurchaseOrderLineForm = ({
     })();
   });
 
-  const isDisabled =
-    isLocked ||
-    isClosed ||
-    (isEditing
-      ? !permissions.can("update", "purchasing")
-      : !permissions.can("create", "purchasing"));
+  const isDisabled = isEditing
+    ? !permissions.can("update", "purchasing")
+    : !permissions.can("create", "purchasing");
 
   const deleteDisclosure = useDisclosure();
   const currencyFormatter = useCurrencyFormatter();
@@ -341,6 +337,7 @@ const PurchaseOrderLineForm = ({
               }
               className="w-full"
               fetcher={fetcher}
+              isDisabled={isLocked}
               onSubmit={() => {
                 if (type === "modal") onClose?.();
               }}

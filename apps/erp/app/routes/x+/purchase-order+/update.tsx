@@ -2,6 +2,7 @@ import { requirePermissions } from "@carbon/auth/auth.server";
 import type { ActionFunctionArgs } from "react-router";
 import { getCurrencyByCode } from "~/modules/accounting";
 import { isPurchaseOrderLocked } from "~/modules/purchasing";
+import { requireUnlockedBulk } from "~/utils/lockedGuard.server";
 
 export async function action({ request }: ActionFunctionArgs) {
   const { client, companyId, userId } = await requirePermissions(request, {
@@ -25,22 +26,17 @@ export async function action({ request }: ActionFunctionArgs) {
   }
 
   // Check if any of the POs are locked
-  for (const id of ids) {
-    const purchaseOrder = await client
-      .from("purchaseOrder")
-      .select("status")
-      .eq("id", id as string)
-      .single();
-    if (
-      purchaseOrder.data &&
-      (isPurchaseOrderLocked(purchaseOrder.data.status) ||
-        purchaseOrder.data.status === "Closed")
-    ) {
-      return {
-        error: { message: "Cannot modify a confirmed purchase order." },
-        data: null
-      };
-    }
+  const purchaseOrders = await client
+    .from("purchaseOrder")
+    .select("status")
+    .in("id", ids as string[]);
+  const lockedError = requireUnlockedBulk({
+    statuses: (purchaseOrders.data ?? []).map((d) => d.status),
+    checkFn: isPurchaseOrderLocked,
+    message: "Cannot modify a confirmed purchase order."
+  });
+  if (lockedError) {
+    return lockedError;
   }
 
   if (typeof value !== "string" && value !== null) {

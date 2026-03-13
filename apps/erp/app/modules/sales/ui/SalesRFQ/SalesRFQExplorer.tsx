@@ -27,7 +27,7 @@ import { Empty, ItemThumbnail } from "~/components";
 import { usePermissions, useRealtime, useRouteData } from "~/hooks";
 import type { MethodItemType } from "~/modules/shared";
 import { path } from "~/utils/path";
-import { salesRfqDragValidator } from "../../sales.models";
+import { isSalesRfqLocked, salesRfqDragValidator } from "../../sales.models";
 import type { SalesRFQ, SalesRFQLine } from "../../types";
 import DeleteSalesRFQLine from "./DeleteSalesRFQLine";
 import SalesRFQLineForm from "./SalesRFQLineForm";
@@ -81,9 +81,7 @@ export default function SalesRFQExplorer() {
     unitOfMeasureCode: "EA"
   };
 
-  const isDisabled = ["Ready for Quote"].includes(
-    salesRfqData?.rfqSummary.status ?? ""
-  );
+  const isDisabled = isSalesRfqLocked(salesRfqData?.rfqSummary?.status);
 
   const { setNodeRef: setExplorerRef, isOver: isOverExplorer } = useDroppable({
     id: "sales-rfq-explorer"

@@ -29,8 +29,10 @@ import type {
 } from "~/modules/sales";
 import {
   getOpportunityLineDocuments,
+  getSalesOrder,
   getSalesOrderLine,
   getSalesOrderLineShipments,
+  isSalesOrderLocked,
   salesOrderLineValidator,
   upsertSalesOrderLine
 } from "~/modules/sales";
@@ -44,6 +46,7 @@ import {
 } from "~/modules/sales/ui/SalesOrder";
 import { SalesOrderLineShipments } from "~/modules/sales/ui/SalesOrder/SalesOrderLineShipments";
 import { getCustomFields, setCustomFields } from "~/utils/form";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
@@ -87,13 +90,25 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
 export async function action({ request, params }: ActionFunctionArgs) {
   assertIsPost(request);
-  const { client, userId } = await requirePermissions(request, {
-    create: "sales"
-  });
-
   const { orderId, lineId } = params;
   if (!orderId) throw new Error("Could not find orderId");
   if (!lineId) throw new Error("Could not find lineId");
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "sales"
+  });
+
+  const salesOrder = await getSalesOrder(viewClient, orderId);
+  await requireUnlocked({
+    request,
+    isLocked: isSalesOrderLocked(salesOrder.data?.status),
+    redirectTo: path.to.salesOrderLine(orderId, lineId),
+    message: "Cannot modify a locked sales order. Reopen it first."
+  });
+
+  const { client, userId } = await requirePermissions(request, {
+    create: "sales"
+  });
 
   const formData = await request.formData();
   const validation = await validator(salesOrderLineValidator).validate(
@@ -155,6 +170,8 @@ export default function EditSalesOrderLineRoute() {
   if (!orderData?.opportunity) throw new Error("Failed to load opportunity");
   if (!orderData?.salesOrder) throw new Error("Failed to load sales order");
 
+  const isReadOnly = isSalesOrderLocked(orderData.salesOrder.status);
+
   const initialValues = {
     id: line?.id ?? undefined,
     salesOrderId: line?.salesOrderId ?? "",
@@ -191,6 +208,7 @@ export default function EditSalesOrderLineRoute() {
         table="salesOrderLine"
         title="Notes"
         subTitle={line.itemReadableId ?? ""}
+        isReadOnly={isReadOnly}
         internalNotes={line.internalNotes as JSONContent}
         externalNotes={line.externalNotes as JSONContent}
       />
@@ -250,12 +268,13 @@ export default function EditSalesOrderLineRoute() {
               itemId={line?.itemId}
               modelUpload={line ?? undefined}
               type="Sales Order"
+              isReadOnly={isReadOnly}
             />
           )}
         </Await>
       </Suspense>
       <CadModel
-        isReadOnly={!permissions.can("update", "sales")}
+        isReadOnly={isReadOnly || !permissions.can("update", "sales")}
         metadata={{
           salesOrderLineId: line?.id ?? undefined,
           itemId: line?.itemId ?? undefined

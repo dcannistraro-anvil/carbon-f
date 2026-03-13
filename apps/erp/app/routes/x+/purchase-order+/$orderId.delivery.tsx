@@ -11,6 +11,7 @@ import {
   upsertPurchaseOrderDelivery
 } from "~/modules/purchasing";
 import { setCustomFields } from "~/utils/form";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function action({ request, params }: ActionFunctionArgs) {
@@ -35,16 +36,12 @@ export async function action({ request, params }: ActionFunctionArgs) {
     );
   }
 
-  const isLocked = isPurchaseOrderLocked(purchaseOrder.data?.status);
-  if (isLocked || purchaseOrder.data?.status === "Closed") {
-    throw redirect(
-      path.to.purchaseOrderDetails(orderId),
-      await flash(
-        request,
-        error(null, "Cannot modify a confirmed purchase order.")
-      )
-    );
-  }
+  await requireUnlocked({
+    request,
+    isLocked: isPurchaseOrderLocked(purchaseOrder.data?.status),
+    redirectTo: path.to.purchaseOrderDetails(orderId),
+    message: "Cannot modify a confirmed purchase order."
+  });
 
   const { client, userId } = await requirePermissions(request, {
     update: "purchasing"

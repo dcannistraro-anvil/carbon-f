@@ -7,6 +7,7 @@ import {
 import { useEffect } from "react";
 
 import { useControlField, useField } from "../hooks";
+import { useFormStateContext } from "../internal/formStateContext";
 import type { SelectBaseProps } from "./Select";
 import { SelectBase } from "./Select";
 
@@ -34,6 +35,9 @@ const SelectControlled = ({
   ...props
 }: SelectProps) => {
   const { getInputProps, error } = useField(name);
+  const formState = useFormStateContext();
+  const isDisabled = formState.isDisabled || props.isDisabled;
+  const isReadOnly = formState.isReadOnly || props.isReadOnly;
   const [controlValue, setControlValue] = useControlField<string | undefined>(
     name
   );
@@ -80,6 +84,8 @@ const SelectControlled = ({
           setControlValue(newValue ?? "");
           onChange(newValue ?? "");
         }}
+        isDisabled={isDisabled}
+        isReadOnly={isReadOnly}
         className="w-full"
       />
 

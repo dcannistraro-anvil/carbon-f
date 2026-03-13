@@ -14,10 +14,13 @@ import { z } from "zod";
 import { zfd } from "zod-form-data";
 import {
   deleteWarehouseTransferLine,
+  getWarehouseTransfer,
   getWarehouseTransferLine,
+  isWarehouseTransferLocked,
   upsertWarehouseTransferLine,
   WarehouseTransferLineForm
 } from "~/modules/inventory";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 const warehouseTransferLineActionValidator = z.discriminatedUnion("type", [
@@ -83,6 +86,17 @@ export async function action({ request, params }: ActionFunctionArgs) {
   const { transferId, id } = params;
   if (!transferId) throw new Error("transferId not found");
   if (!id) throw new Error("id not found");
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "inventory"
+  });
+  const transfer = await getWarehouseTransfer(viewClient, transferId);
+  await requireUnlocked({
+    request,
+    isLocked: isWarehouseTransferLocked(transfer.data?.status),
+    redirectTo: path.to.warehouseTransfer(transferId),
+    message: "Cannot modify a locked warehouse transfer. Reopen it first."
+  });
 
   const formData = await request.formData();
   const validation = await validator(

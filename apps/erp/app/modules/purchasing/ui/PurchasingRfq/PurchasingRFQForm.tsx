@@ -9,6 +9,7 @@ import {
   cn,
   VStack
 } from "@carbon/react";
+import { useParams } from "react-router";
 import type { z } from "zod";
 import {
   CustomFormFields,
@@ -20,8 +21,10 @@ import {
   Submit,
   Suppliers
 } from "~/components/Form";
-import { usePermissions } from "~/hooks";
-import { purchasingRfqValidator } from "../../purchasing.models";
+import { usePermissions, useRouteData } from "~/hooks";
+import { path } from "~/utils/path";
+import { isRfqLocked, purchasingRfqValidator } from "../../purchasing.models";
+import type { PurchasingRFQ } from "../../types";
 
 type PurchasingRFQFormValues = z.infer<typeof purchasingRfqValidator>;
 
@@ -31,8 +34,12 @@ type PurchasingRFQFormProps = {
 
 const PurchasingRFQForm = ({ initialValues }: PurchasingRFQFormProps) => {
   const permissions = usePermissions();
+  const { rfqId } = useParams();
+  const routeData = useRouteData<{
+    rfqSummary: PurchasingRFQ;
+  }>(path.to.purchasingRfq(rfqId!));
   const isEditing = initialValues.id !== undefined;
-  const isDraft = ["Draft"].includes(initialValues.status ?? "");
+  const isLocked = isRfqLocked(routeData?.rfqSummary?.status);
 
   return (
     <Card>
@@ -40,6 +47,7 @@ const PurchasingRFQForm = ({ initialValues }: PurchasingRFQFormProps) => {
         method="post"
         validator={purchasingRfqValidator}
         defaultValues={initialValues}
+        isDisabled={isEditing && isLocked}
       >
         <CardHeader>
           <CardTitle>
@@ -82,7 +90,7 @@ const PurchasingRFQForm = ({ initialValues }: PurchasingRFQFormProps) => {
         <CardFooter>
           <Submit
             isDisabled={
-              !isDraft ||
+              isLocked ||
               (isEditing
                 ? !permissions.can("update", "purchasing")
                 : !permissions.can("create", "purchasing"))

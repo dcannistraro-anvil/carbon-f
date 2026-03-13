@@ -60,9 +60,7 @@ const PurchaseOrderForm = ({ initialValues }: PurchaseOrderFormProps) => {
   const routeData = useRouteData<{ purchaseOrder: { status: string } }>(
     orderId ? path.to.purchaseOrder(orderId) : ""
   );
-  const isLocked =
-    isPurchaseOrderLocked(routeData?.purchaseOrder?.status) ||
-    routeData?.purchaseOrder?.status === "Closed";
+  const isLocked = isPurchaseOrderLocked(routeData?.purchaseOrder?.status);
 
   const onSupplierChange = async (
     newValue: {
@@ -114,6 +112,7 @@ const PurchaseOrderForm = ({ initialValues }: PurchaseOrderFormProps) => {
         validator={purchaseOrderValidator}
         defaultValues={initialValues}
         className="w-full"
+        isDisabled={isEditing && isLocked}
       >
         <CardHeader>
           <CardTitle>
@@ -194,7 +193,7 @@ const PurchaseOrderForm = ({ initialValues }: PurchaseOrderFormProps) => {
           <Submit
             isDisabled={
               isEditing
-                ? isLocked || !permissions.can("update", "purchasing")
+                ? !permissions.can("update", "purchasing")
                 : !permissions.can("create", "purchasing")
             }
           >

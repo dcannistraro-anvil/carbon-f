@@ -21,12 +21,14 @@ const JobNotes = ({
   id,
   title,
   subTitle,
-  notes: initialNotes
+  notes: initialNotes,
+  isReadOnly: isReadOnlyProp
 }: {
   id: string | null;
   title: string;
   subTitle: string;
   notes?: JSONContent;
+  isReadOnly?: boolean;
 }) => {
   const {
     id: userId,
@@ -81,7 +83,7 @@ const JobNotes = ({
         </CardHeader>
 
         <CardContent>
-          {permissions.can("update", "sales") ? (
+          {!isReadOnlyProp && permissions.can("update", "production") ? (
             <Editor
               initialValue={(notes ?? {}) as JSONContent}
               onUpload={onUploadImage}

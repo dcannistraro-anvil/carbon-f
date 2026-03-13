@@ -12,6 +12,7 @@ import type {
 import { parseTime } from "@internationalized/date";
 import { useState } from "react";
 import { useField } from "../hooks";
+import { useFormStateContext } from "../internal/formStateContext";
 
 type TimePickerProps = {
   name: string;
@@ -23,6 +24,8 @@ type TimePickerProps = {
 type TimeValue = Time | CalendarDateTime | ZonedDateTime;
 
 const TimePicker = ({ name, label, onChange }: TimePickerProps) => {
+  const formState = useFormStateContext();
+  const isDisabled = formState.isDisabled || formState.isReadOnly;
   const { error, defaultValue, validate } = useField(name);
   const [time, setDate] = useState<TimeValue | null>(
     defaultValue ? parseTime(defaultValue) : null
@@ -42,6 +45,7 @@ const TimePicker = ({ name, label, onChange }: TimePickerProps) => {
         value={time ?? undefined}
         //@ts-ignore
         onChange={handleChange}
+        isDisabled={isDisabled}
       />
       {error && <FormErrorMessage>{error}</FormErrorMessage>}
     </FormControl>

@@ -8,6 +8,7 @@ import {
 } from "@carbon/react";
 import { forwardRef, useEffect } from "react";
 import { useControlField, useField } from "../hooks";
+import { useFormStateContext } from "../internal/formStateContext";
 
 type FormBooleanProps = {
   name: string;
@@ -30,13 +31,16 @@ const Boolean = forwardRef<HTMLInputElement, FormBooleanProps>(
       helperText,
       onChange,
       variant,
-      isDisabled,
+      isDisabled: isDisabledProp,
       value: controlledValue,
       ...props
     },
     ref
   ) => {
     const { getInputProps, error } = useField(name);
+    const formState = useFormStateContext();
+    const isDisabled =
+      formState.isDisabled || formState.isReadOnly || isDisabledProp;
     const [value, setValue] = useControlField<boolean>(name);
 
     useEffect(() => {

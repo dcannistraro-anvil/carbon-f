@@ -87,6 +87,7 @@ const PurchaseInvoiceDeliveryForm = forwardRef<
         validator={purchaseInvoiceDeliveryValidator}
         defaultValues={initialValues}
         fetcher={fetcher}
+        isDisabled={!isEditable}
       >
         <CardHeader>
           <CardTitle>Shipping</CardTitle>
@@ -115,9 +116,7 @@ const PurchaseInvoiceDeliveryForm = forwardRef<
           </div>
         </CardContent>
         <CardFooter>
-          <Submit
-            isDisabled={!permissions.can("update", "invoicing") || !isEditable}
-          >
+          <Submit isDisabled={!permissions.can("update", "invoicing")}>
             Save
           </Submit>
         </CardFooter>

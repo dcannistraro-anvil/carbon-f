@@ -32,6 +32,7 @@ import ConfirmDelete from "~/components/Modals/ConfirmDelete";
 import { usePermissions, useUser } from "~/hooks";
 import type { action as statusAction } from "~/routes/x+/warehouse-transfer+/$transferId.status";
 import { path } from "~/utils/path";
+import { isWarehouseTransferLocked } from "../../inventory.models";
 import type { Receipt, Shipment, WarehouseTransfer } from "../../types";
 import { ReceiptStatus } from "../Receipts";
 import { ShipmentStatus } from "../Shipments";
@@ -54,6 +55,8 @@ const WarehouseTransferHeader = ({
     companyId: company.id,
     variant: "dropdown"
   });
+
+  const isLocked = isWarehouseTransferLocked(warehouseTransfer.status);
 
   const { receipts, shipments, ship, receive, hasShippedItems } =
     useWarehouseTransferRelatedDocuments(warehouseTransfer.id);
@@ -83,6 +86,7 @@ const WarehouseTransferHeader = ({
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   disabled={
+                    isLocked ||
                     !permissions.can("delete", "inventory") ||
                     !permissions.is("employee")
                   }

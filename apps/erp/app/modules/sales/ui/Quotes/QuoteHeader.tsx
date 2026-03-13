@@ -52,6 +52,7 @@ import { usePanels } from "~/components/Layout";
 import ConfirmDelete from "~/components/Modals/ConfirmDelete";
 import { usePermissions, useRouteData, useUser } from "~/hooks";
 import { path } from "~/utils/path";
+import { isQuoteLocked } from "../../sales.models";
 import type {
   Opportunity,
   Quotation,
@@ -158,7 +159,8 @@ const QuoteHeader = () => {
                 <DropdownMenuItem
                   disabled={
                     !permissions.can("delete", "sales") ||
-                    !permissions.is("employee")
+                    !permissions.is("employee") ||
+                    isQuoteLocked(routeData?.quote?.status)
                   }
                   destructive
                   onClick={deleteQuoteModal.onOpen}

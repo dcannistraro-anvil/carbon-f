@@ -12,6 +12,7 @@ import { useRouteData } from "~/hooks";
 import type { Opportunity, SalesRFQ, SalesRFQLine } from "~/modules/sales";
 import {
   getSalesRFQ,
+  isSalesRfqLocked,
   salesRfqValidator,
   upsertSalesRFQ
 } from "~/modules/sales";
@@ -21,6 +22,7 @@ import {
   OpportunityState
 } from "~/modules/sales/ui/Opportunity";
 import { setCustomFields } from "~/utils/form";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
@@ -47,12 +49,25 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
 export async function action({ request, params }: ActionFunctionArgs) {
   assertIsPost(request);
-  const { client, userId } = await requirePermissions(request, {
-    update: "sales"
-  });
 
   const { rfqId: id } = params;
   if (!id) throw new Error("Could not find id");
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "sales"
+  });
+
+  const rfq = await getSalesRFQ(viewClient, id);
+  await requireUnlocked({
+    request,
+    isLocked: isSalesRfqLocked(rfq.data?.status),
+    redirectTo: path.to.salesRfq(id),
+    message: "Cannot modify a locked RFQ. Reopen it first."
+  });
+
+  const { client, userId } = await requirePermissions(request, {
+    update: "sales"
+  });
 
   const formData = await request.formData();
   const validation = await validator(salesRfqValidator).validate(formData);
@@ -98,6 +113,8 @@ export default function SalesRFQDetailsRoute() {
 
   if (!rfqData) throw new Error("Could not find rfq data");
 
+  const isReadOnly = isSalesRfqLocked(rfqData.rfqSummary.status);
+
   return (
     <VStack spacing={2}>
       <OpportunityState
@@ -109,6 +126,7 @@ export default function SalesRFQDetailsRoute() {
         id={rfqData.rfqSummary.id}
         table="salesRfq"
         title="Notes"
+        isReadOnly={isReadOnly}
         internalNotes={internalNotes}
         externalNotes={externalNotes}
       />
@@ -127,6 +145,7 @@ export default function SalesRFQDetailsRoute() {
               attachments={resolvedFiles}
               id={rfqId}
               type="Request for Quote"
+              isReadOnly={isReadOnly}
             />
           )}
         </Await>

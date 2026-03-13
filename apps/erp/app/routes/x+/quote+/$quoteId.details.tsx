@@ -15,7 +15,12 @@ import type {
   QuotationPayment,
   QuotationShipment
 } from "~/modules/sales";
-import { getQuote, quoteValidator, upsertQuote } from "~/modules/sales";
+import {
+  getQuote,
+  isQuoteLocked,
+  quoteValidator,
+  upsertQuote
+} from "~/modules/sales";
 import {
   OpportunityDocuments,
   OpportunityNotes,
@@ -28,6 +33,7 @@ import {
 } from "~/modules/sales/ui/Quotes";
 import type { QuoteShipmentFormRef } from "~/modules/sales/ui/Quotes/QuoteShipmentForm";
 import { setCustomFields } from "~/utils/form";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
@@ -60,6 +66,17 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
   const { quoteId: id } = params;
   if (!id) throw new Error("Could not find id");
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "sales"
+  });
+  const quote = await getQuote(viewClient, id);
+  await requireUnlocked({
+    request,
+    isLocked: isQuoteLocked(quote.data?.status),
+    redirectTo: path.to.quote(id),
+    message: "Cannot modify a locked quote. Reopen it first."
+  });
 
   const formData = await request.formData();
   const validation = await validator(quoteValidator).validate(formData);
@@ -105,6 +122,8 @@ export default function QuoteDetailsRoute() {
   }>(path.to.quote(quoteId));
 
   if (!quoteData) throw new Error("Could not find quote data");
+
+  const isReadOnly = isQuoteLocked(quoteData?.quote?.status);
 
   const shipmentFormRef = useRef<QuoteShipmentFormRef>(null);
 
@@ -162,6 +181,7 @@ export default function QuoteDetailsRoute() {
         table="quote"
         internalNotes={internalNotes}
         externalNotes={externalNotes}
+        isReadOnly={isReadOnly}
       />
       <Suspense
         key={`documents-${quoteId}`}
@@ -178,6 +198,7 @@ export default function QuoteDetailsRoute() {
               attachments={resolvedFiles}
               id={quoteId}
               type="Quote"
+              isReadOnly={isReadOnly}
             />
           )}
         </Await>

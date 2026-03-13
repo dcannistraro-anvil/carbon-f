@@ -10,6 +10,7 @@ import {
   getPurchaseInvoiceLine,
   isPurchaseInvoiceLocked
 } from "~/modules/invoicing";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
@@ -21,15 +22,12 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   if (!invoiceId) throw notFound("invoiceId not found");
 
   const purchaseInvoice = await getPurchaseInvoice(client, invoiceId);
-  if (isPurchaseInvoiceLocked(purchaseInvoice.data?.status)) {
-    throw redirect(
-      path.to.purchaseInvoiceDetails(invoiceId),
-      await flash(
-        request,
-        error(null, "Cannot delete lines on a confirmed purchase invoice.")
-      )
-    );
-  }
+  await requireUnlocked({
+    request,
+    isLocked: isPurchaseInvoiceLocked(purchaseInvoice.data?.status),
+    redirectTo: path.to.purchaseInvoiceDetails(invoiceId),
+    message: "Cannot delete lines on a confirmed purchase invoice."
+  });
 
   const purchaseInvoiceLine = await getPurchaseInvoiceLine(client, lineId);
   if (purchaseInvoiceLine.error) {
@@ -55,15 +53,12 @@ export async function action({ request, params }: ActionFunctionArgs) {
   if (!invoiceId) throw notFound("Could not find invoiceId");
 
   const purchaseInvoice = await getPurchaseInvoice(client, invoiceId);
-  if (isPurchaseInvoiceLocked(purchaseInvoice.data?.status)) {
-    throw redirect(
-      path.to.purchaseInvoiceDetails(invoiceId),
-      await flash(
-        request,
-        error(null, "Cannot delete lines on a confirmed purchase invoice.")
-      )
-    );
-  }
+  await requireUnlocked({
+    request,
+    isLocked: isPurchaseInvoiceLocked(purchaseInvoice.data?.status),
+    redirectTo: path.to.purchaseInvoiceDetails(invoiceId),
+    message: "Cannot delete lines on a confirmed purchase invoice."
+  });
 
   const { error: deleteTypeError } = await deletePurchaseInvoiceLine(
     client,

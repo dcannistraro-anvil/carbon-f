@@ -1,20 +1,46 @@
-import { assertIsPost, success } from "@carbon/auth";
+import { assertIsPost, error, success } from "@carbon/auth";
 import { requirePermissions } from "@carbon/auth/auth.server";
 import { flash } from "@carbon/auth/session.server";
 import type { ActionFunctionArgs } from "react-router";
 import { redirect } from "react-router";
 import { getCurrencyByCode } from "~/modules/accounting";
-import { updateSalesInvoiceExchangeRate } from "~/modules/invoicing";
+import {
+  getSalesInvoice,
+  isSalesInvoiceLocked,
+  updateSalesInvoiceExchangeRate
+} from "~/modules/invoicing";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path, requestReferrer } from "~/utils/path";
 
 export async function action({ request, params }: ActionFunctionArgs) {
   assertIsPost(request);
-  const { client, companyId } = await requirePermissions(request, {
-    update: "invoicing"
-  });
 
   const { invoiceId } = params;
   if (!invoiceId) throw new Error("Could not find invoiceId");
+
+  // Check if SI is locked
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "invoicing"
+  });
+
+  const invoice = await getSalesInvoice(viewClient, invoiceId);
+  if (invoice.error) {
+    throw redirect(
+      path.to.salesInvoiceDetails(invoiceId),
+      await flash(request, error(invoice.error, "Failed to load sales invoice"))
+    );
+  }
+
+  await requireUnlocked({
+    request,
+    isLocked: isSalesInvoiceLocked(invoice.data?.status),
+    redirectTo: path.to.salesInvoiceDetails(invoiceId),
+    message: "Cannot modify a locked sales invoice. Reopen it first."
+  });
+
+  const { client, companyId } = await requirePermissions(request, {
+    update: "invoicing"
+  });
 
   const formData = await request.formData();
   const currencyCode = formData.get("currencyCode") as string;

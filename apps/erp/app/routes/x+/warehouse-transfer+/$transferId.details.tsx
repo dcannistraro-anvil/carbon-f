@@ -10,6 +10,8 @@ import type {
   WarehouseTransferLine
 } from "~/modules/inventory";
 import {
+  getWarehouseTransfer,
+  isWarehouseTransferLocked,
   upsertWarehouseTransfer,
   warehouseTransferValidator
 } from "~/modules/inventory";
@@ -18,12 +20,27 @@ import {
   WarehouseTransferLines
 } from "~/modules/inventory/ui/WarehouseTransfers";
 import { getCustomFields, setCustomFields } from "~/utils/form";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
-export async function action({ request }: ActionFunctionArgs) {
+export async function action({ request, params }: ActionFunctionArgs) {
   assertIsPost(request);
   const { client, userId } = await requirePermissions(request, {
     update: "inventory"
+  });
+
+  const { transferId } = params;
+  if (!transferId) throw new Error("transferId not found");
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "inventory"
+  });
+  const transfer = await getWarehouseTransfer(viewClient, transferId);
+  await requireUnlocked({
+    request,
+    isLocked: isWarehouseTransferLocked(transfer.data?.status),
+    redirectTo: path.to.warehouseTransfer(transferId),
+    message: "Cannot modify a locked warehouse transfer. Reopen it first."
   });
 
   const formData = await request.formData();
@@ -35,13 +52,13 @@ export async function action({ request }: ActionFunctionArgs) {
     return validationError(validation.error);
   }
 
-  const { id, transferId, ...d } = validation.data;
+  const { id, transferId: validatedTransferId, ...d } = validation.data;
   if (!id) throw new Error("id not found");
-  if (!transferId) throw new Error("transferId not found");
+  if (!validatedTransferId) throw new Error("transferId not found");
 
   const updateTransfer = await upsertWarehouseTransfer(client, {
     id,
-    transferId,
+    transferId: validatedTransferId,
     ...d,
     updatedBy: userId,
     customFields: setCustomFields(formData)

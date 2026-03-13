@@ -16,6 +16,7 @@ import {
 import { useState } from "react";
 import { flushSync } from "react-dom";
 import { useField } from "../hooks";
+import { useFormStateContext } from "../internal/formStateContext";
 
 type DateTimePickerProps = {
   name: string;
@@ -31,13 +32,16 @@ type DateTimePickerProps = {
 const DateTimePicker = ({
   name,
   label,
-  isDisabled = false,
+  isDisabled: isDisabledProp = false,
   minValue,
   maxValue,
   inline = false,
   helperText,
   onChange
 }: DateTimePickerProps) => {
+  const formState = useFormStateContext();
+  const isDisabled =
+    formState.isDisabled || formState.isReadOnly || isDisabledProp;
   const { validate } = useFormContext();
   const { error, defaultValue, validate: validateField } = useField(name);
   const [date, setDate] = useState<CalendarDateTime | undefined>(

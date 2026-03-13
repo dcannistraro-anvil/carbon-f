@@ -40,6 +40,7 @@ import ConfirmDelete from "~/components/Modals/ConfirmDelete";
 import { usePermissions, useRouteData } from "~/hooks";
 import { useIntegrations } from "~/hooks/useIntegrations";
 import { path } from "~/utils/path";
+import { isRfqLocked } from "../../purchasing.models";
 import type { PurchasingRFQ, PurchasingRFQLine } from "../../types";
 import { SupplierQuoteCompareDrawer } from "../SupplierQuote";
 import FinalizeRFQModal from "./FinalizeRFQModal";
@@ -74,6 +75,7 @@ const PurchasingRFQHeader = () => {
   }>(path.to.purchasingRfq(rfqId));
 
   const status = routeData?.rfqSummary?.status ?? "Draft";
+  const isLocked = isRfqLocked(status);
 
   const statusFetcher = useFetcher<{}>();
 
@@ -111,6 +113,7 @@ const PurchasingRFQHeader = () => {
             <DropdownMenuContent>
               <DropdownMenuItem
                 disabled={
+                  isLocked ||
                   !permissions.can("delete", "purchasing") ||
                   !permissions.is("employee")
                 }
@@ -168,7 +171,11 @@ const PurchasingRFQHeader = () => {
                       typeof window !== "undefined" && (
                         <Copy
                           className="ml-2"
-                          text={`${window.location.origin}${path.to.externalSupplierQuote(supplier.quoteExternalLinkId)}`}
+                          text={`${
+                            window.location.origin
+                          }${path.to.externalSupplierQuote(
+                            supplier.quoteExternalLinkId
+                          )}`}
                         />
                       )}
                   </DropdownMenuItem>
@@ -313,7 +320,8 @@ const PurchasingRFQHeader = () => {
           action={path.to.cancelPurchasingRfq(rfqId)}
           isOpen={cancelReasonModal.isOpen}
           name={routeData?.rfqSummary?.rfqId!}
-          text={`Are you sure you want to cancel ${routeData?.rfqSummary?.rfqId!}? This will also cancel all related supplier quotes.`}
+          text={`Are you sure you want to cancel ${routeData?.rfqSummary
+            ?.rfqId!}? This will also cancel all related supplier quotes.`}
           deleteText="Cancel"
           onCancel={() => {
             cancelReasonModal.onClose();

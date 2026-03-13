@@ -24,6 +24,7 @@ import {
   LuSettings2
 } from "react-icons/lu";
 import { useControlField, useField } from "../hooks";
+import { useFormStateContext } from "../internal/formStateContext";
 
 type FormNumberProps = NumberFieldProps & {
   name: string;
@@ -45,7 +46,8 @@ const Number = forwardRef<HTMLInputElement, FormNumberProps>(
       label,
       isConfigured,
       isRequired,
-      isReadOnly,
+      isReadOnly: isReadOnlyProp,
+      isDisabled: isDisabledProp,
       helperText,
       value,
       onChange,
@@ -56,6 +58,9 @@ const Number = forwardRef<HTMLInputElement, FormNumberProps>(
     },
     ref
   ) => {
+    const formState = useFormStateContext();
+    const isReadOnly = formState.isReadOnly || isReadOnlyProp;
+    const isDisabled = formState.isDisabled || isDisabledProp;
     const { validate } = useFormContext();
     const { getInputProps, error } = useField(name);
     const [controlValue, setControlValue] = useControlField<number>(name);
@@ -99,13 +104,18 @@ const Number = forwardRef<HTMLInputElement, FormNumberProps>(
             aria-label={value !== undefined && !isNaN(value) ? "Edit" : "Add"}
             size="sm"
             variant="secondary"
-            isDisabled={isReadOnly}
+            isDisabled={isReadOnly || isDisabled}
             onClick={() => setInlineMode(false)}
           />
         </HStack>
       </VStack>
     ) : (
-      <FormControl isInvalid={!!error} isRequired={isRequired}>
+      <FormControl
+        isInvalid={!!error}
+        isRequired={isRequired}
+        isDisabled={isDisabled}
+        isReadOnly={isReadOnly}
+      >
         {label && (
           <FormLabel
             htmlFor={name}
@@ -122,6 +132,7 @@ const Number = forwardRef<HTMLInputElement, FormNumberProps>(
           })}
           value={controlValue}
           onChange={handleChange}
+          isDisabled={isDisabled}
           onBlur={async (e) => {
             if (inline) {
               const result = await validate();

@@ -26,6 +26,7 @@ import { RxCaretSort, RxCheck } from "react-icons/rx";
 import * as ReactPhoneInput from "react-phone-number-input";
 import flags from "react-phone-number-input/flags";
 import { useControlField, useField } from "../hooks";
+import { useFormStateContext } from "../internal/formStateContext";
 
 const PhoneInputComponent = ReactPhoneInput.default;
 
@@ -45,6 +46,9 @@ const PhoneInput: ForwardRefExoticComponent<PhoneInputProps> = forwardRef<
 >(({ name, label, isRequired, className, ...props }, ref) => {
   const { getInputProps, error } = useField(name);
   const [value, setValue] = useControlField<string>(name);
+  const formState = useFormStateContext();
+  const isDisabled =
+    formState.isDisabled || formState.isReadOnly || props.disabled;
 
   const onChange = (value: string) => {
     setValue(value);
@@ -58,6 +62,7 @@ const PhoneInput: ForwardRefExoticComponent<PhoneInputProps> = forwardRef<
       <PhoneInputComponent
         ref={ref}
         className={cn("flex", className)}
+        disabled={isDisabled}
         flagComponent={FlagComponent}
         countrySelectComponent={CountrySelect}
         inputComponent={InputComponent}

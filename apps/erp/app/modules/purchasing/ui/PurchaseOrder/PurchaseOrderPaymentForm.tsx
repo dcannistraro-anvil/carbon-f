@@ -45,7 +45,6 @@ const PurchaseOrderPaymentForm = ({
   }>(path.to.purchaseOrder(orderId));
 
   const isLocked = isPurchaseOrderLocked(routeData?.purchaseOrder?.status);
-  const isClosed = routeData?.purchaseOrder?.status === "Closed";
 
   const fetcher = useFetcher<typeof action>();
   const permissions = usePermissions();
@@ -62,6 +61,7 @@ const PurchaseOrderPaymentForm = ({
         validator={purchaseOrderPaymentValidator}
         defaultValues={initialValues}
         fetcher={fetcher}
+        isDisabled={isLocked}
       >
         <CardHeader>
           <CardTitle>Payment</CardTitle>
@@ -92,11 +92,7 @@ const PurchaseOrderPaymentForm = ({
           </div>
         </CardContent>
         <CardFooter>
-          <Submit
-            isDisabled={
-              isLocked || isClosed || !permissions.can("update", "purchasing")
-            }
-          >
+          <Submit isDisabled={!permissions.can("update", "purchasing")}>
             Save
           </Submit>
         </CardFooter>

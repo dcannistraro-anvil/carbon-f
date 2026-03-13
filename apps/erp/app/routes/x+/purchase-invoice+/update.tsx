@@ -3,6 +3,7 @@ import { parseDate } from "@internationalized/date";
 import type { ActionFunctionArgs } from "react-router";
 import { getCurrencyByCode } from "~/modules/accounting";
 import { isPurchaseInvoiceLocked } from "~/modules/invoicing";
+import { requireUnlockedBulk } from "~/utils/lockedGuard.server";
 
 export async function action({ request }: ActionFunctionArgs) {
   const { client, companyId, userId } = await requirePermissions(request, {
@@ -22,22 +23,17 @@ export async function action({ request }: ActionFunctionArgs) {
   }
 
   // Check if any of the PIs are locked
-  for (const id of ids) {
-    const purchaseInvoice = await client
-      .from("purchaseInvoice")
-      .select("status")
-      .eq("id", id as string)
-      .single();
-    if (
-      purchaseInvoice.data &&
-      isPurchaseInvoiceLocked(purchaseInvoice.data.status)
-    ) {
-      return {
-        error: { message: "Cannot modify a confirmed purchase invoice." },
-        data: null
-      };
-    }
-  }
+  const { data } = await client
+    .from("purchaseInvoice")
+    .select("id, status")
+    .in("id", ids as string[]);
+
+  const lockedError = requireUnlockedBulk({
+    statuses: (data ?? []).map((d) => d.status),
+    checkFn: isPurchaseInvoiceLocked,
+    message: "Cannot modify a confirmed purchase invoice."
+  });
+  if (lockedError) return lockedError;
 
   switch (field) {
     case "invoiceSupplierId":

@@ -23,6 +23,7 @@ import type { SalesInvoice } from "~/modules/invoicing";
 import { salesInvoiceShipmentValidator } from "~/modules/invoicing";
 import type { action } from "~/routes/x+/sales-invoice+/$invoiceId.shipment";
 import { path } from "~/utils/path";
+import { isSalesInvoiceLocked } from "../../invoicing.models";
 
 type SalesInvoiceShipmentFormProps = {
   initialValues: z.infer<typeof salesInvoiceShipmentValidator>;
@@ -47,9 +48,8 @@ const SalesInvoiceShipmentForm = forwardRef<
     salesInvoice: SalesInvoice;
   }>(path.to.salesInvoice(invoiceId));
 
-  const isEditable = ["Draft", "To Review"].includes(
-    routeData?.salesInvoice?.status ?? ""
-  );
+  const isLocked = isSalesInvoiceLocked(routeData?.salesInvoice?.status);
+  const isEditable = !isLocked;
 
   const permissions = usePermissions();
   const fetcher = useFetcher<typeof action>();
@@ -84,6 +84,7 @@ const SalesInvoiceShipmentForm = forwardRef<
         validator={salesInvoiceShipmentValidator}
         defaultValues={initialValues}
         fetcher={fetcher}
+        isDisabled={isLocked}
       >
         <CardHeader>
           <CardTitle>Shipping</CardTitle>

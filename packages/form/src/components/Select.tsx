@@ -18,6 +18,7 @@ import type { ComponentPropsWithoutRef } from "react";
 import { forwardRef } from "react";
 import { LuPlus, LuSettings2, LuX } from "react-icons/lu";
 import { useControlField, useField } from "../hooks";
+import { useFormStateContext } from "../internal/formStateContext";
 
 export type SelectProps = Omit<SelectBaseProps, "onChange"> & {
   name: string;
@@ -48,6 +49,9 @@ const Select = ({
 }: SelectProps) => {
   const { getInputProps, error } = useField(name);
   const [value, setValue] = useControlField<string | undefined>(name);
+  const formState = useFormStateContext();
+  const isDisabled = formState.isDisabled || props.isDisabled;
+  const isReadOnly = formState.isReadOnly || props.isReadOnly;
 
   const onChange = (value: string) => {
     if (value) {
@@ -87,7 +91,9 @@ const Select = ({
           setValue(newValue ?? "");
           onChange(newValue ?? "");
         }}
-        isClearable={isOptional && !props.isReadOnly}
+        isClearable={isOptional && !isReadOnly}
+        isDisabled={isDisabled}
+        isReadOnly={isReadOnly}
         isLoading={isLoading}
         className="w-full"
       />
@@ -116,6 +122,7 @@ export type SelectBaseProps = Omit<
     value: string;
   }[];
   isClearable?: boolean;
+  isDisabled?: boolean;
   isLoading?: boolean;
   isReadOnly?: boolean;
   placeholder?: string;
@@ -133,6 +140,7 @@ export const SelectBase = forwardRef<HTMLButtonElement, SelectBaseProps>(
       value,
       options,
       isClearable,
+      isDisabled,
       isLoading,
       isReadOnly,
       placeholder,
@@ -143,6 +151,7 @@ export const SelectBase = forwardRef<HTMLButtonElement, SelectBaseProps>(
     ref
   ) => {
     const isInlinePreview = !!inline;
+    const isNonInteractive = isReadOnly || isDisabled;
 
     return (
       <HStack spacing={1}>
@@ -155,7 +164,7 @@ export const SelectBase = forwardRef<HTMLButtonElement, SelectBaseProps>(
         <CarbonSelect
           value={value}
           onValueChange={(value) => onChange(value)}
-          disabled={isReadOnly}
+          disabled={isNonInteractive}
         >
           <SelectTrigger
             ref={ref}
@@ -163,7 +172,7 @@ export const SelectBase = forwardRef<HTMLButtonElement, SelectBaseProps>(
             {...props}
             className={cn(!isInlinePreview && "min-w-[160px] relative")}
             inline={isInlinePreview}
-            disabled={isReadOnly}
+            disabled={isNonInteractive}
             hideIcon={isLoading}
           >
             {isInlinePreview ? (
@@ -172,7 +181,7 @@ export const SelectBase = forwardRef<HTMLButtonElement, SelectBaseProps>(
                 variant="secondary"
                 aria-label={value ? "Edit" : "Add"}
                 icon={value ? <LuSettings2 /> : <LuPlus />}
-                isDisabled={isReadOnly}
+                isDisabled={isNonInteractive}
               />
             ) : (
               <div>
@@ -193,7 +202,7 @@ export const SelectBase = forwardRef<HTMLButtonElement, SelectBaseProps>(
             ))}
           </SelectContent>
         </CarbonSelect>
-        {isClearable && !isReadOnly && value && (
+        {isClearable && !isNonInteractive && value && (
           <IconButton
             variant="ghost"
             aria-label="Clear"

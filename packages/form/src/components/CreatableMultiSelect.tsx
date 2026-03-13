@@ -9,6 +9,7 @@ import {
 import { forwardRef, useEffect, useMemo } from "react";
 
 import { useControlField, useField } from "../hooks";
+import { useFormStateContext } from "../internal/formStateContext";
 
 export type CreatableMultiSelectProps = Omit<
   CreatableMultiSelectBaseProps,
@@ -32,6 +33,9 @@ const CreatableMultiSelect = forwardRef<
   ) => {
     const { error } = useField(name);
     const [value, setValue] = useControlField<string[] | undefined>(name);
+    const formState = useFormStateContext();
+    const isReadOnly =
+      formState.isReadOnly || formState.isDisabled || props.isReadOnly;
 
     useEffect(() => {
       if (props.value !== null && props.value !== undefined)
@@ -85,7 +89,8 @@ const CreatableMultiSelect = forwardRef<
             setValue(newValue ?? []);
             onChange(newValue ?? []);
           }}
-          isClearable={isOptional && !props.isReadOnly}
+          isClearable={isOptional && !isReadOnly}
+          isReadOnly={isReadOnly}
           label={label}
           className="w-full"
         />

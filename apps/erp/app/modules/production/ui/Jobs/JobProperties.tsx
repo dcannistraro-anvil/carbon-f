@@ -44,7 +44,7 @@ import type { MethodItemType } from "~/modules/shared";
 import type { action } from "~/routes/x+/items+/update";
 import { path } from "~/utils/path";
 import { copyToClipboard } from "~/utils/string";
-import { deadlineTypes } from "../../production.models";
+import { deadlineTypes, isJobLocked } from "../../production.models";
 import type { Job } from "../../types";
 import { getDeadlineIcon } from "./Deadline";
 
@@ -160,7 +160,7 @@ const JobProperties = () => {
 
   const isDisabled =
     !permissions.can("update", "production") ||
-    ["Completed", "Cancelled"].includes(routeData?.job?.status ?? "");
+    isJobLocked(routeData?.job?.status);
 
   return (
     <VStack
@@ -321,7 +321,7 @@ const JobProperties = () => {
         table="job"
         value={assignee ?? ""}
         variant="inline"
-        isReadOnly={!permissions.can("update", "production")}
+        isReadOnly={isDisabled}
       />
 
       <ValidatedForm

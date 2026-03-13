@@ -11,6 +11,7 @@ import { Await, redirect, useLoaderData, useParams } from "react-router";
 import { useRouteData } from "~/hooks";
 import {
   getSupplierQuote,
+  isSupplierQuoteLocked,
   supplierQuoteValidator,
   upsertSupplierQuote
 } from "~/modules/purchasing";
@@ -25,6 +26,7 @@ import {
 import SupplierInteractionState from "~/modules/purchasing/ui/SupplierInteraction/SupplierInteractionState";
 import SupplierQuoteSummary from "~/modules/purchasing/ui/SupplierQuote/SupplierQuoteSummary";
 import { setCustomFields } from "~/utils/form";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
@@ -57,6 +59,17 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
   const { id } = params;
   if (!id) throw new Error("Could not find id");
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "purchasing"
+  });
+  const quote = await getSupplierQuote(viewClient, id);
+  await requireUnlocked({
+    request,
+    isLocked: isSupplierQuoteLocked(quote.data?.status),
+    redirectTo: path.to.supplierQuote(id),
+    message: "Cannot modify a locked supplier quote. Reopen it first."
+  });
 
   const formData = await request.formData();
   const validation = await validator(supplierQuoteValidator).validate(formData);
@@ -110,6 +123,7 @@ export default function SupplierQuoteDetailsRoute() {
   }>(path.to.supplierQuote(id));
 
   if (!routeData) throw new Error("Could not find quote data");
+  const isReadOnly = isSupplierQuoteLocked(routeData?.quote?.status);
   const initialValues = {
     id: routeData?.quote?.id ?? "",
     supplierId: routeData?.quote?.supplierId ?? "",
@@ -139,6 +153,7 @@ export default function SupplierQuoteDetailsRoute() {
         table="supplierQuote"
         internalNotes={internalNotes}
         externalNotes={externalNotes}
+        isReadOnly={isReadOnly}
       />
       <Suspense
         key={`documents-${id}`}
@@ -155,6 +170,7 @@ export default function SupplierQuoteDetailsRoute() {
               attachments={resolvedFiles}
               id={id}
               type="Supplier Quote"
+              isReadOnly={isReadOnly}
             />
           )}
         </Await>

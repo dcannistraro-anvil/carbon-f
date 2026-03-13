@@ -20,7 +20,7 @@ import {
 } from "~/components/Form";
 import { usePermissions, useRouteData, useUser } from "~/hooks";
 import { path } from "~/utils/path";
-import { quoteShipmentValidator } from "../../sales.models";
+import { isQuoteLocked, quoteShipmentValidator } from "../../sales.models";
 import type { Quotation } from "../../types";
 
 type QuoteShipmentFormProps = {
@@ -61,9 +61,8 @@ const QuoteShipmentForm = forwardRef<
     quote: Quotation;
   }>(path.to.quote(quoteId));
 
-  const isEditable = ["Draft", "To Review"].includes(
-    routeData?.quote?.status ?? ""
-  );
+  const isLocked = isQuoteLocked(routeData?.quote?.status);
+  const isEditable = !isLocked;
 
   const { company } = useUser();
 
@@ -81,6 +80,7 @@ const QuoteShipmentForm = forwardRef<
         validator={quoteShipmentValidator}
         defaultValues={initialValues}
         fetcher={fetcher}
+        isDisabled={isLocked}
       >
         <CardHeader>
           <CardTitle>Shipping</CardTitle>

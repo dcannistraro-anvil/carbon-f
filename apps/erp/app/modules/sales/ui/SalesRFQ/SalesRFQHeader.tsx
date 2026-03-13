@@ -48,6 +48,7 @@ import { usePanels } from "~/components/Layout";
 import ConfirmDelete from "~/components/Modals/ConfirmDelete";
 import { usePermissions, useRouteData, useUser } from "~/hooks";
 import { path } from "~/utils/path";
+import { isSalesRfqLocked } from "../../sales.models";
 import type { Opportunity, SalesRFQ, SalesRFQLine } from "../../types";
 import SalesRFQStatus from "./SalesRFQStatus";
 
@@ -70,6 +71,7 @@ const SalesRFQHeader = () => {
   }>(path.to.salesRfq(rfqId));
 
   const status = routeData?.rfqSummary?.status ?? "Draft";
+  const isLocked = isSalesRfqLocked(status);
 
   const statusFetcher = useFetcher<{}>();
 
@@ -101,6 +103,7 @@ const SalesRFQHeader = () => {
             <DropdownMenuContent>
               <DropdownMenuItem
                 disabled={
+                  isLocked ||
                   !permissions.can("delete", "sales") ||
                   !permissions.is("employee")
                 }

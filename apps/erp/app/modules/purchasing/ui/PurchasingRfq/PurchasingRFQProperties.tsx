@@ -27,7 +27,7 @@ import type { action } from "~/routes/x+/items+/update";
 import { useSuppliers } from "~/stores";
 import { path } from "~/utils/path";
 import { copyToClipboard } from "~/utils/string";
-import { isRfqEditable } from "../../purchasing.models";
+import { isRfqEditable, isRfqLocked } from "../../purchasing.models";
 import type { PurchasingRFQ, PurchasingRFQSupplier } from "../../types";
 import { SupplierForm } from "../Supplier";
 
@@ -113,7 +113,9 @@ const PurchasingRFQProperties = () => {
       const formData = new FormData();
 
       formData.append("purchasingRfqId", rfqId);
-      supplierIds.forEach((id) => formData.append("supplierIds", id));
+      for (const id of supplierIds) {
+        formData.append("supplierIds", id);
+      }
 
       fetcher.submit(formData, {
         method: "post",
@@ -136,7 +138,8 @@ const PurchasingRFQProperties = () => {
 
   const isDisabled =
     !permissions.can("update", "purchasing") ||
-    !isRfqEditable(routeData?.rfqSummary?.status);
+    !isRfqEditable(routeData?.rfqSummary?.status) ||
+    isRfqLocked(routeData?.rfqSummary?.status);
 
   return (
     <VStack
@@ -198,7 +201,7 @@ const PurchasingRFQProperties = () => {
         table="purchasingRfq"
         value={assignee ?? ""}
         variant="inline"
-        isReadOnly={!permissions.can("update", "purchasing")}
+        isReadOnly={isDisabled}
       />
 
       <ValidatedForm

@@ -38,13 +38,32 @@ import {
 } from "react-router";
 import { useRouteData } from "~/hooks";
 import type { StockTransfer, StockTransferLine } from "~/modules/inventory";
-import { stockTransferLineScanValidator } from "~/modules/inventory";
+import {
+  getStockTransfer,
+  isStockTransferLocked,
+  stockTransferLineScanValidator
+} from "~/modules/inventory";
 import { getItemShelfQuantities } from "~/modules/items";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
-export async function action({ request }: ActionFunctionArgs) {
+export async function action({ request, params }: ActionFunctionArgs) {
   const { client, companyId, userId } = await requirePermissions(request, {
     update: "inventory"
+  });
+
+  const { id } = params;
+  if (!id) throw new Error("id is not found");
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "inventory"
+  });
+  const transfer = await getStockTransfer(viewClient, id);
+  await requireUnlocked({
+    request,
+    isLocked: isStockTransferLocked(transfer.data?.status),
+    redirectTo: path.to.stockTransfer(id),
+    message: "Cannot modify a locked stock transfer. Reopen it first."
   });
 
   const payload = await request.json();
@@ -56,11 +75,16 @@ export async function action({ request }: ActionFunctionArgs) {
     );
   }
 
-  const { id, stockTransferId, itemId, locationId, trackedEntityId } =
-    validated.data;
+  const {
+    id: lineId,
+    stockTransferId,
+    itemId,
+    locationId,
+    trackedEntityId
+  } = validated.data;
 
   const [stockTransferLine, itemShelfQuantities] = await Promise.all([
-    client.from("stockTransferLines").select("*").eq("id", id!).single(),
+    client.from("stockTransferLines").select("*").eq("id", lineId!).single(),
     getItemShelfQuantities(client, itemId, companyId, locationId)
   ]);
 
@@ -94,7 +118,7 @@ export async function action({ request }: ActionFunctionArgs) {
   const functionPayload: any = {
     type: transferType,
     stockTransferId,
-    stockTransferLineId: id,
+    stockTransferLineId: lineId,
     trackedEntityId,
     quantity:
       transferType === "batch" ? (stockTransferLine.data?.quantity ?? 1) : 1,

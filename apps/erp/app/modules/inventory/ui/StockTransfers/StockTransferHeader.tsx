@@ -26,7 +26,11 @@ import Assignee, { useOptimisticAssignment } from "~/components/Assignee";
 import { useAuditLog } from "~/components/AuditLog";
 import ConfirmDelete from "~/components/Modals/ConfirmDelete";
 import { usePermissions, useRouteData, useUser } from "~/hooks";
-import type { StockTransfer, StockTransferLine } from "~/modules/inventory";
+import {
+  isStockTransferLocked,
+  type StockTransfer,
+  type StockTransferLine
+} from "~/modules/inventory";
 import { path } from "~/utils/path";
 import StockTransferCompleteModal from "./StockTransferCompleteModal";
 import StockTransferStatus from "./StockTransferStatus";
@@ -64,6 +68,7 @@ const StockTransferHeader = () => {
     ["Released", "In Progress"].includes(status);
 
   const isCompleted = status === "Completed";
+  const isLocked = isStockTransferLocked(status);
 
   const optimisticAssignment = useOptimisticAssignment({
     id,
@@ -105,7 +110,8 @@ const StockTransferHeader = () => {
                     !permissions.can("delete", "inventory") ||
                     !permissions.is("employee") ||
                     !["Released", "Draft"].includes(status) ||
-                    hasPickedItems
+                    hasPickedItems ||
+                    isLocked
                   }
                   destructive
                   onClick={deleteModal.onOpen}

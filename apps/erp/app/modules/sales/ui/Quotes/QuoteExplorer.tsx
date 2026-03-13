@@ -51,6 +51,7 @@ import {
 import { getLinkToItemDetails } from "~/modules/items/ui/Item/ItemForm";
 import type { MethodItemType } from "~/modules/shared";
 import { path } from "~/utils/path";
+import { isQuoteLocked } from "../../sales.models";
 import type {
   Customer,
   Quotation,
@@ -100,7 +101,8 @@ export default function QuoteExplorer({ methods }: QuoteExplorerProps) {
   const deleteLineDisclosure = useDisclosure();
   const [deleteLine, setDeleteLine] = useState<QuotationLine | null>(null);
   const isDisabled =
-    !permissions.can("delete", "sales") || quoteData?.quote?.status !== "Draft";
+    !permissions.can("delete", "sales") ||
+    isQuoteLocked(quoteData?.quote?.status);
 
   const onDeleteLine = (line: QuotationLine) => {
     setDeleteLine(line);

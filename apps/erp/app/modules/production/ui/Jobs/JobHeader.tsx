@@ -77,7 +77,7 @@ import {
   useUser
 } from "~/hooks";
 import { path } from "~/utils/path";
-import { jobCompleteValidator } from "../../production.models";
+import { isJobLocked, jobCompleteValidator } from "../../production.models";
 import type { Job } from "../../types";
 import JobStatus from "./JobStatus";
 
@@ -164,7 +164,8 @@ const JobHeader = () => {
               <DropdownMenuItem
                 disabled={
                   !permissions.can("delete", "production") ||
-                  !permissions.is("employee")
+                  !permissions.is("employee") ||
+                  isJobLocked(routeData?.job?.status)
                 }
                 destructive
                 onClick={deleteJobModal.onOpen}

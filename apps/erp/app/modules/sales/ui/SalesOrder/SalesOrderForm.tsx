@@ -30,9 +30,9 @@ import {
   Submit
 } from "~/components/Form";
 import ExchangeRate from "~/components/Form/ExchangeRate";
-import { usePermissions, useUser } from "~/hooks";
+import { usePermissions, useRouteData, useUser } from "~/hooks";
 import { path } from "~/utils/path";
-import { salesOrderValidator } from "../../sales.models";
+import { isSalesOrderLocked, salesOrderValidator } from "../../sales.models";
 
 type SalesOrderFormValues = z.infer<typeof salesOrderValidator>;
 
@@ -61,6 +61,12 @@ const SalesOrderForm = ({ initialValues }: SalesOrderFormProps) => {
   });
   const isEditing = initialValues.id !== undefined;
   const isCustomer = permissions.is("customer");
+
+  const orderId = initialValues.id;
+  const routeData = useRouteData<{ salesOrder: { status: string } }>(
+    orderId ? path.to.salesOrder(orderId) : ""
+  );
+  const isLocked = isSalesOrderLocked(routeData?.salesOrder?.status);
 
   const exchangeRateFetcher = useFetcher<{ exchangeRate: number }>();
 
@@ -119,6 +125,7 @@ const SalesOrderForm = ({ initialValues }: SalesOrderFormProps) => {
         method="post"
         validator={salesOrderValidator}
         defaultValues={initialValues}
+        isDisabled={isEditing && isLocked}
       >
         <CardHeader>
           <CardTitle>{isEditing ? "Sales Order" : "New Sales Order"}</CardTitle>

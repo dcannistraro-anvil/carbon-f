@@ -125,8 +125,7 @@ const PurchaseOrderProperties = () => {
 
   const isDisabled =
     !permissions.can("update", "purchasing") ||
-    isPurchaseOrderLocked(routeData?.purchaseOrder?.status) ||
-    routeData?.purchaseOrder?.status === "Closed";
+    isPurchaseOrderLocked(routeData?.purchaseOrder?.status);
 
   return (
     <VStack

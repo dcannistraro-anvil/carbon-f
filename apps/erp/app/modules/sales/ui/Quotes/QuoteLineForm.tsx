@@ -59,7 +59,11 @@ import { methodType } from "~/modules/shared";
 import type { action } from "~/routes/x+/quote+/$quoteId.new";
 import { useItems } from "~/stores";
 import { path } from "~/utils/path";
-import { quoteLineStatusType, quoteLineValidator } from "../../sales.models";
+import {
+  isQuoteLocked,
+  quoteLineStatusType,
+  quoteLineValidator
+} from "../../sales.models";
 import type { Quotation, QuotationLine } from "../../types";
 import DeleteQuoteLine from "./DeleteQuoteLine";
 
@@ -88,9 +92,8 @@ const QuoteLineForm = ({
     quote: Quotation;
   }>(path.to.quote(quoteId));
 
-  const isEditable = ["Draft", "To Review"].includes(
-    routeData?.quote?.status ?? ""
-  );
+  const isLocked = isQuoteLocked(routeData?.quote?.status);
+  const isEditable = !isLocked;
 
   const isEditing = initialValues.id !== undefined;
 
@@ -266,6 +269,7 @@ const QuoteLineForm = ({
                   : path.to.newQuoteLine(quoteId)
               }
               className="w-full"
+              isDisabled={isEditing && isLocked}
               onSubmit={() => {
                 if (type === "modal") onClose?.();
               }}
@@ -316,13 +320,15 @@ const QuoteLineForm = ({
                         />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem
-                          destructive
-                          onClick={deleteDisclosure.onOpen}
-                        >
-                          <DropdownMenuIcon icon={<LuTrash />} />
-                          Delete Line
-                        </DropdownMenuItem>
+                        {!isLocked && (
+                          <DropdownMenuItem
+                            destructive
+                            onClick={deleteDisclosure.onOpen}
+                          >
+                            <DropdownMenuIcon icon={<LuTrash />} />
+                            Delete Line
+                          </DropdownMenuItem>
+                        )}
                         <DropdownMenuItem asChild>
                           <Link
                             to={getLinkToItemDetails("Part", itemData.itemId!)}

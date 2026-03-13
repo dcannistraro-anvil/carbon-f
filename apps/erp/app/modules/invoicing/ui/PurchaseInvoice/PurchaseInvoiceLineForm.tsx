@@ -157,11 +157,9 @@ const PurchaseInvoiceLineForm = ({
     })();
   });
 
-  const isDisabled = !isEditable
-    ? true
-    : isEditing
-      ? !permissions.can("update", "purchasing")
-      : !permissions.can("create", "purchasing");
+  const isDisabled = isEditing
+    ? !permissions.can("update", "purchasing")
+    : !permissions.can("create", "purchasing");
 
   const currencyFormatter = useCurrencyFormatter();
   const percentFormatter = usePercentFormatter();
@@ -313,6 +311,7 @@ const PurchaseInvoiceLineForm = ({
                 : path.to.newPurchaseInvoiceLine(invoiceId)
             }
             className="w-full"
+            isDisabled={!isEditable}
             onSubmit={() => {
               if (type === "modal") onClose?.();
             }}

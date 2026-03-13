@@ -30,6 +30,7 @@ import {
   SupplierInteractionLineNotes
 } from "~/modules/purchasing/ui/SupplierInteraction";
 import { getCustomFields, setCustomFields } from "~/utils/form";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
@@ -95,16 +96,12 @@ export async function action({ request, params }: ActionFunctionArgs) {
     );
   }
 
-  const isLocked = isPurchaseOrderLocked(purchaseOrder.data?.status);
-  if (isLocked || purchaseOrder.data?.status === "Closed") {
-    throw redirect(
-      path.to.purchaseOrderLine(orderId, lineId),
-      await flash(
-        request,
-        error(null, "Cannot modify a confirmed purchase order.")
-      )
-    );
-  }
+  await requireUnlocked({
+    request,
+    isLocked: isPurchaseOrderLocked(purchaseOrder.data?.status),
+    redirectTo: path.to.purchaseOrderLine(orderId, lineId),
+    message: "Cannot modify a confirmed purchase order."
+  });
 
   const { client, userId } = await requirePermissions(request, {
     update: "purchasing"
@@ -154,9 +151,7 @@ export default function EditPurchaseOrderLineRoute() {
   const routeData = useRouteData<{
     purchaseOrder: { status: string };
   }>(path.to.purchaseOrder(orderId));
-  const isReadOnly =
-    isPurchaseOrderLocked(routeData?.purchaseOrder?.status) ||
-    routeData?.purchaseOrder?.status === "Closed";
+  const isReadOnly = isPurchaseOrderLocked(routeData?.purchaseOrder?.status);
 
   const { line, files } = useLoaderData<typeof loader>();
 

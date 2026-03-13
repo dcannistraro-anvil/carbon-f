@@ -3,6 +3,9 @@ import { requirePermissions } from "@carbon/auth/auth.server";
 import { flash } from "@carbon/auth/session.server";
 import type { ActionFunctionArgs } from "react-router";
 import { data } from "react-router";
+import { getStockTransfer, isStockTransferLocked } from "~/modules/inventory";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
+import { path } from "~/utils/path";
 
 export async function action({ request, params }: ActionFunctionArgs) {
   assertIsPost(request);
@@ -12,6 +15,17 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
   const { id } = params;
   if (!id) throw notFound("id not found");
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "inventory"
+  });
+  const transfer = await getStockTransfer(viewClient, id);
+  await requireUnlocked({
+    request,
+    isLocked: isStockTransferLocked(transfer.data?.status),
+    redirectTo: path.to.stockTransfer(id),
+    message: "Cannot modify a locked stock transfer. Reopen it first."
+  });
 
   const formData = await request.formData();
 

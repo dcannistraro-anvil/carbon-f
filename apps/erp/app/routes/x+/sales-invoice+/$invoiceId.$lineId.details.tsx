@@ -15,8 +15,11 @@ import {
   useLoaderData,
   useParams
 } from "react-router";
+import { useRouteData } from "~/hooks";
 import {
+  getSalesInvoice,
   getSalesInvoiceLine,
+  isSalesInvoiceLocked,
   salesInvoiceLineValidator,
   upsertSalesInvoiceLine
 } from "~/modules/invoicing";
@@ -28,6 +31,7 @@ import {
 } from "~/modules/sales/ui/Opportunity";
 import { useItems } from "~/stores";
 import { getCustomFields, setCustomFields } from "~/utils/form";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
@@ -51,13 +55,34 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
 export async function action({ request, params }: ActionFunctionArgs) {
   assertIsPost(request);
-  const { client, userId } = await requirePermissions(request, {
-    create: "invoicing"
-  });
 
   const { invoiceId, lineId } = params;
   if (!invoiceId) throw new Error("Could not find invoiceId");
   if (!lineId) throw new Error("Could not find lineId");
+
+  // Check if SI is locked
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "invoicing"
+  });
+
+  const invoice = await getSalesInvoice(viewClient, invoiceId);
+  if (invoice.error) {
+    throw redirect(
+      path.to.salesInvoiceLine(invoiceId, lineId),
+      await flash(request, error(invoice.error, "Failed to load sales invoice"))
+    );
+  }
+
+  await requireUnlocked({
+    request,
+    isLocked: isSalesInvoiceLocked(invoice.data?.status),
+    redirectTo: path.to.salesInvoiceLine(invoiceId, lineId),
+    message: "Cannot modify a locked sales invoice. Reopen it first."
+  });
+
+  const { client, userId } = await requirePermissions(request, {
+    create: "invoicing"
+  });
 
   const formData = await request.formData();
   const validation = await validator(salesInvoiceLineValidator).validate(
@@ -115,6 +140,11 @@ export default function EditSalesInvoiceLineRoute() {
   if (!invoiceId) throw notFound("invoiceId not found");
   if (!lineId) throw notFound("lineId not found");
 
+  const routeData = useRouteData<{
+    salesInvoice: { status: string };
+  }>(path.to.salesInvoice(invoiceId));
+  const isReadOnly = isSalesInvoiceLocked(routeData?.salesInvoice?.status);
+
   const { salesInvoiceLine, files } = useLoaderData<typeof loader>();
 
   const initialValues = {
@@ -152,6 +182,7 @@ export default function EditSalesInvoiceLineRoute() {
         title="Notes"
         subTitle={getItemReadableId(items, salesInvoiceLine?.itemId) ?? ""}
         internalNotes={salesInvoiceLine?.internalNotes as JSONContent}
+        isReadOnly={isReadOnly}
       />
 
       <Suspense
@@ -169,6 +200,7 @@ export default function EditSalesInvoiceLineRoute() {
               lineId={lineId}
               itemId={salesInvoiceLine?.itemId}
               type="Sales Invoice"
+              isReadOnly={isReadOnly}
             />
           )}
         </Await>

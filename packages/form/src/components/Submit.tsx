@@ -12,6 +12,7 @@ import {
 import { forwardRef } from "react";
 import { useBlocker, useNavigation } from "react-router";
 import { useIsSubmitting } from "../hooks";
+import { useFormStateContext } from "../internal/formStateContext";
 import { useFormContext } from "../userFacingFormContext";
 
 type SubmitProps = ButtonProps & {
@@ -38,7 +39,19 @@ export function DefaultDisabledSubmit({
 }
 
 export const Submit = forwardRef<HTMLButtonElement, SubmitProps>(
-  ({ formId, children, isDisabled, withBlocker = true, ...props }, ref) => {
+  (
+    {
+      formId,
+      children,
+      isDisabled: isDisabledProp,
+      withBlocker = true,
+      ...props
+    },
+    ref
+  ) => {
+    const formStateCtx = useFormStateContext();
+    const isDisabled =
+      formStateCtx.isDisabled || formStateCtx.isReadOnly || isDisabledProp;
     const isSubmitting = useIsSubmitting(formId);
     const transition = useNavigation();
     const isIdle = transition.state === "idle";

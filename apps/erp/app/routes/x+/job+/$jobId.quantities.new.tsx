@@ -5,11 +5,14 @@ import { validationError, validator } from "@carbon/form";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import { data, redirect, useLoaderData } from "react-router";
 import {
+  getJob,
   getJobOperations,
+  isJobLocked,
   productionQuantityValidator,
   upsertProductionQuantity
 } from "~/modules/production";
 import { ProductionQuantityForm } from "~/modules/production/ui/Jobs";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { getParams, path } from "~/utils/path";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
@@ -41,6 +44,17 @@ export async function action({ request, params }: ActionFunctionArgs) {
   if (!jobId) {
     throw notFound("jobId not found");
   }
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "production"
+  });
+  const job = await getJob(viewClient, jobId);
+  await requireUnlocked({
+    request,
+    isLocked: isJobLocked(job.data?.status),
+    redirectTo: path.to.job(jobId),
+    message: "Cannot modify a locked job. Reopen it first."
+  });
 
   const formData = await request.formData();
   const modal = formData.get("type") === "modal";

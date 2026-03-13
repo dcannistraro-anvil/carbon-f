@@ -9,6 +9,7 @@ import {
   isPurchaseOrderLocked,
   updatePurchaseOrderExchangeRate
 } from "~/modules/purchasing";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function action({ request, params }: ActionFunctionArgs) {
@@ -33,18 +34,12 @@ export async function action({ request, params }: ActionFunctionArgs) {
     );
   }
 
-  if (
-    isPurchaseOrderLocked(purchaseOrder.data?.status) ||
-    purchaseOrder.data?.status === "Closed"
-  ) {
-    throw redirect(
-      path.to.purchaseOrderDetails(orderId),
-      await flash(
-        request,
-        error(null, "Cannot modify a confirmed purchase order.")
-      )
-    );
-  }
+  await requireUnlocked({
+    request,
+    isLocked: isPurchaseOrderLocked(purchaseOrder.data?.status),
+    redirectTo: path.to.purchaseOrderDetails(orderId),
+    message: "Cannot modify a confirmed purchase order."
+  });
 
   const { client, companyId } = await requirePermissions(request, {
     create: "purchasing"

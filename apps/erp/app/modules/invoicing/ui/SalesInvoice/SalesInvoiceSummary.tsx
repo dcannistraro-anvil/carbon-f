@@ -30,6 +30,7 @@ import {
 } from "~/hooks";
 import { useItems } from "~/stores";
 import { getPrivateUrl, path } from "~/utils/path";
+import { isSalesInvoiceLocked } from "../../invoicing.models";
 import type {
   SalesInvoice,
   SalesInvoiceLine,
@@ -348,9 +349,7 @@ const SalesInvoiceSummary = ({
     currency: routeData?.salesInvoice?.currencyCode ?? "USD"
   });
 
-  const isEditable = ["Draft", "To Review"].includes(
-    routeData?.salesInvoice?.status ?? ""
-  );
+  const isEditable = !isSalesInvoiceLocked(routeData?.salesInvoice?.status);
 
   // Calculate totals
   const subtotal =

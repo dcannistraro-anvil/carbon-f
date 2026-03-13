@@ -18,7 +18,10 @@ import {
   TextArea
 } from "~/components/Form";
 import { usePermissions } from "~/hooks";
-import { warehouseTransferValidator } from "../../inventory.models";
+import {
+  isWarehouseTransferLocked,
+  warehouseTransferValidator
+} from "../../inventory.models";
 
 type WarehouseTransferFormProps = {
   initialValues: z.infer<typeof warehouseTransferValidator>;
@@ -29,6 +32,7 @@ const WarehouseTransferForm = ({
 }: WarehouseTransferFormProps) => {
   const permissions = usePermissions();
   const isEditing = !!initialValues.id;
+  const isLocked = isWarehouseTransferLocked(initialValues.status);
   const canEdit =
     permissions.can("update", "inventory") &&
     ["Draft"].includes(initialValues.status ?? "");
@@ -39,6 +43,7 @@ const WarehouseTransferForm = ({
       method="post"
       defaultValues={initialValues}
       className="w-full"
+      isDisabled={isEditing && isLocked}
     >
       <Card className="w-full">
         <CardHeader>

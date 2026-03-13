@@ -324,6 +324,7 @@ type JobDocumentsProps = {
   itemId?: string | null;
   bucket?: "job" | "parts";
   modelUpload?: ModelUpload;
+  isReadOnly?: boolean;
 };
 
 const JobDocuments = ({
@@ -331,7 +332,8 @@ const JobDocuments = ({
   jobId,
   itemId,
   modelUpload,
-  bucket = "job"
+  bucket = "job",
+  isReadOnly
 }: JobDocumentsProps) => {
   const {
     canDelete,
@@ -378,7 +380,9 @@ const JobDocuments = ({
             <CardTitle>Files</CardTitle>
           </CardHeader>
           <CardAction>
-            <JobDocumentForm jobId={jobId} itemId={itemId} bucket={bucket} />
+            {!isReadOnly && (
+              <JobDocumentForm jobId={jobId} itemId={itemId} bucket={bucket} />
+            )}
           </CardAction>
         </HStack>
         <CardContent>
@@ -440,7 +444,7 @@ const JobDocuments = ({
                           </DropdownMenuItem>
                           <DropdownMenuItem
                             destructive
-                            disabled={!canDelete}
+                            disabled={!canDelete || isReadOnly}
                             onClick={() => deleteModel()}
                           >
                             Delete
@@ -536,7 +540,9 @@ const JobDocuments = ({
                             {itemId &&
                               (file as any).bucket !== "opportunity-line" && (
                                 <DropdownMenuSub>
-                                  <DropdownMenuSubTrigger disabled={!canUpdate}>
+                                  <DropdownMenuSubTrigger
+                                    disabled={!canUpdate || isReadOnly}
+                                  >
                                     Move to
                                   </DropdownMenuSubTrigger>
                                   <DropdownMenuSubContent>
@@ -562,7 +568,7 @@ const JobDocuments = ({
                               )}
                             <DropdownMenuItem
                               destructive
-                              disabled={!canDelete}
+                              disabled={!canDelete || isReadOnly}
                               onClick={() => deleteFile(file)}
                             >
                               Delete
@@ -586,7 +592,7 @@ const JobDocuments = ({
               )}
             </Tbody>
           </Table>
-          <FileDropzone onDrop={onDrop} />
+          {!isReadOnly && <FileDropzone onDrop={onDrop} />}
         </CardContent>
       </Card>
     </>

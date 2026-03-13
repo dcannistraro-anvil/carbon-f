@@ -233,6 +233,12 @@ export const warehouseTransferStatusType = [
   "Cancelled"
 ] as const;
 
+export function isWarehouseTransferLocked(
+  status: string | null | undefined
+): boolean {
+  return status !== null && status !== undefined && status !== "Draft";
+}
+
 export const warehouseTransferValidator = z
   .object({
     id: zfd.text(z.string().optional()),
@@ -276,6 +282,12 @@ export const stockTransferStatusType = [
   "In Progress",
   "Completed"
 ] as const;
+
+export function isStockTransferLocked(
+  status: string | null | undefined
+): boolean {
+  return status !== null && status !== undefined && status !== "Draft";
+}
 
 export const stockTransferValidator = z.object({
   id: zfd.text(z.string().optional()),

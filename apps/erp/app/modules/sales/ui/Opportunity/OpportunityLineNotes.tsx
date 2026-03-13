@@ -28,6 +28,7 @@ const OpportunityLineNotes = ({
   table,
   title,
   subTitle,
+  isReadOnly: isReadOnlyProp,
   internalNotes: initialInternalNotes,
   externalNotes: initialExternalNotes
 }: {
@@ -35,6 +36,7 @@ const OpportunityLineNotes = ({
   table: "salesRfqLine" | "quoteLine" | "salesOrderLine" | "salesInvoiceLine";
   title: string;
   subTitle: string;
+  isReadOnly?: boolean;
   internalNotes?: JSONContent;
   externalNotes?: JSONContent;
 }) => {
@@ -45,6 +47,7 @@ const OpportunityLineNotes = ({
   const { carbon } = useCarbon();
   const permissions = usePermissions();
   const isEmployee = permissions.is("employee");
+  const canEdit = !isReadOnlyProp && permissions.can("update", "sales");
   const [tab, setTab] = useState(isEmployee ? "internal" : "external");
   const [internalNotes, setInternalNotes] = useState(
     initialInternalNotes ?? {}
@@ -126,7 +129,7 @@ const OpportunityLineNotes = ({
           </HStack>
           <CardContent>
             <TabsContent value="internal">
-              {permissions.can("update", "sales") ? (
+              {canEdit ? (
                 <Editor
                   initialValue={(internalNotes ?? {}) as JSONContent}
                   onUpload={onUploadImage}
@@ -145,7 +148,7 @@ const OpportunityLineNotes = ({
               )}
             </TabsContent>
             <TabsContent value="external">
-              {permissions.can("update", "sales") ? (
+              {canEdit ? (
                 <Editor
                   initialValue={(externalNotes ?? {}) as JSONContent}
                   onUpload={onUploadImage}

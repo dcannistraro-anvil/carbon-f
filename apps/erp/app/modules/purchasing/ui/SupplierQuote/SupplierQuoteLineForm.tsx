@@ -41,7 +41,10 @@ import { usePermissions, useRouteData, useUser } from "~/hooks";
 
 import type { MethodItemType } from "~/modules/shared/types";
 import { path } from "~/utils/path";
-import { supplierQuoteLineValidator } from "../../purchasing.models";
+import {
+  isSupplierQuoteLocked,
+  supplierQuoteLineValidator
+} from "../../purchasing.models";
 import type { SupplierQuote } from "../../types";
 import DeleteSupplierQuoteLine from "./DeleteSupplierQuoteLine";
 
@@ -70,7 +73,7 @@ const SupplierQuoteLineForm = ({
     quote: SupplierQuote;
   }>(path.to.supplierQuote(id));
 
-  const isEditable = ["Draft"].includes(routeData?.quote?.status ?? "");
+  const isLocked = isSupplierQuoteLocked(routeData?.quote?.status);
 
   const isEditing = initialValues.id !== undefined;
 
@@ -178,6 +181,7 @@ const SupplierQuoteLineForm = ({
                   : path.to.newSupplierQuoteLine(id)
               }
               className="w-full"
+              isDisabled={isEditing && isLocked}
               onSubmit={() => {
                 if (type === "modal") onClose?.();
               }}
@@ -204,28 +208,30 @@ const SupplierQuoteLineForm = ({
                     )}
                   </ModalCardDescription>
                 </ModalCardHeader>
-                {isEditing && permissions.can("update", "purchasing") && (
-                  <CardAction className="pr-12">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <IconButton
-                          icon={<BsThreeDotsVertical />}
-                          aria-label="More"
-                          variant="ghost"
-                        />
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem
-                          destructive
-                          onClick={deleteDisclosure.onOpen}
-                        >
-                          <DropdownMenuIcon icon={<LuTrash />} />
-                          Delete Line
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </CardAction>
-                )}
+                {isEditing &&
+                  !isLocked &&
+                  permissions.can("update", "purchasing") && (
+                    <CardAction className="pr-12">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <IconButton
+                            icon={<BsThreeDotsVertical />}
+                            aria-label="More"
+                            variant="ghost"
+                          />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem
+                            destructive
+                            onClick={deleteDisclosure.onOpen}
+                          >
+                            <DropdownMenuIcon icon={<LuTrash />} />
+                            Delete Line
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </CardAction>
+                  )}
               </HStack>
               <ModalCardBody>
                 <Hidden name="id" />
@@ -313,7 +319,7 @@ const SupplierQuoteLineForm = ({
                         name="quantity"
                         label="Quantity"
                         defaults={[1, 25, 50, 100]}
-                        isDisabled={!isEditable}
+                        isDisabled={isLocked}
                       />
                     </div>
                   </div>
@@ -322,7 +328,7 @@ const SupplierQuoteLineForm = ({
               <ModalCardFooter>
                 <Submit
                   isDisabled={
-                    !isEditable ||
+                    isLocked ||
                     (isEditing
                       ? !permissions.can("update", "purchasing")
                       : !permissions.can("create", "purchasing"))

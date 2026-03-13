@@ -27,7 +27,10 @@ import {
 import { usePermissions, useRouteData, useUser } from "~/hooks";
 import type { action } from "~/routes/x+/sales-order+/$orderId.shipment";
 import { path } from "~/utils/path";
-import { salesOrderShipmentValidator } from "../../sales.models";
+import {
+  isSalesOrderLocked,
+  salesOrderShipmentValidator
+} from "../../sales.models";
 import type { SalesOrder } from "../../types";
 
 type SalesOrderShipmentFormProps = {
@@ -73,6 +76,7 @@ const SalesOrderShipmentForm = forwardRef<
   }>(path.to.salesOrder(orderId));
 
   const { company } = useUser();
+  const isLocked = isSalesOrderLocked(routeData?.salesOrder?.status);
 
   const isCustomer = permissions.is("customer");
 
@@ -90,6 +94,7 @@ const SalesOrderShipmentForm = forwardRef<
         validator={salesOrderShipmentValidator}
         defaultValues={initialValues}
         fetcher={fetcher}
+        isDisabled={isLocked}
       >
         <CardHeader>
           <CardTitle>Shipping</CardTitle>

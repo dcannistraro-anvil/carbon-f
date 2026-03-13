@@ -1,6 +1,10 @@
 import { requirePermissions } from "@carbon/auth/auth.server";
 import type { ActionFunctionArgs } from "react-router";
-import { upsertMaintenanceDispatch } from "~/modules/resources";
+import {
+  isMaintenanceDispatchLocked,
+  upsertMaintenanceDispatch
+} from "~/modules/resources";
+import { requireUnlockedBulk } from "~/utils/lockedGuard.server";
 
 export async function action({ request }: ActionFunctionArgs) {
   const { client, userId } = await requirePermissions(request, {
@@ -18,6 +22,19 @@ export async function action({ request }: ActionFunctionArgs) {
   ) {
     return { error: { message: "Invalid form data" }, data: null };
   }
+
+  // Per-ID locked check
+  const dispatches = await client
+    .from("maintenanceDispatch")
+    .select("id, status")
+    .in("id", ids as string[]);
+
+  const lockedError = requireUnlockedBulk({
+    statuses: (dispatches.data ?? []).map((d) => d.status),
+    checkFn: isMaintenanceDispatchLocked,
+    message: "Cannot modify a locked dispatch. Reopen it first."
+  });
+  if (lockedError) return lockedError;
 
   const updateData: Record<string, unknown> = {
     updatedBy: userId,

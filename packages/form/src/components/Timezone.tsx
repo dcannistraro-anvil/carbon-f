@@ -16,6 +16,7 @@ import {
 import { timezones } from "@carbon/utils";
 import { LuX } from "react-icons/lu";
 import { useControlField, useField } from "../hooks";
+import { useFormStateContext } from "../internal/formStateContext";
 import type { SelectProps } from "./Select";
 
 type TimezoneProps = Omit<SelectProps, "options"> & {
@@ -26,13 +27,16 @@ const Timezone = ({
   name,
   label,
   helperText,
-  isReadOnly,
+  isReadOnly: isReadOnlyProp,
   isClearable,
   placeholder,
   size,
   ...props
 }: TimezoneProps) => {
   const { getInputProps, error } = useField(name);
+  const formState = useFormStateContext();
+  const isReadOnly =
+    formState.isReadOnly || formState.isDisabled || isReadOnlyProp;
   const [value, setValue] = useControlField<string | undefined>(name);
 
   return (

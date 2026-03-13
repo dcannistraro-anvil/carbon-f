@@ -14,6 +14,7 @@ import {
   getSalesOrder,
   getSalesOrderPayment,
   getSalesOrderShipment,
+  isSalesOrderLocked,
   salesOrderValidator,
   upsertSalesOrder
 } from "~/modules/sales";
@@ -29,6 +30,7 @@ import {
 } from "~/modules/sales/ui/SalesOrder";
 import type { SalesOrderShipmentFormRef } from "~/modules/sales/ui/SalesOrder/SalesOrderShipmentForm";
 import { getCustomFields, setCustomFields } from "~/utils/form";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
@@ -79,12 +81,34 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
 export async function action({ request, params }: ActionFunctionArgs) {
   assertIsPost(request);
-  const { client, userId } = await requirePermissions(request, {
-    update: "sales"
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "sales"
   });
 
   const { orderId: id } = params;
   if (!id) throw new Error("Could not find id");
+
+  const salesOrder = await getSalesOrder(viewClient, id);
+  if (salesOrder.error) {
+    throw redirect(
+      path.to.salesOrder(id),
+      await flash(
+        request,
+        error(salesOrder.error, "Failed to load sales order")
+      )
+    );
+  }
+
+  await requireUnlocked({
+    request,
+    isLocked: isSalesOrderLocked(salesOrder.data?.status),
+    redirectTo: path.to.salesOrder(id),
+    message: "Cannot modify a locked sales order. Reopen it first."
+  });
+
+  const { client, userId } = await requirePermissions(request, {
+    update: "sales"
+  });
 
   const formData = await request.formData();
   const validation = await validator(salesOrderValidator).validate(formData);
@@ -130,6 +154,8 @@ export default function SalesOrderDetailsRoute() {
   }>(path.to.salesOrder(orderId));
 
   if (!orderData) throw new Error("Could not find order data");
+
+  const isReadOnly = isSalesOrderLocked(orderData.salesOrder.status);
 
   const shipmentFormRef = useRef<SalesOrderShipmentFormRef>(null);
 
@@ -177,6 +203,7 @@ export default function SalesOrderDetailsRoute() {
         id={orderData.salesOrder.id}
         table="salesOrder"
         title="Notes"
+        isReadOnly={isReadOnly}
         internalNotes={internalNotes}
         externalNotes={externalNotes}
       />
@@ -195,6 +222,7 @@ export default function SalesOrderDetailsRoute() {
               attachments={resolvedFiles}
               id={orderId}
               type="Sales Order"
+              isReadOnly={isReadOnly}
             />
           )}
         </Await>

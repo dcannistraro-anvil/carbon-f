@@ -15,7 +15,7 @@ import { getLocalTimeZone, today } from "@internationalized/date";
 import type { ReactNode } from "react";
 import { useState } from "react";
 import { flushSync } from "react-dom";
-import { useFetcher } from "react-router";
+import { useFetcher, useParams } from "react-router";
 import type { z } from "zod";
 import {
   Currency,
@@ -30,12 +30,14 @@ import {
   SupplierLocation
 } from "~/components/Form";
 import ExchangeRate from "~/components/Form/ExchangeRate";
-import { usePermissions, useUser } from "~/hooks";
+import { usePermissions, useRouteData, useUser } from "~/hooks";
 import { path } from "~/utils/path";
 import {
+  isSupplierQuoteLocked,
   purchaseOrderTypeType,
   supplierQuoteValidator
 } from "../../purchasing.models";
+import type { SupplierQuote } from "../../types";
 
 type SupplierQuoteFormValues = z.infer<typeof supplierQuoteValidator>;
 
@@ -57,7 +59,12 @@ const SupplierQuoteForm = ({ initialValues }: SupplierQuoteFormProps) => {
     supplierContactId: initialValues.supplierContactId
   });
 
-  const isDisabled = initialValues?.status !== "Draft";
+  const { id } = useParams();
+  const routeData = useRouteData<{
+    quote: SupplierQuote;
+  }>(path.to.supplierQuote(id ?? ""));
+
+  const isLocked = isSupplierQuoteLocked(routeData?.quote?.status);
   const isEditing = initialValues.id !== undefined;
 
   const exchangeRateFetcher = useFetcher<{ exchangeRate: number }>();
@@ -111,6 +118,7 @@ const SupplierQuoteForm = ({ initialValues }: SupplierQuoteFormProps) => {
         method="post"
         validator={supplierQuoteValidator}
         defaultValues={initialValues}
+        isDisabled={isEditing && isLocked}
       >
         <CardHeader>
           <CardTitle>
@@ -226,7 +234,7 @@ const SupplierQuoteForm = ({ initialValues }: SupplierQuoteFormProps) => {
         <CardFooter>
           <Submit
             isDisabled={
-              isDisabled ||
+              (isEditing && isLocked) ||
               (isEditing
                 ? !permissions.can("update", "purchasing")
                 : !permissions.can("create", "purchasing"))

@@ -54,6 +54,7 @@ import type { MethodItemType } from "~/modules/shared";
 import { methodItemType } from "~/modules/shared";
 import { useItems } from "~/stores/items";
 import { path } from "~/utils/path";
+import { isSalesOrderLocked } from "../../sales.models";
 import type {
   Customer,
   SalesOrder,
@@ -145,7 +146,10 @@ export default function SalesOrderExplorer() {
   const newSalesOrderLineDisclosure = useDisclosure();
   const deleteLineDisclosure = useDisclosure();
   const [deleteLine, setDeleteLine] = useState<SalesOrderLine | null>(null);
-  const isDisabled = salesOrderData?.salesOrder?.status !== "Draft";
+  const isLocked = isSalesOrderLocked(salesOrderData?.salesOrder?.status);
+  const isDisabled = isLocked
+    ? true
+    : salesOrderData?.salesOrder?.status !== "Draft";
 
   useRealtime(
     "modelUpload",

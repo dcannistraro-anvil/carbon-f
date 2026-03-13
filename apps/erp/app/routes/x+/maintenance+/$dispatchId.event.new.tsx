@@ -3,9 +3,13 @@ import { requirePermissions } from "@carbon/auth/auth.server";
 import { validator } from "@carbon/form";
 import type { ActionFunctionArgs } from "react-router";
 import {
+  getMaintenanceDispatch,
+  isMaintenanceDispatchLocked,
   maintenanceDispatchEventValidator,
   upsertMaintenanceDispatchEvent
 } from "~/modules/resources";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
+import { path } from "~/utils/path";
 
 export async function action({ request, params }: ActionFunctionArgs) {
   assertIsPost(request);
@@ -15,6 +19,17 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
   const { dispatchId } = params;
   if (!dispatchId) throw new Error("Could not find dispatchId");
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "resources"
+  });
+  const dispatch = await getMaintenanceDispatch(viewClient, dispatchId);
+  await requireUnlocked({
+    request,
+    isLocked: isMaintenanceDispatchLocked(dispatch.data?.status),
+    redirectTo: path.to.maintenanceDispatch(dispatchId),
+    message: "Cannot modify a locked dispatch. Reopen it first."
+  });
 
   const formData = await request.formData();
   const validation = await validator(

@@ -59,6 +59,16 @@ export const salesInvoiceStatusType = [
   "Overdue"
 ] as const;
 
+/**
+ * Sales Invoice is locked (non-editable) when status is anything other than Draft.
+ * Once posted/confirmed, no edits are allowed regardless of permission level.
+ */
+export function isSalesInvoiceLocked(
+  status: string | null | undefined
+): boolean {
+  return status !== null && status !== undefined && status !== "Draft";
+}
+
 export const purchaseInvoiceValidator = z.object({
   id: zfd.text(z.string().optional()),
   invoiceId: zfd.text(z.string().optional()),

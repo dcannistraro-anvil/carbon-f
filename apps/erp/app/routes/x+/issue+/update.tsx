@@ -2,6 +2,8 @@ import { getCarbonServiceRole } from "@carbon/auth";
 import { requirePermissions } from "@carbon/auth/auth.server";
 import { FunctionRegion } from "@supabase/supabase-js";
 import type { ActionFunctionArgs } from "react-router";
+import { isIssueLocked } from "~/modules/quality";
+import { requireUnlockedBulk } from "~/utils/lockedGuard.server";
 
 export async function action({ request }: ActionFunctionArgs) {
   const { client, companyId, userId } = await requirePermissions(request, {
@@ -19,6 +21,19 @@ export async function action({ request }: ActionFunctionArgs) {
   ) {
     return { error: { message: "Invalid form data" }, data: null };
   }
+
+  // Per-ID locked check
+  const issues = await client
+    .from("nonConformance")
+    .select("id, status")
+    .in("id", ids as string[]);
+
+  const lockedError = requireUnlockedBulk({
+    statuses: (issues.data ?? []).map((i) => i.status),
+    checkFn: isIssueLocked,
+    message: "Cannot modify a closed issue. Reopen it first."
+  });
+  if (lockedError) return lockedError;
 
   switch (field) {
     case "requiredActionIds":

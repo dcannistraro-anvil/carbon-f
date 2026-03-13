@@ -17,6 +17,7 @@ import type {
 } from "~/modules/invoicing";
 import {
   getSalesInvoice,
+  isSalesInvoiceLocked,
   salesInvoiceValidator,
   upsertSalesInvoice
 } from "~/modules/invoicing";
@@ -29,6 +30,7 @@ import {
   OpportunityNotes
 } from "~/modules/sales/ui/Opportunity";
 import { getCustomFields, setCustomFields } from "~/utils/form";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
@@ -54,12 +56,33 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
 export async function action({ request, params }: ActionFunctionArgs) {
   assertIsPost(request);
-  const { client, userId } = await requirePermissions(request, {
-    update: "invoicing"
-  });
 
   const { invoiceId: id } = params;
   if (!id) throw new Error("Could not find invoiceId");
+
+  // Check if SI is locked
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "invoicing"
+  });
+
+  const invoice = await getSalesInvoice(viewClient, id);
+  if (invoice.error) {
+    throw redirect(
+      path.to.salesInvoice(id),
+      await flash(request, error(invoice.error, "Failed to load sales invoice"))
+    );
+  }
+
+  await requireUnlocked({
+    request,
+    isLocked: isSalesInvoiceLocked(invoice.data?.status),
+    redirectTo: path.to.salesInvoice(id),
+    message: "Cannot modify a locked sales invoice. Reopen it first."
+  });
+
+  const { client, userId } = await requirePermissions(request, {
+    update: "invoicing"
+  });
 
   const formData = await request.formData();
   const validation = await validator(salesInvoiceValidator).validate(formData);
@@ -112,6 +135,8 @@ export default function SalesInvoiceBasicRoute() {
 
   if (!invoiceData) throw new Error("Could not find invoice data");
 
+  const isReadOnly = isSalesInvoiceLocked(salesInvoice.status);
+
   const shipmentFormRef = useRef<SalesInvoiceShipmentFormRef>(null);
 
   const handleEditShippingCost = () => {
@@ -152,6 +177,7 @@ export default function SalesInvoiceBasicRoute() {
         title="Notes"
         table="salesInvoice"
         internalNotes={internalNotes}
+        isReadOnly={isReadOnly}
       />
       <Suspense
         key={`documents-${invoiceId}`}
@@ -168,6 +194,7 @@ export default function SalesInvoiceBasicRoute() {
               attachments={resolvedFiles}
               id={invoiceId}
               type="Sales Invoice"
+              isReadOnly={isReadOnly}
             />
           )}
         </Await>

@@ -9,6 +9,7 @@ import {
   getPurchaseOrderLine,
   isPurchaseOrderLocked
 } from "~/modules/purchasing";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
@@ -20,18 +21,12 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   if (!orderId) throw notFound("orderId not found");
 
   const purchaseOrder = await getPurchaseOrder(client, orderId);
-  if (
-    isPurchaseOrderLocked(purchaseOrder.data?.status) ||
-    purchaseOrder.data?.status === "Closed"
-  ) {
-    throw redirect(
-      path.to.purchaseOrderDetails(orderId),
-      await flash(
-        request,
-        error(null, "Cannot delete lines on a confirmed purchase order.")
-      )
-    );
-  }
+  await requireUnlocked({
+    request,
+    isLocked: isPurchaseOrderLocked(purchaseOrder.data?.status),
+    redirectTo: path.to.purchaseOrderDetails(orderId),
+    message: "Cannot delete lines on a confirmed purchase order."
+  });
 
   const purchaseOrderLine = await getPurchaseOrderLine(client, lineId);
   if (purchaseOrderLine.error) {
@@ -57,18 +52,12 @@ export async function action({ request, params }: ActionFunctionArgs) {
   if (!orderId) throw notFound("Could not find orderId");
 
   const purchaseOrder = await getPurchaseOrder(client, orderId);
-  if (
-    isPurchaseOrderLocked(purchaseOrder.data?.status) ||
-    purchaseOrder.data?.status === "Closed"
-  ) {
-    throw redirect(
-      path.to.purchaseOrderDetails(orderId),
-      await flash(
-        request,
-        error(null, "Cannot delete lines on a confirmed purchase order.")
-      )
-    );
-  }
+  await requireUnlocked({
+    request,
+    isLocked: isPurchaseOrderLocked(purchaseOrder.data?.status),
+    redirectTo: path.to.purchaseOrderDetails(orderId),
+    message: "Cannot delete lines on a confirmed purchase order."
+  });
 
   const { error: deleteTypeError } = await deletePurchaseOrderLine(
     client,

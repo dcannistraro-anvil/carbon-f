@@ -1,5 +1,7 @@
 import { requirePermissions } from "@carbon/auth/auth.server";
 import type { ActionFunctionArgs } from "react-router";
+import { isSalesRfqLocked } from "~/modules/sales";
+import { requireUnlockedBulk } from "~/utils/lockedGuard.server";
 
 export async function action({ request }: ActionFunctionArgs) {
   const { client, userId } = await requirePermissions(request, {
@@ -17,6 +19,18 @@ export async function action({ request }: ActionFunctionArgs) {
   ) {
     return { error: { message: "Invalid form data" }, data: null };
   }
+
+  // Check if any of the selected RFQs are locked
+  const salesRfqs = await client
+    .from("salesRfq")
+    .select("id, status")
+    .in("id", ids as string[]);
+  const lockedError = requireUnlockedBulk({
+    statuses: (salesRfqs.data ?? []).map((r) => r.status),
+    checkFn: isSalesRfqLocked,
+    message: "Cannot modify a locked RFQ."
+  });
+  if (lockedError) return lockedError;
 
   switch (field) {
     case "customerContactId":

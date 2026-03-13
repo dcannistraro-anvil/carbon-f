@@ -3,7 +3,8 @@ import { requirePermissions } from "@carbon/auth/auth.server";
 import { flash } from "@carbon/auth/session.server";
 import type { ActionFunctionArgs } from "react-router";
 import { data, redirect } from "react-router";
-import { deleteQuoteLine } from "~/modules/sales";
+import { deleteQuoteLine, getQuote, isQuoteLocked } from "~/modules/sales";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function action({ request, params }: ActionFunctionArgs) {
@@ -15,6 +16,17 @@ export async function action({ request, params }: ActionFunctionArgs) {
   const { quoteId, lineId: quoteLineId } = params;
   if (!quoteId) throw new Error("Could not find quoteId");
   if (!quoteLineId) throw new Error("Could not find quoteLineId");
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "sales"
+  });
+  const quote = await getQuote(viewClient, quoteId);
+  await requireUnlocked({
+    request,
+    isLocked: isQuoteLocked(quote.data?.status),
+    redirectTo: path.to.quote(quoteId),
+    message: "Cannot modify a locked quote. Reopen it first."
+  });
 
   const deleteLine = await deleteQuoteLine(client, quoteLineId);
 

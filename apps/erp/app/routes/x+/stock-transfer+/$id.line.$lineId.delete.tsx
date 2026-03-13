@@ -3,7 +3,12 @@ import { requirePermissions } from "@carbon/auth/auth.server";
 import { flash } from "@carbon/auth/session.server";
 import type { ActionFunctionArgs } from "react-router";
 import { data, redirect } from "react-router";
-import { deleteStockTransferLine } from "~/modules/inventory";
+import {
+  deleteStockTransferLine,
+  getStockTransfer,
+  isStockTransferLocked
+} from "~/modules/inventory";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function action({ request, params }: ActionFunctionArgs) {
@@ -15,6 +20,17 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
   if (!id) throw new Error("id is not found");
   if (!lineId) throw new Error("lineId is not found");
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "inventory"
+  });
+  const transfer = await getStockTransfer(viewClient, id);
+  await requireUnlocked({
+    request,
+    isLocked: isStockTransferLocked(transfer.data?.status),
+    redirectTo: path.to.stockTransfer(id),
+    message: "Cannot modify a locked stock transfer. Reopen it first."
+  });
 
   const mutation = await deleteStockTransferLine(client, lineId);
   if (mutation.error) {

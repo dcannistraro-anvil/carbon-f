@@ -4,7 +4,13 @@ import { flash } from "@carbon/auth/session.server";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import { redirect, useLoaderData, useNavigate, useParams } from "react-router";
 import { ConfirmDelete } from "~/components/Modals";
-import { deleteSalesOrderLine, getSalesOrderLine } from "~/modules/sales";
+import {
+  deleteSalesOrderLine,
+  getSalesOrder,
+  getSalesOrderLine,
+  isSalesOrderLocked
+} from "~/modules/sales";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path, requestReferrer } from "~/utils/path";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
@@ -30,13 +36,25 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 }
 
 export async function action({ request, params }: ActionFunctionArgs) {
-  const { client } = await requirePermissions(request, {
-    delete: "sales"
-  });
-
   const { lineId, orderId } = params;
   if (!lineId) throw notFound("Could not find lineId");
   if (!orderId) throw notFound("Could not find orderId");
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "sales"
+  });
+
+  const salesOrder = await getSalesOrder(viewClient, orderId);
+  await requireUnlocked({
+    request,
+    isLocked: isSalesOrderLocked(salesOrder.data?.status),
+    redirectTo: path.to.salesOrder(orderId),
+    message: "Cannot delete lines on a locked sales order. Reopen it first."
+  });
+
+  const { client } = await requirePermissions(request, {
+    delete: "sales"
+  });
 
   const { error: deleteTypeError } = await deleteSalesOrderLine(client, lineId);
   if (deleteTypeError) {

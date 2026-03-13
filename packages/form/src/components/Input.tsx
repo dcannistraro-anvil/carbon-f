@@ -13,6 +13,7 @@ import type { ReactNode } from "react";
 import { forwardRef } from "react";
 import type { ValidationBehaviorOptions } from "src/internal/getInputProps";
 import { useField } from "../hooks";
+import { useFormStateContext } from "../internal/formStateContext";
 
 type FormInputProps = InputProps & {
   name: string;
@@ -39,14 +40,24 @@ const Input = forwardRef<HTMLInputElement, FormInputProps>(
       prefix,
       suffix,
       onConfigure,
+      isDisabled: isDisabledProp,
+      isReadOnly: isReadOnlyProp,
       ...rest
     },
     ref
   ) => {
     const { getInputProps, error } = useField(name);
+    const formState = useFormStateContext();
+    const isDisabled = formState.isDisabled || isDisabledProp;
+    const isReadOnly = formState.isReadOnly || isReadOnlyProp;
 
     return (
-      <FormControl isInvalid={!!error} isRequired={isRequired}>
+      <FormControl
+        isInvalid={!!error}
+        isRequired={isRequired}
+        isDisabled={isDisabled}
+        isReadOnly={isReadOnly}
+      >
         {label ? (
           <FormLabel
             htmlFor={name}
@@ -70,6 +81,8 @@ const Input = forwardRef<HTMLInputElement, FormInputProps>(
                 id: name,
                 ...rest
               })}
+              isDisabled={isDisabled}
+              isReadOnly={isReadOnly}
             />
             {suffix && <InputRightAddon children={suffix} />}
           </InputGroup>
@@ -80,6 +93,8 @@ const Input = forwardRef<HTMLInputElement, FormInputProps>(
               id: name,
               ...rest
             })}
+            isDisabled={isDisabled}
+            isReadOnly={isReadOnly}
           />
         )}
 

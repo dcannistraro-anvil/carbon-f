@@ -46,6 +46,7 @@ import type { jobStatus } from "../../production.models";
 import {
   bulkJobValidator,
   deadlineTypes,
+  isJobLocked,
   jobValidator
 } from "../../production.models";
 import { getDeadlineIcon } from "./Deadline";
@@ -68,9 +69,8 @@ const JobForm = ({ initialValues }: JobFormProps) => {
     initialValues.itemType ?? "Item"
   );
 
-  const isDisabled = ["Completed", "Cancelled"].includes(
-    initialValues.status ?? ""
-  );
+  const isLocked = isJobLocked(initialValues.status);
+  const isDisabled = isLocked;
 
   const bulkInitialValues = {
     ...initialValues,
@@ -232,6 +232,7 @@ const JobForm = ({ initialValues }: JobFormProps) => {
                 method="post"
                 validator={jobValidator}
                 defaultValues={initialValues}
+                isDisabled={isEditing && isLocked}
               >
                 <CardHeader>
                   <CardTitle>{isEditing ? "Job" : "New Job"}</CardTitle>

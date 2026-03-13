@@ -15,6 +15,7 @@ import { useIsSubmitting, useIsValid } from "./hooks";
 import { FORM_ID_FIELD } from "./internal/constants";
 import type { InternalFormContextValue } from "./internal/formContext";
 import { InternalFormContext } from "./internal/formContext";
+import { FormStateContext } from "./internal/formStateContext";
 import {
   useDefaultValuesFromLoader,
   useErrorResponseForForm,
@@ -105,6 +106,16 @@ export type FormProps<DataType, Subaction extends string | undefined> = {
    * Set this to `false` to disable this behavior.
    */
   disableFocusOnError?: boolean;
+  /**
+   * When true, all nested form fields will be disabled,
+   * ignoring their individual `isDisabled` props.
+   */
+  isDisabled?: boolean;
+  /**
+   * When true, all nested form fields will be read-only,
+   * ignoring their individual `isReadOnly` props.
+   */
+  isReadOnly?: boolean;
 } & Omit<ComponentProps<typeof ReactRouterForm>, "onSubmit">;
 
 const getDataFromForm = (el: HTMLFormElement) => new FormData(el);
@@ -266,6 +277,8 @@ export function ValidatedForm<
   subaction,
   resetAfterSubmit = false,
   disableFocusOnError,
+  isDisabled = false,
+  isReadOnly = false,
   method,
   replace,
   id,
@@ -285,6 +298,10 @@ export function ValidatedForm<
       fetcher
     }),
     [action, fetcher, formId, providedDefaultValues, subaction]
+  );
+  const formStateValue = useMemo(
+    () => ({ isDisabled, isReadOnly }),
+    [isDisabled, isReadOnly]
   );
   const backendError = useErrorResponseForForm(contextValue);
   const backendDefaultValues = useDefaultValuesFromLoader(contextValue);
@@ -458,18 +475,20 @@ export function ValidatedForm<
       }}
     >
       <InternalFormContext.Provider value={contextValue}>
-        <>
-          <FormResetter
-            formRef={formRef}
-            resetAfterSubmit={resetAfterSubmit}
-            onComplete={onAfterSubmit}
-          />
-          {subaction && (
-            <input type="hidden" value={subaction} name="subaction" />
-          )}
-          {id && <input type="hidden" value={id} name={FORM_ID_FIELD} />}
-          {children}
-        </>
+        <FormStateContext.Provider value={formStateValue}>
+          <>
+            <FormResetter
+              formRef={formRef}
+              resetAfterSubmit={resetAfterSubmit}
+              onComplete={onAfterSubmit}
+            />
+            {subaction && (
+              <input type="hidden" value={subaction} name="subaction" />
+            )}
+            {id && <input type="hidden" value={id} name={FORM_ID_FIELD} />}
+            {children}
+          </>
+        </FormStateContext.Provider>
       </InternalFormContext.Provider>
     </Form>
   );

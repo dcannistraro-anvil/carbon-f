@@ -75,6 +75,12 @@ export const supplierQuoteStatusType = [
   "Cancelled"
 ] as const;
 
+export function isSupplierQuoteLocked(
+  status: string | null | undefined
+): boolean {
+  return status !== null && status !== undefined && status !== "Draft";
+}
+
 export const externalSupplierQuoteValidator = z.object({
   digitalSupplierQuoteSubmittedBy: zfd.text(
     z.string().min(1, { message: "Name is required" })
@@ -519,7 +525,8 @@ export const PURCHASE_ORDER_LOCKED_STATUSES = [
   "To Receive",
   "To Receive and Invoice",
   "To Invoice",
-  "Completed"
+  "Completed",
+  "Closed"
 ] as const;
 
 export type PurchaseOrderLockedStatus =

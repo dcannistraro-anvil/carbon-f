@@ -5,8 +5,11 @@ import type { ActionFunctionArgs } from "react-router";
 import { redirect } from "react-router";
 import {
   deleteIssueAssociation,
+  getIssue,
+  isIssueLocked,
   nonConformanceAssociationType
 } from "~/modules/quality";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path, requestReferrer } from "~/utils/path";
 
 export async function action({ request, params }: ActionFunctionArgs) {
@@ -19,6 +22,17 @@ export async function action({ request, params }: ActionFunctionArgs) {
   if (!id) throw new Error("Could not find id");
   if (!type) throw new Error("Could not find type");
   if (!associationId) throw new Error("Could not find associationId");
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "quality"
+  });
+  const issue = await getIssue(viewClient, id);
+  await requireUnlocked({
+    request,
+    isLocked: isIssueLocked(issue.data?.status),
+    redirectTo: requestReferrer(request) ?? path.to.issue(id),
+    message: "Cannot modify a closed issue. Reopen it first."
+  });
 
   // @ts-expect-error
   if (!nonConformanceAssociationType.includes(type)) {

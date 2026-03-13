@@ -157,6 +157,19 @@ export const maintenanceDispatchStatus = [
   "Cancelled"
 ] as const;
 
+export const MAINTENANCE_DISPATCH_LOCKED_STATUSES = [
+  "Completed",
+  "Cancelled"
+] as const;
+
+export function isMaintenanceDispatchLocked(
+  status: string | null | undefined
+): boolean {
+  return MAINTENANCE_DISPATCH_LOCKED_STATUSES.includes(
+    status as (typeof MAINTENANCE_DISPATCH_LOCKED_STATUSES)[number]
+  );
+}
+
 export const maintenanceDispatchValidator = z.object({
   id: zfd.text(z.string().optional()),
   status: z.enum(maintenanceDispatchStatus),

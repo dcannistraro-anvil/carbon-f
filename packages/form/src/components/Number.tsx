@@ -15,6 +15,7 @@ import {
 import { forwardRef } from "react";
 import { LuChevronDown, LuChevronUp } from "react-icons/lu";
 import { useField } from "../hooks";
+import { useFormStateContext } from "../internal/formStateContext";
 
 type FormNumberProps = NumberFieldProps & {
   name: string;
@@ -35,7 +36,8 @@ const Number = forwardRef<HTMLInputElement, FormNumberProps>(
       label,
       isConfigured = false,
       isRequired,
-      isReadOnly,
+      isReadOnly: isReadOnlyProp,
+      isDisabled: isDisabledProp,
       helperText,
       onConfigure,
       ...rest
@@ -43,6 +45,9 @@ const Number = forwardRef<HTMLInputElement, FormNumberProps>(
     ref
   ) => {
     const { getInputProps, error } = useField(name);
+    const formState = useFormStateContext();
+    const isReadOnly = formState.isReadOnly || isReadOnlyProp;
+    const isDisabled = formState.isDisabled || isDisabledProp;
     const formatOptions =
       rest.formatOptions ??
       ({
@@ -51,7 +56,12 @@ const Number = forwardRef<HTMLInputElement, FormNumberProps>(
       } satisfies Intl.NumberFormatOptions);
 
     return (
-      <FormControl isInvalid={!!error} isRequired={isRequired}>
+      <FormControl
+        isInvalid={!!error}
+        isRequired={isRequired}
+        isDisabled={isDisabled}
+        isReadOnly={isReadOnly}
+      >
         {label && (
           <FormLabel
             htmlFor={name}
@@ -67,6 +77,7 @@ const Number = forwardRef<HTMLInputElement, FormNumberProps>(
             ...rest
           })}
           formatOptions={formatOptions}
+          isDisabled={isDisabled}
         >
           <NumberInputGroup className="relative">
             <NumberInput isReadOnly={isReadOnly} ref={ref} size={size} />

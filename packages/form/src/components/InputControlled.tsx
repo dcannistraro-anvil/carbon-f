@@ -17,6 +17,7 @@ import type { ChangeEvent, ReactNode } from "react";
 import { forwardRef, useEffect, useRef, useState } from "react";
 import { LuPlus, LuSettings2 } from "react-icons/lu";
 import { useControlField, useField } from "../hooks";
+import { useFormStateContext } from "../internal/formStateContext";
 
 type FormInputControlledProps = Omit<InputProps, "value" | "onChange"> & {
   name: string;
@@ -48,13 +49,17 @@ const InputControlled = forwardRef<HTMLInputElement, FormInputControlledProps>(
       onChange,
       isUppercase,
       inline = false,
-      isReadOnly,
+      isReadOnly: isReadOnlyProp,
+      isDisabled: isDisabledProp,
       onBlur,
       onConfigure,
       ...rest
     },
     ref
   ) => {
+    const formState = useFormStateContext();
+    const isDisabled = formState.isDisabled || isDisabledProp;
+    const isReadOnly = formState.isReadOnly || isReadOnlyProp;
     const { validate } = useFormContext();
     const { getInputProps, error } = useField(name);
     const [controlValue, setControlValue] = useControlField<string>(name);
@@ -92,7 +97,7 @@ const InputControlled = forwardRef<HTMLInputElement, FormInputControlledProps>(
             aria-label={value ? "Edit" : "Add"}
             size="sm"
             variant="secondary"
-            isDisabled={isReadOnly}
+            isDisabled={isReadOnly || isDisabled}
             onClick={() => setInlineMode(false)}
           />
         </HStack>
@@ -101,6 +106,8 @@ const InputControlled = forwardRef<HTMLInputElement, FormInputControlledProps>(
       <FormControl
         isInvalid={!!error}
         isRequired={isRequired}
+        isDisabled={isDisabled}
+        isReadOnly={isReadOnly}
         className={className}
       >
         {label && (
@@ -133,6 +140,7 @@ const InputControlled = forwardRef<HTMLInputElement, FormInputControlledProps>(
               onChange={handleChange}
               value={controlValue}
               isReadOnly={isReadOnly}
+              isDisabled={isDisabled}
               onBlur={async (e) => {
                 if (inline) {
                   const result = await validate();
@@ -163,6 +171,8 @@ const InputControlled = forwardRef<HTMLInputElement, FormInputControlledProps>(
             })}
             onChange={handleChange}
             value={controlValue}
+            isReadOnly={isReadOnly}
+            isDisabled={isDisabled}
             onBlur={async (e) => {
               if (inline) {
                 const result = await validate();

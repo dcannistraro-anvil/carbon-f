@@ -23,6 +23,7 @@ import { Link, useFetcher, useParams } from "react-router";
 import ConfirmDelete from "~/components/Modals/ConfirmDelete";
 import { usePermissions, useRouteData } from "~/hooks";
 import { path } from "~/utils/path";
+import { isMaintenanceDispatchLocked } from "../../resources.models";
 import type { MaintenanceDispatchDetail } from "../../types";
 import MaintenanceStatus from "./MaintenanceStatus";
 
@@ -35,6 +36,7 @@ const MaintenanceDispatchHeader = () => {
   }>(path.to.maintenanceDispatch(dispatchId));
 
   const status = routeData?.dispatch?.status;
+  const isLocked = isMaintenanceDispatchLocked(status);
   const permissions = usePermissions();
   const statusFetcher = useFetcher<{}>();
   const deleteModal = useDisclosure();
@@ -64,6 +66,7 @@ const MaintenanceDispatchHeader = () => {
                 <DropdownMenuItem
                   destructive
                   disabled={
+                    isLocked ||
                     !permissions.can("delete", "resources") ||
                     !permissions.is("employee")
                   }

@@ -161,7 +161,6 @@ const PurchaseOrderHeader = () => {
                 <DropdownMenuItem
                   disabled={
                     isLocked ||
-                    routeData?.purchaseOrder?.status === "Closed" ||
                     !permissions.can("delete", "purchasing") ||
                     !permissions.is("employee") ||
                     (isNeedsApproval && !routeData?.canDelete)
@@ -518,10 +517,7 @@ const PurchaseOrderHeader = () => {
                 isDisabled={
                   ["Draft"].includes(routeData?.purchaseOrder?.status ?? "") ||
                   statusFetcher.state !== "idle" ||
-                  // Locked POs require delete permission to reopen
-                  (isLocked
-                    ? !permissions.can("delete", "purchasing")
-                    : !permissions.can("update", "purchasing")) ||
+                  !permissions.can("update", "purchasing") ||
                   (isNeedsApproval && !routeData?.canReopen)
                 }
                 isLoading={

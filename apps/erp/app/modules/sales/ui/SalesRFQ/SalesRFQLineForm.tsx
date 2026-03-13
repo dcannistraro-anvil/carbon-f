@@ -38,7 +38,7 @@ import {
 } from "~/components/Form";
 import { usePermissions, useRouteData, useUser } from "~/hooks";
 import { path } from "~/utils/path";
-import { salesRfqLineValidator } from "../../sales.models";
+import { isSalesRfqLocked, salesRfqLineValidator } from "../../sales.models";
 import type { SalesRFQ, SalesRFQLine } from "../../types";
 import DeleteSalesRFQLine from "./DeleteSalesRFQLine";
 
@@ -65,9 +65,7 @@ const SalesRFQLineForm = ({
     rfqSummary: SalesRFQ;
   }>(path.to.salesRfq(rfqId));
 
-  const isEditable = ["Draft", "Ready for Quote"].includes(
-    routeData?.rfqSummary?.status ?? ""
-  );
+  const isLocked = isSalesRfqLocked(routeData?.rfqSummary?.status);
 
   const isEditing = initialValues.id !== undefined;
 
@@ -195,6 +193,7 @@ const SalesRFQLineForm = ({
                   : path.to.newSalesRFQLine(rfqId)
               }
               className="w-full"
+              isDisabled={isEditing && isLocked}
               onSubmit={() => {
                 if (type === "modal") onClose?.();
               }}
@@ -225,28 +224,27 @@ const SalesRFQLineForm = ({
                     )}
                   </ModalCardDescription>
                 </ModalCardHeader>
-                {isEditing && permissions.can("update", "sales") && (
-                  <CardAction className="pr-12">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <IconButton
-                          icon={<BsThreeDotsVertical />}
-                          aria-label="More"
-                          variant="ghost"
-                        />
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem
-                          disabled={!isEditable}
-                          onClick={deleteDisclosure.onOpen}
-                        >
-                          <DropdownMenuIcon icon={<LuTrash />} />
-                          Delete Line
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </CardAction>
-                )}
+                {isEditing &&
+                  permissions.can("update", "sales") &&
+                  !isLocked && (
+                    <CardAction className="pr-12">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <IconButton
+                            icon={<BsThreeDotsVertical />}
+                            aria-label="More"
+                            variant="ghost"
+                          />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem onClick={deleteDisclosure.onOpen}>
+                            <DropdownMenuIcon icon={<LuTrash />} />
+                            Delete Line
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </CardAction>
+                  )}
               </HStack>
               <ModalCardBody>
                 <Hidden name="id" />
@@ -328,7 +326,7 @@ const SalesRFQLineForm = ({
               <ModalCardFooter>
                 <Submit
                   isDisabled={
-                    !isEditable ||
+                    isLocked ||
                     (isEditing
                       ? !permissions.can("update", "sales")
                       : !permissions.can("create", "sales"))

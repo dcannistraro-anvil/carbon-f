@@ -1,5 +1,7 @@
 export * from "./components";
 export * from "./hooks";
+export type { FormStateContextValue } from "./internal/formStateContext";
+export { useFormStateContext } from "./internal/formStateContext";
 export {
   FieldArray,
   type FieldArrayHelpers,

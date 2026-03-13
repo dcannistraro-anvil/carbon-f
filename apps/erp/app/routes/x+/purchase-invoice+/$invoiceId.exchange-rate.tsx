@@ -9,6 +9,7 @@ import {
   isPurchaseInvoiceLocked,
   updatePurchaseInvoiceExchangeRate
 } from "~/modules/invoicing";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path, requestReferrer } from "~/utils/path";
 
 export async function action({ request, params }: ActionFunctionArgs) {
@@ -33,15 +34,12 @@ export async function action({ request, params }: ActionFunctionArgs) {
     );
   }
 
-  if (isPurchaseInvoiceLocked(purchaseInvoice.data?.status)) {
-    throw redirect(
-      path.to.purchaseInvoiceDetails(invoiceId),
-      await flash(
-        request,
-        error(null, "Cannot modify a confirmed purchase invoice.")
-      )
-    );
-  }
+  await requireUnlocked({
+    request,
+    isLocked: isPurchaseInvoiceLocked(purchaseInvoice.data?.status),
+    redirectTo: path.to.purchaseInvoiceDetails(invoiceId),
+    message: "Cannot modify a confirmed purchase invoice."
+  });
 
   const { client, companyId } = await requirePermissions(request, {
     update: "invoicing"

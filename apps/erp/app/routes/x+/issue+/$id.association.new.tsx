@@ -2,7 +2,10 @@ import { assertIsPost } from "@carbon/auth";
 import { requirePermissions } from "@carbon/auth/auth.server";
 import { validator } from "@carbon/form";
 import type { ActionFunctionArgs } from "react-router";
+import { getIssue, isIssueLocked } from "~/modules/quality";
 import { issueAssociationValidator } from "~/modules/quality/quality.models";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
+import { path } from "~/utils/path";
 
 export async function action({ request, params }: ActionFunctionArgs) {
   assertIsPost(request);
@@ -12,6 +15,17 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
   const { id: nonConformanceId } = params;
   if (!nonConformanceId) throw new Error("Could not find id");
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "quality"
+  });
+  const issue = await getIssue(viewClient, nonConformanceId);
+  await requireUnlocked({
+    request,
+    isLocked: isIssueLocked(issue.data?.status),
+    redirectTo: path.to.issue(nonConformanceId),
+    message: "Cannot modify a closed issue. Reopen it first."
+  });
 
   const formData = await request.formData();
   const validation = await validator(issueAssociationValidator).validate(

@@ -32,7 +32,7 @@ import type { MethodItemType, MethodType } from "~/modules/shared";
 import { useItems } from "~/stores";
 import { path } from "~/utils/path";
 import type { jobOperationValidator } from "../../production.models";
-import { jobMaterialValidator } from "../../production.models";
+import { isJobLocked, jobMaterialValidator } from "../../production.models";
 import type { Job } from "../../types";
 
 type JobMaterialFormProps = {
@@ -145,9 +145,7 @@ const JobMaterialForm = ({
     navigate
   ]);
 
-  const isDisabled = ["Completed", "Cancelled"].includes(
-    jobData?.job?.status ?? ""
-  );
+  const isDisabled = isJobLocked(jobData?.job?.status);
 
   const [items] = useItems();
   const itemReadableId = getItemReadableId(items, itemData.itemId);

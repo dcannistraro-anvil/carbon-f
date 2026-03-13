@@ -12,6 +12,7 @@ import { useRouteData } from "~/hooks";
 import type { PurchasingRFQ, PurchasingRFQLine } from "~/modules/purchasing";
 import {
   getPurchasingRFQ,
+  isRfqLocked,
   purchasingRfqValidator,
   upsertPurchasingRFQ
 } from "~/modules/purchasing";
@@ -21,6 +22,7 @@ import {
 } from "~/modules/purchasing/ui/SupplierInteraction";
 import SupplierInteractionState from "~/modules/purchasing/ui/SupplierInteraction/SupplierInteractionState";
 import { setCustomFields } from "~/utils/form";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
@@ -46,12 +48,23 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
 export async function action({ request, params }: ActionFunctionArgs) {
   assertIsPost(request);
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "purchasing"
+  });
   const { client, companyId, userId } = await requirePermissions(request, {
     update: "purchasing"
   });
 
   const { rfqId: id } = params;
   if (!id) throw new Error("Could not find id");
+
+  const rfq = await getPurchasingRFQ(viewClient, id);
+  await requireUnlocked({
+    request,
+    isLocked: isRfqLocked(rfq.data?.status),
+    redirectTo: path.to.purchasingRfq(id),
+    message: "Cannot modify a locked RFQ. Reopen it first."
+  });
 
   const formData = await request.formData();
   const validation = await validator(purchasingRfqValidator).validate(formData);
@@ -107,6 +120,8 @@ export default function PurchasingRFQDetailsRoute() {
 
   if (!rfqData) throw new Error("Could not find rfq data");
 
+  const isReadOnly = isRfqLocked(rfqData.rfqSummary.status);
+
   return (
     <VStack spacing={2}>
       <SupplierInteractionState
@@ -123,6 +138,7 @@ export default function PurchasingRFQDetailsRoute() {
         table="purchasingRfq"
         title="Notes"
         internalNotes={internalNotes}
+        isReadOnly={isReadOnly}
       />
       <Suspense
         key={`documents-${rfqId}`}
@@ -139,6 +155,7 @@ export default function PurchasingRFQDetailsRoute() {
               attachments={resolvedFiles}
               id={rfqId}
               type="Purchasing Request for Quote"
+              isReadOnly={isReadOnly}
             />
           )}
         </Await>

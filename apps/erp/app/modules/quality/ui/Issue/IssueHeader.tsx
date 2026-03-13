@@ -27,6 +27,7 @@ import ConfirmDelete from "~/components/Modals/ConfirmDelete";
 import { usePermissions, useRouteData } from "~/hooks";
 import { useSuppliers } from "~/stores/suppliers";
 import { path } from "~/utils/path";
+import { isIssueLocked } from "../../quality.models";
 import type { Issue } from "../../types";
 import IssueStatus from "./IssueStatus";
 
@@ -72,7 +73,8 @@ const IssueHeader = () => {
                   destructive
                   disabled={
                     !permissions.can("delete", "quality") ||
-                    !permissions.is("employee")
+                    !permissions.is("employee") ||
+                    isIssueLocked(status)
                   }
                   onClick={deleteIssueModal.onOpen}
                 >
@@ -184,7 +186,8 @@ const IssueHeader = () => {
           action={path.to.deleteIssue(id)}
           isOpen={deleteIssueModal.isOpen}
           name={routeData?.nonConformance?.nonConformanceId!}
-          text={`Are you sure you want to delete ${routeData?.nonConformance?.nonConformanceId!}? This cannot be undone.`}
+          text={`Are you sure you want to delete ${routeData?.nonConformance
+            ?.nonConformanceId!}? This cannot be undone.`}
           onCancel={() => {
             deleteIssueModal.onClose();
           }}

@@ -27,6 +27,7 @@ import { usePermissions, useRouteData } from "~/hooks";
 import type { action } from "~/routes/x+/items+/update";
 import { path } from "~/utils/path";
 import { copyToClipboard } from "~/utils/string";
+import { isSalesRfqLocked } from "../../sales.models";
 import type { SalesRFQ } from "../../types";
 
 const SalesRFQProperties = () => {
@@ -94,7 +95,7 @@ const SalesRFQProperties = () => {
 
   const isDisabled =
     !permissions.can("update", "sales") ||
-    !["Draft", "Ready to Quote"].includes(routeData?.rfqSummary?.status ?? "");
+    isSalesRfqLocked(routeData?.rfqSummary?.status);
 
   return (
     <VStack
@@ -155,7 +156,7 @@ const SalesRFQProperties = () => {
         table="salesRfq"
         value={assignee ?? ""}
         variant="inline"
-        isReadOnly={!permissions.can("update", "sales")}
+        isReadOnly={isDisabled}
       />
 
       <ValidatedForm

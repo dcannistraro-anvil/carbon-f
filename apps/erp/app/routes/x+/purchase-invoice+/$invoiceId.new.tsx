@@ -16,6 +16,7 @@ import {
 } from "~/modules/invoicing";
 import type { MethodItemType } from "~/modules/shared";
 import { setCustomFields } from "~/utils/form";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function action({ request, params }: ActionFunctionArgs) {
@@ -40,15 +41,12 @@ export async function action({ request, params }: ActionFunctionArgs) {
     );
   }
 
-  if (isPurchaseInvoiceLocked(purchaseInvoice.data?.status)) {
-    throw redirect(
-      path.to.purchaseInvoiceDetails(invoiceId),
-      await flash(
-        request,
-        error(null, "Cannot modify a confirmed purchase invoice.")
-      )
-    );
-  }
+  await requireUnlocked({
+    request,
+    isLocked: isPurchaseInvoiceLocked(purchaseInvoice.data?.status),
+    redirectTo: path.to.purchaseInvoiceDetails(invoiceId),
+    message: "Cannot modify a confirmed purchase invoice."
+  });
 
   const { client, companyId, userId } = await requirePermissions(request, {
     create: "invoicing"

@@ -4,17 +4,34 @@ import { flash } from "@carbon/auth/session.server";
 import type { ActionFunctionArgs } from "react-router";
 import { redirect } from "react-router";
 import { getCurrencyByCode } from "~/modules/accounting";
-import { updateSalesOrderExchangeRate } from "~/modules/sales";
+import {
+  getSalesOrder,
+  isSalesOrderLocked,
+  updateSalesOrderExchangeRate
+} from "~/modules/sales";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function action({ request, params }: ActionFunctionArgs) {
   assertIsPost(request);
+  const { orderId } = params;
+  if (!orderId) throw new Error("Could not find orderId");
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "sales"
+  });
+
+  const salesOrder = await getSalesOrder(viewClient, orderId);
+  await requireUnlocked({
+    request,
+    isLocked: isSalesOrderLocked(salesOrder.data?.status),
+    redirectTo: path.to.salesOrderDetails(orderId),
+    message: "Cannot modify a locked sales order. Reopen it first."
+  });
+
   const { client, companyId } = await requirePermissions(request, {
     create: "sales"
   });
-
-  const { orderId } = params;
-  if (!orderId) throw new Error("Could not find orderId");
 
   const formData = await request.formData();
   const currencyCode = formData.get("currencyCode") as string;

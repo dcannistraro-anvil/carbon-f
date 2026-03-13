@@ -9,6 +9,7 @@ import {
 import { useEffect } from "react";
 import { flushSync } from "react-dom";
 import { useControlField, useField } from "../hooks";
+import { useFormStateContext } from "../internal/formStateContext";
 
 export type ComboboxProps = Omit<ComboboxBaseProps, "onChange"> & {
   name: string;
@@ -39,6 +40,9 @@ const Combobox = ({
 }: ComboboxProps) => {
   const { getInputProps, error } = useField(name);
   const [value, setValue] = useControlField<string | undefined>(name);
+  const formState = useFormStateContext();
+  const isReadOnly =
+    formState.isReadOnly || formState.isDisabled || props.isReadOnly;
 
   useEffect(() => {
     if (props.value !== null && props.value !== undefined)
@@ -78,7 +82,8 @@ const Combobox = ({
           });
           onChange(newValue?.replace(/"/g, '\\"') ?? "");
         }}
-        isClearable={isOptional && !props.isReadOnly}
+        isClearable={isOptional && !isReadOnly}
+        isReadOnly={isReadOnly}
         isLoading={isLoading}
         className="w-full"
       />

@@ -7,10 +7,13 @@ import type {
   WarehouseTransferLine
 } from "~/modules/inventory";
 import {
+  getWarehouseTransfer,
+  isWarehouseTransferLocked,
   upsertWarehouseTransferLine,
   warehouseTransferLineValidator
 } from "~/modules/inventory";
 import { WarehouseTransferLineForm } from "~/modules/inventory/ui/WarehouseTransfers";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function action({ request, params }: ActionFunctionArgs) {
@@ -22,6 +25,17 @@ export async function action({ request, params }: ActionFunctionArgs) {
   if (!transferId) {
     throw new Error("transferId not found");
   }
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "inventory"
+  });
+  const transfer = await getWarehouseTransfer(viewClient, transferId);
+  await requireUnlocked({
+    request,
+    isLocked: isWarehouseTransferLocked(transfer.data?.status),
+    redirectTo: path.to.warehouseTransfer(transferId),
+    message: "Cannot modify a locked warehouse transfer. Reopen it first."
+  });
 
   const formData = await request.formData();
   const validation = warehouseTransferLineValidator.safeParse(

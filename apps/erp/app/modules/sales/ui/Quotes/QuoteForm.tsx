@@ -31,9 +31,10 @@ import {
   Submit
 } from "~/components/Form";
 import ExchangeRate from "~/components/Form/ExchangeRate";
-import { usePermissions, useUser } from "~/hooks";
+import { usePermissions, useRouteData, useUser } from "~/hooks";
 import { path } from "~/utils/path";
-import { quoteValidator } from "../../sales.models";
+import { isQuoteLocked, quoteValidator } from "../../sales.models";
+import type { Quotation } from "../../types";
 
 type QuoteFormValues = z.infer<typeof quoteValidator>;
 
@@ -57,8 +58,14 @@ const QuoteForm = ({ initialValues }: QuoteFormProps) => {
     customerLocationId: initialValues.customerLocationId
   });
   const isCustomer = permissions.is("customer");
-  const isDisabled = initialValues?.status !== "Draft";
   const isEditing = initialValues.id !== undefined;
+
+  const routeData = useRouteData<{
+    quote: Quotation;
+  }>(path.to.quote(initialValues.id ?? ""));
+
+  const isLocked = isQuoteLocked(routeData?.quote?.status);
+  const isDisabled = isEditing && isLocked;
 
   const exchangeRateFetcher = useFetcher<{ exchangeRate: number }>();
 
@@ -117,6 +124,7 @@ const QuoteForm = ({ initialValues }: QuoteFormProps) => {
         method="post"
         validator={quoteValidator}
         defaultValues={initialValues}
+        isDisabled={isDisabled}
       >
         <CardHeader>
           <CardTitle>{isEditing ? "Quote" : "New Quote"}</CardTitle>

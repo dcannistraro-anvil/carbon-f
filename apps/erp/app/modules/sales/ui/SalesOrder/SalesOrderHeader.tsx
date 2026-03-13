@@ -58,7 +58,7 @@ import type { action as confirmAction } from "~/routes/x+/sales-order+/$orderId.
 import type { action as statusAction } from "~/routes/x+/sales-order+/$orderId.status";
 import { useCustomers } from "~/stores/customers";
 import { path } from "~/utils/path";
-import { salesConfirmValidator } from "../../sales.models";
+import { isSalesOrderLocked, salesConfirmValidator } from "../../sales.models";
 import type { Opportunity, SalesOrder, SalesOrderLine } from "../../types";
 import SalesStatus from "./SalesStatus";
 import { useSalesOrder } from "./useSalesOrder";
@@ -192,6 +192,7 @@ const SalesOrderHeader = () => {
   if (!routeData?.salesOrder) throw new Error("Failed to load sales order");
 
   const permissions = usePermissions();
+  const isLocked = isSalesOrderLocked(routeData?.salesOrder?.status);
 
   const statusFetcher = useFetcher<typeof statusAction>();
   const confirmFetcher = useFetcher<typeof confirmAction>();
@@ -296,6 +297,7 @@ const SalesOrderHeader = () => {
                 <DropdownMenuItem
                   destructive
                   disabled={
+                    isLocked ||
                     !permissions.can("delete", "sales") ||
                     !permissions.is("employee")
                   }

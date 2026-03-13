@@ -31,6 +31,7 @@ import type { action as exchangeRateAction } from "~/routes/x+/sales-invoice+/$i
 import type { action } from "~/routes/x+/sales-invoice+/update";
 import { path } from "~/utils/path";
 import { copyToClipboard } from "~/utils/string";
+import { isSalesInvoiceLocked } from "../../invoicing.models";
 import type { SalesInvoice } from "../../types";
 
 const SalesInvoiceProperties = () => {
@@ -108,11 +109,8 @@ const SalesInvoiceProperties = () => {
       ? optimisticAssignment
       : routeData?.salesInvoice?.assignee;
 
-  const isDisabled =
-    !permissions.can("update", "invoicing") ||
-    !["Draft", "To Review", "Overdue"].includes(
-      routeData?.salesInvoice?.status ?? ""
-    );
+  const isLocked = isSalesInvoiceLocked(routeData?.salesInvoice?.status);
+  const isDisabled = !permissions.can("update", "sales") || isLocked;
 
   return (
     <VStack
@@ -174,7 +172,7 @@ const SalesInvoiceProperties = () => {
         table="salesInvoice"
         value={assignee ?? ""}
         variant="inline"
-        isReadOnly={!permissions.can("update", "invoicing")}
+        isReadOnly={isDisabled}
       />
 
       <ValidatedForm

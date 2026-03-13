@@ -7,10 +7,12 @@ import type { ActionFunctionArgs } from "react-router";
 import { data, useParams } from "react-router";
 import { useRouteData } from "~/hooks";
 import {
+  isMaintenanceDispatchLocked,
   maintenanceDispatchItemValidator,
   upsertMaintenanceDispatchItem
 } from "~/modules/resources";
 import type { MaintenanceDispatchItem } from "~/modules/resources/types";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function action({ request, params }: ActionFunctionArgs) {
@@ -21,6 +23,21 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
   const { dispatchId } = params;
   if (!dispatchId) throw new Error("dispatchId not found");
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "resources"
+  });
+  const dispatch = await viewClient
+    .from("maintenanceDispatch")
+    .select("id, status")
+    .eq("id", dispatchId)
+    .single();
+  await requireUnlocked({
+    request,
+    isLocked: isMaintenanceDispatchLocked(dispatch.data?.status),
+    redirectTo: path.to.maintenanceDispatch(dispatchId),
+    message: "Cannot modify a locked dispatch. Reopen it first."
+  });
 
   const formData = await request.formData();
   const validation = await validator(maintenanceDispatchItemValidator).validate(

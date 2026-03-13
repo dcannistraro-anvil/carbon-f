@@ -5,9 +5,13 @@ import { validator } from "@carbon/form";
 import type { ActionFunctionArgs } from "react-router";
 import { data } from "react-router";
 import {
+  getIssue,
   insertIssueReviewer,
+  isIssueLocked,
   nonConformanceReviewerValidator
 } from "~/modules/quality";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
+import { path } from "~/utils/path";
 
 export async function action({ request, params }: ActionFunctionArgs) {
   assertIsPost(request);
@@ -17,6 +21,17 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
   const { id } = params;
   if (!id) throw new Error("Non-conformance ID is required");
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "quality"
+  });
+  const issue = await getIssue(viewClient, id);
+  await requireUnlocked({
+    request,
+    isLocked: isIssueLocked(issue.data?.status),
+    redirectTo: path.to.issue(id),
+    message: "Cannot modify a closed issue. Reopen it first."
+  });
 
   const formData = await request.formData();
   const validation = await validator(nonConformanceReviewerValidator).validate(

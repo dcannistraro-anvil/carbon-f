@@ -20,8 +20,10 @@ import type {
 } from "~/modules/purchasing";
 import {
   getSupplierInteractionLineDocuments,
+  getSupplierQuote,
   getSupplierQuoteLine,
   getSupplierQuoteLinePrices,
+  isSupplierQuoteLocked,
   supplierQuoteLineValidator,
   upsertSupplierQuoteLine
 } from "~/modules/purchasing";
@@ -35,6 +37,7 @@ import {
 } from "~/modules/purchasing/ui/SupplierQuote";
 import type { MethodItemType } from "~/modules/shared";
 import { setCustomFields } from "~/utils/form";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
@@ -81,6 +84,17 @@ export async function action({ request, params }: ActionFunctionArgs) {
   const { id, lineId } = params;
   if (!id) throw new Error("Could not find id");
   if (!lineId) throw new Error("Could not find lineId");
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "purchasing"
+  });
+  const quote = await getSupplierQuote(viewClient, id);
+  await requireUnlocked({
+    request,
+    isLocked: isSupplierQuoteLocked(quote.data?.status),
+    redirectTo: path.to.supplierQuote(id),
+    message: "Cannot modify a locked supplier quote. Reopen it first."
+  });
 
   const formData = await request.formData();
 
@@ -129,6 +143,7 @@ export default function SupplierQuoteLine() {
   }>(path.to.supplierQuote(id));
 
   const exchangeRate = routeData?.quote?.exchangeRate ?? 1;
+  const isReadOnly = isSupplierQuoteLocked(routeData?.quote?.status);
 
   const initialValues = {
     ...line,
@@ -155,6 +170,7 @@ export default function SupplierQuoteLine() {
         subTitle={line.itemReadableId ?? ""}
         internalNotes={line.internalNotes as JSONContent}
         externalNotes={line.externalNotes as JSONContent}
+        isReadOnly={isReadOnly}
       />
       <SupplierQuoteLinePricing
         line={line}
@@ -176,6 +192,7 @@ export default function SupplierQuoteLine() {
               id={id}
               lineId={lineId}
               type="Supplier Quote"
+              isReadOnly={isReadOnly}
             />
           )}
         </Await>

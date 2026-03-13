@@ -56,7 +56,10 @@ import { getDefaultShelfForJob } from "~/modules/inventory/inventory.service";
 import { methodType } from "~/modules/shared";
 import { useItems } from "~/stores";
 import { path } from "~/utils/path";
-import { salesOrderLineValidator } from "../../sales.models";
+import {
+  isSalesOrderLocked,
+  salesOrderLineValidator
+} from "../../sales.models";
 import type {
   SalesOrder,
   SalesOrderLine,
@@ -86,9 +89,8 @@ const SalesOrderLineForm = ({
     salesOrder: SalesOrder;
   }>(path.to.salesOrder(orderId));
 
-  const isEditable = ["Draft", "To Review"].includes(
-    routeData?.salesOrder?.status ?? ""
-  );
+  const isLocked = isSalesOrderLocked(routeData?.salesOrder?.status);
+  const isEditable = !isLocked;
 
   const baseCurrency = company?.baseCurrencyCode ?? "USD";
 
@@ -211,6 +213,7 @@ const SalesOrderLineForm = ({
                   : path.to.newSalesOrderLine(orderId)
               }
               className="w-full"
+              isDisabled={isEditing && isLocked}
               onSubmit={() => {
                 if (type === "modal") onClose?.();
               }}
@@ -261,28 +264,30 @@ const SalesOrderLineForm = ({
                     )}
                   </ModalCardDescription>
                 </ModalCardHeader>
-                {isEditing && permissions.can("update", "sales") && (
-                  <CardAction className="pr-12">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <IconButton
-                          icon={<BsThreeDotsVertical />}
-                          aria-label="More"
-                          variant="ghost"
-                        />
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem
-                          destructive
-                          onClick={deleteDisclosure.onOpen}
-                        >
-                          <DropdownMenuIcon icon={<LuTrash />} />
-                          Delete Line
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </CardAction>
-                )}
+                {isEditing &&
+                  permissions.can("update", "sales") &&
+                  !isLocked && (
+                    <CardAction className="pr-12">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <IconButton
+                            icon={<BsThreeDotsVertical />}
+                            aria-label="More"
+                            variant="ghost"
+                          />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem
+                            destructive
+                            onClick={deleteDisclosure.onOpen}
+                          >
+                            <DropdownMenuIcon icon={<LuTrash />} />
+                            Delete Line
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </CardAction>
+                  )}
               </HStack>
               <ModalCardBody>
                 <Hidden name="id" />

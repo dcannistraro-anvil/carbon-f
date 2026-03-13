@@ -6,19 +6,37 @@ import type { ActionFunctionArgs } from "react-router";
 import { redirect, useParams } from "react-router";
 import { useRouteData, useUser } from "~/hooks";
 import type { Customer, SalesOrder, SalesOrderLineType } from "~/modules/sales";
-import { salesOrderLineValidator, upsertSalesOrderLine } from "~/modules/sales";
+import {
+  getSalesOrder,
+  isSalesOrderLocked,
+  salesOrderLineValidator,
+  upsertSalesOrderLine
+} from "~/modules/sales";
 import { SalesOrderLineForm } from "~/modules/sales/ui/SalesOrder";
 import { setCustomFields } from "~/utils/form";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function action({ request, params }: ActionFunctionArgs) {
   assertIsPost(request);
+  const { orderId } = params;
+  if (!orderId) throw new Error("Could not find orderId");
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "sales"
+  });
+
+  const salesOrder = await getSalesOrder(viewClient, orderId);
+  await requireUnlocked({
+    request,
+    isLocked: isSalesOrderLocked(salesOrder.data?.status),
+    redirectTo: path.to.salesOrderDetails(orderId),
+    message: "Cannot add lines to a locked sales order. Reopen it first."
+  });
+
   const { client, companyId, userId } = await requirePermissions(request, {
     create: "sales"
   });
-
-  const { orderId } = params;
-  if (!orderId) throw new Error("Could not find orderId");
 
   const formData = await request.formData();
   const validation = await validator(salesOrderLineValidator).validate(

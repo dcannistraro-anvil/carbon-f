@@ -8,7 +8,7 @@ import {
   HStack
 } from "@carbon/react";
 import { useState } from "react";
-import { useFetcher } from "react-router";
+import { useFetcher, useParams } from "react-router";
 import type { z } from "zod";
 import {
   Customer,
@@ -18,9 +18,13 @@ import {
   PaymentTerm,
   Submit
 } from "~/components/Form";
-import { usePermissions } from "~/hooks";
+import { usePermissions, useRouteData } from "~/hooks";
 import { path } from "~/utils/path";
-import { salesOrderPaymentValidator } from "../../sales.models";
+import {
+  isSalesOrderLocked,
+  salesOrderPaymentValidator
+} from "../../sales.models";
+import type { SalesOrder } from "../../types";
 
 type SalesOrderPaymentFormProps = {
   initialValues: z.infer<typeof salesOrderPaymentValidator>;
@@ -31,11 +35,16 @@ const SalesOrderPaymentForm = ({
 }: SalesOrderPaymentFormProps) => {
   const fetcher = useFetcher<{}>();
   const permissions = usePermissions();
+  const { orderId } = useParams();
+  const routeData = useRouteData<{ salesOrder: SalesOrder }>(
+    orderId ? path.to.salesOrder(orderId) : ""
+  );
+  const isLocked = isSalesOrderLocked(routeData?.salesOrder?.status);
   const [customer, setCustomer] = useState<string | undefined>(
     initialValues.invoiceCustomerId
   );
 
-  const isDisabled = !permissions.can("update", "sales");
+  const isDisabled = !permissions.can("update", "sales") || isLocked;
 
   return (
     <Card>
@@ -45,6 +54,7 @@ const SalesOrderPaymentForm = ({
         validator={salesOrderPaymentValidator}
         defaultValues={initialValues}
         fetcher={fetcher}
+        isDisabled={isLocked}
       >
         <CardHeader>
           <CardTitle>Payment</CardTitle>

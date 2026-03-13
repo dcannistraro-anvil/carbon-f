@@ -27,8 +27,10 @@ import {
   SequenceOrCustomId,
   Submit
 } from "~/components/Form";
-import { usePermissions } from "~/hooks";
-import { salesRfqValidator } from "../../sales.models";
+import { usePermissions, useRouteData } from "~/hooks";
+import { path } from "~/utils/path";
+import { isSalesRfqLocked, salesRfqValidator } from "../../sales.models";
+import type { SalesRFQ } from "../../types";
 
 type SalesRFQFormValues = z.infer<typeof salesRfqValidator>;
 
@@ -50,6 +52,12 @@ const SalesRFQForm = ({ initialValues }: SalesRFQFormProps) => {
   });
   const isEditing = initialValues.id !== undefined;
   const isCustomer = permissions.is("customer");
+
+  const routeData = useRouteData<{
+    rfqSummary: SalesRFQ;
+  }>(initialValues.id ? path.to.salesRfq(initialValues.id) : "");
+
+  const isLocked = isSalesRfqLocked(routeData?.rfqSummary?.status);
   const isDraft = ["Draft", "Ready to Quote"].includes(
     initialValues.status ?? ""
   );
@@ -105,6 +113,7 @@ const SalesRFQForm = ({ initialValues }: SalesRFQFormProps) => {
         method="post"
         validator={salesRfqValidator}
         defaultValues={initialValues}
+        isDisabled={isEditing && isLocked}
       >
         <CardHeader>
           <CardTitle>{isEditing ? "RFQ" : "New RFQ"}</CardTitle>

@@ -1,6 +1,8 @@
 import { requirePermissions } from "@carbon/auth/auth.server";
 import type { ActionFunctionArgs } from "react-router";
 import { getCurrencyByCode } from "~/modules/accounting";
+import { isQuoteLocked } from "~/modules/sales";
+import { requireUnlockedBulk } from "~/utils/lockedGuard.server";
 
 export async function action({ request }: ActionFunctionArgs) {
   const { client, companyId, userId } = await requirePermissions(request, {
@@ -18,6 +20,19 @@ export async function action({ request }: ActionFunctionArgs) {
   ) {
     return { error: { message: "Invalid form data" }, data: null };
   }
+
+  // Per-ID locked check
+  const quotes = await client
+    .from("quote")
+    .select("status")
+    .in("id", ids as string[]);
+
+  const lockedError = requireUnlockedBulk({
+    statuses: (quotes.data ?? []).map((q) => q.status),
+    checkFn: isQuoteLocked,
+    message: "Cannot modify a locked quote. Reopen it first."
+  });
+  if (lockedError) return lockedError;
 
   switch (field) {
     case "customerId":

@@ -4,8 +4,14 @@ import { flash } from "@carbon/auth/session.server";
 import { validationError, validator } from "@carbon/form";
 import type { ActionFunctionArgs } from "react-router";
 import { redirect } from "react-router";
-import { quotePaymentValidator, upsertQuotePayment } from "~/modules/sales";
+import {
+  getQuote,
+  isQuoteLocked,
+  quotePaymentValidator,
+  upsertQuotePayment
+} from "~/modules/sales";
 import { setCustomFields } from "~/utils/form";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function action({ request, params }: ActionFunctionArgs) {
@@ -16,6 +22,17 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
   const { quoteId } = params;
   if (!quoteId) throw new Error("Could not find quoteId");
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "sales"
+  });
+  const quote = await getQuote(viewClient, quoteId);
+  await requireUnlocked({
+    request,
+    isLocked: isQuoteLocked(quote.data?.status),
+    redirectTo: path.to.quote(quoteId),
+    message: "Cannot modify a locked quote. Reopen it first."
+  });
 
   const formData = await request.formData();
   const validation = await validator(quotePaymentValidator).validate(formData);

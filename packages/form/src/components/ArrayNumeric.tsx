@@ -19,6 +19,7 @@ import { flushSync } from "react-dom";
 import { IoMdAdd, IoMdClose } from "react-icons/io";
 import { LuChevronDown, LuChevronUp } from "react-icons/lu";
 import { useField } from "../hooks";
+import { useFormStateContext } from "../internal/formStateContext";
 import { useFieldArray } from "../internal/state/fieldArray";
 
 type FormArrayNumericProps = InputProps & {
@@ -29,7 +30,21 @@ type FormArrayNumericProps = InputProps & {
 };
 
 const ArrayNumeric = forwardRef<HTMLInputElement, FormArrayNumericProps>(
-  ({ name, label, isDisabled, isRequired, defaults, ...rest }, ref) => {
+  (
+    {
+      name,
+      label,
+      isDisabled: isDisabledProp,
+      isReadOnly: isReadOnlyProp,
+      isRequired,
+      defaults,
+      ...rest
+    },
+    ref
+  ) => {
+    const formState = useFormStateContext();
+    const isDisabled = formState.isDisabled || isDisabledProp;
+    const isReadOnly = formState.isReadOnly || isReadOnlyProp;
     const listRef = useRef<HTMLDivElement>(null);
     const [items, { push, remove }, error] = useFieldArray<number>(name);
 
@@ -58,11 +73,13 @@ const ArrayNumeric = forwardRef<HTMLInputElement, FormArrayNumericProps>(
                   remove(index);
                 });
               }}
+              isDisabled={isDisabled}
+              isReadOnly={isReadOnly}
               {...rest}
             />
           ))}
           <Button
-            isDisabled={isDisabled}
+            isDisabled={isDisabled || isReadOnly}
             variant="secondary"
             leftIcon={<IoMdAdd />}
             onClick={onAdd}
@@ -86,6 +103,8 @@ type ArrayNumericInputProps = InputProps & {
 const ArrayNumericInput = ({
   name,
   onRemove,
+  isDisabled,
+  isReadOnly,
   ...rest
 }: ArrayNumericInputProps) => {
   const { getInputProps, error } = useField(name);
@@ -99,18 +118,21 @@ const ArrayNumericInput = ({
             id: name,
             ...rest
           })}
+          isDisabled={isDisabled}
         >
           <NumberInputGroup className="relative">
-            <NumberInput />
+            <NumberInput isReadOnly={isReadOnly} />
 
-            <NumberInputStepper>
-              <NumberIncrementStepper>
-                <LuChevronUp size="1em" strokeWidth="3" />
-              </NumberIncrementStepper>
-              <NumberDecrementStepper>
-                <LuChevronDown size="1em" strokeWidth="3" />
-              </NumberDecrementStepper>
-            </NumberInputStepper>
+            {!isReadOnly && (
+              <NumberInputStepper>
+                <NumberIncrementStepper>
+                  <LuChevronUp size="1em" strokeWidth="3" />
+                </NumberIncrementStepper>
+                <NumberDecrementStepper>
+                  <LuChevronDown size="1em" strokeWidth="3" />
+                </NumberDecrementStepper>
+              </NumberInputStepper>
+            )}
           </NumberInputGroup>
         </NumberField>
         <IconButton
@@ -118,6 +140,7 @@ const ArrayNumericInput = ({
           aria-label="Remove item"
           icon={<IoMdClose />}
           onClick={onRemove}
+          isDisabled={isDisabled || isReadOnly}
         />
       </HStack>
 

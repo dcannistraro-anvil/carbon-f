@@ -11,8 +11,10 @@ import { Documents } from "~/components";
 import { useRouteData } from "~/hooks";
 import type { IssueAssociationNode } from "~/modules/quality";
 import {
+  getIssue,
   getIssueActionTasks,
   getIssueReviewers,
+  isIssueLocked,
   issueValidator,
   upsertIssue
 } from "~/modules/quality";
@@ -24,6 +26,7 @@ import {
 } from "~/modules/quality/ui/Issue";
 import type { StorageItem } from "~/types";
 import { setCustomFields } from "~/utils/form";
+import { requireUnlocked } from "~/utils/lockedGuard.server";
 import { path } from "~/utils/path";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
@@ -60,6 +63,17 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
   const { id } = params;
   if (!id) throw new Error("Could not find id");
+
+  const { client: viewClient } = await requirePermissions(request, {
+    view: "quality"
+  });
+  const issue = await getIssue(viewClient, id);
+  await requireUnlocked({
+    request,
+    isLocked: isIssueLocked(issue.data?.status),
+    redirectTo: path.to.issue(id),
+    message: "Cannot modify a closed issue. Reopen it first."
+  });
 
   const formData = await request.formData();
   const validation = await validator(issueValidator).validate(formData);
@@ -119,7 +133,7 @@ export default function IssueDetailsRoute() {
         title={"Description of Issue"}
         subTitle={nonConformance?.name}
         content={nonConformance?.content as JSONContent}
-        isDisabled={nonConformance?.status === "Closed"}
+        isDisabled={isIssueLocked(nonConformance?.status)}
       />
 
       <Suspense
@@ -170,7 +184,7 @@ export default function IssueDetailsRoute() {
             <ActionTasksList
               tasks={resolvedTasks?.data ?? []}
               suppliers={routeData?.suppliers ?? []}
-              isDisabled={nonConformance?.status === "Closed"}
+              isDisabled={isIssueLocked(nonConformance?.status)}
             />
           )}
         </Await>
@@ -187,7 +201,7 @@ export default function IssueDetailsRoute() {
           {(resolvedReviewers) => (
             <ReviewersList
               reviewers={resolvedReviewers?.data ?? []}
-              isDisabled={nonConformance?.status === "Closed"}
+              isDisabled={isIssueLocked(nonConformance?.status)}
             />
           )}
         </Await>

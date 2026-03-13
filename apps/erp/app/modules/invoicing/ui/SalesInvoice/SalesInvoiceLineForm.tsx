@@ -50,6 +50,7 @@ import type { MethodItemType } from "~/modules/shared";
 import { methodType } from "~/modules/shared";
 import { useItems } from "~/stores";
 import { path } from "~/utils/path";
+import { isSalesInvoiceLocked } from "../../invoicing.models";
 
 type SalesInvoiceLineFormProps = {
   initialValues: z.infer<typeof salesInvoiceLineValidator> & {
@@ -79,7 +80,8 @@ const SalesInvoiceLineForm = ({
     salesInvoice: SalesInvoice;
   }>(path.to.salesInvoice(invoiceId));
 
-  const isEditable = ["Draft"].includes(routeData?.salesInvoice?.status ?? "");
+  const isLocked = isSalesInvoiceLocked(routeData?.salesInvoice?.status);
+  const isEditable = !isLocked;
 
   const [itemType, setItemType] = useState<MethodItemType>(
     initialValues.invoiceLineType as MethodItemType
@@ -278,6 +280,7 @@ const SalesInvoiceLineForm = ({
                 : path.to.newSalesInvoiceLine(invoiceId)
             }
             className="w-full"
+            isDisabled={isEditing && isLocked}
             onSubmit={() => {
               if (type === "modal") onClose?.();
             }}

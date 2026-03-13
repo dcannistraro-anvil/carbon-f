@@ -54,6 +54,7 @@ import { usePermissions, useRouteData, useSettings } from "~/hooks";
 import { useSuppliers } from "~/stores/suppliers";
 import { path } from "~/utils/path";
 
+import { isSupplierQuoteLocked } from "../../purchasing.models";
 import type {
   SupplierInteraction,
   SupplierQuote,
@@ -108,6 +109,7 @@ const SupplierQuoteHeader = () => {
   const statusFetcher = useFetcher<{}>();
 
   const hasLines = routeData?.lines && routeData.lines.length > 0;
+  const isLocked = isSupplierQuoteLocked(routeData?.quote?.status);
   const quoteStatus: string = routeData?.quote?.status ?? "";
   const editableStatuses = ["Draft", "Declined"];
   const isEditableStatus = editableStatuses.includes(quoteStatus);
@@ -152,6 +154,7 @@ const SupplierQuoteHeader = () => {
               <DropdownMenuContent>
                 <DropdownMenuItem
                   disabled={
+                    isLocked ||
                     !permissions.can("delete", "purchasing") ||
                     !permissions.is("employee")
                   }

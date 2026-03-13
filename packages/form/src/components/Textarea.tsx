@@ -8,6 +8,7 @@ import {
 import type { ChangeEvent } from "react";
 import { forwardRef, useState } from "react";
 import { useField } from "../hooks";
+import { useFormStateContext } from "../internal/formStateContext";
 
 type FormTextArea = TextareaProps & {
   name: string;
@@ -19,6 +20,9 @@ type FormTextArea = TextareaProps & {
 const TextArea = forwardRef<HTMLTextAreaElement, FormTextArea>(
   ({ name, label, characterLimit, isRequired, ...rest }, ref) => {
     const { getInputProps, error, defaultValue } = useField(name);
+    const formState = useFormStateContext();
+    const disabled = formState.isDisabled || rest.disabled;
+    const readOnly = formState.isReadOnly || rest.readOnly;
     const [characterCount, setCharacterCount] = useState(
       defaultValue?.length ?? 0
     );
@@ -38,6 +42,8 @@ const TextArea = forwardRef<HTMLTextAreaElement, FormTextArea>(
           })}
           maxLength={characterLimit}
           onChange={onChange}
+          disabled={disabled}
+          readOnly={readOnly}
         />
         {characterLimit && (
           <p className="text-sm text-muted-foreground">

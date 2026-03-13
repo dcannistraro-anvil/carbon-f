@@ -28,6 +28,7 @@ import { getLinkToItemDetails } from "~/modules/items/ui/Item/ItemForm";
 import type { MethodItemType } from "~/modules/shared";
 import { useItems } from "~/stores";
 import { path } from "~/utils/path";
+import { isSupplierQuoteLocked } from "../../purchasing.models";
 import type { Supplier, SupplierQuote, SupplierQuoteLine } from "../../types";
 import DeleteSupplierQuoteLine from "./DeleteSupplierQuoteLine";
 import SupplierQuoteLineForm from "./SupplierQuoteLineForm";
@@ -57,9 +58,8 @@ export default function SupplierQuoteExplorer() {
   const newSupplierQuoteLineDisclosure = useDisclosure();
   const deleteLineDisclosure = useDisclosure();
   const [deleteLine, setDeleteLine] = useState<SupplierQuoteLine | null>(null);
-  const isDisabled =
-    !permissions.can("delete", "purchasing") ||
-    routeData?.quote?.status !== "Draft";
+  const isLocked = isSupplierQuoteLocked(routeData?.quote?.status);
+  const isDisabled = !permissions.can("delete", "purchasing") || isLocked;
 
   const onDeleteLine = (line: SupplierQuoteLine) => {
     setDeleteLine(line);

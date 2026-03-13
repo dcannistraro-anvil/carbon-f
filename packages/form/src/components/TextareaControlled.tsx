@@ -9,6 +9,7 @@ import {
 import type { ChangeEvent } from "react";
 import { forwardRef, useEffect } from "react";
 import { useControlField, useField } from "../hooks";
+import { useFormStateContext } from "../internal/formStateContext";
 
 type FormTextAreaControlledProps = Omit<TextareaProps, "value" | "onChange"> & {
   name: string;
@@ -40,6 +41,9 @@ const TextAreaControlled = forwardRef<
   ) => {
     const { getInputProps, error } = useField(name);
     const [controlValue, setControlValue] = useControlField<string>(name);
+    const formState = useFormStateContext();
+    const disabled = formState.isDisabled || rest.disabled;
+    const readOnly = formState.isReadOnly || rest.readOnly;
 
     useEffect(() => {
       setControlValue(value);
@@ -71,6 +75,8 @@ const TextAreaControlled = forwardRef<
           value={controlValue}
           onChange={handleChange}
           maxLength={characterLimit}
+          disabled={disabled}
+          readOnly={readOnly}
         />
         {characterLimit && (
           <p className="text-sm text-muted-foreground">

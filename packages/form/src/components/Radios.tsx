@@ -7,6 +7,7 @@ import {
 } from "@carbon/react";
 import { useId } from "react";
 import { useField } from "../hooks";
+import { useFormStateContext } from "../internal/formStateContext";
 
 type RadiosProps = {
   name: string;
@@ -22,6 +23,8 @@ const Radios = ({
   orientation = "vertical"
 }: RadiosProps) => {
   const { getInputProps, error } = useField(name);
+  const formState = useFormStateContext();
+  const isDisabled = formState.isDisabled || formState.isReadOnly;
   const id = useId();
 
   return (
@@ -34,6 +37,7 @@ const Radios = ({
         })}
         name={name}
         orientation={orientation}
+        disabled={isDisabled}
       >
         {options.map(({ label, value }) => (
           <div key={value} className="flex items-center space-x-2">

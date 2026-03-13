@@ -1,6 +1,8 @@
 import { requirePermissions } from "@carbon/auth/auth.server";
 import type { ActionFunctionArgs } from "react-router";
 import { getCurrencyByCode } from "~/modules/accounting";
+import { isSalesOrderLocked } from "~/modules/sales";
+import { requireUnlockedBulk } from "~/utils/lockedGuard.server";
 
 export async function action({ request }: ActionFunctionArgs) {
   const { client, companyId, userId } = await requirePermissions(request, {
@@ -18,6 +20,19 @@ export async function action({ request }: ActionFunctionArgs) {
   ) {
     return { error: { message: "Invalid form data" }, data: null };
   }
+
+  // Check if any of the selected orders are locked
+  const salesOrders = await client
+    .from("salesOrder")
+    .select("id, status")
+    .in("id", ids as string[]);
+
+  const lockedError = requireUnlockedBulk({
+    statuses: (salesOrders.data ?? []).map((o) => o.status),
+    checkFn: isSalesOrderLocked,
+    message: "Cannot modify a confirmed sales order."
+  });
+  if (lockedError) return lockedError;
 
   switch (field) {
     case "customerId":
