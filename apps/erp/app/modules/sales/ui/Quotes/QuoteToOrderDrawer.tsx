@@ -1,4 +1,5 @@
 import { useCarbon } from "@carbon/auth";
+import { SelectControlled, ValidatedForm } from "@carbon/form";
 import {
   Button,
   cn,
@@ -34,6 +35,7 @@ import { flushSync } from "react-dom";
 import { useDropzone } from "react-dropzone";
 import {
   LuBan,
+  LuBell,
   LuChevronDown,
   LuCreditCard,
   LuImage,
@@ -42,17 +44,20 @@ import {
   LuTruck,
   LuUpload
 } from "react-icons/lu";
-import { Form, useNavigation, useParams } from "react-router";
+import { useNavigation, useParams } from "react-router";
 import type { z } from "zod";
 import { CustomerAvatar } from "~/components";
 import { Enumerable } from "~/components/Enumerable";
+import { CustomerContact, EmailRecipients } from "~/components/Form";
 import { usePaymentTerm } from "~/components/Form/PaymentTerm";
 import { useShippingMethod } from "~/components/Form/ShippingMethod";
 import { useRouteData, useUser } from "~/hooks";
 import { useCurrencyFormatter } from "~/hooks/useCurrencyFormatter";
+import { useIntegrations } from "~/hooks/useIntegrations";
 import { getDocumentType } from "~/modules/shared";
 import { getPrivateUrl, path } from "~/utils/path";
 import type { selectedLineSchema } from "../../sales.models";
+import { salesConfirmValidator } from "../../sales.models";
 import type {
   Quotation,
   QuotationLine,
@@ -292,6 +297,7 @@ const QuoteToOrderDrawer = ({
             <CustomerDetailsForm poNumber={poNumber} />
             <PaymentDetailsForm />
             <ShippingDetailsForm />
+            <NotificationOptionsForm quote={quote} />
           </VStack>
         );
       default:
@@ -320,22 +326,22 @@ const QuoteToOrderDrawer = ({
         <DrawerHeader>
           <DrawerTitle>{titles[step]}</DrawerTitle>
         </DrawerHeader>
-        <DrawerBody>{renderStep()}</DrawerBody>
-        <DrawerFooter>
-          {step > 0 && (
-            <Button variant="secondary" onClick={() => setStep(step - 1)}>
-              Back
-            </Button>
-          )}
-          {step < 2 ? (
-            <Button
-              onClick={() => setStep(step + 1)}
-              isDisabled={isNextButtonDisabled}
-            >
-              Next
-            </Button>
-          ) : (
-            <Form action={path.to.convertQuoteToOrder(quote.id!)} method="post">
+        {step === 2 ? (
+          <ValidatedForm
+            method="post"
+            action={path.to.convertQuoteToOrder(quote.id!)}
+            validator={salesConfirmValidator}
+            defaultValues={{
+              notification: "None",
+              customerContact: quote.customerContactId ?? undefined,
+              cc: []
+            }}
+          >
+            <DrawerBody>{renderStep()}</DrawerBody>
+            <DrawerFooter>
+              <Button variant="secondary" onClick={() => setStep(step - 1)}>
+                Back
+              </Button>
               <Button
                 type="submit"
                 isDisabled={isSubmitting}
@@ -349,9 +355,26 @@ const QuoteToOrderDrawer = ({
                 value={JSON.stringify(selectedLines)}
               />
               <input type="hidden" name="poNumber" value={poNumber} />
-            </Form>
-          )}
-        </DrawerFooter>
+            </DrawerFooter>
+          </ValidatedForm>
+        ) : (
+          <>
+            <DrawerBody>{renderStep()}</DrawerBody>
+            <DrawerFooter>
+              {step > 0 && (
+                <Button variant="secondary" onClick={() => setStep(step - 1)}>
+                  Back
+                </Button>
+              )}
+              <Button
+                onClick={() => setStep(step + 1)}
+                isDisabled={isNextButtonDisabled}
+              >
+                Next
+              </Button>
+            </DrawerFooter>
+          </>
+        )}
       </DrawerContent>
     </Drawer>
   );
@@ -932,6 +955,59 @@ function ShippingDetailsForm() {
             </Tr>
           </Tbody>
         </Table>
+      )}
+    </div>
+  );
+}
+
+function NotificationOptionsForm({ quote }: { quote: Quotation }) {
+  const [isExpanded, setIsExpanded] = useState(true);
+  const integrations = useIntegrations();
+  const canEmail = integrations.has("resend");
+  const [notificationType, setNotificationType] = useState(
+    canEmail ? "Email" : "None"
+  );
+
+  if (!canEmail) return null;
+
+  return (
+    <div className="border border-border rounded-md shadow-sm p-4 flex flex-col gap-4 w-full">
+      <HStack
+        className="w-full justify-between cursor-pointer"
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
+        <HStack>
+          <LuBell />
+          <Label>Notification</Label>
+        </HStack>
+        <LuChevronDown
+          className={`transition-transform ${isExpanded ? "rotate-180" : ""}`}
+        />
+      </HStack>
+      {isExpanded && (
+        <VStack spacing={4}>
+          <SelectControlled
+            label="Send Via"
+            name="notification"
+            options={[
+              { label: "None", value: "None" },
+              { label: "Email", value: "Email" }
+            ]}
+            value={notificationType}
+            onChange={(t) => {
+              if (t) setNotificationType(t.value);
+            }}
+          />
+          {notificationType === "Email" && (
+            <>
+              <CustomerContact
+                name="customerContact"
+                customer={quote.customerId ?? undefined}
+              />
+              <EmailRecipients name="cc" label="CC" type="employee" />
+            </>
+          )}
+        </VStack>
       )}
     </div>
   );
