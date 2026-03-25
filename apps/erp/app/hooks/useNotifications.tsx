@@ -129,12 +129,11 @@ export function useNotifications({
 
   useEffect(() => {
     if (subscriberId && !headlessServiceRef.current) {
+      const isEu = NOVU_API_URL.includes("eu.");
       const headlessService = new HeadlessService({
         applicationIdentifier: NOVU_APPLICATION_ID!,
-        backendUrl: NOVU_API_URL,
-        socketUrl: NOVU_API_URL.includes("eu.")
-          ? "wss://eu.socket.novu.co"
-          : undefined,
+        backendUrl: isEu ? "https://eu.api.novu.co" : "https://api.novu.co",
+        socketUrl: isEu ? "wss://eu.socket.novu.co" : undefined, // ← base only, no /socket.io
         subscriberId
       });
 
