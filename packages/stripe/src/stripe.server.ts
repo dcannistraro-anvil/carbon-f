@@ -271,11 +271,11 @@ export async function getCheckoutUrl({
 
   const serviceRole = getCarbonServiceRole();
   const plan = await getPlanById(serviceRole, planId);
-  const checkoutSession = await stripe.checkout.sessions.create({
+  const checkoutSession = await stripe!.checkout.sessions.create({
     customer: stripeCustomerId,
     line_items: [
       {
-        price: plan.data.stripePriceId,
+        price: plan.data?.stripePriceId ?? "",
         quantity: 1
       }
     ],
@@ -283,11 +283,12 @@ export async function getCheckoutUrl({
     success_url: `${getAppUrl()}/api/webhook/stripe`,
     cancel_url: `${getAppUrl()}/api/webhook/stripe`,
     payment_method_types: ["card", "us_bank_account", "cashapp"],
-    ...(plan.data.stripeTrialPeriodDays > 0 && {
-      subscription_data: {
-        trial_period_days: plan.data.stripeTrialPeriodDays
-      }
-    }),
+    ...(plan.data?.stripeTrialPeriodDays &&
+      plan.data.stripeTrialPeriodDays > 0 && {
+        subscription_data: {
+          trial_period_days: plan.data?.stripeTrialPeriodDays ?? 0
+        }
+      }),
     metadata: {
       userId,
       companyId
@@ -380,8 +381,8 @@ export async function processStripeEvent({
     const data = event.data.object as Stripe.Checkout.Session;
     const { customer } = data;
 
-    const companyId = data.metadata.companyId;
-    const userId = data.metadata.userId;
+    const companyId = data.metadata?.companyId;
+    const userId = data.metadata?.userId;
 
     if (!companyId || !userId) {
       console.error(
@@ -402,7 +403,7 @@ export async function processStripeEvent({
           customer,
           companyId,
           userId,
-          data.customer_details?.email
+          data.customer_details?.email ?? undefined
         )
       ]);
     } catch (error) {
@@ -471,7 +472,7 @@ async function sendNewCustomerNotification(
 
   const plan = await getPlanByPriceId(
     serviceRole,
-    subscription.items.data[0].price.id
+    subscription?.items.data[0]?.price.id ?? ""
   );
 
   if (CarbonEdition === Edition.Cloud) {
@@ -521,23 +522,23 @@ export async function syncStripeDataToKV(
   const subscription = subscriptions.data[0];
   const plan = await getPlanByPriceId(
     serviceRole,
-    subscription.items.data[0].price.id
+    subscription?.items.data[0]?.price.id ?? ""
   );
 
   const subDataResult = KvStripeCustomerSchema.safeParse({
-    subscriptionId: subscription.id,
-    status: subscription.status,
+    subscriptionId: subscription?.id ?? "",
+    status: subscription?.status ?? "active",
     planId: plan.data?.id ?? null,
-    priceId: subscription.items.data[0].price.id,
-    currentPeriodStart: subscription.items.data[0].current_period_start,
-    currentPeriodEnd: subscription.items.data[0].current_period_end,
-    cancelAtPeriodEnd: subscription.cancel_at_period_end,
+    priceId: subscription?.items.data[0]?.price.id ?? "",
+    currentPeriodStart: subscription?.items.data[0]?.current_period_start ?? 0,
+    currentPeriodEnd: subscription?.items.data[0]?.current_period_end ?? 0,
+    cancelAtPeriodEnd: subscription?.cancel_at_period_end ?? false,
     paymentMethod:
-      subscription.default_payment_method &&
-      typeof subscription.default_payment_method !== "string"
+      subscription?.default_payment_method &&
+      typeof subscription?.default_payment_method !== "string"
         ? {
-            brand: subscription.default_payment_method.card?.brand ?? null,
-            last4: subscription.default_payment_method.card?.last4 ?? null
+            brand: subscription?.default_payment_method?.card?.brand ?? null,
+            last4: subscription?.default_payment_method?.card?.last4 ?? null
           }
         : null
   });
@@ -554,8 +555,8 @@ export async function syncStripeDataToKV(
       {
         id: companyId,
         planId: plan.data?.id ?? "",
-        tasksLimit: plan.data.tasksLimit ?? 0,
-        aiTokensLimit: plan.data.aiTokensLimit ?? 0,
+        tasksLimit: plan.data?.tasksLimit ?? 0,
+        aiTokensLimit: plan.data?.aiTokensLimit ?? 0,
         usersLimit: 10, // Default value as defined in the migration
         stripeSubscriptionStatus: (subData.cancelAtPeriodEnd
           ? "Canceled"
@@ -669,7 +670,7 @@ export async function updateSubscriptionQuantityForCompany(companyId: string) {
     }
 
     // Update the quantity on the first subscription item
-    const subscriptionItemId = subscription.items.data[0].id;
+    const subscriptionItemId = subscription?.items.data[0]?.id ?? "";
 
     await stripe.subscriptionItems.update(subscriptionItemId, {
       quantity: activeUserCount
