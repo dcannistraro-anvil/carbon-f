@@ -1,15 +1,5 @@
--- Fix: parts/materials/tools/consumables/services views sometimes show
--- the wrong revision (e.g., rev "0" instead of rev "A").
---
--- Root cause: the latest_items CTE ordered by createdAt DESC to pick
--- the "most recent" revision, but data migrations (part-revision-merges)
--- reassigned items to new revisions without updating createdAt. This caused
--- some initial revisions (rev "0") to have a later createdAt than the
--- actual latest revision.
---
--- Fix: add a CASE expression that demotes the initial revision ("0"/empty)
--- below any named revision, so named revisions are always preferred.
--- createdAt DESC remains as a tiebreaker among named revisions.
+-- Fix: prefer named revisions (A, B, etc.) over initial revision (0/empty)
+-- in latest_items CTE. createdAt DESC remains as tiebreaker among named revisions.
 
 CREATE OR REPLACE VIEW "parts" WITH (SECURITY_INVOKER=true) AS
 WITH latest_items AS (
