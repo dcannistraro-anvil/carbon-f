@@ -311,9 +311,11 @@ const QuoteLinePricing = ({
     };
   });
 
-  const unitCostsByQuantity = costsByQuantity.map((costs) =>
-    Object.values(costs).reduce((sum, v) => sum + v, 0)
-  );
+  const unitCostsByQuantity = hasCalculatedCost
+    ? costsByQuantity.map((costs) =>
+        Object.values(costs).reduce((sum, v) => sum + v, 0)
+      )
+    : quantities.map(() => editableFields.unitCost);
 
   const computeUnitPriceFromMarkups = useCallback(
     (
