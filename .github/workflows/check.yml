@@ -11,8 +11,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  check:
-    name: Lint and Typecheck
+  install:
+    name: Install Dependencies
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,7 +21,57 @@ jobs:
           node-version: 20
           cache: npm
 
-      - run: npm install
+      - uses: actions/cache@v4
+        id: node-modules-cache
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: node-modules-${{ hashFiles('package-lock.json') }}
+
+      - if: steps.node-modules-cache.outputs.cache-hit != 'true'
+        run: npm install
+
+  lint:
+    name: Lint
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: node-modules-${{ hashFiles('package-lock.json') }}
+
       - run: npx biome check
+
+  typecheck:
+    name: Typecheck
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: node-modules-${{ hashFiles('package-lock.json') }}
+
       - run: npm run typegen
       - run: npm run typecheck
