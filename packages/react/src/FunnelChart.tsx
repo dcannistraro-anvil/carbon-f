@@ -8,8 +8,6 @@ import { Fragment, useMemo, useRef, useState } from "react";
 import { useIsMobile } from "./hooks";
 import { cn } from "./utils/cn";
 
-const verticalPadding = 30;
-
 interface FunnelStep {
   id: string;
   label: string;
@@ -64,6 +62,9 @@ const layers = [
   }
 ];
 
+const maxLayerPadding = 12;
+const chartPadding = 40;
+
 function FunnelChartContent({
   width,
   height,
@@ -105,7 +106,10 @@ function FunnelChartContent({
 
   const yScale = scaleLinear({
     domain: [highestValue, -highestValue],
-    range: [height - verticalPadding, verticalPadding]
+    range: [
+      height - maxLayerPadding - chartPadding,
+      maxLayerPadding + chartPadding
+    ]
   });
 
   return (
