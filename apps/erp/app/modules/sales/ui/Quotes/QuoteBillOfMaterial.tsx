@@ -287,7 +287,8 @@ const QuoteBillOfMaterial = ({
         description: "",
         item: {
           name: "",
-          itemTrackingType: "Inventory"
+          itemTrackingType: "Inventory",
+          replenishmentSystem: null
         }
       });
     } else {

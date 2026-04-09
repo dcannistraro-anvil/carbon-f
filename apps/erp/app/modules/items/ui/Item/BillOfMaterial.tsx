@@ -205,7 +205,8 @@ const BillOfMaterial = ({
         description: "",
         item: {
           name: "",
-          itemTrackingType: "Inventory"
+          itemTrackingType: "Inventory",
+          replenishmentSystem: "Buy and Make"
         }
       });
     } else {
