@@ -12,7 +12,10 @@ export const modelThumbnailFunction = inngest.createFunction(
       VERCEL_URL === undefined || VERCEL_URL.includes("localhost");
 
     const getModelUrl = (id: string) => {
-      const domain = isLocal ? "http://localhost:3000" : VERCEL_URL;
+      if (isLocal) return `http://localhost:3000/file/model/${id}`;
+      const domain = VERCEL_URL?.startsWith("https://")
+        ? VERCEL_URL
+        : `https://${VERCEL_URL}`;
       return `${domain}/file/model/${id}`;
     };
 
