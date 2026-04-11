@@ -46,10 +46,16 @@ const Input = forwardRef<HTMLInputElement, FormInputProps>(
     },
     ref
   ) => {
-    const { getInputProps, error } = useField(name);
+    const {
+      getInputProps,
+      error,
+      isOptional: fieldIsOptional
+    } = useField(name);
     const formState = useFormStateContext();
     const isDisabled = formState.isDisabled || isDisabledProp;
     const isReadOnly = formState.isReadOnly || isReadOnlyProp;
+    const resolvedIsOptional =
+      isOptional ?? (isRequired ? false : (fieldIsOptional ?? false));
 
     return (
       <FormControl
@@ -61,7 +67,7 @@ const Input = forwardRef<HTMLInputElement, FormInputProps>(
         {label ? (
           <FormLabel
             htmlFor={name}
-            isOptional={isOptional}
+            isOptional={resolvedIsOptional}
             isConfigured={isConfigured}
             onConfigure={onConfigure}
           >

@@ -26,7 +26,12 @@ type TimeValue = Time | CalendarDateTime | ZonedDateTime;
 const TimePicker = ({ name, label, onChange }: TimePickerProps) => {
   const formState = useFormStateContext();
   const isDisabled = formState.isDisabled || formState.isReadOnly;
-  const { error, defaultValue, validate } = useField(name);
+  const {
+    error,
+    defaultValue,
+    validate,
+    isOptional: fieldIsOptional
+  } = useField(name);
   const [time, setDate] = useState<TimeValue | null>(
     defaultValue ? parseTime(defaultValue) : null
   );
@@ -39,7 +44,11 @@ const TimePicker = ({ name, label, onChange }: TimePickerProps) => {
 
   return (
     <FormControl isInvalid={!!error}>
-      {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
+      {label && (
+        <FormLabel htmlFor={name} isOptional={fieldIsOptional ?? false}>
+          {label}
+        </FormLabel>
+      )}
       <input type="hidden" name={name} value={time?.toString()} />
       <TimePickerBase
         value={time ?? undefined}

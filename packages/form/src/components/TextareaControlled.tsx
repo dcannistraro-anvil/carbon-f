@@ -15,6 +15,7 @@ type FormTextAreaControlledProps = Omit<TextareaProps, "value" | "onChange"> & {
   name: string;
   label?: string;
   characterLimit?: number;
+  isOptional?: boolean;
   isRequired?: boolean;
   helperText?: string;
   value: string;
@@ -30,6 +31,7 @@ const TextAreaControlled = forwardRef<
       name,
       label,
       characterLimit,
+      isOptional,
       isRequired,
       helperText,
       value,
@@ -39,7 +41,11 @@ const TextAreaControlled = forwardRef<
     },
     ref
   ) => {
-    const { getInputProps, error } = useField(name);
+    const {
+      getInputProps,
+      error,
+      isOptional: fieldIsOptional
+    } = useField(name);
     const [controlValue, setControlValue] = useControlField<string>(name);
     const formState = useFormStateContext();
     const disabled = formState.isDisabled || rest.disabled;
@@ -58,6 +64,8 @@ const TextAreaControlled = forwardRef<
     };
 
     const characterCount = controlValue?.length ?? 0;
+    const resolvedIsOptional =
+      isOptional ?? (isRequired ? false : (fieldIsOptional ?? false));
 
     return (
       <FormControl
@@ -65,7 +73,11 @@ const TextAreaControlled = forwardRef<
         isRequired={isRequired}
         className={className}
       >
-        {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
+        {label && (
+          <FormLabel htmlFor={name} isOptional={resolvedIsOptional}>
+            {label}
+          </FormLabel>
+        )}
         <TextAreaBase
           ref={ref}
           {...getInputProps({

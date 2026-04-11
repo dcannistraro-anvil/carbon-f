@@ -16,6 +16,7 @@ import {
   useRegisterReceiveFocus,
   useSmartValidate
 } from "./internal/hooks";
+import { isFieldOptional } from "./internal/isFieldOptional";
 import {
   useControllableValue,
   useUpdateControllableValue
@@ -64,6 +65,11 @@ export type FieldProps = {
    * Whether or not the field has been touched.
    */
   touched: boolean;
+  /**
+   * Whether this field is optional in the form validator.
+   * `undefined` means the optionality could not be determined.
+   */
+  isOptional?: boolean;
   /**
    * Helper to set the touched state of the field.
    */
@@ -114,6 +120,11 @@ export const useField = (
       return registerReceiveFocus(name, handleReceiveFocus);
   }, [handleReceiveFocus, name, registerReceiveFocus]);
 
+  const optionality = useMemo(
+    () => isFieldOptional(formContext.validatorSchema, name),
+    [formContext.validatorSchema, name]
+  );
+
   const field = useMemo<FieldProps>(() => {
     const helpers = {
       error,
@@ -121,6 +132,7 @@ export const useField = (
       validate: () => smartValidate({ alwaysIncludeErrorsFromFields: [name] }),
       defaultValue,
       touched: !!touched,
+      isOptional: optionality,
       setTouched
     };
     const getInputProps = createGetInputProps({
@@ -138,6 +150,7 @@ export const useField = (
     clearError,
     defaultValue,
     touched,
+    optionality,
     setTouched,
     name,
     hasBeenSubmitted,

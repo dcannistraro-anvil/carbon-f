@@ -42,11 +42,13 @@ const ArrayNumeric = forwardRef<HTMLInputElement, FormArrayNumericProps>(
     },
     ref
   ) => {
+    const { isOptional: fieldIsOptional } = useField(name);
     const formState = useFormStateContext();
     const isDisabled = formState.isDisabled || isDisabledProp;
     const isReadOnly = formState.isReadOnly || isReadOnlyProp;
     const listRef = useRef<HTMLDivElement>(null);
     const [items, { push, remove }, error] = useFieldArray<number>(name);
+    const resolvedIsOptional = isRequired ? false : (fieldIsOptional ?? false);
 
     const onAdd = () => {
       flushSync(() => {
@@ -61,7 +63,11 @@ const ArrayNumeric = forwardRef<HTMLInputElement, FormArrayNumericProps>(
 
     return (
       <FormControl isInvalid={!!error} isRequired={isRequired}>
-        {label && <FormLabel htmlFor={`${name}`}>{label}</FormLabel>}
+        {label && (
+          <FormLabel htmlFor={`${name}`} isOptional={resolvedIsOptional}>
+            {label}
+          </FormLabel>
+        )}
         <VStack className="mb-4" ref={listRef}>
           {items.map((item, index) => (
             <ArrayNumericInput

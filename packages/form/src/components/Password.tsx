@@ -21,15 +21,24 @@ type FormPasswordProps = InputProps & {
 
 const Password = forwardRef<HTMLInputElement, FormPasswordProps>(
   ({ name, label, isRequired, ...rest }, ref) => {
-    const { getInputProps, error } = useField(name);
+    const {
+      getInputProps,
+      error,
+      isOptional: fieldIsOptional
+    } = useField(name);
     const formState = useFormStateContext();
     const isDisabled = formState.isDisabled || rest.isDisabled;
     const isReadOnly = formState.isReadOnly || rest.isReadOnly;
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const resolvedIsOptional = isRequired ? false : (fieldIsOptional ?? false);
 
     return (
       <FormControl isInvalid={!!error} isRequired={isRequired}>
-        {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
+        {label && (
+          <FormLabel htmlFor={name} isOptional={resolvedIsOptional}>
+            {label}
+          </FormLabel>
+        )}
         <InputGroup>
           <Input
             {...getInputProps({

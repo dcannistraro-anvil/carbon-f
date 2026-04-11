@@ -66,7 +66,7 @@ const MultiSelect = ({
   maxPreview,
   ...props
 }: MultiSelectProps) => {
-  const { error } = useField(name);
+  const { error, isOptional: fieldIsOptional } = useField(name);
   const [value, setValue] = useControlField<string[]>(name);
   const formState = useFormStateContext();
   const isReadOnly =
@@ -83,7 +83,11 @@ const MultiSelect = ({
 
   return (
     <FormControl isInvalid={!!error}>
-      {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
+      {label && (
+        <FormLabel htmlFor={name} isOptional={fieldIsOptional ?? false}>
+          {label}
+        </FormLabel>
+      )}
       {(value ?? []).filter(Boolean).map((selection, index) => (
         <input
           key={`${name}[${index}]`}

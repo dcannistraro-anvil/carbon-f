@@ -293,9 +293,10 @@ export function ValidatedForm<
       action,
       subaction,
       defaultValuesProp: providedDefaultValues,
-      fetcher
+      fetcher,
+      validatorSchema: validator
     }),
-    [action, fetcher, formId, providedDefaultValues, subaction]
+    [action, fetcher, formId, providedDefaultValues, subaction, validator]
   );
   const formStateValue = useMemo(
     () => ({ isDisabled, isReadOnly }),

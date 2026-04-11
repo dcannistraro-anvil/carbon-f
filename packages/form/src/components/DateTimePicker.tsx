@@ -43,7 +43,12 @@ const DateTimePicker = ({
   const isDisabled =
     formState.isDisabled || formState.isReadOnly || isDisabledProp;
   const { validate } = useFormContext();
-  const { error, defaultValue, validate: validateField } = useField(name);
+  const {
+    error,
+    defaultValue,
+    validate: validateField,
+    isOptional: fieldIsOptional
+  } = useField(name);
   const [date, setDate] = useState<CalendarDateTime | undefined>(
     defaultValue
       ? toCalendarDateTime(parseAbsolute(defaultValue, getLocalTimeZone()))
@@ -80,7 +85,11 @@ const DateTimePicker = ({
 
   return (
     <FormControl isInvalid={!!error}>
-      {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
+      {label && (
+        <FormLabel htmlFor={name} isOptional={fieldIsOptional ?? false}>
+          {label}
+        </FormLabel>
+      )}
       <input type="hidden" name={name} value={utcValue} />
       <DateTimePickerBase
         value={date}

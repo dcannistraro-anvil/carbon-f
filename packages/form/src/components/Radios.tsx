@@ -22,14 +22,18 @@ const Radios = ({
   options,
   orientation = "vertical"
 }: RadiosProps) => {
-  const { getInputProps, error } = useField(name);
+  const { getInputProps, error, isOptional: fieldIsOptional } = useField(name);
   const formState = useFormStateContext();
   const isDisabled = formState.isDisabled || formState.isReadOnly;
   const id = useId();
 
   return (
     <FormControl isInvalid={!!error}>
-      {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
+      {label && (
+        <FormLabel htmlFor={name} isOptional={fieldIsOptional ?? false}>
+          {label}
+        </FormLabel>
+      )}
       <RadioGroup
         {...getInputProps({
           // @ts-ignore

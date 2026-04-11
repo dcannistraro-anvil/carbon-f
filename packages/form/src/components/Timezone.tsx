@@ -33,7 +33,7 @@ const Timezone = ({
   size,
   ...props
 }: TimezoneProps) => {
-  const { getInputProps, error } = useField(name);
+  const { getInputProps, error, isOptional: fieldIsOptional } = useField(name);
   const formState = useFormStateContext();
   const isReadOnly =
     formState.isReadOnly || formState.isDisabled || isReadOnlyProp;
@@ -41,7 +41,11 @@ const Timezone = ({
 
   return (
     <FormControl isInvalid={!!error}>
-      {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
+      {label && (
+        <FormLabel htmlFor={name} isOptional={fieldIsOptional ?? false}>
+          {label}
+        </FormLabel>
+      )}
       <input
         {...getInputProps({
           id: name

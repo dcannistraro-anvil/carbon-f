@@ -19,13 +19,19 @@ type FormTextArea = TextareaProps & {
 
 const TextArea = forwardRef<HTMLTextAreaElement, FormTextArea>(
   ({ name, label, characterLimit, isRequired, ...rest }, ref) => {
-    const { getInputProps, error, defaultValue } = useField(name);
+    const {
+      getInputProps,
+      error,
+      defaultValue,
+      isOptional: fieldIsOptional
+    } = useField(name);
     const formState = useFormStateContext();
     const disabled = formState.isDisabled || rest.disabled;
     const readOnly = formState.isReadOnly || rest.readOnly;
     const [characterCount, setCharacterCount] = useState(
       defaultValue?.length ?? 0
     );
+    const resolvedIsOptional = isRequired ? false : (fieldIsOptional ?? false);
 
     const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
       if (characterLimit) setCharacterCount(e.target.value.length);
@@ -33,7 +39,11 @@ const TextArea = forwardRef<HTMLTextAreaElement, FormTextArea>(
 
     return (
       <FormControl isInvalid={!!error} isRequired={isRequired}>
-        {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
+        {label && (
+          <FormLabel htmlFor={name} isOptional={resolvedIsOptional}>
+            {label}
+          </FormLabel>
+        )}
         <TextAreaBase
           ref={ref}
           {...getInputProps({

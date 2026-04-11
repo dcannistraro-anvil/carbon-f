@@ -36,7 +36,11 @@ const Boolean = forwardRef<HTMLInputElement, FormBooleanProps>(
     },
     ref
   ) => {
-    const { getInputProps, error } = useField(name);
+    const {
+      getInputProps,
+      error,
+      isOptional: fieldIsOptional
+    } = useField(name);
     const formState = useFormStateContext();
     const isDisabled =
       formState.isDisabled || formState.isReadOnly || isDisabledProp;
@@ -49,7 +53,11 @@ const Boolean = forwardRef<HTMLInputElement, FormBooleanProps>(
 
     return (
       <FormControl isInvalid={!!error} className="pt-2">
-        {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
+        {label && (
+          <FormLabel htmlFor={name} isOptional={fieldIsOptional ?? false}>
+            {label}
+          </FormLabel>
+        )}
         <HStack>
           <Switch
             variant={variant}

@@ -42,17 +42,22 @@ const CreatableCombobox = forwardRef<HTMLButtonElement, CreatableComboboxProps>(
       label,
       helperText,
       isConfigured = false,
-      isOptional = false,
+      isOptional,
       onConfigure,
       ...props
     },
     ref
   ) => {
-    const { getInputProps, error } = useField(name);
+    const {
+      getInputProps,
+      error,
+      isOptional: fieldIsOptional
+    } = useField(name);
     const [value, setValue] = useControlField<string | undefined>(name);
     const formState = useFormStateContext();
     const isReadOnly =
       formState.isReadOnly || formState.isDisabled || props.isReadOnly;
+    const resolvedIsOptional = isOptional ?? fieldIsOptional ?? false;
 
     useEffect(() => {
       if (props.value !== null && props.value !== undefined)
@@ -84,7 +89,7 @@ const CreatableCombobox = forwardRef<HTMLButtonElement, CreatableComboboxProps>(
             htmlFor={name}
             isConfigured={isConfigured}
             onConfigure={onConfigure}
-            isOptional={isOptional}
+            isOptional={resolvedIsOptional}
           >
             {label}
           </FormLabel>
@@ -102,7 +107,7 @@ const CreatableCombobox = forwardRef<HTMLButtonElement, CreatableComboboxProps>(
           ref={ref}
           {...props}
           value={value?.replace(/"/g, '\\"')}
-          isClearable={isClearable ?? (isOptional && !isReadOnly)}
+          isClearable={isClearable ?? (resolvedIsOptional && !isReadOnly)}
           isReadOnly={isReadOnly}
           label={label}
           className="w-full"

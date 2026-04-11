@@ -23,6 +23,7 @@ type FormInputControlledProps = Omit<InputProps, "value" | "onChange"> & {
   name: string;
   label?: ReactNode;
   isConfigured?: boolean;
+  isOptional?: boolean;
   isUppercase?: boolean;
   isRequired?: boolean;
   helperText?: string;
@@ -40,6 +41,7 @@ const InputControlled = forwardRef<HTMLInputElement, FormInputControlledProps>(
       name,
       label,
       isConfigured,
+      isOptional,
       isRequired,
       helperText,
       prefix,
@@ -61,7 +63,11 @@ const InputControlled = forwardRef<HTMLInputElement, FormInputControlledProps>(
     const isDisabled = formState.isDisabled || isDisabledProp;
     const isReadOnly = formState.isReadOnly || isReadOnlyProp;
     const { validate } = useFormContext();
-    const { getInputProps, error } = useField(name);
+    const {
+      getInputProps,
+      error,
+      isOptional: fieldIsOptional
+    } = useField(name);
     const [controlValue, setControlValue] = useControlField<string>(name);
     const [inlineMode, setInlineMode] = useState(inline);
     const inputRef = useRef<HTMLInputElement | null>(null);
@@ -82,6 +88,8 @@ const InputControlled = forwardRef<HTMLInputElement, FormInputControlledProps>(
         onChange(isUppercase ? uppercase(e.target.value) : e.target.value);
       }
     };
+    const resolvedIsOptional =
+      isOptional ?? (isRequired ? false : (fieldIsOptional ?? false));
 
     return inlineMode ? (
       <VStack>
@@ -113,6 +121,7 @@ const InputControlled = forwardRef<HTMLInputElement, FormInputControlledProps>(
         {label && (
           <FormLabel
             htmlFor={name}
+            isOptional={resolvedIsOptional}
             isConfigured={isConfigured}
             onConfigure={onConfigure}
           >

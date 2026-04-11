@@ -40,10 +40,12 @@ const InputOTP = forwardRef<HTMLInputElement, FormInputOTPProps>(
     },
     ref
   ) => {
-    const { error } = useField(name);
+    const { error, isOptional: fieldIsOptional } = useField(name);
     const [value, setValue] = useControlField<string>(name);
     const formState = useFormStateContext();
     const isDisabled = formState.isDisabled || formState.isReadOnly;
+    const resolvedIsOptional =
+      isOptional ?? (isRequired ? false : (fieldIsOptional ?? false));
 
     useEffect(() => {
       if (value?.length === maxLength) {
@@ -61,7 +63,7 @@ const InputOTP = forwardRef<HTMLInputElement, FormInputOTPProps>(
         {label ? (
           <FormLabel
             htmlFor={name}
-            isOptional={isOptional}
+            isOptional={resolvedIsOptional}
             isConfigured={isConfigured}
             onConfigure={onConfigure}
           >

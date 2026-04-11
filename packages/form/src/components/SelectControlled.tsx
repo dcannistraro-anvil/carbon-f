@@ -34,10 +34,11 @@ const SelectControlled = ({
   onConfigure,
   ...props
 }: SelectProps) => {
-  const { getInputProps, error } = useField(name);
+  const { getInputProps, error, isOptional: fieldIsOptional } = useField(name);
   const formState = useFormStateContext();
   const isDisabled = formState.isDisabled || props.isDisabled;
   const isReadOnly = formState.isReadOnly || props.isReadOnly;
+  const resolvedIsOptional = isOptional ?? fieldIsOptional ?? false;
   const [controlValue, setControlValue] = useControlField<string | undefined>(
     name
   );
@@ -61,7 +62,7 @@ const SelectControlled = ({
         <FormLabel
           htmlFor={name}
           isConfigured={isConfigured}
-          isOptional={isOptional}
+          isOptional={resolvedIsOptional}
           onConfigure={onConfigure}
         >
           {label}

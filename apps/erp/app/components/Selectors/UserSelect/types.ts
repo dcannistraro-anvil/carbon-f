@@ -33,6 +33,7 @@ export interface UserSelectProps {
     | null;
   isMulti?: boolean;
   label?: string;
+  isOptional?: boolean;
   placeholder?: string;
   showAvatars?: boolean;
   queryFilters?: UserSelectionGenericQueryFilters;

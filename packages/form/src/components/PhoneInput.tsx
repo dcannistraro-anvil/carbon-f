@@ -44,11 +44,12 @@ const PhoneInput: ForwardRefExoticComponent<PhoneInputProps> = forwardRef<
   ElementRef<typeof ReactPhoneInput.default>,
   PhoneInputProps
 >(({ name, label, isRequired, className, ...props }, ref) => {
-  const { getInputProps, error } = useField(name);
+  const { getInputProps, error, isOptional: fieldIsOptional } = useField(name);
   const [value, setValue] = useControlField<string>(name);
   const formState = useFormStateContext();
   const isDisabled =
     formState.isDisabled || formState.isReadOnly || props.disabled;
+  const resolvedIsOptional = isRequired ? false : (fieldIsOptional ?? false);
 
   const onChange = (value: string) => {
     setValue(value);
@@ -58,7 +59,11 @@ const PhoneInput: ForwardRefExoticComponent<PhoneInputProps> = forwardRef<
 
   return (
     <FormControl isInvalid={!!error} isRequired={isRequired}>
-      {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
+      {label && (
+        <FormLabel htmlFor={name} isOptional={resolvedIsOptional}>
+          {label}
+        </FormLabel>
+      )}
       <PhoneInputComponent
         ref={ref}
         className={cn("flex", className)}

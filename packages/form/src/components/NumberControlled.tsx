@@ -29,6 +29,7 @@ import { useFormStateContext } from "../internal/formStateContext";
 type FormNumberProps = NumberFieldProps & {
   name: string;
   label?: ReactNode;
+  isOptional?: boolean;
   isRequired?: boolean;
   helperText?: string;
   value: number;
@@ -44,6 +45,7 @@ const Number = forwardRef<HTMLInputElement, FormNumberProps>(
       name,
       label,
       isConfigured,
+      isOptional,
       isRequired,
       isReadOnly: isReadOnlyProp,
       isDisabled: isDisabledProp,
@@ -61,7 +63,11 @@ const Number = forwardRef<HTMLInputElement, FormNumberProps>(
     const isReadOnly = formState.isReadOnly || isReadOnlyProp;
     const isDisabled = formState.isDisabled || isDisabledProp;
     const { validate } = useFormContext();
-    const { getInputProps, error } = useField(name);
+    const {
+      getInputProps,
+      error,
+      isOptional: fieldIsOptional
+    } = useField(name);
     const [controlValue, setControlValue] = useControlField<number>(name);
     const [inlineMode, setInlineMode] = useState(inline);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -80,6 +86,8 @@ const Number = forwardRef<HTMLInputElement, FormNumberProps>(
       setControlValue(newValue);
       onChange?.(newValue);
     };
+    const resolvedIsOptional =
+      isOptional ?? (isRequired ? false : (fieldIsOptional ?? false));
 
     return inlineMode ? (
       <VStack>
@@ -118,6 +126,7 @@ const Number = forwardRef<HTMLInputElement, FormNumberProps>(
         {label && (
           <FormLabel
             htmlFor={name}
+            isOptional={resolvedIsOptional}
             isConfigured={isConfigured}
             onConfigure={onConfigure}
           >

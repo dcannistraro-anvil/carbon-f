@@ -22,6 +22,7 @@ type FormNumberProps = NumberFieldProps & {
   size?: "sm" | "md" | "lg";
   label?: string;
   isConfigured?: boolean;
+  isOptional?: boolean;
   isRequired?: boolean;
   helperText?: string;
   onConfigure?: () => void;
@@ -34,6 +35,7 @@ const Number = forwardRef<HTMLInputElement, FormNumberProps>(
       size = "md",
       label,
       isConfigured = false,
+      isOptional,
       isRequired,
       isReadOnly: isReadOnlyProp,
       isDisabled: isDisabledProp,
@@ -43,7 +45,11 @@ const Number = forwardRef<HTMLInputElement, FormNumberProps>(
     },
     ref
   ) => {
-    const { getInputProps, error } = useField(name);
+    const {
+      getInputProps,
+      error,
+      isOptional: fieldIsOptional
+    } = useField(name);
     const formState = useFormStateContext();
     const isReadOnly = formState.isReadOnly || isReadOnlyProp;
     const isDisabled = formState.isDisabled || isDisabledProp;
@@ -53,6 +59,8 @@ const Number = forwardRef<HTMLInputElement, FormNumberProps>(
         minimumFractionDigits: 0,
         maximumFractionDigits: 10
       } satisfies Intl.NumberFormatOptions);
+    const resolvedIsOptional =
+      isOptional ?? (isRequired ? false : (fieldIsOptional ?? false));
 
     return (
       <FormControl
@@ -64,6 +72,7 @@ const Number = forwardRef<HTMLInputElement, FormNumberProps>(
         {label && (
           <FormLabel
             htmlFor={name}
+            isOptional={resolvedIsOptional}
             isConfigured={isConfigured}
             onConfigure={onConfigure}
           >
