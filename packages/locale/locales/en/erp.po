@@ -211,7 +211,7 @@ msgid "Account Category"
 msgstr "Account Category"
 
 #: apps/erp/app/modules/purchasing/ui/Supplier/SupplierForm.tsx:128
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:252
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:257
 #: apps/erp/app/modules/purchasing/ui/Supplier/SuppliersTable.tsx:121
 #: apps/erp/app/modules/sales/ui/Customer/CustomerForm.tsx:129
 #: apps/erp/app/modules/sales/ui/Customer/CustomerHeader.tsx:148
@@ -697,7 +697,7 @@ msgstr "API Key"
 msgid "API Keys"
 msgstr "API Keys"
 
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:275
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:284
 msgid "Approval Date"
 msgstr "Approval Date"
 
@@ -714,13 +714,13 @@ msgstr "Approval Requirements"
 msgid "Approval Rules"
 msgstr "Approval Rules"
 
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:326
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:328
 #: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:214
 #: apps/erp/app/modules/quality/ui/Documents/QualityDocumentHeader.tsx:196
 msgid "Approve"
 msgstr "Approve"
 
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:267
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:274
 #: apps/erp/app/modules/quality/ui/Calibrations/GaugeCalibrationRecordForm.tsx:365
 #: apps/erp/app/modules/quality/ui/Calibrations/GaugeCalibrationRecordsTable.tsx:258
 msgid "Approved By"
@@ -787,7 +787,7 @@ msgid "Are you sure you want to create jobs for this sales order? This will crea
 msgstr "Are you sure you want to create jobs for this sales order? This will create jobs for all lines that don't already have jobs."
 
 #. placeholder {0}: routeData?.supplier?.name
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:352
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:366
 msgid "Are you sure you want to deactivate {0}?"
 msgstr "Are you sure you want to deactivate {0}?"
 
@@ -859,10 +859,10 @@ msgstr "Are you sure you want to delete {0}?"
 #: apps/erp/app/modules/items/ui/Tools/ToolHeader.tsx:91
 #: apps/erp/app/modules/items/ui/Tools/ToolsTable.tsx:562
 #: apps/erp/app/modules/production/ui/Procedures/ProcedureHeader.tsx:190
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:556
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:558
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:341
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:332
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:352
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:346
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:354
 #: apps/erp/app/modules/quality/ui/Documents/QualityDocumentHeader.tsx:296
 #: apps/erp/app/modules/quality/ui/Issue/IssueHeader.tsx:191
 #: apps/erp/app/modules/resources/ui/Training/TrainingHeader.tsx:96
@@ -1151,7 +1151,7 @@ msgstr "Are you sure you want to delete this timecard? This cannot be undone."
 msgid "Are you sure you want to finalize the quote?"
 msgstr "Are you sure you want to finalize the quote?"
 
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:455
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:457
 msgid "Are you sure you want to finalize the supplier quote?"
 msgstr "Are you sure you want to finalize the supplier quote?"
 
@@ -1335,6 +1335,10 @@ msgstr "Audit logging is not enabled"
 #: apps/erp/app/routes/x+/settings+/audit-logs.tsx:175
 msgid "Audit Logs"
 msgstr "Audit Logs"
+
+#: apps/erp/app/routes/_public+/login.tsx:287
+msgid "Authentication Error"
+msgstr "Authentication Error"
 
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbanForm.tsx:295
 msgid "Auto Release"
@@ -1563,6 +1567,14 @@ msgstr "Buyer"
 msgid "by {byUser}"
 msgstr "by {byUser}"
 
+#: apps/erp/app/routes/_public+/invite.$code.tsx:170
+msgid "By accepting the invite, you agree to the <0>Terms of Service</0> and <1>Privacy Policy</1>."
+msgstr "By accepting the invite, you agree to the <0>Terms of Service</0> and <1>Privacy Policy</1>."
+
+#: apps/erp/app/routes/_public+/login.tsx:370
+msgid "By signing in, you agree to the <0>Terms of Service</0> and <1>Privacy Policy.</1>"
+msgstr "By signing in, you agree to the <0>Terms of Service</0> and <1>Privacy Policy.</1>"
+
 #: apps/erp/app/modules/items/ui/Parts/PartForm.tsx:341
 #: apps/erp/app/modules/items/ui/Tools/ToolForm.tsx:333
 #: apps/erp/app/routes/x+/part+/$itemId.details.tsx:342
@@ -1658,18 +1670,18 @@ msgstr "Calibrations"
 #: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:597
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderApprovalModal.tsx:129
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderFinalizeModal.tsx:116
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:506
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:508
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/FinalizeRFQModal.tsx:153
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:265
 #: apps/erp/app/modules/purchasing/ui/Supplier/SupplierApprovalModal.tsx:79
 #: apps/erp/app/modules/purchasing/ui/Supplier/SupplierContactForm.tsx:120
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:358
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:372
 #: apps/erp/app/modules/purchasing/ui/Supplier/SupplierLocationForm.tsx:105
 #: apps/erp/app/modules/purchasing/ui/Supplier/SupplierProcessForm.tsx:142
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteCompareDrawer.tsx:288
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteFinalizeModal.tsx:102
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:301
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:480
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:303
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:484
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteSendModal.tsx:183
 #: apps/erp/app/modules/purchasing/ui/SupplierTypes/SupplierTypeForm.tsx:100
 #: apps/erp/app/modules/quality/ui/Calibrations/GaugeCalibrationRecordForm.tsx:393
@@ -1841,6 +1853,14 @@ msgstr "Carbon client not found"
 msgid "Carbon column"
 msgstr "Carbon column"
 
+#: apps/erp/app/routes/_public+/invite.$code.tsx:114
+#: apps/erp/app/routes/_public+/invite.$code.tsx:144
+#: apps/erp/app/routes/_public+/login.tsx:227
+#: apps/erp/app/routes/_public+/magic-link.tsx:26
+#: apps/erp/app/routes/_public+/verify.tsx:145
+msgid "Carbon Logo"
+msgstr "Carbon Logo"
+
 #: apps/erp/app/components/ImportCSVModal/FieldMappings.tsx:454
 msgid "Carbon Value"
 msgstr "Carbon Value"
@@ -1925,6 +1945,10 @@ msgstr "Chart of Accounts"
 msgid "Chat"
 msgstr "Chat"
 
+#: apps/erp/app/routes/_public+/login.tsx:236
+msgid "Check your email"
+msgstr "Check your email"
+
 #: apps/erp/app/components/ImportCSVModal/FieldMappings.tsx:287
 msgid "Choose another file"
 msgstr "Choose another file"
@@ -1975,14 +1999,14 @@ msgid "Clear search query"
 msgstr "Clear search query"
 
 #: apps/erp/app/modules/people/ui/Timecards/TimecardForm.tsx:98
-#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:97
+#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:109
 #: apps/erp/app/routes/x+/person+/$personId.timecard.tsx:464
 #: apps/erp/app/routes/x+/person+/$personId.timecard.tsx:523
 msgid "Clock In"
 msgstr "Clock In"
 
 #: apps/erp/app/modules/people/ui/Timecards/TimecardForm.tsx:104
-#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:106
+#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:118
 #: apps/erp/app/routes/x+/person+/$personId.timecard.tsx:453
 #: apps/erp/app/routes/x+/person+/$personId.timecard.tsx:526
 msgid "Clock Out"
@@ -1998,7 +2022,7 @@ msgstr "Clocked in since {0}"
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferWizard.tsx:1290
 #: apps/erp/app/modules/production/ui/Jobs/JobMaterialsTable.tsx:580
 #: apps/erp/app/modules/purchasing/ui/Planning/PurchasingPlanningOrderDrawer.tsx:760
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:546
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:550
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteSendModal.tsx:87
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteSendModal.tsx:178
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteHeader.tsx:574
@@ -2110,7 +2134,7 @@ msgstr "Company Name"
 msgid "Company Name"
 msgstr "Company Name"
 
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:264
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:266
 msgid "Compare and Order"
 msgstr "Compare and Order"
 
@@ -2588,7 +2612,7 @@ msgstr "Copy response"
 msgid "Copy this link to share the quote with a customer"
 msgstr "Copy this link to share the quote with a customer"
 
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:533
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:537
 msgid "Copy this link to share the quote with a supplier"
 msgstr "Copy this link to share the quote with a supplier"
 
@@ -3203,7 +3227,7 @@ msgstr "Data type cannot be changed"
 
 #: apps/erp/app/modules/people/ui/Holidays/HolidayForm.tsx:72
 #: apps/erp/app/modules/people/ui/Holidays/HolidaysTable.tsx:62
-#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:86
+#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:98
 #: apps/erp/app/modules/resources/ui/Suggestions/SuggestionDetails.tsx:144
 #: apps/erp/app/modules/resources/ui/Suggestions/SuggestionsTable.tsx:109
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderLineShipments.tsx:97
@@ -3269,7 +3293,7 @@ msgstr "Days Off"
 msgid "Days Remaining"
 msgstr "Days Remaining"
 
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:368
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:382
 #: apps/erp/app/modules/quality/ui/Gauge/GaugesTable.tsx:451
 #: apps/erp/app/modules/resources/ui/WorkCenters/WorkCentersTable.tsx:485
 #: apps/erp/app/modules/users/ui/components/DeactivateUsersModal.tsx:80
@@ -3306,7 +3330,7 @@ msgstr "Deactivate Employees"
 msgid "Deactivate Process"
 msgstr "Deactivate Process"
 
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:348
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:362
 msgid "Deactivate Supplier"
 msgstr "Deactivate Supplier"
 
@@ -3727,7 +3751,7 @@ msgstr "Delete Supplier Quote"
 msgid "Delete Supplier Type"
 msgstr "Delete Supplier Type"
 
-#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:198
+#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:210
 msgid "Delete Timecard"
 msgstr "Delete Timecard"
 
@@ -3870,7 +3894,7 @@ msgstr "Detail"
 msgid "Details"
 msgstr "Details"
 
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:199
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:201
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteHeader.tsx:209
 msgid "Digital Quote"
 msgstr "Digital Quote"
@@ -4095,7 +4119,7 @@ msgstr "Due Date of Last Job"
 msgid "Due Days after {selectedCalculationMethod}"
 msgstr "Due Days after {selectedCalculationMethod}"
 
-#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:115
+#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:127
 #: apps/erp/app/modules/production/ui/Jobs/ProductionEventsTable.tsx:123
 #: apps/erp/app/modules/resources/ui/Training/TrainingsTable.tsx:122
 #: apps/erp/app/routes/x+/person+/$personId.timecard.tsx:529
@@ -4456,7 +4480,7 @@ msgid "Edit Supplier Type"
 msgstr "Edit Supplier Type"
 
 #: apps/erp/app/modules/people/ui/Timecards/TimecardForm.tsx:82
-#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:186
+#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:198
 #: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceDispatchExplorer.tsx:511
 #: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceDispatchProperties.tsx:612
 msgid "Edit Timecard"
@@ -4520,6 +4544,7 @@ msgstr "Edit Work Center"
 msgid "Email"
 msgstr "Email"
 
+#: apps/erp/app/routes/_public+/login.tsx:326
 #: apps/erp/app/routes/x+/users+/operators.$operatorId.tsx:143
 msgid "Email Address"
 msgstr "Email Address"
@@ -4541,7 +4566,7 @@ msgstr "Emoji"
 #: apps/erp/app/components/Layout/Topbar/CreateMenu.tsx:109
 #: apps/erp/app/modules/people/ui/People/PeopleTable.tsx:233
 #: apps/erp/app/modules/people/ui/Timecards/TimecardForm.tsx:92
-#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:65
+#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:77
 #: apps/erp/app/modules/production/ui/Jobs/ProductionEventForm.tsx:96
 #: apps/erp/app/modules/production/ui/Jobs/ProductionEventsTable.tsx:67
 #: apps/erp/app/modules/production/ui/Jobs/ProductionQuantitiesTable.tsx:65
@@ -4696,6 +4721,10 @@ msgstr "Entity is {status}"
 #: apps/erp/app/routes/onboarding+/plan.tsx:60
 msgid "ERP, MES, QMS"
 msgstr "ERP, MES, QMS"
+
+#: apps/erp/app/routes/_public+/callback.tsx:140
+msgid "Error"
+msgstr "Error"
 
 #: apps/erp/app/components/Documents.tsx:106
 #: apps/erp/app/modules/items/ui/Item/ItemDocuments.tsx:320
@@ -5194,6 +5223,7 @@ msgstr "Failed to load purchase orders"
 msgid "Failed to load receipt lines"
 msgstr "Failed to load receipt lines"
 
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferHeader.tsx:380
 #: apps/erp/app/modules/quality/ui/Issue/IssueAssociations.tsx:773
 msgid "Failed to load receipts"
 msgstr "Failed to load receipts"
@@ -5210,6 +5240,7 @@ msgstr "Failed to load sales orders"
 msgid "Failed to load shipment lines"
 msgstr "Failed to load shipment lines"
 
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferHeader.tsx:386
 #: apps/erp/app/modules/quality/ui/Issue/IssueAssociations.tsx:676
 msgid "Failed to load shipments"
 msgstr "Failed to load shipments"
@@ -5468,13 +5499,13 @@ msgid "Filtering"
 msgstr "Filtering"
 
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderFinalizeModal.tsx:119
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:247
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:249
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:202
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:236
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:251
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:237
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:452
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:492
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:239
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:454
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:496
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteFinalizeModal.tsx:225
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteHeader.tsx:241
 msgid "Finalize"
@@ -5961,6 +5992,10 @@ msgstr "Inv. Adjustment Variance"
 msgid "Inv. Interim Accrual"
 msgstr "Inv. Interim Accrual"
 
+#: apps/erp/app/routes/_public+/invite.$code.tsx:118
+msgid "Invalid Invite"
+msgstr "Invalid Invite"
+
 #: apps/erp/app/routes/x+/traceability+/_index.tsx:45
 msgid "Invalid tracking number"
 msgstr "Invalid tracking number"
@@ -6039,8 +6074,8 @@ msgstr "Invite"
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentHeader.tsx:228
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentHeader.tsx:271
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentHeader.tsx:318
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:427
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:480
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:429
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:482
 #: apps/erp/app/modules/purchasing/ui/SupplierInteraction/SupplierInteractionState.tsx:82
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:575
 msgid "Invoice"
@@ -6393,6 +6428,11 @@ msgstr "Jobs in progress"
 msgid "Jobs Required"
 msgstr "Jobs Required"
 
+#. placeholder {0}: company?.name ?? "Company"
+#: apps/erp/app/routes/_public+/invite.$code.tsx:164
+msgid "Join {0}"
+msgstr "Join {0}"
+
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbansTable.tsx:641
 msgid "Kanban"
 msgstr "Kanban"
@@ -6565,6 +6605,11 @@ msgstr "Left item"
 msgid "Leftover Parts Detected"
 msgstr "Leftover Parts Detected"
 
+#: apps/erp/app/routes/_public+/_layout.tsx:30
+#: apps/erp/app/routes/_public+/magic-link.tsx:33
+msgid "Let's build something"
+msgstr "Let's build something"
+
 #. js-lingui-explicit-id
 #: apps/erp/app/components/Layout/Topbar/Breadcrumbs.tsx:225
 msgid "Let's set up your new company"
@@ -6609,7 +6654,7 @@ msgstr "Linear Team"
 msgid "Lines need internal part numbers"
 msgstr "Lines need internal part numbers"
 
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:464
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:466
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteFinalizeModal.tsx:164
 msgid "Lines need prices or lead times"
 msgstr "Lines need prices or lead times"
@@ -6709,7 +6754,7 @@ msgstr "Loading..."
 #: apps/erp/app/modules/people/ui/Person/PersonPreview.tsx:63
 #: apps/erp/app/modules/people/ui/Shifts/ShiftForm.tsx:72
 #: apps/erp/app/modules/people/ui/Shifts/ShiftsTable.tsx:84
-#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:154
+#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:166
 #: apps/erp/app/modules/production/ui/Jobs/JobForm.tsx:342
 #: apps/erp/app/modules/production/ui/Jobs/JobForm.tsx:502
 #: apps/erp/app/modules/production/ui/Jobs/JobHeader.tsx:1047
@@ -6765,6 +6810,14 @@ msgstr "Locations"
 #: apps/erp/app/components/Table/components/TableHeader.tsx:349
 msgid "Lock"
 msgstr "Lock"
+
+#: apps/erp/app/routes/_public+/magic-link.tsx:41
+msgid "Log In"
+msgstr "Log In"
+
+#: apps/erp/app/routes/_public+/login.tsx:364
+msgid "Login or create a new account"
+msgstr "Login or create a new account"
 
 #: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:162
 msgid "Logo removed successfully"
@@ -6982,7 +7035,7 @@ msgstr "Manufacturer"
 msgid "Manufacturing"
 msgstr "Manufacturing"
 
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:235
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:237
 msgid "Mark as Planned"
 msgstr "Mark as Planned"
 
@@ -7633,7 +7686,7 @@ msgid "New Holiday"
 msgstr "New Holiday"
 
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentHeader.tsx:239
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:442
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:444
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:538
 msgid "New Invoice"
 msgstr "New Invoice"
@@ -7739,7 +7792,7 @@ msgstr "New Quote Line"
 
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptForm/ReceiptForm.tsx:70
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferHeader.tsx:247
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:372
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:374
 msgid "New Receipt"
 msgstr "New Receipt"
 
@@ -7791,7 +7844,7 @@ msgstr "New Shift"
 
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentForm/ShipmentForm.tsx:82
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferHeader.tsx:180
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:276
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:278
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:468
 msgid "New Shipment"
 msgstr "New Shipment"
@@ -8470,9 +8523,9 @@ msgstr "Options"
 
 #: apps/erp/app/modules/purchasing/ui/Planning/PurchasingPlanningOrderDrawer.tsx:776
 #: apps/erp/app/modules/purchasing/ui/SupplierInteraction/SupplierInteractionState.tsx:81
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:254
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:260
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:278
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:256
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:262
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:280
 #: apps/erp/app/modules/sales/ui/Opportunity/OpportunityState.tsx:144
 msgid "Order"
 msgstr "Order"
@@ -8726,7 +8779,7 @@ msgid "Payment Terms"
 msgstr "Payment Terms"
 
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoiceHeader.tsx:292
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:206
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:208
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteHeader.tsx:220
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:363
 msgid "PDF"
@@ -9003,9 +9056,9 @@ msgid "Prev"
 msgstr "Prev"
 
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoiceHeader.tsx:281
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:195
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:197
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:137
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:186
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:188
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteHeader.tsx:195
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:352
 msgid "Preview"
@@ -9746,7 +9799,7 @@ msgstr "Receipt Requested Date"
 #: apps/erp/app/modules/inventory/ui/useInventorySubmodules.tsx:27
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferHeader.tsx:232
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceHeader.tsx:276
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:355
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:357
 #: apps/erp/app/routes/x+/inventory+/receipts.tsx:14
 #: apps/erp/app/routes/x+/issue+/$id.tsx:140
 #: apps/erp/app/routes/x+/part+/$itemId.tsx:286
@@ -9761,7 +9814,7 @@ msgid "Receivables"
 msgstr "Receivables"
 
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferHeader.tsx:282
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:407
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:409
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrdersTable.tsx:411
 msgid "Receive"
 msgstr "Receive"
@@ -9813,6 +9866,10 @@ msgstr "Record deleted"
 msgid "Records"
 msgstr "Records"
 
+#: apps/erp/app/routes/_public+/login.tsx:256
+msgid "Redirecting to verification page..."
+msgstr "Redirecting to verification page..."
+
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:79
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransfersTable.tsx:101
 #: apps/erp/app/modules/quality/ui/Calibrations/GaugeCalibrationRecordForm.tsx:336
@@ -9834,7 +9891,7 @@ msgstr "Refresh"
 msgid "Refresh exchange rate"
 msgstr "Refresh exchange rate"
 
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:338
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:340
 #: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:225
 #: apps/erp/app/modules/quality/ui/Documents/QualityDocumentHeader.tsx:204
 msgid "Reject"
@@ -9845,11 +9902,11 @@ msgstr "Reject"
 msgid "Reject Quote"
 msgstr "Reject Quote"
 
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:286
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:297
 msgid "Rejected By"
 msgstr "Rejected By"
 
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:294
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:307
 msgid "Rejected Date"
 msgstr "Rejected Date"
 
@@ -9931,9 +9988,9 @@ msgstr "Remove sort by column"
 
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferHeader.tsx:211
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferHeader.tsx:304
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:529
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:531
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:297
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:325
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:327
 #: apps/erp/app/modules/quality/ui/Issue/IssueHeader.tsx:181
 #: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceDispatchHeader.tsx:151
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteHeader.tsx:332
@@ -10142,6 +10199,10 @@ msgstr "Results per page"
 #: apps/erp/app/components/Chat/messages/MessageActions.tsx:143
 msgid "Retry response"
 msgstr "Retry response"
+
+#: apps/erp/app/routes/_public+/invite.$code.tsx:129
+msgid "Return Home"
+msgstr "Return Home"
 
 #: apps/erp/app/modules/items/ui/Item/ItemWithRevision.tsx:20
 msgid "Rev {revision}"
@@ -10907,7 +10968,7 @@ msgstr "Self-Onboarding with Carbon Academy"
 #: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:221
 #: apps/erp/app/modules/production/ui/Jobs/JobBillOfProcess.tsx:3396
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteFinalizeModal.tsx:105
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:218
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:220
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteSendModal.tsx:186
 #: apps/erp/app/modules/users/ui/components/ResendInviteModal.tsx:85
 msgid "Send"
@@ -11084,7 +11145,7 @@ msgstr "Share"
 msgid "Share Link"
 msgstr "Share Link"
 
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:530
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:534
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteHeader.tsx:558
 msgid "Share Quote"
 msgstr "Share Quote"
@@ -11132,7 +11193,7 @@ msgid "Shifts"
 msgstr "Shifts"
 
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferHeader.tsx:215
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:311
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:313
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:506
 msgid "Ship"
 msgstr "Ship"
@@ -11182,7 +11243,7 @@ msgstr "Shipment Location"
 #: apps/erp/app/modules/inventory/ui/useInventorySubmodules.tsx:33
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferHeader.tsx:165
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoiceHeader.tsx:253
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:259
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:261
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:451
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderLineShipments.tsx:65
 #: apps/erp/app/routes/x+/inventory+/shipments.tsx:15
@@ -11320,6 +11381,18 @@ msgstr "Show part thumbnails on quotes, sales orders, sales invoices, and shipme
 msgid "Show sync options"
 msgstr "Show sync options"
 
+#: apps/erp/app/routes/_public+/login.tsx:339
+msgid "Sign in with Email"
+msgstr "Sign in with Email"
+
+#: apps/erp/app/routes/_public+/login.tsx:303
+msgid "Sign in with Google"
+msgstr "Sign in with Google"
+
+#: apps/erp/app/routes/_public+/login.tsx:316
+msgid "Sign in with Outlook"
+msgstr "Sign in with Outlook"
+
 #: apps/erp/app/components/AvatarMenu.tsx:218
 msgid "Sign Out"
 msgstr "Sign Out"
@@ -11355,6 +11428,10 @@ msgstr "Skip scheduled maintenance on company holidays"
 #: apps/erp/app/modules/quality/ui/Actions/ActionsTable.tsx:280
 msgid "Skipped"
 msgstr "Skipped"
+
+#: apps/erp/app/routes/_public+/callback.tsx:147
+msgid "Something went wrong. Please try again."
+msgstr "Something went wrong. Please try again."
 
 #: apps/erp/app/components/Table/components/Sort/Sort.tsx:49
 #: apps/erp/app/components/Table/components/Sort/Sort.tsx:50
@@ -11522,7 +11599,7 @@ msgstr "State / Province"
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransfersTable.tsx:65
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoicesTable.tsx:130
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoicesTable.tsx:124
-#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:126
+#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:138
 #: apps/erp/app/modules/production/ui/Jobs/JobsTable.tsx:310
 #: apps/erp/app/modules/production/ui/Planning/ProductionPlanningOrderDrawer.tsx:374
 #: apps/erp/app/modules/production/ui/Procedures/ProcedureProperties.tsx:174
@@ -11530,7 +11607,7 @@ msgstr "State / Province"
 #: apps/erp/app/modules/purchasing/ui/Planning/PurchasingPlanningOrderDrawer.tsx:621
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrdersTable.tsx:124
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQsTable.tsx:102
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:234
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:235
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuotesTable.tsx:105
 #: apps/erp/app/modules/quality/ui/Documents/QualityDocumentProperties.tsx:202
 #: apps/erp/app/modules/quality/ui/Documents/QualityDocumentsTable.tsx:84
@@ -11989,7 +12066,7 @@ msgstr "Table actions"
 #: apps/erp/app/modules/production/ui/Jobs/JobsTable.tsx:417
 #: apps/erp/app/modules/production/ui/Procedures/ProcedureProperties.tsx:223
 #: apps/erp/app/modules/production/ui/Procedures/ProceduresTable.tsx:110
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:313
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:327
 #: apps/erp/app/modules/purchasing/ui/Supplier/SuppliersTable.tsx:138
 #: apps/erp/app/modules/quality/ui/Documents/QualityDocumentProperties.tsx:231
 #: apps/erp/app/modules/quality/ui/Documents/QualityDocumentsTable.tsx:104
@@ -12109,7 +12186,7 @@ msgstr "The date the customer expects to receive the goods"
 msgid "The endpoint that receives a POST request with the updated data when the table is updated"
 msgstr "The endpoint that receives a POST request with the updated data when the table is updated"
 
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:467
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:469
 msgid "The following line items are missing prices or lead times:"
 msgstr "The following line items are missing prices or lead times:"
 
@@ -12288,12 +12365,12 @@ msgstr "Thumbnails are not included"
 msgid "Thursday"
 msgstr "Thursday"
 
-#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:213
+#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:225
 msgid "Timecard"
 msgstr "Timecard"
 
 #: apps/erp/app/modules/people/ui/Person/PersonSidebar/usePersonSidebar.tsx:35
-#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:220
+#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:232
 #: apps/erp/app/modules/people/ui/usePeopleSubmodules.tsx:29
 #: apps/erp/app/routes/x+/people+/timecard.tsx:16
 #: apps/erp/app/routes/x+/person+/$personId.timecard.tsx:430
@@ -12398,9 +12475,9 @@ msgstr "Toggle level"
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoiceHeader.tsx:358
 #: apps/erp/app/modules/production/ui/Jobs/JobHeader.tsx:403
 #: apps/erp/app/modules/production/ui/Procedures/ProcedureHeader.tsx:165
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:534
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:536
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:302
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:331
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:333
 #: apps/erp/app/modules/quality/ui/Documents/QualityDocumentHeader.tsx:272
 #: apps/erp/app/modules/resources/ui/Training/TrainingHeader.tsx:85
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteHeader.tsx:357
@@ -12657,7 +12734,7 @@ msgstr "Tuesday"
 #: apps/erp/app/modules/production/ui/Procedures/ProcedureExplorer.tsx:802
 #: apps/erp/app/modules/purchasing/ui/Planning/PurchasingPlanningTable.tsx:429
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderForm.tsx:187
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:246
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:249
 #: apps/erp/app/modules/purchasing/ui/Supplier/SuppliersTable.tsx:100
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteForm.tsx:226
 #: apps/erp/app/modules/quality/ui/Calibrations/GaugeCalibrationRecordsTable.tsx:146
@@ -12702,8 +12779,8 @@ msgid "Types"
 msgstr "Types"
 
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceHeader.tsx:228
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:184
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:175
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:185
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:176
 msgid "Unapproved Supplier"
 msgstr "Unapproved Supplier"
 
@@ -13051,6 +13128,11 @@ msgstr "Use ... to get the next part ID"
 msgid "Use ... to get the next tool ID"
 msgstr "Use ... to get the next tool ID"
 
+#: apps/erp/app/routes/_public+/login.tsx:269
+#: apps/erp/app/routes/_public+/verify.tsx:178
+msgid "Use a different email"
+msgstr "Use a different email"
+
 #: apps/erp/app/routes/x+/settings+/items.tsx:181
 msgid "Use metric system for default material dimensions."
 msgstr "Use metric system for default material dimensions."
@@ -13121,6 +13203,15 @@ msgstr "Value"
 #: apps/erp/app/modules/settings/ui/Company/CompanyForm.tsx:30
 msgid "VAT Number"
 msgstr "VAT Number"
+
+#: apps/erp/app/routes/_public+/verify.tsx:168
+msgid "Verification Error"
+msgstr "Verification Error"
+
+#: apps/erp/app/routes/_public+/login.tsx:248
+#: apps/erp/app/routes/_public+/verify.tsx:158
+msgid "Verify your email"
+msgstr "Verify your email"
 
 #: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:512
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:497
@@ -13368,6 +13459,18 @@ msgstr "Watch full video"
 msgid "We've mapped each column to what we believe is correct, but please review the data below to confirm it's accurate."
 msgstr "We've mapped each column to what we believe is correct, but please review the data below to confirm it's accurate."
 
+#: apps/erp/app/routes/_public+/verify.tsx:161
+msgid "We've sent a verification code to {email}"
+msgstr "We've sent a verification code to {email}"
+
+#: apps/erp/app/routes/_public+/login.tsx:251
+msgid "We've sent a verification code to {signupEmail}"
+msgstr "We've sent a verification code to {signupEmail}"
+
+#: apps/erp/app/routes/_public+/login.tsx:239
+msgid "We've sent you a magic link to sign in to your account."
+msgstr "We've sent you a magic link to sign in to your account."
+
 #: apps/erp/app/components/Chat/WebSearch.tsx:181
 msgid "Web Search"
 msgstr "Web Search"
@@ -13419,6 +13522,7 @@ msgstr "Weighted Average"
 msgid "Weighted average cost over last year calculated when the invoice is posted"
 msgstr "Weighted average cost over last year calculated when the invoice is posted"
 
+#: apps/erp/app/routes/_public+/invite.$code.tsx:154
 #: apps/erp/app/routes/onboarding+/_index.tsx:36
 msgid "Welcome to Carbon"
 msgstr "Welcome to Carbon"
@@ -13625,6 +13729,10 @@ msgstr "Your Console PIN"
 #: apps/erp/app/routes/share+/supplier-quote.$id.tsx:1033
 msgid "Your Email"
 msgstr "Your Email"
+
+#: apps/erp/app/routes/_public+/invite.$code.tsx:121
+msgid "Your invitation is invalid or has already been accepted. Please contact support if you believe this is an error."
+msgstr "Your invitation is invalid or has already been accepted. Please contact support if you believe this is an error."
 
 #: apps/erp/app/routes/share+/supplier-quote.$id.tsx:968
 #: apps/erp/app/routes/share+/supplier-quote.$id.tsx:1028

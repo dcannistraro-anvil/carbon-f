@@ -20,6 +20,7 @@ import {
   Heading,
   VStack
 } from "@carbon/react";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { LuCircleAlert } from "react-icons/lu";
 import type {
   ActionFunctionArgs,
@@ -131,6 +132,7 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export default function VerifyRoute() {
+  const { t } = useLingui();
   const [searchParams] = useSearchParams();
   const email = searchParams.get("email") ?? "";
   const redirectTo = searchParams.get("redirectTo") ?? undefined;
@@ -140,7 +142,11 @@ export default function VerifyRoute() {
   return (
     <>
       <div className="flex justify-center mb-4">
-        <img src="/carbon-logo-mark.svg" alt="Carbon Logo" className="w-36" />
+        <img
+          src="/carbon-logo-mark.svg"
+          alt={t`Carbon Logo`}
+          className="w-36"
+        />
       </div>
       <div className="rounded-lg md:bg-card md:border md:border-border md:shadow-lg p-8 w-[380px]">
         <ValidatedForm
@@ -152,15 +158,19 @@ export default function VerifyRoute() {
           <Hidden name="email" value={email} />
           <Hidden name="redirectTo" value={redirectTo} />
           <VStack spacing={4} className="items-center">
-            <Heading size="h3">Verify your email</Heading>
+            <Heading size="h3">
+              <Trans>Verify your email</Trans>
+            </Heading>
             <p className="text-muted-foreground tracking-tight text-sm text-center">
-              We've sent a verification code to {email}
+              <Trans>We've sent a verification code to {email}</Trans>
             </p>
 
             {fetcher.data?.success === false && fetcher.data?.message && (
               <Alert variant="destructive">
                 <LuCircleAlert className="w-4 h-4" />
-                <AlertTitle>Verification Error</AlertTitle>
+                <AlertTitle>
+                  <Trans>Verification Error</Trans>
+                </AlertTitle>
                 <AlertDescription>{fetcher.data?.message}</AlertDescription>
               </Alert>
             )}
@@ -168,7 +178,9 @@ export default function VerifyRoute() {
             <InputOTP name="code" label="" />
 
             <Button type="button" variant="link" size="sm" asChild>
-              <Link to="/login">Use a different email</Link>
+              <Link to="/login">
+                <Trans>Use a different email</Trans>
+              </Link>
             </Button>
           </VStack>
         </ValidatedForm>

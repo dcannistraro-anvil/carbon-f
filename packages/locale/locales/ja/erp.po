@@ -13,38 +13,38 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#. placeholder {0}: rule.escalationDays
 #: apps/erp/app/modules/settings/ui/Approvals/ApprovalRuleDetails.tsx:96
+#. placeholder {0}: rule.escalationDays
 msgid "{0} days"
 msgstr "{0}日"
 
-#. placeholder {0}: attachment.name
-#. placeholder {0}: file.name
 #: apps/erp/app/components/Documents.tsx:110
 #: apps/erp/app/modules/production/ui/Jobs/JobDocuments.tsx:87
 #: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceDispatchNotes.tsx:275
 #: apps/erp/app/modules/sales/ui/Opportunity/OpportunityDocuments.tsx:322
 #: apps/erp/app/modules/sales/ui/Opportunity/OpportunityLineDocuments.tsx:96
+#. placeholder {0}: attachment.name
+#. placeholder {0}: file.name
 msgid "{0} deleted successfully"
 msgstr "{0}が正常に削除されました"
 
-#. placeholder {0}: history.length
 #: apps/erp/app/modules/items/ui/Item/SupplierPartForm.tsx:259
+#. placeholder {0}: history.length
 msgid "{0} orders"
 msgstr "{0}件の注文"
 
-#. placeholder {0}: selectedProcesses.length
 #: apps/erp/app/modules/quality/ui/Issue/IssueTask.tsx:844
+#. placeholder {0}: selectedProcesses.length
 msgid "{0} Processes"
 msgstr "{0}個のプロセス"
 
-#. placeholder {0}: row.original.subCategoriesCount ?? 0
 #: apps/erp/app/modules/accounting/ui/AccountCategories/AccountCategoriesTable.tsx:100
+#. placeholder {0}: row.original.subCategoriesCount ?? 0
 msgid "{0} Subcategories"
 msgstr "{0}個のサブカテゴリ"
 
-#. placeholder {0}: file.name
 #: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceDispatchNotes.tsx:229
+#. placeholder {0}: file.name
 msgid "{0} uploaded successfully"
 msgstr "{0}が正常にアップロードされました"
 
@@ -211,7 +211,7 @@ msgid "Account Category"
 msgstr "勘定科目"
 
 #: apps/erp/app/modules/purchasing/ui/Supplier/SupplierForm.tsx:128
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:252
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:257
 #: apps/erp/app/modules/purchasing/ui/Supplier/SuppliersTable.tsx:121
 #: apps/erp/app/modules/sales/ui/Customer/CustomerForm.tsx:129
 #: apps/erp/app/modules/sales/ui/Customer/CustomerHeader.tsx:148
@@ -697,7 +697,7 @@ msgstr "APIキー"
 msgid "API Keys"
 msgstr "APIキー"
 
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:275
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:284
 msgid "Approval Date"
 msgstr "承認日"
 
@@ -714,13 +714,13 @@ msgstr "承認要件"
 msgid "Approval Rules"
 msgstr "承認ルール"
 
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:326
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:328
 #: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:214
 #: apps/erp/app/modules/quality/ui/Documents/QualityDocumentHeader.tsx:196
 msgid "Approve"
 msgstr "承認"
 
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:267
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:274
 #: apps/erp/app/modules/quality/ui/Calibrations/GaugeCalibrationRecordForm.tsx:365
 #: apps/erp/app/modules/quality/ui/Calibrations/GaugeCalibrationRecordsTable.tsx:258
 msgid "Approved By"
@@ -742,9 +742,9 @@ msgstr "アーカイブ済み"
 msgid "Archived Logs"
 msgstr "アーカイブされたログ"
 
+#: apps/erp/app/routes/share+/quote.$id.tsx:1346
 #. placeholder {0}: quote.quoteId
 #. placeholder {1}: formatter.format(total)
-#: apps/erp/app/routes/share+/quote.$id.tsx:1346
 msgid "Are you sure you want to accept quote {0} for {1}?"
 msgstr "本当に見積書 {0} を {1} で受け入れてもよろしいですか？"
 
@@ -756,8 +756,8 @@ msgstr "プロセス「{name}」を有効化してもよろしいですか？ド
 msgid "Are you sure you want to activate this gauge?."
 msgstr "このゲージを有効化してもよろしいですか？"
 
-#. placeholder {0}: routeData?.rfqSummary ?.rfqId!
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:325
+#. placeholder {0}: routeData?.rfqSummary ?.rfqId!
 msgid "Are you sure you want to cancel {0}? This will also cancel all related supplier quotes."
 msgstr "{0}をキャンセルしてもよろしいですか？これにより、関連するすべてのサプライヤー見積もりもキャンセルされます。"
 
@@ -786,28 +786,28 @@ msgstr "RFQを見積もりに変換してもよろしいですか？"
 msgid "Are you sure you want to create jobs for this sales order? This will create jobs for all lines that don't already have jobs."
 msgstr "このセールスオーダーのジョブを作成してもよろしいですか？これにより、まだジョブを持っていないすべての行のジョブが作成されます。"
 
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:366
 #. placeholder {0}: routeData?.supplier?.name
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:352
 msgid "Are you sure you want to deactivate {0}?"
 msgstr "{0}を非アクティブ化してもよろしいですか？"
 
-#. placeholder {0}: selectedCategory?.category
 #: apps/erp/app/modules/accounting/ui/AccountCategories/AccountCategoriesTable.tsx:196
+#. placeholder {0}: selectedCategory?.category
 msgid "Are you sure you want to deactivate the {0} account category?"
 msgstr "{0}勘定科目を無効化してもよろしいですか?"
 
-#. placeholder {0}: selectedCategory?.name
 #: apps/erp/app/modules/people/ui/Attributes/AttributeCategoriesTable.tsx:186
+#. placeholder {0}: selectedCategory?.name
 msgid "Are you sure you want to deactivate the {0} attribute category?"
 msgstr "{0}属性カテゴリを無効化してもよろしいですか？"
 
-#. placeholder {0}: selectedAttribute?.name
 #: apps/erp/app/modules/people/ui/Attributes/AttributeCategoryDetail.tsx:227
+#. placeholder {0}: selectedAttribute?.name
 msgid "Are you sure you want to deactivate the {0} attribute?"
 msgstr "本当に {0} 属性を無効化してもよろしいですか?"
 
-#. placeholder {0}: selectedAccountSubcategory?.name
 #: apps/erp/app/modules/accounting/ui/AccountCategories/AccountCategoryDetail.tsx:110
+#. placeholder {0}: selectedAccountSubcategory?.name
 msgid "Are you sure you want to deactivate the {0} subcategory?"
 msgstr "本当に{0}サブカテゴリを無効化してもよろしいですか？"
 
@@ -832,19 +832,16 @@ msgstr "このゲージを非アクティブ化してもよろしいですか?"
 msgid "Are you sure you want to deactivate this user?"
 msgstr "このユーザーを無効化してもよろしいですか？"
 
-#. placeholder {0}: tool.readableIdWithRevision
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteBillOfProcess.tsx:2618
+#. placeholder {0}: tool.readableIdWithRevision
 msgid "Are you sure you want to delete {0} from this operation? This cannot be undone."
 msgstr "{0}をこの操作から削除してもよろしいですか?これは元に戻すことができません。"
 
-#. placeholder {0}: selectedGroup.name
 #: apps/erp/app/modules/items/ui/Parts/ConfigurationParameters.tsx:376
+#. placeholder {0}: selectedGroup.name
 msgid "Are you sure you want to delete {0}?"
 msgstr "{0}を削除してもよろしいですか？"
 
-#. placeholder {0}: routeData?.consumableSummary?.readableIdWithRevision
-#. placeholder {0}: routeData?.customer?.name!
-#. placeholder {0}: routeData?.document?.name
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptHeader.tsx:160
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentHeader.tsx:395
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferHeader.tsx:226
@@ -859,10 +856,10 @@ msgstr "{0}を削除してもよろしいですか？"
 #: apps/erp/app/modules/items/ui/Tools/ToolHeader.tsx:91
 #: apps/erp/app/modules/items/ui/Tools/ToolsTable.tsx:562
 #: apps/erp/app/modules/production/ui/Procedures/ProcedureHeader.tsx:190
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:556
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:558
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:341
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:332
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:352
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:346
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:354
 #: apps/erp/app/modules/quality/ui/Documents/QualityDocumentHeader.tsx:296
 #: apps/erp/app/modules/quality/ui/Issue/IssueHeader.tsx:191
 #: apps/erp/app/modules/resources/ui/Training/TrainingHeader.tsx:96
@@ -874,16 +871,19 @@ msgstr "{0}を削除してもよろしいですか？"
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrdersTable.tsx:617
 #: apps/erp/app/modules/sales/ui/SalesRFQ/SalesRFQHeader.tsx:297
 #: apps/erp/app/modules/sales/ui/SalesRFQ/SalesRFQsTable.tsx:272
+#. placeholder {0}: routeData?.consumableSummary?.readableIdWithRevision
+#. placeholder {0}: routeData?.customer?.name!
+#. placeholder {0}: routeData?.document?.name
 msgid "Are you sure you want to delete {0}? This cannot be undone."
 msgstr "本当に{0}を削除してもよろしいですか？この操作は取り消せません。"
 
-#. placeholder {0}: selectedCustomField?.name
 #: apps/erp/app/modules/settings/ui/CustomFields/CustomFieldsTableDetail.tsx:231
+#. placeholder {0}: selectedCustomField?.name
 msgid "Are you sure you want to delete the {0} field?"
 msgstr "{0}フィールドを削除してもよろしいですか？"
 
-#. placeholder {0}: parameter.label
 #: apps/erp/app/modules/items/ui/Parts/ConfigurationParameters.tsx:1089
+#. placeholder {0}: parameter.label
 msgid "Are you sure you want to delete the {0} parameter? This will not update any formulas that are using this parameter."
 msgstr "{0}パラメータを削除してもよろしいですか？これを使用している数式は更新されません。"
 
@@ -895,14 +895,14 @@ msgstr "この操作から{key}パラメータを削除してもよろしいで�
 msgid "Are you sure you want to delete the {name} attribute from this operation? This cannot be undone."
 msgstr "この操作から{name}属性を削除してもよろしいですか？この操作は取り消せません。"
 
+#: apps/erp/app/routes/x+/accounting+/charts.delete.$accountId.tsx:70
 #. placeholder {0}: account.name
 #. placeholder {1}: account.number
-#: apps/erp/app/routes/x+/accounting+/charts.delete.$accountId.tsx:70
 msgid "Are you sure you want to delete the account: {0} ({1})? This cannot be undone."
 msgstr "このアカウントを削除してもよろしいですか: {0} ({1})? この操作は取り消せません。"
 
-#. placeholder {0}: apiKey.name
 #: apps/erp/app/routes/x+/settings+/api-keys.delete.$id.tsx:56
+#. placeholder {0}: apiKey.name
 msgid "Are you sure you want to delete the API key: {0}? This cannot be undone."
 msgstr "API キー: {0} を削除してもよろしいですか？この操作は取り消せません。"
 
@@ -910,8 +910,8 @@ msgstr "API キー: {0} を削除してもよろしいですか？この操作�
 msgid "Are you sure you want to delete the contractor: {name}? This cannot be undone."
 msgstr "本当に契約者 {name} を削除してもよろしいですか？この操作は取り消せません。"
 
-#. placeholder {0}: customerPart?.customer?.name ?? ""
 #: apps/erp/app/routes/x+/part+/$itemId.sales.customer-parts.delete.$customerPartToItemId.tsx:85
+#. placeholder {0}: customerPart?.customer?.name ?? ""
 msgid "Are you sure you want to delete the customer part for {0}? This cannot be undone."
 msgstr "本当に{0}の顧客部品を削除してもよろしいですか？この操作は取り消せません。"
 
@@ -919,13 +919,13 @@ msgstr "本当に{0}の顧客部品を削除してもよろしいですか？こ
 msgid "Are you sure you want to delete the customer portal for: {customerName}? This cannot be undone."
 msgstr "顧客ポータル {customerName} を削除してもよろしいですか？この操作は取り消せません。"
 
-#. placeholder {0}: customerStatus.name
 #: apps/erp/app/routes/x+/sales+/customer-statuses.delete.$customerStatusId.tsx:80
+#. placeholder {0}: customerStatus.name
 msgid "Are you sure you want to delete the customer status: {0}? This cannot be undone."
 msgstr "顧客ステータス「{0}」を削除してもよろしいですか？この操作は取り消せません。"
 
-#. placeholder {0}: customerType.name
 #: apps/erp/app/routes/x+/sales+/customer-types.delete.$customerTypeId.tsx:92
+#. placeholder {0}: customerType.name
 msgid "Are you sure you want to delete the customer type: {0}? This cannot be undone."
 msgstr "顧客タイプ「{0}」を削除してもよろしいですか？この操作は取り消せません。"
 
@@ -933,8 +933,8 @@ msgstr "顧客タイプ「{0}」を削除してもよろしいですか？この
 msgid "Are you sure you want to delete the department: {name}? This cannot be undone."
 msgstr "本当に部門「{name}」を削除してもよろしいですか？この操作は取り消せません。"
 
-#. placeholder {0}: employeeType.name
 #: apps/erp/app/routes/x+/users+/employee-types.delete.$employeeTypeId.tsx:85
+#. placeholder {0}: employeeType.name
 msgid "Are you sure you want to delete the employee type: {0}? This cannot be undone."
 msgstr "従業員タイプ「{0}」を削除してもよろしいですか？この操作は取り消せません。"
 
@@ -942,13 +942,13 @@ msgstr "従業員タイプ「{0}」を削除してもよろしいですか？こ
 msgid "Are you sure you want to delete the failure mode: {name}? This cannot be undone."
 msgstr "失敗モード「{name}」を削除してもよろしいですか？この操作は取り消せません。"
 
-#. placeholder {0}: gaugeType.name
 #: apps/erp/app/routes/x+/quality+/gauge-types.delete.$id.tsx:76
+#. placeholder {0}: gaugeType.name
 msgid "Are you sure you want to delete the gauge type: {0}? This cannot be undone."
 msgstr "ゲージタイプ「{0}」を削除してもよろしいですか？この操作は取り消せません。"
 
-#. placeholder {0}: group.name
 #: apps/erp/app/routes/x+/users+/groups.delete.$groupId.tsx:73
+#. placeholder {0}: group.name
 msgid "Are you sure you want to delete the group: {0}? This cannot be undone."
 msgstr "グループ「{0}」を削除してもよろしいですか？この操作は取り消せません。"
 
@@ -956,23 +956,23 @@ msgstr "グループ「{0}」を削除してもよろしいですか？この操
 msgid "Are you sure you want to delete the holiday: {name}? This cannot be undone."
 msgstr "本当に休日「{name}」を削除してもよろしいですか？この操作は取り消せません。"
 
-#. placeholder {0}: nonConformanceType.name
 #: apps/erp/app/routes/x+/quality+/issue-types.delete.$id.tsx:79
+#. placeholder {0}: nonConformanceType.name
 msgid "Are you sure you want to delete the issue type: {0}? This cannot be undone."
 msgstr "本当に問題タイプ: {0} を削除してもよろしいですか？この操作は取り消せません。"
 
-#. placeholder {0}: itemPostingGroup.name
 #: apps/erp/app/routes/x+/items+/groups.delete.$groupId.tsx:94
+#. placeholder {0}: itemPostingGroup.name
 msgid "Are you sure you want to delete the item group: {0}? This cannot be undone."
 msgstr "本当にアイテムグループ: {0} を削除してもよろしいですか？この操作は取り消せません。"
 
-#. placeholder {0}: line.customerPartId
-#. placeholder {0}: line.description
-#. placeholder {0}: line.itemReadableId
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/DeletePurchaseInvoiceLine.tsx:23
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/DeletePurchasingRFQLine.tsx:23
 #: apps/erp/app/modules/sales/ui/SalesOrder/DeleteSalesOrderLine.tsx:23
 #: apps/erp/app/modules/sales/ui/SalesRFQ/DeleteSalesRFQLine.tsx:23
+#. placeholder {0}: line.customerPartId
+#. placeholder {0}: line.description
+#. placeholder {0}: line.itemReadableId
 msgid "Are you sure you want to delete the line: {0}? This cannot be undone."
 msgstr "本当にこの行を削除してもよろしいですか: {0}? この操作は取り消せません。"
 
@@ -991,38 +991,38 @@ msgstr "本当に位置情報を削除してもよろしいですか: {name}? �
 msgid "Are you sure you want to delete the maintenance schedule: {name}? This cannot be undone."
 msgstr "メンテナンススケジュール「{name}」を削除してもよろしいですか？この操作は取り消せません。"
 
-#. placeholder {0}: materialDimension.name
 #: apps/erp/app/routes/x+/items+/dimensions.delete.$id.tsx:81
+#. placeholder {0}: materialDimension.name
 msgid "Are you sure you want to delete the material dimension: {0}? This cannot be undone."
 msgstr "本当に材料寸法「{0}」を削除してもよろしいですか？この操作は取り消せません。"
 
-#. placeholder {0}: materialFinish.name
 #: apps/erp/app/routes/x+/items+/finishes.delete.$id.tsx:78
+#. placeholder {0}: materialFinish.name
 msgid "Are you sure you want to delete the material finish: {0}? This cannot be undone."
 msgstr "本当に材料仕上げを削除してもよろしいですか: {0}? この操作は取り消せません。"
 
-#. placeholder {0}: materialForm.name
 #: apps/erp/app/routes/x+/items+/forms.delete.$formId.tsx:78
+#. placeholder {0}: materialForm.name
 msgid "Are you sure you want to delete the material form: {0}? This cannot be undone."
 msgstr "本当に材料フォーム: {0} を削除してもよろしいですか？この操作は取り消せません。"
 
-#. placeholder {0}: materialGrade.name
 #: apps/erp/app/routes/x+/items+/grades.delete.$id.tsx:78
+#. placeholder {0}: materialGrade.name
 msgid "Are you sure you want to delete the material grade: {0}? This cannot be undone."
 msgstr "本当に材料グレード: {0} を削除してもよろしいですか？この操作は取り消せません。"
 
-#. placeholder {0}: materialSubstance.name
 #: apps/erp/app/routes/x+/items+/substances.delete.$substanceId.tsx:84
+#. placeholder {0}: materialSubstance.name
 msgid "Are you sure you want to delete the material substance: {0}? This cannot be undone."
 msgstr "本当に材料物質「{0}」を削除してもよろしいですか？この操作は取り消せません。"
 
-#. placeholder {0}: materialType.name
 #: apps/erp/app/routes/x+/items+/types.delete.$id.tsx:78
+#. placeholder {0}: materialType.name
 msgid "Are you sure you want to delete the material type: {0}? This cannot be undone."
 msgstr "本当に材料タイプ: {0} を削除してもよろしいですか？この操作は取り消せません。"
 
-#. placeholder {0}: noQuoteReason.name
 #: apps/erp/app/routes/x+/sales+/no-quote-reasons.delete.$id.tsx:82
+#. placeholder {0}: noQuoteReason.name
 msgid "Are you sure you want to delete the no quote reason: {0}? This cannot be undone."
 msgstr "本当に見積もり不可の理由「{0}」を削除してもよろしいですか？この操作は取り消せません。"
 
@@ -1030,36 +1030,36 @@ msgstr "本当に見積もり不可の理由「{0}」を削除してもよろし
 msgid "Are you sure you want to delete the partner: {name}? This cannot be undone."
 msgstr "パートナー「{name}」を削除してもよろしいですか？この操作は取り消せません。"
 
-#. placeholder {0}: paymentTerm.name
 #: apps/erp/app/routes/x+/accounting+/payment-terms.delete.$paymentTermId.tsx:92
+#. placeholder {0}: paymentTerm.name
 msgid "Are you sure you want to delete the payment term: {0}? This cannot be undone."
 msgstr "支払い条件「{0}」を削除してもよろしいですか？この操作は取り消せません。"
 
+#: apps/erp/app/routes/x+/purchase-invoice+/$invoiceId.$lineId.delete.tsx:100
 #. placeholder {0}: purchaseInvoiceLine.quantity ?? 0
 #. placeholder {1}: purchaseInvoiceLine.description ?? ""
-#: apps/erp/app/routes/x+/purchase-invoice+/$invoiceId.$lineId.delete.tsx:100
 msgid "Are you sure you want to delete the purchase invoice line for {0} {1}? This cannot be undone."
 msgstr "購入請求書行の{0} {1}を削除してもよろしいですか？この操作は取り消せません。"
 
+#: apps/erp/app/routes/x+/sales-invoice+/$invoiceId.$lineId.delete.tsx:100
 #. placeholder {0}: salesInvoiceLine.quantity ?? 0
 #. placeholder {1}: salesInvoiceLine.description ?? ""
-#: apps/erp/app/routes/x+/sales-invoice+/$invoiceId.$lineId.delete.tsx:100
 msgid "Are you sure you want to delete the sales invoice line for {0} {1}? This cannot be undone."
 msgstr "本当に販売請求書行の{0} {1}を削除してもよろしいですか？この操作は取り消せません。"
 
+#: apps/erp/app/routes/x+/sales-order+/$orderId.$lineId.delete.tsx:93
 #. placeholder {0}: salesOrderLine.saleQuantity ?? 0
 #. placeholder {1}: salesOrderLine.description ?? ""
-#: apps/erp/app/routes/x+/sales-order+/$orderId.$lineId.delete.tsx:93
 msgid "Are you sure you want to delete the sales order line for {0} {1}? This cannot be undone."
 msgstr "本当に販売注文行 {0} {1} を削除してもよろしいですか？この操作は取り消せません。"
 
-#. placeholder {0}: scrapReason.name
 #: apps/erp/app/routes/x+/production+/scrap-reasons.delete.$scrapReasonId.tsx:82
+#. placeholder {0}: scrapReason.name
 msgid "Are you sure you want to delete the scrap reason: {0}? This cannot be undone."
 msgstr "スクラップ理由「{0}」を削除してもよろしいですか？この操作は取り消せません。"
 
-#. placeholder {0}: shelf.name
 #: apps/erp/app/routes/x+/inventory+/shelves.delete.$shelfId.tsx:106
+#. placeholder {0}: shelf.name
 msgid "Are you sure you want to delete the shelf: {0}? This cannot be undone."
 msgstr "本当に棚「{0}」を削除してもよろしいですか？この操作は取り消せません。"
 
@@ -1067,28 +1067,28 @@ msgstr "本当に棚「{0}」を削除してもよろしいですか？この操
 msgid "Are you sure you want to delete the shift: {name} from {locationName}? This cannot be undone."
 msgstr "シフト「{name}」を{locationName}から削除してもよろしいですか？この操作は取り消せません。"
 
-#. placeholder {0}: shippingMethod.name
 #: apps/erp/app/routes/x+/inventory+/shipping-methods.delete.$shippingMethodId.tsx:94
+#. placeholder {0}: shippingMethod.name
 msgid "Are you sure you want to delete the shipping method: {0}? This cannot be undone."
 msgstr "配送方法「{0}」を削除してもよろしいですか？この操作は取り消せません。"
 
-#. placeholder {0}: supplierType.name
 #: apps/erp/app/routes/x+/purchasing+/supplier-types.delete.$supplierTypeId.tsx:93
+#. placeholder {0}: supplierType.name
 msgid "Are you sure you want to delete the supplier type: {0}? This cannot be undone."
 msgstr "サプライヤータイプ: {0} を削除してもよろしいですか？この操作は取り消せません。"
 
-#. placeholder {0}: unitOfMeasure.name
 #: apps/erp/app/routes/x+/items+/uom.delete.$uomId.tsx:88
+#. placeholder {0}: unitOfMeasure.name
 msgid "Are you sure you want to delete the unit of measure: {0}? This cannot be undone."
 msgstr "本当に計測単位「{0}」を削除してもよろしいですか？この操作は取り消せません。"
 
-#. placeholder {0}: selectedView.name
 #: apps/erp/app/components/Layout/Navigation/GroupedContentSidebar.tsx:162
+#. placeholder {0}: selectedView.name
 msgid "Are you sure you want to delete the view \"{0}\"?"
 msgstr "本当に「{0}」ビューを削除してもよろしいですか？"
 
-#. placeholder {0}: webhook.name
 #: apps/erp/app/routes/x+/settings+/webhooks.delete.$id.tsx:76
+#. placeholder {0}: webhook.name
 msgid "Are you sure you want to delete the webhook: {0}? This cannot be undone."
 msgstr "本当にウェブフック: {0} を削除してもよろしいですか？この操作は取り消せません。"
 
@@ -1151,14 +1151,14 @@ msgstr "このタイムカードを削除してもよろしいですか？この
 msgid "Are you sure you want to finalize the quote?"
 msgstr "見積書を確定してもよろしいですか？"
 
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:455
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:457
 msgid "Are you sure you want to finalize the supplier quote?"
 msgstr "サプライヤー見積もりを確定してもよろしいですか？"
 
-#. placeholder {0}: selectedPurchaseInvoice.invoiceId!
-#. placeholder {0}: selectedSalesInvoice.invoiceId!
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoicesTable.tsx:336
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoicesTable.tsx:327
+#. placeholder {0}: selectedPurchaseInvoice.invoiceId!
+#. placeholder {0}: selectedSalesInvoice.invoiceId!
 msgid "Are you sure you want to permanently delete {0}?"
 msgstr "{0}を完全に削除してもよろしいですか？"
 
@@ -1218,8 +1218,8 @@ msgstr "会社のオーナーとして、別の従業員に所有権を譲渡で
 msgid "Ascending"
 msgstr "昇順"
 
-#. js-lingui-explicit-id
 #: apps/erp/app/components/Chat/ChatInput.tsx:189
+#. js-lingui-explicit-id
 msgid "Ask anything"
 msgstr "何でも聞いてください"
 
@@ -1336,6 +1336,10 @@ msgstr "監査ログが有効になっていません"
 msgid "Audit Logs"
 msgstr "監査ログ"
 
+#: apps/erp/app/routes/_public+/login.tsx:287
+msgid "Authentication Error"
+msgstr "認証エラー"
+
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbanForm.tsx:295
 msgid "Auto Release"
 msgstr "自動リリース"
@@ -1396,13 +1400,8 @@ msgstr "残高"
 msgid "Balance at Date"
 msgstr "日付時点の残高"
 
-#: apps/erp/app/modules/settings/ui/Company/CompanyForm.tsx:34
-#: apps/erp/app/routes/onboarding+/company.tsx:217
-msgid "Base Currency"
-msgstr ""
-
-#. js-lingui-explicit-id
 #: apps/erp/app/components/Layout/Topbar/Breadcrumbs.tsx:244
+#. js-lingui-explicit-id
 msgid "Base Currency"
 msgstr "基本通貨"
 
@@ -1493,8 +1492,8 @@ msgstr "請求"
 msgid "Billing Address"
 msgstr "請求先住所"
 
-#. placeholder {0}: workCenter.blockingDispatchReadableId
 #: apps/erp/app/routes/x+/production+/_index.tsx:863
+#. placeholder {0}: workCenter.blockingDispatchReadableId
 msgid "Blocked by {0}"
 msgstr "{0}によってブロックされています"
 
@@ -1562,6 +1561,14 @@ msgstr "購入者"
 #: apps/erp/app/components/Layout/Topbar/Notifications.tsx:155
 msgid "by {byUser}"
 msgstr "{byUser}による"
+
+#: apps/erp/app/routes/_public+/invite.$code.tsx:170
+msgid "By accepting the invite, you agree to the <0>Terms of Service</0> and <1>Privacy Policy</1>."
+msgstr "招待を受け入れることで、<0>利用規約</0>および<1>プライバシーポリシー</1>に同意するものとします。"
+
+#: apps/erp/app/routes/_public+/login.tsx:370
+msgid "By signing in, you agree to the <0>Terms of Service</0> and <1>Privacy Policy.</1>"
+msgstr "サインインすることで、<0>利用規約</0>および<1>プライバシーポリシー</1>に同意するものとします。"
 
 #: apps/erp/app/modules/items/ui/Parts/PartForm.tsx:341
 #: apps/erp/app/modules/items/ui/Tools/ToolForm.tsx:333
@@ -1658,18 +1665,18 @@ msgstr "キャリブレーション"
 #: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:597
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderApprovalModal.tsx:129
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderFinalizeModal.tsx:116
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:506
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:508
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/FinalizeRFQModal.tsx:153
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:265
 #: apps/erp/app/modules/purchasing/ui/Supplier/SupplierApprovalModal.tsx:79
 #: apps/erp/app/modules/purchasing/ui/Supplier/SupplierContactForm.tsx:120
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:358
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:372
 #: apps/erp/app/modules/purchasing/ui/Supplier/SupplierLocationForm.tsx:105
 #: apps/erp/app/modules/purchasing/ui/Supplier/SupplierProcessForm.tsx:142
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteCompareDrawer.tsx:288
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteFinalizeModal.tsx:102
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:301
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:480
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:303
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:484
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteSendModal.tsx:183
 #: apps/erp/app/modules/purchasing/ui/SupplierTypes/SupplierTypeForm.tsx:100
 #: apps/erp/app/modules/quality/ui/Calibrations/GaugeCalibrationRecordForm.tsx:393
@@ -1841,6 +1848,14 @@ msgstr "Carbonクライアントが見つかりません"
 msgid "Carbon column"
 msgstr "Carbonカラム"
 
+#: apps/erp/app/routes/_public+/invite.$code.tsx:114
+#: apps/erp/app/routes/_public+/invite.$code.tsx:144
+#: apps/erp/app/routes/_public+/login.tsx:227
+#: apps/erp/app/routes/_public+/magic-link.tsx:26
+#: apps/erp/app/routes/_public+/verify.tsx:145
+msgid "Carbon Logo"
+msgstr "Carbonロゴ"
+
 #: apps/erp/app/components/ImportCSVModal/FieldMappings.tsx:454
 msgid "Carbon Value"
 msgstr "カーボン値"
@@ -1925,6 +1940,10 @@ msgstr "勘定科目表"
 msgid "Chat"
 msgstr "チャット"
 
+#: apps/erp/app/routes/_public+/login.tsx:236
+msgid "Check your email"
+msgstr "メールを確認してください"
+
 #: apps/erp/app/components/ImportCSVModal/FieldMappings.tsx:287
 msgid "Choose another file"
 msgstr "別のファイルを選択"
@@ -1975,21 +1994,21 @@ msgid "Clear search query"
 msgstr "検索クエリをクリア"
 
 #: apps/erp/app/modules/people/ui/Timecards/TimecardForm.tsx:98
-#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:97
+#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:109
 #: apps/erp/app/routes/x+/person+/$personId.timecard.tsx:464
 #: apps/erp/app/routes/x+/person+/$personId.timecard.tsx:523
 msgid "Clock In"
 msgstr "時刻入力"
 
 #: apps/erp/app/modules/people/ui/Timecards/TimecardForm.tsx:104
-#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:106
+#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:118
 #: apps/erp/app/routes/x+/person+/$personId.timecard.tsx:453
 #: apps/erp/app/routes/x+/person+/$personId.timecard.tsx:526
 msgid "Clock Out"
 msgstr "時間外"
 
-#. placeholder {0}: formatTime(openEntry.clockIn)
 #: apps/erp/app/routes/x+/person+/$personId.timecard.tsx:472
+#. placeholder {0}: formatTime(openEntry.clockIn)
 msgid "Clocked in since {0}"
 msgstr "{0}以来クロックイン中"
 
@@ -1998,7 +2017,7 @@ msgstr "{0}以来クロックイン中"
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferWizard.tsx:1290
 #: apps/erp/app/modules/production/ui/Jobs/JobMaterialsTable.tsx:580
 #: apps/erp/app/modules/purchasing/ui/Planning/PurchasingPlanningOrderDrawer.tsx:760
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:546
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:550
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteSendModal.tsx:87
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteSendModal.tsx:178
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteHeader.tsx:574
@@ -2100,17 +2119,12 @@ msgstr "企業"
 msgid "Company"
 msgstr "会社"
 
-#: apps/erp/app/modules/settings/ui/Company/CompanyForm.tsx:28
-#: apps/erp/app/routes/onboarding+/company.tsx:214
-msgid "Company Name"
-msgstr ""
-
-#. js-lingui-explicit-id
 #: apps/erp/app/components/Layout/Topbar/Breadcrumbs.tsx:236
+#. js-lingui-explicit-id
 msgid "Company Name"
 msgstr "会社名"
 
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:264
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:266
 msgid "Compare and Order"
 msgstr "比較して注文"
 
@@ -2278,8 +2292,8 @@ msgstr "設定済み"
 msgid "Confirm"
 msgstr "確認"
 
-#. placeholder {0}: salesOrder?.salesOrderId
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:121
+#. placeholder {0}: salesOrder?.salesOrderId
 msgid "Confirm {0}"
 msgstr "{0}を確認"
 
@@ -2588,7 +2602,7 @@ msgstr "レスポンスをコピー"
 msgid "Copy this link to share the quote with a customer"
 msgstr "このリンクをコピーして、顧客と見積書を共有してください"
 
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:533
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:537
 msgid "Copy this link to share the quote with a supplier"
 msgstr "このリンクをコピーして、サプライヤーと見積もりを共有してください"
 
@@ -2645,9 +2659,9 @@ msgstr "国"
 msgid "Create"
 msgstr "作成"
 
-#. placeholder {0}: search.trim() === "" ? label : search
 #: packages/react/src/CreateableCombobox.tsx:291
 #: packages/react/src/CreateableMultiSelect.tsx:339
+#. placeholder {0}: search.trim() === "" ? label : search
 msgid "Create {0}"
 msgstr "{0}を作成"
 
@@ -2683,7 +2697,7 @@ msgstr "監査証跡エントリを作成"
 
 #: apps/erp/app/modules/production/ui/Jobs/JobBillOfProcess.tsx:298
 msgid "Create Issue"
-msgstr ""
+msgstr "問題を作成"
 
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:620
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderSummary.tsx:147
@@ -2819,8 +2833,8 @@ msgstr "顧客ステータスを作成しました"
 msgid "Created customer type"
 msgstr "顧客タイプを作成しました"
 
-#. placeholder {0}: createdCustomer?.name ?? t`Customer`
 #: apps/erp/app/modules/sales/ui/Customer/CustomerForm.tsx:61
+#. placeholder {0}: createdCustomer?.name ?? t`Customer`
 msgid "Created customer: {0}"
 msgstr "顧客を作成しました: {0}"
 
@@ -3203,7 +3217,7 @@ msgstr "データ型は変更できません"
 
 #: apps/erp/app/modules/people/ui/Holidays/HolidayForm.tsx:72
 #: apps/erp/app/modules/people/ui/Holidays/HolidaysTable.tsx:62
-#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:86
+#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:98
 #: apps/erp/app/modules/resources/ui/Suggestions/SuggestionDetails.tsx:144
 #: apps/erp/app/modules/resources/ui/Suggestions/SuggestionsTable.tsx:109
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderLineShipments.tsx:97
@@ -3269,7 +3283,7 @@ msgstr "休日"
 msgid "Days Remaining"
 msgstr "残り日数"
 
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:368
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:382
 #: apps/erp/app/modules/quality/ui/Gauge/GaugesTable.tsx:451
 #: apps/erp/app/modules/resources/ui/WorkCenters/WorkCentersTable.tsx:485
 #: apps/erp/app/modules/users/ui/components/DeactivateUsersModal.tsx:80
@@ -3278,8 +3292,8 @@ msgstr "残り日数"
 msgid "Deactivate"
 msgstr "無効化"
 
-#. placeholder {0}: workCenter.name
 #: apps/erp/app/modules/resources/ui/WorkCenters/WorkCentersTable.tsx:435
+#. placeholder {0}: workCenter.name
 msgid "Deactivate {0}"
 msgstr "{0}を無効化"
 
@@ -3306,7 +3320,7 @@ msgstr "従業員を無効化"
 msgid "Deactivate Process"
 msgstr "プロセスを無効化"
 
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:348
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:362
 msgid "Deactivate Supplier"
 msgstr "サプライヤーを無効化"
 
@@ -3727,7 +3741,7 @@ msgstr "サプライヤー見積を削除"
 msgid "Delete Supplier Type"
 msgstr "サプライヤータイプを削除"
 
-#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:198
+#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:210
 msgid "Delete Timecard"
 msgstr "タイムカードを削除"
 
@@ -3870,7 +3884,7 @@ msgstr "詳細"
 msgid "Details"
 msgstr "詳細"
 
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:199
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:201
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteHeader.tsx:209
 msgid "Digital Quote"
 msgstr "デジタル見積"
@@ -4052,8 +4066,8 @@ msgstr "ドロップシップメントステータス"
 msgid "Drop your file here, or click to browse."
 msgstr "ファイルをここにドラッグするか、クリックして参照してください。"
 
-#. placeholder {0}: formatRelativeTime( convertDateStringToIsoString(dueDate) )
 #: apps/erp/app/routes/x+/production+/_index.tsx:958
+#. placeholder {0}: formatRelativeTime( convertDateStringToIsoString(dueDate) )
 msgid "Due {0}"
 msgstr "期限 {0}"
 
@@ -4095,7 +4109,7 @@ msgstr "最後のジョブの期限"
 msgid "Due Days after {selectedCalculationMethod}"
 msgstr "{selectedCalculationMethod}後の支払期日"
 
-#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:115
+#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:127
 #: apps/erp/app/modules/production/ui/Jobs/ProductionEventsTable.tsx:123
 #: apps/erp/app/modules/resources/ui/Training/TrainingsTable.tsx:122
 #: apps/erp/app/routes/x+/person+/$personId.timecard.tsx:529
@@ -4456,7 +4470,7 @@ msgid "Edit Supplier Type"
 msgstr "サプライヤータイプを編集"
 
 #: apps/erp/app/modules/people/ui/Timecards/TimecardForm.tsx:82
-#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:186
+#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:198
 #: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceDispatchExplorer.tsx:511
 #: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceDispatchProperties.tsx:612
 msgid "Edit Timecard"
@@ -4520,6 +4534,7 @@ msgstr "ワークセンターを編集"
 msgid "Email"
 msgstr "メール"
 
+#: apps/erp/app/routes/_public+/login.tsx:326
 #: apps/erp/app/routes/x+/users+/operators.$operatorId.tsx:143
 msgid "Email Address"
 msgstr "メールアドレス"
@@ -4541,7 +4556,7 @@ msgstr "絵文字"
 #: apps/erp/app/components/Layout/Topbar/CreateMenu.tsx:109
 #: apps/erp/app/modules/people/ui/People/PeopleTable.tsx:233
 #: apps/erp/app/modules/people/ui/Timecards/TimecardForm.tsx:92
-#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:65
+#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:77
 #: apps/erp/app/modules/production/ui/Jobs/ProductionEventForm.tsx:96
 #: apps/erp/app/modules/production/ui/Jobs/ProductionEventsTable.tsx:67
 #: apps/erp/app/modules/production/ui/Jobs/ProductionQuantitiesTable.tsx:65
@@ -4697,6 +4712,10 @@ msgstr "エンティティは {status} です"
 msgid "ERP, MES, QMS"
 msgstr "ERP、MES、QMS"
 
+#: apps/erp/app/routes/_public+/callback.tsx:140
+msgid "Error"
+msgstr "エラー"
+
 #: apps/erp/app/components/Documents.tsx:106
 #: apps/erp/app/modules/items/ui/Item/ItemDocuments.tsx:320
 msgid "Error deleting file"
@@ -4846,8 +4865,8 @@ msgstr "為替レート"
 msgid "Expand"
 msgstr "展開"
 
-#. placeholder {0}: item.label
 #: apps/erp/app/components/Selectors/UserSelect/components/SelectionList.tsx:89
+#. placeholder {0}: item.label
 msgid "Expand {0}"
 msgstr "展開 {0}"
 
@@ -4958,138 +4977,138 @@ msgstr "外部参照"
 msgid "External Reference"
 msgstr "外部参照"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/items/ui/Consumables/ConsumableForm.tsx:66
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create consumable: {0}"
 msgstr "消耗品の作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/sales/ui/CustomerPortals/CustomerPortalForm.tsx:50
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create customer portal: {0}"
 msgstr "顧客ポータルの作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/sales/ui/CustomerStatuses/CustomerStatusForm.tsx:50
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create customer status: {0}"
 msgstr "顧客ステータスの作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/sales/ui/CustomerTypes/CustomerTypeForm.tsx:50
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create customer type: {0}"
 msgstr "顧客タイプの作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/sales/ui/Customer/CustomerForm.tsx:64
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create customer: {0}"
 msgstr "顧客の作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/people/ui/Departments/DepartmentForm.tsx:56
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create department: {0}"
 msgstr "部門の作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/resources/ui/FailureModes/FailureModeForm.tsx:60
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create failure mode: {0}"
 msgstr "失敗モードの作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/quality/ui/GaugeTypes/GaugeTypeForm.tsx:50
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create gauge type: {0}"
 msgstr "ゲージタイプの作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/items/ui/ItemPostingGroups/ItemPostingGroupForm.tsx:61
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create item group: {0}"
 msgstr "アイテムグループの作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/resources/ui/Locations/LocationForm.tsx:56
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create location: {0}"
 msgstr "ロケーションの作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/resources/ui/MaintenanceSchedule/MaintenanceScheduleForm.tsx:122
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create maintenance schedule: {0}"
 msgstr "メンテナンススケジュールの作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/items/ui/MaterialDimensions/MaterialDimensionForm.tsx:56
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create material dimension: {0}"
 msgstr "マテリアルディメンションの作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/items/ui/MaterialFinishes/MaterialFinishForm.tsx:56
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create material finish: {0}"
 msgstr "マテリアルフィニッシュの作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/items/ui/MaterialShapes/MaterialShapeForm.tsx:62
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create material form: {0}"
 msgstr "マテリアルフォームの作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/items/ui/MaterialGrades/MaterialGradeForm.tsx:56
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create material grade: {0}"
 msgstr "材料グレードの作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/items/ui/MaterialSubstances/MaterialSubstanceForm.tsx:62
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create material substance: {0}"
 msgstr "材料物質の作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/items/ui/MaterialTypes/MaterialTypeForm.tsx:58
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create material type: {0}"
 msgstr "マテリアルタイプの作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/items/ui/Materials/MaterialForm.tsx:103
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create material: {0}"
 msgstr "材料の作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/sales/ui/NoQuoteReasons/NoQuoteReasonForm.tsx:50
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create no quote reason: {0}"
 msgstr "見積なし理由の作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/items/ui/Parts/PartForm.tsx:160
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create part: {0}"
 msgstr "パーツの作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/accounting/ui/PaymentTerms/PaymentTermForm.tsx:62
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create payment term: {0}"
 msgstr "支払い条件の作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/resources/ui/Processes/ProcessForm.tsx:76
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create process: {0}"
 msgstr "プロセスの作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/inventory/ui/ShippingMethods/ShippingMethodForm.tsx:58
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create shipping method: {0}"
 msgstr "配送方法の作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferLineForm.tsx:103
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create stock transfer line: {0}"
 msgstr "在庫移動行の作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/items/ui/Tools/ToolForm.tsx:159
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create tool: {0}"
 msgstr "ツール作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/settings/ui/Webhooks/WebhookForm.tsx:53
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create webhook: {0}"
 msgstr "ウェブフックの作成に失敗しました: {0}"
 
-#. placeholder {0}: fetcher.data.error.message
 #: apps/erp/app/modules/resources/ui/WorkCenters/WorkCenterForm.tsx:66
+#. placeholder {0}: fetcher.data.error.message
 msgid "Failed to create work center: {0}"
 msgstr "ワークセンターの作成に失敗しました: {0}"
 
@@ -5194,6 +5213,7 @@ msgstr "購買注文の読み込みに失敗しました"
 msgid "Failed to load receipt lines"
 msgstr "領収書行の読み込みに失敗しました"
 
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferHeader.tsx:380
 #: apps/erp/app/modules/quality/ui/Issue/IssueAssociations.tsx:773
 msgid "Failed to load receipts"
 msgstr "領収書の読み込みに失敗しました"
@@ -5210,6 +5230,7 @@ msgstr "販売注文の読み込みに失敗しました"
 msgid "Failed to load shipment lines"
 msgstr "配送ラインの読み込みに失敗しました"
 
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferHeader.tsx:386
 #: apps/erp/app/modules/quality/ui/Issue/IssueAssociations.tsx:676
 msgid "Failed to load shipments"
 msgstr "出荷の読み込みに失敗しました"
@@ -5299,8 +5320,6 @@ msgstr "ファイルのアップロードに失敗しました"
 msgid "Failed to upload file to new location"
 msgstr "新しい場所へのファイルアップロードに失敗しました"
 
-#. placeholder {0}: file.name
-#. placeholder {0}: fileUpload.name
 #: apps/erp/app/components/Documents.tsx:208
 #: apps/erp/app/modules/account/ui/UserAttributes/UserAttributesForm.tsx:772
 #: apps/erp/app/modules/items/ui/Item/ItemDocuments.tsx:427
@@ -5308,6 +5327,8 @@ msgstr "新しい場所へのファイルアップロードに失敗しました
 #: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceDispatchNotes.tsx:227
 #: apps/erp/app/modules/sales/ui/Opportunity/OpportunityDocuments.tsx:396
 #: apps/erp/app/modules/sales/ui/Opportunity/OpportunityLineDocuments.tsx:273
+#. placeholder {0}: file.name
+#. placeholder {0}: fileUpload.name
 msgid "Failed to upload file: {0}"
 msgstr "ファイルのアップロードに失敗しました: {0}"
 
@@ -5414,8 +5435,8 @@ msgstr "ファイル拡張子"
 msgid "File is already in the selected bucket"
 msgstr "ファイルは既に選択されたバケットに存在しています"
 
-#. placeholder {0}: ( logo.size / 1024 / 1024 ).toFixed(2)
 #: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:80
+#. placeholder {0}: ( logo.size / 1024 / 1024 ).toFixed(2)
 msgid "File size exceeds {maxSizeMB}MB limit. Current size: {0}MB"
 msgstr "ファイルサイズが{maxSizeMB}MB制限を超えています。現在のサイズ: {0}MB"
 
@@ -5424,11 +5445,11 @@ msgstr "ファイルサイズが{maxSizeMB}MB制限を超えています。現�
 msgid "File size exceeds 10MB limit"
 msgstr "ファイルサイズが10MBの制限を超えています"
 
-#. placeholder {0}: SIZE_LIMIT.format()
 #: apps/erp/app/modules/items/ui/Parts/PartForm.tsx:133
 #: apps/erp/app/modules/items/ui/Parts/PartForm.tsx:143
 #: apps/erp/app/modules/items/ui/Tools/ToolForm.tsx:132
 #: apps/erp/app/modules/items/ui/Tools/ToolForm.tsx:142
+#. placeholder {0}: SIZE_LIMIT.format()
 msgid "File size too big (max. {0})"
 msgstr "ファイルサイズが大きすぎます (最大 {0})"
 
@@ -5468,13 +5489,13 @@ msgid "Filtering"
 msgstr "フィルタリング"
 
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderFinalizeModal.tsx:119
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:247
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:249
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:202
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:236
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:251
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:237
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:452
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:492
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:239
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:454
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:496
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteFinalizeModal.tsx:225
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteHeader.tsx:241
 msgid "Finalize"
@@ -5656,18 +5677,18 @@ msgstr "メソッドを取得"
 msgid "Get Started"
 msgstr "始める"
 
-#. placeholder {0}: user.firstName
 #: apps/erp/app/components/Greeting.tsx:24
+#. placeholder {0}: user.firstName
 msgid "Good afternoon, {0}"
 msgstr "こんにちは、{0}"
 
-#. placeholder {0}: user.firstName
 #: apps/erp/app/components/Greeting.tsx:26
+#. placeholder {0}: user.firstName
 msgid "Good evening, {0}"
 msgstr "おやすみなさい、{0}"
 
-#. placeholder {0}: user.firstName
 #: apps/erp/app/components/Greeting.tsx:22
+#. placeholder {0}: user.firstName
 msgid "Good morning, {0}"
 msgstr "おはようございます、{0}"
 
@@ -5961,6 +5982,10 @@ msgstr "在庫調整差異"
 msgid "Inv. Interim Accrual"
 msgstr "在庫中間見越計上"
 
+#: apps/erp/app/routes/_public+/invite.$code.tsx:118
+msgid "Invalid Invite"
+msgstr "無効な招待"
+
 #: apps/erp/app/routes/x+/traceability+/_index.tsx:45
 msgid "Invalid tracking number"
 msgstr "無効な追跡番号"
@@ -6039,8 +6064,8 @@ msgstr "招待"
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentHeader.tsx:228
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentHeader.tsx:271
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentHeader.tsx:318
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:427
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:480
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:429
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:482
 #: apps/erp/app/modules/purchasing/ui/SupplierInteraction/SupplierInteractionState.tsx:82
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:575
 msgid "Invoice"
@@ -6393,6 +6418,11 @@ msgstr "進行中のジョブ"
 msgid "Jobs Required"
 msgstr "ジョブが必要です"
 
+#: apps/erp/app/routes/_public+/invite.$code.tsx:164
+#. placeholder {0}: company?.name ?? "Company"
+msgid "Join {0}"
+msgstr "{0}に参加"
+
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbansTable.tsx:641
 msgid "Kanban"
 msgstr "カンバン"
@@ -6507,8 +6537,8 @@ msgstr "最後のキャリブレーション日"
 msgid "Last Name"
 msgstr "姓"
 
-#. placeholder {0}: formatDateTime(lastSyncedAt)
 #: apps/erp/app/components/OnshapeSync.tsx:353
+#. placeholder {0}: formatDateTime(lastSyncedAt)
 msgid "Last synced: {0}"
 msgstr "最後に同期: {0}"
 
@@ -6565,8 +6595,13 @@ msgstr "左側の項目"
 msgid "Leftover Parts Detected"
 msgstr "余剰部品が検出されました"
 
-#. js-lingui-explicit-id
+#: apps/erp/app/routes/_public+/_layout.tsx:30
+#: apps/erp/app/routes/_public+/magic-link.tsx:33
+msgid "Let's build something"
+msgstr "何か作ってみましょう"
+
 #: apps/erp/app/components/Layout/Topbar/Breadcrumbs.tsx:225
+#. js-lingui-explicit-id
 msgid "Let's set up your new company"
 msgstr "新しい会社をセットアップしましょう"
 
@@ -6609,7 +6644,7 @@ msgstr "Linear Team"
 msgid "Lines need internal part numbers"
 msgstr "ラインには内部部品番号が必要です"
 
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:464
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:466
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteFinalizeModal.tsx:164
 msgid "Lines need prices or lead times"
 msgstr "ラインには価格またはリードタイムが必要です"
@@ -6709,7 +6744,7 @@ msgstr "読み込み中..."
 #: apps/erp/app/modules/people/ui/Person/PersonPreview.tsx:63
 #: apps/erp/app/modules/people/ui/Shifts/ShiftForm.tsx:72
 #: apps/erp/app/modules/people/ui/Shifts/ShiftsTable.tsx:84
-#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:154
+#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:166
 #: apps/erp/app/modules/production/ui/Jobs/JobForm.tsx:342
 #: apps/erp/app/modules/production/ui/Jobs/JobForm.tsx:502
 #: apps/erp/app/modules/production/ui/Jobs/JobHeader.tsx:1047
@@ -6766,6 +6801,14 @@ msgstr "ロケーション"
 msgid "Lock"
 msgstr "ロック"
 
+#: apps/erp/app/routes/_public+/magic-link.tsx:41
+msgid "Log In"
+msgstr "ログイン"
+
+#: apps/erp/app/routes/_public+/login.tsx:364
+msgid "Login or create a new account"
+msgstr "ログインするか新しいアカウントを作成してください"
+
 #: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:162
 msgid "Logo removed successfully"
 msgstr "ロゴが正常に削除されました"
@@ -6780,8 +6823,8 @@ msgstr "ロゴが正常にアップロードされました"
 msgid "Logos"
 msgstr "ロゴ"
 
-#. placeholder {0}: auditConfig.retentionDays
 #: apps/erp/app/modules/settings/ui/AuditLog/AuditLogSettings.tsx:108
+#. placeholder {0}: auditConfig.retentionDays
 msgid "Logs older than {0} days are automatically archived."
 msgstr "{0}日以上前のログは自動的にアーカイブされます。"
 
@@ -6897,13 +6940,13 @@ msgstr "製造品は直接請求できません。方法をピックに変更し
 msgid "Make Method Version"
 msgstr "製造方法バージョン"
 
-#. placeholder {0}: selectedRevision.revision
 #: apps/erp/app/modules/items/ui/Item/UsedIn.tsx:339
+#. placeholder {0}: selectedRevision.revision
 msgid "Make revision {0} default?"
 msgstr "リビジョン {0} をデフォルトにしますか？"
 
-#. placeholder {0}: selectedRevision.revision
 #: apps/erp/app/modules/items/ui/Item/UsedIn.tsx:338
+#. placeholder {0}: selectedRevision.revision
 msgid "Make size {0} default?"
 msgstr "サイズ {0} をデフォルトにしますか？"
 
@@ -6982,7 +7025,7 @@ msgstr "製造業者"
 msgid "Manufacturing"
 msgstr "製造"
 
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:235
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:237
 msgid "Mark as Planned"
 msgstr "計画済みとしてマーク"
 
@@ -7407,9 +7450,9 @@ msgstr "移動先"
 msgid "Move to Trash"
 msgstr "ゴミ箱に移動"
 
+#: apps/erp/app/modules/sales/ui/Opportunity/OpportunityLineDocuments.tsx:348
 #. placeholder {0}: file.name
 #. placeholder {1}: targetBucket === "parts" ? "Parts" : "Opportunity"
-#: apps/erp/app/modules/sales/ui/Opportunity/OpportunityLineDocuments.tsx:348
 msgid "Moved {0} to {1} bucket"
 msgstr "{0}を{1}バケットに移動しました"
 
@@ -7633,7 +7676,7 @@ msgid "New Holiday"
 msgstr "新しい休日"
 
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentHeader.tsx:239
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:442
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:444
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:538
 msgid "New Invoice"
 msgstr "新しい請求書"
@@ -7739,7 +7782,7 @@ msgstr "新しい見積行"
 
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptForm/ReceiptForm.tsx:70
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferHeader.tsx:247
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:372
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:374
 msgid "New Receipt"
 msgstr "新しい領収書"
 
@@ -7791,7 +7834,7 @@ msgstr "新しいシフト"
 
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentForm/ShipmentForm.tsx:82
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferHeader.tsx:180
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:276
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:278
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:468
 msgid "New Shipment"
 msgstr "新しい出荷"
@@ -7894,9 +7937,9 @@ msgstr "次のシーケンス"
 msgid "No"
 msgstr "いいえ"
 
-#. placeholder {0}: node.name.toLowerCase()
 #: apps/erp/app/modules/items/ui/Item/UsedIn.tsx:250
 #: apps/erp/app/modules/items/ui/Item/UsedIn.tsx:427
+#. placeholder {0}: node.name.toLowerCase()
 msgid "No {0} found"
 msgstr "{0}が見つかりません"
 
@@ -7924,8 +7967,8 @@ msgstr "アクティブな見積がありません"
 msgid "No addresses found"
 msgstr "住所が見つかりません"
 
-#. placeholder {0}: auditConfig.retentionDays
 #: apps/erp/app/modules/settings/ui/AuditLog/AuditLogSettings.tsx:146
+#. placeholder {0}: auditConfig.retentionDays
 msgid "No archived logs yet. Logs older than {0} days will be automatically archived and available for download here."
 msgstr "まだアーカイブされたログはありません。{0}日以上前のログは自動的にアーカイブされ、ここからダウンロードできます。"
 
@@ -8294,9 +8337,9 @@ msgstr "販売注文中"
 msgid "On Shelf"
 msgstr "棚上"
 
+#: apps/erp/app/modules/accounting/ui/Currencies/CurrencyForm.tsx:46
 #. placeholder {0}: company?.baseCurrencyCode
 #. placeholder {1}: initialValues.code
-#: apps/erp/app/modules/accounting/ui/Currencies/CurrencyForm.tsx:46
 msgid "One {0} is equal to how many {1}?"
 msgstr "1つの{0}は何個の{1}に相当しますか？"
 
@@ -8470,9 +8513,9 @@ msgstr "オプション"
 
 #: apps/erp/app/modules/purchasing/ui/Planning/PurchasingPlanningOrderDrawer.tsx:776
 #: apps/erp/app/modules/purchasing/ui/SupplierInteraction/SupplierInteractionState.tsx:81
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:254
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:260
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:278
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:256
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:262
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:280
 #: apps/erp/app/modules/sales/ui/Opportunity/OpportunityState.tsx:144
 msgid "Order"
 msgstr "注文"
@@ -8726,7 +8769,7 @@ msgid "Payment Terms"
 msgstr "支払条件"
 
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoiceHeader.tsx:292
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:206
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:208
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteHeader.tsx:220
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:363
 msgid "PDF"
@@ -9003,9 +9046,9 @@ msgid "Prev"
 msgstr "前へ"
 
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoiceHeader.tsx:281
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:195
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:197
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:137
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:186
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:188
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteHeader.tsx:195
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:352
 msgid "Preview"
@@ -9746,7 +9789,7 @@ msgstr "受取要求日"
 #: apps/erp/app/modules/inventory/ui/useInventorySubmodules.tsx:27
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferHeader.tsx:232
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceHeader.tsx:276
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:355
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:357
 #: apps/erp/app/routes/x+/inventory+/receipts.tsx:14
 #: apps/erp/app/routes/x+/issue+/$id.tsx:140
 #: apps/erp/app/routes/x+/part+/$itemId.tsx:286
@@ -9761,13 +9804,13 @@ msgid "Receivables"
 msgstr "売掛金"
 
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferHeader.tsx:282
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:407
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:409
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrdersTable.tsx:411
 msgid "Receive"
 msgstr "受け取る"
 
-#. placeholder {0}: job.jobId
 #: apps/erp/app/modules/production/ui/Jobs/JobHeader.tsx:1016
+#. placeholder {0}: job.jobId
 msgid "Receive {0} to Inventory"
 msgstr "{0}を在庫に受け取る"
 
@@ -9813,6 +9856,10 @@ msgstr "レコード削除済み"
 msgid "Records"
 msgstr "記録"
 
+#: apps/erp/app/routes/_public+/login.tsx:256
+msgid "Redirecting to verification page..."
+msgstr "検証ページにリダイレクト中..."
+
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:79
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransfersTable.tsx:101
 #: apps/erp/app/modules/quality/ui/Calibrations/GaugeCalibrationRecordForm.tsx:336
@@ -9834,7 +9881,7 @@ msgstr "更新"
 msgid "Refresh exchange rate"
 msgstr "為替レートを更新"
 
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:338
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:340
 #: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:225
 #: apps/erp/app/modules/quality/ui/Documents/QualityDocumentHeader.tsx:204
 msgid "Reject"
@@ -9845,11 +9892,11 @@ msgstr "却下"
 msgid "Reject Quote"
 msgstr "見積もりを却下"
 
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:286
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:297
 msgid "Rejected By"
 msgstr "却下者"
 
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:294
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:307
 msgid "Rejected Date"
 msgstr "却下日"
 
@@ -9884,8 +9931,8 @@ msgstr "このPINを覚えておいてください。MES端末でコンソール
 msgid "Remove"
 msgstr "削除"
 
-#. placeholder {0}: item.label
 #: apps/erp/app/components/Selectors/UserSelect/components/SelectionList.tsx:107
+#. placeholder {0}: item.label
 msgid "Remove {0}"
 msgstr "{0}を削除"
 
@@ -9931,9 +9978,9 @@ msgstr "列でソートを削除"
 
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferHeader.tsx:211
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferHeader.tsx:304
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:529
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:531
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:297
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:325
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:327
 #: apps/erp/app/modules/quality/ui/Issue/IssueHeader.tsx:181
 #: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceDispatchHeader.tsx:151
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteHeader.tsx:332
@@ -10111,9 +10158,9 @@ msgstr "リセット"
 msgid "Reset PIN"
 msgstr "PINをリセット"
 
+#: apps/erp/app/routes/x+/users+/operators.reset-pin.$operatorId.tsx:109
 #. placeholder {0}: operator.firstName
 #. placeholder {1}: operator.lastName
-#: apps/erp/app/routes/x+/users+/operators.reset-pin.$operatorId.tsx:109
 msgid "Reset PIN for {0} {1}"
 msgstr "{0} {1}のPINをリセット"
 
@@ -10143,6 +10190,10 @@ msgstr "ページあたりの結果数"
 msgid "Retry response"
 msgstr "再度応答を試みる"
 
+#: apps/erp/app/routes/_public+/invite.$code.tsx:129
+msgid "Return Home"
+msgstr "ホームに戻る"
+
 #: apps/erp/app/modules/items/ui/Item/ItemWithRevision.tsx:20
 msgid "Rev {revision}"
 msgstr "Rev {revision}"
@@ -10157,10 +10208,10 @@ msgstr "すべての在庫調整を取り消す"
 msgid "Revision"
 msgstr "リビジョン"
 
-#. placeholder {0}: revision.revision
 #: apps/erp/app/modules/items/ui/Materials/MaterialsTable.tsx:586
 #: apps/erp/app/modules/items/ui/Parts/PartsTable.tsx:504
 #: apps/erp/app/modules/items/ui/Tools/ToolsTable.tsx:493
+#. placeholder {0}: revision.revision
 msgid "Revision {0}"
 msgstr "リビジョン {0}"
 
@@ -10727,8 +10778,8 @@ msgstr "関連アイテムを検索..."
 msgid "Search suppliers..."
 msgstr "サプライヤーを検索..."
 
-#. js-lingui-explicit-id
 #: apps/erp/app/components/Chat/ChatInput.tsx:185
+#. js-lingui-explicit-id
 msgid "Search the web"
 msgstr "ウェブを検索"
 
@@ -10786,8 +10837,8 @@ msgstr "新しい所有者を選択"
 msgid "Select a plan"
 msgstr "プランを選択"
 
-#. placeholder {0}: plans[0].stripeTrialPeriodDays
 #: apps/erp/app/routes/onboarding+/plan.tsx:155
+#. placeholder {0}: plans[0].stripeTrialPeriodDays
 msgid "Select a plan to get started. You won't be charged for the first {0} days. Switch or cancel anytime."
 msgstr "プランを選択して開始します。最初の{0}日間は料金がかかりません。いつでも切り替えまたはキャンセルできます。"
 
@@ -10907,7 +10958,7 @@ msgstr "Carbon Academyによるセルフオンボーディング"
 #: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:221
 #: apps/erp/app/modules/production/ui/Jobs/JobBillOfProcess.tsx:3396
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteFinalizeModal.tsx:105
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:218
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:220
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteSendModal.tsx:186
 #: apps/erp/app/modules/users/ui/components/ResendInviteModal.tsx:85
 msgid "Send"
@@ -11008,8 +11059,8 @@ msgstr "各コスト カテゴリの新しい見積行のデフォルト マー�
 msgid "Set Quantity"
 msgstr "数量を設定"
 
-#. placeholder {0}: selectedVersion.version
 #: apps/erp/app/modules/items/ui/Item/MakeMethodTools.tsx:456
+#. placeholder {0}: selectedVersion.version
 msgid "Set Version {0} as Active Version?"
 msgstr "バージョン {0} をアクティブバージョンとして設定しますか？"
 
@@ -11084,7 +11135,7 @@ msgstr "共有"
 msgid "Share Link"
 msgstr "リンクを共有"
 
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:530
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:534
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteHeader.tsx:558
 msgid "Share Quote"
 msgstr "見積もりを共有"
@@ -11132,7 +11183,7 @@ msgid "Shifts"
 msgstr "シフト"
 
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferHeader.tsx:215
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:311
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:313
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:506
 msgid "Ship"
 msgstr "出荷"
@@ -11182,7 +11233,7 @@ msgstr "配送場所"
 #: apps/erp/app/modules/inventory/ui/useInventorySubmodules.tsx:33
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferHeader.tsx:165
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoiceHeader.tsx:253
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:259
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:261
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:451
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderLineShipments.tsx:65
 #: apps/erp/app/routes/x+/inventory+/shipments.tsx:15
@@ -11320,6 +11371,18 @@ msgstr "見積書、販売注文、販売請求書、および出荷に部品の
 msgid "Show sync options"
 msgstr "同期オプションを表示"
 
+#: apps/erp/app/routes/_public+/login.tsx:339
+msgid "Sign in with Email"
+msgstr "メールでサインイン"
+
+#: apps/erp/app/routes/_public+/login.tsx:303
+msgid "Sign in with Google"
+msgstr "Googleでサインイン"
+
+#: apps/erp/app/routes/_public+/login.tsx:316
+msgid "Sign in with Outlook"
+msgstr "Outlookでサインイン"
+
 #: apps/erp/app/components/AvatarMenu.tsx:218
 msgid "Sign Out"
 msgstr "サインアウト"
@@ -11355,6 +11418,10 @@ msgstr "会社の祝日に予定されたメンテナンスをスキップする
 #: apps/erp/app/modules/quality/ui/Actions/ActionsTable.tsx:280
 msgid "Skipped"
 msgstr "スキップ"
+
+#: apps/erp/app/routes/_public+/callback.tsx:147
+msgid "Something went wrong. Please try again."
+msgstr "何か問題が発生しました。もう一度お試しください。"
 
 #: apps/erp/app/components/Table/components/Sort/Sort.tsx:49
 #: apps/erp/app/components/Table/components/Sort/Sort.tsx:50
@@ -11465,8 +11532,8 @@ msgstr "標準リードタイム"
 msgid "Start"
 msgstr "開始"
 
-#. placeholder {0}: plan.stripeTrialPeriodDays
 #: apps/erp/app/routes/onboarding+/plan.tsx:221
+#. placeholder {0}: plan.stripeTrialPeriodDays
 msgid "Start {0} Day Free Trial"
 msgstr "{0}日間の無料トライアルを開始"
 
@@ -11522,7 +11589,7 @@ msgstr "都道府県"
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransfersTable.tsx:65
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoicesTable.tsx:130
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoicesTable.tsx:124
-#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:126
+#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:138
 #: apps/erp/app/modules/production/ui/Jobs/JobsTable.tsx:310
 #: apps/erp/app/modules/production/ui/Planning/ProductionPlanningOrderDrawer.tsx:374
 #: apps/erp/app/modules/production/ui/Procedures/ProcedureProperties.tsx:174
@@ -11530,7 +11597,7 @@ msgstr "都道府県"
 #: apps/erp/app/modules/purchasing/ui/Planning/PurchasingPlanningOrderDrawer.tsx:621
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrdersTable.tsx:124
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQsTable.tsx:102
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:234
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:235
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuotesTable.tsx:105
 #: apps/erp/app/modules/quality/ui/Documents/QualityDocumentProperties.tsx:202
 #: apps/erp/app/modules/quality/ui/Documents/QualityDocumentsTable.tsx:84
@@ -11940,9 +12007,9 @@ msgstr "供給"
 msgid "Supply & Demand"
 msgstr "供給と需要"
 
-#. placeholder {0}: supportedModelTypes.join(", ")
 #: apps/erp/app/modules/items/ui/Parts/PartForm.tsx:373
 #: apps/erp/app/modules/items/ui/Tools/ToolForm.tsx:365
+#. placeholder {0}: supportedModelTypes.join(", ")
 msgid "Supports {0} files"
 msgstr "{0} ファイルに対応しています"
 
@@ -11989,7 +12056,7 @@ msgstr "テーブルアクション"
 #: apps/erp/app/modules/production/ui/Jobs/JobsTable.tsx:417
 #: apps/erp/app/modules/production/ui/Procedures/ProcedureProperties.tsx:223
 #: apps/erp/app/modules/production/ui/Procedures/ProceduresTable.tsx:110
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:313
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:327
 #: apps/erp/app/modules/purchasing/ui/Supplier/SuppliersTable.tsx:138
 #: apps/erp/app/modules/quality/ui/Documents/QualityDocumentProperties.tsx:231
 #: apps/erp/app/modules/quality/ui/Documents/QualityDocumentsTable.tsx:104
@@ -12109,7 +12176,7 @@ msgstr "顧客が商品を受け取ることを期待する日付"
 msgid "The endpoint that receives a POST request with the updated data when the table is updated"
 msgstr "テーブルが更新されたときに、更新されたデータを含むPOSTリクエストを受け取るエンドポイント"
 
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:467
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:469
 msgid "The following line items are missing prices or lead times:"
 msgstr "以下の行項目は価格またはリードタイムが不足しています:"
 
@@ -12288,12 +12355,12 @@ msgstr "サムネイルは含まれていません"
 msgid "Thursday"
 msgstr "木曜日"
 
-#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:213
+#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:225
 msgid "Timecard"
 msgstr "タイムカード"
 
 #: apps/erp/app/modules/people/ui/Person/PersonSidebar/usePersonSidebar.tsx:35
-#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:220
+#: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:232
 #: apps/erp/app/modules/people/ui/usePeopleSubmodules.tsx:29
 #: apps/erp/app/routes/x+/people+/timecard.tsx:16
 #: apps/erp/app/routes/x+/person+/$personId.timecard.tsx:430
@@ -12398,9 +12465,9 @@ msgstr "レベルを切り替え"
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoiceHeader.tsx:358
 #: apps/erp/app/modules/production/ui/Jobs/JobHeader.tsx:403
 #: apps/erp/app/modules/production/ui/Procedures/ProcedureHeader.tsx:165
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:534
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:536
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:302
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:331
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:333
 #: apps/erp/app/modules/quality/ui/Documents/QualityDocumentHeader.tsx:272
 #: apps/erp/app/modules/resources/ui/Training/TrainingHeader.tsx:85
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteHeader.tsx:357
@@ -12657,7 +12724,7 @@ msgstr "火曜日"
 #: apps/erp/app/modules/production/ui/Procedures/ProcedureExplorer.tsx:802
 #: apps/erp/app/modules/purchasing/ui/Planning/PurchasingPlanningTable.tsx:429
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderForm.tsx:187
-#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:246
+#: apps/erp/app/modules/purchasing/ui/Supplier/SupplierHeader.tsx:249
 #: apps/erp/app/modules/purchasing/ui/Supplier/SuppliersTable.tsx:100
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteForm.tsx:226
 #: apps/erp/app/modules/quality/ui/Calibrations/GaugeCalibrationRecordsTable.tsx:146
@@ -12702,8 +12769,8 @@ msgid "Types"
 msgstr "タイプ"
 
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceHeader.tsx:228
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:184
-#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:175
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:185
+#: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:176
 msgid "Unapproved Supplier"
 msgstr "未承認サプライヤー"
 
@@ -12996,18 +13063,15 @@ msgstr "CSVをアップロード"
 msgid "Uploaded model"
 msgstr "モデルをアップロードしました"
 
-#. placeholder {0}: file.name
-#. placeholder {0}: fileUpload.name
 #: apps/erp/app/components/Documents.tsx:214
 #: apps/erp/app/modules/account/ui/UserAttributes/UserAttributesForm.tsx:774
 #: apps/erp/app/modules/items/ui/Item/ItemDocuments.tsx:429
 #: apps/erp/app/modules/sales/ui/Opportunity/OpportunityDocuments.tsx:398
+#. placeholder {0}: file.name
+#. placeholder {0}: fileUpload.name
 msgid "Uploaded: {0}"
 msgstr "アップロード完了: {0}"
 
-#. placeholder {0}: avatarFile.name
-#. placeholder {0}: file.name
-#. placeholder {0}: fileUpload.name
 #: apps/erp/app/components/Documents.tsx:199
 #: apps/erp/app/components/ImportCSVModal/UploadCSV.tsx:77
 #: apps/erp/app/components/ItemThumnailUpload.tsx:78
@@ -13016,6 +13080,9 @@ msgstr "アップロード完了: {0}"
 #: apps/erp/app/modules/documents/ui/Documents/DocumentCreateForm.tsx:22
 #: apps/erp/app/modules/items/ui/Item/ItemDocuments.tsx:416
 #: apps/erp/app/modules/sales/ui/Opportunity/OpportunityDocuments.tsx:386
+#. placeholder {0}: avatarFile.name
+#. placeholder {0}: file.name
+#. placeholder {0}: fileUpload.name
 msgid "Uploading {0}"
 msgstr "アップロード中 {0}"
 
@@ -13050,6 +13117,11 @@ msgstr "「...」を使用して次のパートIDを取得します"
 #: apps/erp/app/modules/items/ui/Tools/ToolForm.tsx:254
 msgid "Use ... to get the next tool ID"
 msgstr "「...」を使用して次のツールIDを取得します"
+
+#: apps/erp/app/routes/_public+/login.tsx:269
+#: apps/erp/app/routes/_public+/verify.tsx:178
+msgid "Use a different email"
+msgstr "別のメールアドレスを使用"
 
 #: apps/erp/app/routes/x+/settings+/items.tsx:181
 msgid "Use metric system for default material dimensions."
@@ -13121,6 +13193,15 @@ msgstr "値"
 #: apps/erp/app/modules/settings/ui/Company/CompanyForm.tsx:30
 msgid "VAT Number"
 msgstr "VAT番号"
+
+#: apps/erp/app/routes/_public+/verify.tsx:168
+msgid "Verification Error"
+msgstr "認証エラー"
+
+#: apps/erp/app/routes/_public+/login.tsx:248
+#: apps/erp/app/routes/_public+/verify.tsx:158
+msgid "Verify your email"
+msgstr "メールアドレスを確認"
 
 #: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:512
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:497
@@ -13368,6 +13449,18 @@ msgstr "フル動画を視聴"
 msgid "We've mapped each column to what we believe is correct, but please review the data below to confirm it's accurate."
 msgstr "各列を正しいと思われるものにマッピングしましたが、以下のデータを確認して、正確であることを確認してください。"
 
+#: apps/erp/app/routes/_public+/verify.tsx:161
+msgid "We've sent a verification code to {email}"
+msgstr "検証コードを {email} に送信しました"
+
+#: apps/erp/app/routes/_public+/login.tsx:251
+msgid "We've sent a verification code to {signupEmail}"
+msgstr "検証コードを {signupEmail} に送信しました"
+
+#: apps/erp/app/routes/_public+/login.tsx:239
+msgid "We've sent you a magic link to sign in to your account."
+msgstr "あなたのアカウントにサインインするためのマジックリンクを送信しました。"
+
 #: apps/erp/app/components/Chat/WebSearch.tsx:181
 msgid "Web Search"
 msgstr "ウェブ検索"
@@ -13419,6 +13512,7 @@ msgstr "加重平均"
 msgid "Weighted average cost over last year calculated when the invoice is posted"
 msgstr "請求書が転記されるときに計算された過去1年間の加重平均コスト"
 
+#: apps/erp/app/routes/_public+/invite.$code.tsx:154
 #: apps/erp/app/routes/onboarding+/_index.tsx:36
 msgid "Welcome to Carbon"
 msgstr "Carbonへようこそ"
@@ -13590,14 +13684,14 @@ msgstr "テーマ設定からいつでもUIスタイルを変更できます"
 msgid "You can only see this key once. Store it safely."
 msgstr "このキーは一度だけ表示されます。安全に保管してください。"
 
-#. placeholder {0}: new Date(openClockEntry.clockIn).toLocaleString()
 #: apps/erp/app/components/TimeCardWarning.tsx:119
+#. placeholder {0}: new Date(openClockEntry.clockIn).toLocaleString()
 msgid "You clocked in at {0}. You can edit your clock-out time below or acknowledge that you're still working."
 msgstr "あなたは{0}にクロックインしました。下記でクロックアウト時間を編集するか、まだ働いていることを確認できます。"
 
+#: apps/erp/app/modules/production/ui/Jobs/JobHeader.tsx:1073
 #. placeholder {0}: leftoverQuantity === 1 ? "part" : "parts"
 #. placeholder {1}: job.quantity
-#: apps/erp/app/modules/production/ui/Jobs/JobHeader.tsx:1073
 msgid ""
 "You completed {leftoverQuantity} more \n"
 "                        {0} than the\n"
@@ -13621,6 +13715,10 @@ msgstr "あなたのコンソールPIN"
 #: apps/erp/app/routes/share+/supplier-quote.$id.tsx:1033
 msgid "Your Email"
 msgstr "あなたのメールアドレス"
+
+#: apps/erp/app/routes/_public+/invite.$code.tsx:121
+msgid "Your invitation is invalid or has already been accepted. Please contact support if you believe this is an error."
+msgstr "ご招待が無効であるか、既に受け入れられています。これがエラーだと思われる場合は、サポートにお問い合わせください。"
 
 #: apps/erp/app/routes/share+/supplier-quote.$id.tsx:968
 #: apps/erp/app/routes/share+/supplier-quote.$id.tsx:1028

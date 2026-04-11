@@ -24,6 +24,7 @@ import {
   cn,
   VStack
 } from "@carbon/react";
+import { Trans } from "@lingui/react/macro";
 import { useEffect, useRef, useState } from "react";
 import { LuTriangleAlert } from "react-icons/lu";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
@@ -141,17 +142,23 @@ export default function AuthCallback() {
           <VStack spacing={4}>
             <Alert variant="destructive">
               <LuTriangleAlert className="h-4 w-4" />
-              <AlertTitle>Error</AlertTitle>
+              <AlertTitle>
+                <Trans>Error</Trans>
+              </AlertTitle>
               <AlertDescription>{error}</AlertDescription>
             </Alert>
             {error.includes("expired") && (
               <>
                 <p className="text-sm text-muted-foreground">
-                  But don't worry. You can use the forgot password flow to
-                  request a new magic link.
+                  <Trans>
+                    But don't worry. You can use the forgot password flow to
+                    request a new magic link.
+                  </Trans>
                 </p>
                 <Button size="lg" asChild className="w-full">
-                  <Link to={path.to.login}>Login</Link>
+                  <Link to={path.to.login}>
+                    <Trans>Login</Trans>
+                  </Link>
                 </Button>
               </>
             )}

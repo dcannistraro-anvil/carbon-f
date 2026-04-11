@@ -15,6 +15,7 @@ import { redis } from "@carbon/kv";
 import { Button as _Button, Heading as _Heading, VStack } from "@carbon/react";
 import { updateSubscriptionQuantityForCompany } from "@carbon/stripe/stripe.server";
 import { Edition } from "@carbon/utils";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { AnimatePresence, motion } from "framer-motion";
 import type {
   ActionFunctionArgs,
@@ -103,23 +104,34 @@ const Heading = motion.create(_Heading);
 const Button = motion.create(_Button);
 
 export default function Invite() {
+  const { t } = useLingui();
   const { success, company } = useLoaderData<typeof loader>();
 
   if (!success) {
     return (
       <VStack spacing={4} className="max-w-lg items-center text-center">
         <div className="flex justify-center mb-4">
-          <img src="/carbon-logo-mark.svg" alt="Carbon Logo" className="w-36" />
+          <img
+            src="/carbon-logo-mark.svg"
+            alt={t`Carbon Logo`}
+            className="w-36"
+          />
         </div>
         <VStack spacing={2} className="text-center w-full">
-          <Heading className="w-full text-center">Invalid Invite</Heading>
+          <Heading className="w-full text-center">
+            <Trans>Invalid Invite</Trans>
+          </Heading>
           <p>
-            Your invitation is invalid or has already been accepted. Please
-            contact support if you believe this is an error.
+            <Trans>
+              Your invitation is invalid or has already been accepted. Please
+              contact support if you believe this is an error.
+            </Trans>
           </p>
         </VStack>
         <Button asChild>
-          <Link to="/">Return Home</Link>
+          <Link to="/">
+            <Trans>Return Home</Trans>
+          </Link>
         </Button>
       </VStack>
     );
@@ -133,7 +145,7 @@ export default function Invite() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 2, ease: "easeInOut" }}
           src="/carbon-logo-mark.svg"
-          alt="Carbon Logo"
+          alt={t`Carbon Logo`}
           className="w-24 mb-3"
         />
 
@@ -143,7 +155,7 @@ export default function Invite() {
           size="h1"
           className="m-0"
         >
-          Welcome to Carbon
+          <Trans>Welcome to Carbon</Trans>
         </Heading>
 
         <Form method="post">
@@ -153,21 +165,23 @@ export default function Invite() {
             size="lg"
             type="submit"
           >
-            {`Join ${company?.name ?? "Company"}`}
+            <Trans>Join {company?.name ?? "Company"}</Trans>
           </Button>
         </Form>
       </VStack>
 
       <p className="text-xs text-muted-foreground  text-center">
-        By accepting the invite, you agree to the{" "}
-        <Link to="https://carbon.ms/terms" className="underline">
-          Terms of Service
-        </Link>{" "}
-        and{" "}
-        <Link to="https://carbon.ms/privacy" className="underline">
-          Privacy Policy
-        </Link>
-        .
+        <Trans>
+          By accepting the invite, you agree to the{" "}
+          <Link to="https://carbon.ms/terms" className="underline">
+            Terms of Service
+          </Link>{" "}
+          and{" "}
+          <Link to="https://carbon.ms/privacy" className="underline">
+            Privacy Policy
+          </Link>
+          .
+        </Trans>
       </p>
     </AnimatePresence>
   );

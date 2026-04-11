@@ -13,46 +13,46 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: apps/mes/app/components/JobOperation/components/Step.tsx:434
 #. placeholder {0}: attribute.name
 #. placeholder {1}: activeStep + 1
-#: apps/mes/app/components/JobOperation/components/Step.tsx:434
 msgid "{0} - Set {1}"
 msgstr "{0} - 组 {1}"
 
-#. placeholder {0}: employeeIds.length
 #: apps/mes/app/components/Kanban/components/ItemCard.tsx:262
+#. placeholder {0}: employeeIds.length
 msgid "{0} Active"
 msgstr "{0} 个活跃"
 
-#. placeholder {0}: batch.quantity
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:147
+#. placeholder {0}: batch.quantity
 msgid "{0} available"
 msgstr "{0} 可用"
 
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:637
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:851
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1795
 #. placeholder {0}: operation.quantityComplete
 #. placeholder {0}: serialIndex + 1
 #. placeholder {1}: operation.operationQuantity
 #. placeholder {1}: operation.targetQuantity
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:637
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:851
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1795
 msgid "{0} of {1}"
 msgstr "{0} / {1}"
 
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:874
 #. placeholder {0}: attributes.filter((a) => a.jobOperationStepRecord.some( (r) => r.index === activeStep ) ).length
 #. placeholder {1}: attributes.length
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:874
 msgid "{0} of {1} complete"
 msgstr "{0} / {1} 已完成"
 
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1819
 #. placeholder {0}: attributes.filter((a) => a.jobOperationStepRecord.some( (r) => r.index === activeStep ) ).length
 #. placeholder {1}: attributes.length
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1819
 msgid "{0} of {1} completed"
 msgstr "{0} / {1} 已完成"
 
-#. placeholder {0}: item.quantityScrapped
 #: apps/mes/app/components/Kanban/components/ItemCard.tsx:281
+#. placeholder {0}: item.quantityScrapped
 msgid "{0} Scrapped"
 msgstr "{0} 已报废"
 
@@ -145,9 +145,9 @@ msgstr "附加文件"
 msgid "Authentication Error"
 msgstr "认证错误"
 
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:146
 #. placeholder {0}: batch.readableId
 #. placeholder {1}: batch.quantity
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:146
 msgid "Batch {0} ({1} available)"
 msgstr "批次 {0}（{1} 可用）"
 
@@ -155,8 +155,8 @@ msgstr "批次 {0}（{1} 可用）"
 msgid "Batch is not available"
 msgstr "批次不可用"
 
-#. placeholder {0}: index + 1
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:501
+#. placeholder {0}: index + 1
 msgid "Batch Number {0}"
 msgstr "批次号 {0}"
 
@@ -164,14 +164,18 @@ msgstr "批次号 {0}"
 msgid "Batch number is required"
 msgstr "批次号为必填项"
 
-#. placeholder {0}: column.blockingDispatchReadableId
 #: apps/mes/app/components/Kanban/components/ColumnCard.tsx:129
+#. placeholder {0}: column.blockingDispatchReadableId
 msgid "Blocked by {0}"
 msgstr "被 {0} 阻塞"
 
 #: apps/mes/app/routes/x+/maintenance.tsx:441
 msgid "Blocking"
 msgstr "阻塞中"
+
+#: apps/mes/app/routes/_public+/callback.tsx:153
+msgid "But don't worry. You can use the forgot password flow to request a new magic link."
+msgstr "但别担心。您可以使用忘记密码流程来请求新的魔法链接。"
 
 #: apps/mes/app/routes/_public+/login.tsx:249
 msgid "By signing in, you agree to the <0>Terms of Service</0> and <1>Privacy Policy.</1>"
@@ -235,8 +239,8 @@ msgstr "上班打卡"
 msgid "Clock Out"
 msgstr "下班打卡"
 
-#. placeholder {0}: formatTime(openEntry.clockIn)
 #: apps/mes/app/routes/x+/timecard.tsx:272
+#. placeholder {0}: formatTime(openEntry.clockIn)
 msgid "Clocked in since {0}"
 msgstr "自 {0} 起已打卡上班"
 
@@ -252,28 +256,28 @@ msgstr "仍然关闭"
 msgid "Close Out"
 msgstr "结束"
 
-#. placeholder {0}: operation.itemReadableId
 #: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:74
+#. placeholder {0}: operation.itemReadableId
 msgid "Close out {0}"
 msgstr "结束 {0}"
 
+#: apps/mes/app/components/Kanban/Kanban.tsx:113
 #. placeholder {0}: active.data.current.column.title
 #. placeholder {1}: overColumnPosition + 1
 #. placeholder {2}: columnOrder.length
-#: apps/mes/app/components/Kanban/Kanban.tsx:113
 msgid "Column {0} was dropped into position {1} of {2}"
 msgstr "列 {0} 已放置到第 {1} 个位置（共 {2} 个）"
 
+#: apps/mes/app/components/Kanban/Kanban.tsx:97
 #. placeholder {0}: active.data.current.column.title
 #. placeholder {1}: over.data.current.column.title
 #. placeholder {2}: overIndex + 1
 #. placeholder {3}: columnOrder.length
-#: apps/mes/app/components/Kanban/Kanban.tsx:97
 msgid "Column {0} was moved over {1} at position {2} of {3}"
 msgstr "列 {0} 已移动到 {1} 上方，位于第 {2} 个位置（共 {3} 个）"
 
-#. placeholder {0}: column.title
 #: apps/mes/app/components/Kanban/components/ColumnCard.tsx:71
+#. placeholder {0}: column.title
 msgid "Column: {0}"
 msgstr "列：{0}"
 
@@ -301,9 +305,9 @@ msgstr "控制台模式"
 msgid "Copy PIN"
 msgstr "复制 PIN 码"
 
-#. placeholder {0}: search.trim() === "" ? label : search
 #: packages/react/src/CreateableCombobox.tsx:291
 #: packages/react/src/CreateableMultiSelect.tsx:339
+#. placeholder {0}: search.trim() === "" ? label : search
 msgid "Create {0}"
 msgstr "创建 {0}"
 
@@ -338,8 +342,8 @@ msgstr "删除"
 msgid "Delete Step"
 msgstr "删除步骤"
 
-#. placeholder {0}: new Date(deletingEntry.clockIn).toLocaleString()
 #: apps/mes/app/routes/x+/timecard.tsx:488
+#. placeholder {0}: new Date(deletingEntry.clockIn).toLocaleString()
 msgid "Delete Timecard ({0})"
 msgstr "删除考勤记录 ({0})"
 
@@ -374,19 +378,19 @@ msgstr "下载"
 msgid "Drag and drop a file here, or click to select a file"
 msgstr "拖放文件到此处，或点击选择文件"
 
-#. placeholder {0}: active.data.current?.type
 #: apps/mes/app/components/Kanban/Kanban.tsx:122
+#. placeholder {0}: active.data.current?.type
 msgid "Dragging {0} cancelled."
 msgstr "拖拽 {0} 已取消。"
 
-#. placeholder {0}: formatRelativeTime( convertDateStringToIsoString( operation.operationDueDate ) )
-#. placeholder {0}: formatRelativeTime( convertDateStringToIsoString(operation.jobDueDate) )
-#. placeholder {0}: formatRelativeTime( convertDateStringToIsoString(item.dueDate) )
 #: apps/mes/app/components/JobOperation/JobOperation.tsx:578
 #: apps/mes/app/components/JobOperation/JobOperation.tsx:679
 #: apps/mes/app/components/JobOperation/JobOperation.tsx:2031
 #: apps/mes/app/components/Kanban/components/ItemCard.tsx:229
 #: apps/mes/app/components/OperationsList.tsx:187
+#. placeholder {0}: formatRelativeTime( convertDateStringToIsoString( operation.operationDueDate ) )
+#. placeholder {0}: formatRelativeTime( convertDateStringToIsoString(operation.jobDueDate) )
+#. placeholder {0}: formatRelativeTime( convertDateStringToIsoString(item.dueDate) )
 msgid "Due {0}"
 msgstr "截止 {0}"
 
@@ -431,10 +435,14 @@ msgstr "输入名字"
 msgid "Enter last name"
 msgstr "输入姓氏"
 
-#. placeholder {0}: selectedPerson.name
 #: apps/mes/app/components/PinInOverlay.tsx:352
+#. placeholder {0}: selectedPerson.name
 msgid "Enter PIN for {0}"
 msgstr "输入 {0} 的 PIN 码"
+
+#: apps/mes/app/routes/_public+/callback.tsx:146
+msgid "Error"
+msgstr "错误"
 
 #: apps/mes/app/components/JobOperation/JobOperation.tsx:1014
 msgid "Estimated"
@@ -460,8 +468,8 @@ msgstr "获取活跃工序失败"
 msgid "Failed to fetch shelves"
 msgstr "获取货架失败"
 
-#. placeholder {0}: fileUpload.name
 #: apps/mes/app/components/JobOperation/components/Step.tsx:385
+#. placeholder {0}: fileUpload.name
 msgid "Failed to upload file: {0}"
 msgstr "文件上传失败：{0}"
 
@@ -618,8 +626,8 @@ msgstr "位置"
 msgid "Log Completed"
 msgstr "记录完成数量"
 
-#. placeholder {0}: operation.itemReadableId
 #: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:73
+#. placeholder {0}: operation.itemReadableId
 msgid "Log completed for {0}"
 msgstr "记录 {0} 的完成数量"
 
@@ -627,8 +635,8 @@ msgstr "记录 {0} 的完成数量"
 msgid "Log Rework"
 msgstr "记录返工"
 
-#. placeholder {0}: operation.itemReadableId
 #: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:72
+#. placeholder {0}: operation.itemReadableId
 msgid "Log rework for {0}"
 msgstr "记录 {0} 的返工"
 
@@ -637,10 +645,14 @@ msgstr "记录 {0} 的返工"
 msgid "Log Scrap"
 msgstr "记录报废"
 
-#. placeholder {0}: operation.itemReadableId
 #: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:71
+#. placeholder {0}: operation.itemReadableId
 msgid "Log scrap for {0}"
 msgstr "记录 {0} 的报废"
+
+#: apps/mes/app/routes/_public+/callback.tsx:160
+msgid "Login"
+msgstr "登录"
 
 #: apps/mes/app/components/JobOperation/components/Controls.tsx:198
 #: apps/mes/app/components/JobOperation/JobOperation.tsx:2196
@@ -685,8 +697,8 @@ msgstr "模型"
 msgid "More options"
 msgstr "更多选项"
 
-#. placeholder {0}: column.title
 #: apps/mes/app/components/Kanban/components/ColumnCard.tsx:153
+#. placeholder {0}: column.title
 msgid "Move column: {0}"
 msgstr "移动列：{0}"
 
@@ -841,8 +853,8 @@ msgstr "OEE 影响"
 msgid "OEM Required"
 msgstr "需要 OEM"
 
-#. placeholder {0}: batch.quantity
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:183
+#. placeholder {0}: batch.quantity
 msgid "Only {0} available"
 msgstr "仅 {0} 可用"
 
@@ -886,10 +898,10 @@ msgstr "检验通过"
 msgid "Pause"
 msgstr "暂停"
 
+#: apps/mes/app/components/Kanban/Kanban.tsx:84
 #. placeholder {0}: startColumn?.title
 #. placeholder {1}: startIndex + 1
 #. placeholder {2}: columnOrder.length
-#: apps/mes/app/components/Kanban/Kanban.tsx:84
 msgid "Picked up Column {0} at position: {1} of {2}"
 msgstr "已拾取列 {0}，位于第 {1} 个位置（共 {2} 个）"
 
@@ -970,9 +982,9 @@ msgstr "最近"
 msgid "Record"
 msgstr "记录"
 
-#. placeholder {0}: activeStep + 1
 #: apps/mes/app/components/JobOperation/JobOperation.tsx:803
 #: apps/mes/app/components/JobOperation/JobOperation.tsx:1754
+#. placeholder {0}: activeStep + 1
 msgid "Record {0}"
 msgstr "记录 {0}"
 
@@ -1087,13 +1099,13 @@ msgstr "选择物料并指定发放数量"
 msgid "Select an item..."
 msgstr "选择物料..."
 
-#. placeholder {0}: index + 1
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:591
+#. placeholder {0}: index + 1
 msgid "Select Batch {0}"
 msgstr "选择批次 {0}"
 
-#. placeholder {0}: index + 1
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:439
+#. placeholder {0}: index + 1
 msgid "Select Serial {0}"
 msgstr "选择序列号 {0}"
 
@@ -1111,13 +1123,13 @@ msgstr "发送"
 msgid "Serial"
 msgstr "序列号"
 
-#. placeholder {0}: sn.readableId
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:128
+#. placeholder {0}: sn.readableId
 msgid "Serial {0}"
 msgstr "序列号 {0}"
 
-#. placeholder {0}: index + 1
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:381
+#. placeholder {0}: index + 1
 msgid "Serial Number {0}"
 msgstr "序列号 {0}"
 
@@ -1243,8 +1255,8 @@ msgstr "切换操作员"
 msgid "Tag"
 msgstr "标签"
 
-#. placeholder {0}: operation.operationQuantity
 #: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:212
+#. placeholder {0}: operation.operationQuantity
 msgid "The completed quantity for this operation is less than the required quantity of {0}."
 msgstr "此工序的完成数量小于所需数量 {0}。"
 
@@ -1260,8 +1272,8 @@ msgstr "缩略图"
 msgid "Time Entries"
 msgstr "工时记录"
 
-#. placeholder {0}: formatDuration(totalDuration)
 #: apps/mes/app/routes/x+/dispatch.$dispatchId.tsx:306
+#. placeholder {0}: formatDuration(totalDuration)
 msgid "Time Worked: {0}"
 msgstr "工作时间：{0}"
 
@@ -1277,13 +1289,13 @@ msgstr "工具"
 msgid "Total Quantity"
 msgstr "总数量"
 
-#. placeholder {0}: formatDuration(totalDuration)
 #: apps/mes/app/routes/x+/dispatch.$dispatchId.tsx:546
+#. placeholder {0}: formatDuration(totalDuration)
 msgid "Total time: {0}"
 msgstr "总时间：{0}"
 
-#. placeholder {0}: formatTotalHours(entries)
 #: apps/mes/app/routes/x+/timecard.tsx:471
+#. placeholder {0}: formatTotalHours(entries)
 msgid "Total: {0}"
 msgstr "合计：{0}"
 
@@ -1311,13 +1323,13 @@ msgstr "更新"
 msgid "Updated successfully"
 msgstr "更新成功"
 
-#. placeholder {0}: fileUpload.name
 #: apps/mes/app/components/JobOperation/components/Step.tsx:387
+#. placeholder {0}: fileUpload.name
 msgid "Uploaded: {0}"
 msgstr "已上传：{0}"
 
-#. placeholder {0}: fileUpload.name
 #: apps/mes/app/components/JobOperation/components/Step.tsx:373
+#. placeholder {0}: fileUpload.name
 msgid "Uploading {0}"
 msgstr "正在上传 {0}"
 
@@ -1340,8 +1352,8 @@ msgstr "在制品"
 msgid "Work Center"
 msgstr "工作中心"
 
-#. placeholder {0}: new Date(openClockEntry.clockIn).toLocaleString()
 #: apps/mes/app/components/TimeCardWarning.tsx:119
+#. placeholder {0}: new Date(openClockEntry.clockIn).toLocaleString()
 msgid "You clocked in at {0}. You can edit your clock-out time below or acknowledge that you're still working."
 msgstr "您于 {0} 打卡上班。您可以在下方编辑下班时间，或确认您仍在工作。"
 

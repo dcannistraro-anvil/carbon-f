@@ -1,5 +1,6 @@
 import { CONTROLLED_ENVIRONMENT } from "@carbon/auth";
 import { cn, Heading } from "@carbon/react";
+import { Trans } from "@lingui/react/macro";
 import { Outlet } from "react-router";
 
 export default function PublicRoute() {
@@ -26,7 +27,7 @@ export default function PublicRoute() {
         <div className="relative z-20 mt-auto">
           <blockquote className="space-y-2">
             <Heading size="display" className="text-foreground">
-              Let's build something
+              <Trans>Let's build something</Trans>
               <span className="inline-block">
                 <span className="loading-dot">.</span>
                 <span className="loading-dot">.</span>

@@ -173,6 +173,10 @@ msgstr "Blocked by {0}"
 msgid "Blocking"
 msgstr "Blocking"
 
+#: apps/mes/app/routes/_public+/callback.tsx:153
+msgid "But don't worry. You can use the forgot password flow to request a new magic link."
+msgstr "But don't worry. You can use the forgot password flow to request a new magic link."
+
 #: apps/mes/app/routes/_public+/login.tsx:249
 msgid "By signing in, you agree to the <0>Terms of Service</0> and <1>Privacy Policy.</1>"
 msgstr "By signing in, you agree to the <0>Terms of Service</0> and <1>Privacy Policy.</1>"
@@ -436,6 +440,10 @@ msgstr "Enter last name"
 msgid "Enter PIN for {0}"
 msgstr "Enter PIN for {0}"
 
+#: apps/mes/app/routes/_public+/callback.tsx:146
+msgid "Error"
+msgstr "Error"
+
 #: apps/mes/app/components/JobOperation/JobOperation.tsx:1014
 msgid "Estimated"
 msgstr "Estimated"
@@ -641,6 +649,10 @@ msgstr "Log Scrap"
 #: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:71
 msgid "Log scrap for {0}"
 msgstr "Log scrap for {0}"
+
+#: apps/mes/app/routes/_public+/callback.tsx:160
+msgid "Login"
+msgstr "Login"
 
 #: apps/mes/app/components/JobOperation/components/Controls.tsx:198
 #: apps/mes/app/components/JobOperation/JobOperation.tsx:2196

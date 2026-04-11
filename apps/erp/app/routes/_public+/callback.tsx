@@ -17,6 +17,7 @@ import {
 import { getUserByEmail } from "@carbon/auth/users.server";
 import { validator } from "@carbon/form";
 import { Alert, AlertDescription, AlertTitle, cn, VStack } from "@carbon/react";
+import { Trans } from "@lingui/react/macro";
 import { useEffect, useRef, useState } from "react";
 import { LuTriangleAlert } from "react-icons/lu";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
@@ -135,13 +136,15 @@ export default function AuthCallback() {
           <VStack spacing={4}>
             <Alert variant="destructive">
               <LuTriangleAlert className="h-4 w-4" />
-              <AlertTitle>Error</AlertTitle>
+              <AlertTitle>
+                <Trans>Error</Trans>
+              </AlertTitle>
               <AlertDescription>{error}</AlertDescription>
             </Alert>
             {error.includes("expired") && (
               <>
                 <p className="text-sm text-muted-foreground">
-                  Something went wrong. Please try again.
+                  <Trans>Something went wrong. Please try again.</Trans>
                 </p>
               </>
             )}
