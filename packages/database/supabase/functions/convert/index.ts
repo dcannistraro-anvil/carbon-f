@@ -555,6 +555,7 @@ serve(async (req: Request) => {
             .where("id", "=", quote.data.id)
             .execute();
 
+          const customerPartSeen = new Set<string>();
           const customerPartToItemInserts = quoteLines.data
             .map((line) => ({
               companyId,
@@ -563,7 +564,13 @@ serve(async (req: Request) => {
               customerPartRevision: line.customerPartRevision ?? "",
               itemId: line.itemId!,
             }))
-            .filter((line) => !!line.itemId && !!line.customerPartId);
+            .filter((line) => {
+              if (!line.itemId || !line.customerPartId) return false;
+              const key = `${line.customerId}-${line.itemId}`;
+              if (customerPartSeen.has(key)) return false;
+              customerPartSeen.add(key);
+              return true;
+            });
           if (customerPartToItemInserts.length > 0) {
             await trx
               .insertInto("customerPartToItem")
@@ -1055,6 +1062,7 @@ serve(async (req: Request) => {
             .where("id", "=", id)
             .execute();
 
+          const rfqCustomerPartSeen = new Set<string>();
           const customerPartToItemInserts = salesRfqLinesWithItemIds
             .map((line) => ({
               companyId,
@@ -1063,7 +1071,13 @@ serve(async (req: Request) => {
               customerPartRevision: line.customerPartRevision ?? "",
               itemId: line.itemId!,
             }))
-            .filter((line) => !!line.itemId && !!line.customerPartId);
+            .filter((line) => {
+              if (!line.itemId || !line.customerPartId) return false;
+              const key = `${line.customerId}-${line.itemId}`;
+              if (rfqCustomerPartSeen.has(key)) return false;
+              rfqCustomerPartSeen.add(key);
+              return true;
+            });
           if (customerPartToItemInserts.length > 0) {
             await trx
               .insertInto("customerPartToItem")
