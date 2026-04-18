@@ -5,7 +5,7 @@ import { VStack } from "@carbon/react";
 import { msg } from "@lingui/core/macro";
 import type { LoaderFunctionArgs } from "react-router";
 import { Outlet, redirect, useLoaderData } from "react-router";
-import { getStorageUnits } from "~/modules/inventory";
+import { getStorageTypesList, getStorageUnits } from "~/modules/inventory";
 import StorageUnitsTable from "~/modules/inventory/ui/StorageUnits/StorageUnitsTable";
 import { getLocationsList } from "~/modules/resources";
 import { getUserDefaults } from "~/modules/users/users.server";
@@ -67,13 +67,19 @@ export async function loader({ request }: LoaderFunctionArgs) {
     locationId = locationsList.data[0].id as string;
   }
 
-  const storageUnits = await getStorageUnits(client, locationId, companyId, {
-    search,
-    limit,
-    offset,
-    sorts,
-    filters
-  });
+  const [storageUnits, storageTypesList] = await Promise.all([
+    getStorageUnits(client, locationId, companyId, {
+      search,
+      limit,
+      offset,
+      sorts,
+      filters
+    }),
+    // Fetch storage types server-side so the Storage Types column can render
+    // resolved names on first paint instead of flashing raw ids while the
+    // client-side useStorageTypes() fetcher catches up.
+    getStorageTypesList(client, companyId)
+  ]);
 
   if (storageUnits.error) {
     throw redirect(
@@ -89,12 +95,13 @@ export async function loader({ request }: LoaderFunctionArgs) {
     count: storageUnits.count ?? 0,
     storageUnits: storageUnits.data ?? [],
     locations: locationsList.data,
-    locationId
+    locationId,
+    storageTypes: storageTypesList.data ?? []
   };
 }
 
 export default function StorageUnitsRoute() {
-  const { count, storageUnits, locations, locationId } =
+  const { count, storageUnits, locations, locationId, storageTypes } =
     useLoaderData<typeof loader>();
 
   // storageUnits comes from storageUnits_recursive (a view) so every column
@@ -118,6 +125,7 @@ export default function StorageUnitsRoute() {
         count={count}
         locations={locations}
         locationId={locationId}
+        storageTypes={storageTypes}
       />
       <Outlet />
     </VStack>

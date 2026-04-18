@@ -42,6 +42,7 @@ type StorageUnitsTableProps = {
   count: number;
   locations: { id: string; name: string }[];
   locationId: string;
+  storageTypes: { id: string; name: string }[];
 };
 
 const StorageUnitsTable = memo(
@@ -49,7 +50,8 @@ const StorageUnitsTable = memo(
     data,
     count,
     locations: serverLocations,
-    locationId
+    locationId,
+    storageTypes: serverStorageTypes
   }: StorageUnitsTableProps) => {
     const [params] = useUrlParams();
     const { t } = useLingui();
@@ -67,7 +69,19 @@ const StorageUnitsTable = memo(
       return clientLocations;
     }, [serverLocations, clientLocations]);
 
-    const storageTypes = useStorageTypes();
+    // Storage types come from the server loader so the Storage Types column
+    // resolves names on first paint. Fall back to the client-side
+    // useStorageTypes() hook only if the server payload is somehow missing.
+    const clientStorageTypes = useStorageTypes();
+    const storageTypes = useMemo(() => {
+      if (serverStorageTypes && serverStorageTypes.length > 0) {
+        return serverStorageTypes.map((st) => ({
+          value: st.id,
+          label: st.name
+        }));
+      }
+      return clientStorageTypes;
+    }, [serverStorageTypes, clientStorageTypes]);
 
     const columns = useMemo<ColumnDef<StorageUnit>[]>(() => {
       return [
