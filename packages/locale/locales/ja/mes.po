@@ -13,46 +13,46 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:434
 #. placeholder {0}: attribute.name
 #. placeholder {1}: activeStep + 1
+#: apps/mes/app/components/JobOperation/components/Step.tsx:434
 msgid "{0} - Set {1}"
 msgstr "{0} - セット {1}"
 
-#: apps/mes/app/components/Kanban/components/ItemCard.tsx:262
 #. placeholder {0}: employeeIds.length
+#: apps/mes/app/components/Kanban/components/ItemCard.tsx:262
 msgid "{0} Active"
 msgstr "{0} アクティブ"
 
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:147
 #. placeholder {0}: batch.quantity
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:147
 msgid "{0} available"
 msgstr "{0} 利用可能"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:637
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:851
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1795
 #. placeholder {0}: operation.quantityComplete
 #. placeholder {0}: serialIndex + 1
 #. placeholder {1}: operation.operationQuantity
 #. placeholder {1}: operation.targetQuantity
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:637
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:851
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1795
 msgid "{0} of {1}"
 msgstr "{0} / {1}"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:874
 #. placeholder {0}: attributes.filter((a) => a.jobOperationStepRecord.some( (r) => r.index === activeStep ) ).length
 #. placeholder {1}: attributes.length
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:874
 msgid "{0} of {1} complete"
 msgstr "{0} / {1} 完了"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1819
 #. placeholder {0}: attributes.filter((a) => a.jobOperationStepRecord.some( (r) => r.index === activeStep ) ).length
 #. placeholder {1}: attributes.length
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1819
 msgid "{0} of {1} completed"
 msgstr "{0} / {1} 完了済み"
 
-#: apps/mes/app/components/Kanban/components/ItemCard.tsx:281
 #. placeholder {0}: item.quantityScrapped
+#: apps/mes/app/components/Kanban/components/ItemCard.tsx:281
 msgid "{0} Scrapped"
 msgstr "{0} スクラップ"
 
@@ -136,9 +136,9 @@ msgstr "ファイルを添付"
 msgid "Authentication Error"
 msgstr "認証エラー"
 
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:146
 #. placeholder {0}: batch.readableId
 #. placeholder {1}: batch.quantity
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:146
 msgid "Batch {0} ({1} available)"
 msgstr "バッチ {0}（{1} 利用可能）"
 
@@ -146,8 +146,8 @@ msgstr "バッチ {0}（{1} 利用可能）"
 msgid "Batch is not available"
 msgstr "バッチは利用できません"
 
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:501
 #. placeholder {0}: index + 1
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:501
 msgid "Batch Number {0}"
 msgstr "バッチ番号 {0}"
 
@@ -155,8 +155,8 @@ msgstr "バッチ番号 {0}"
 msgid "Batch number is required"
 msgstr "バッチ番号は必須です"
 
-#: apps/mes/app/components/Kanban/components/ColumnCard.tsx:129
 #. placeholder {0}: column.blockingDispatchReadableId
+#: apps/mes/app/components/Kanban/components/ColumnCard.tsx:129
 msgid "Blocked by {0}"
 msgstr "{0} によりブロック中"
 
@@ -229,8 +229,8 @@ msgstr "出勤打刻"
 msgid "Clock Out"
 msgstr "退勤打刻"
 
-#: apps/mes/app/routes/x+/timecard.tsx:272
 #. placeholder {0}: formatTime(openEntry.clockIn)
+#: apps/mes/app/routes/x+/timecard.tsx:272
 msgid "Clocked in since {0}"
 msgstr "{0} から出勤中"
 
@@ -246,28 +246,28 @@ msgstr "強制的に閉じる"
 msgid "Close Out"
 msgstr "クローズ"
 
-#: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:74
 #. placeholder {0}: operation.itemReadableId
+#: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:74
 msgid "Close out {0}"
 msgstr "{0} をクローズ"
 
-#: apps/mes/app/components/Kanban/Kanban.tsx:113
 #. placeholder {0}: active.data.current.column.title
 #. placeholder {1}: overColumnPosition + 1
 #. placeholder {2}: columnOrder.length
+#: apps/mes/app/components/Kanban/Kanban.tsx:113
 msgid "Column {0} was dropped into position {1} of {2}"
 msgstr "カラム {0} が {2} 中の位置 {1} にドロップされました"
 
-#: apps/mes/app/components/Kanban/Kanban.tsx:97
 #. placeholder {0}: active.data.current.column.title
 #. placeholder {1}: over.data.current.column.title
 #. placeholder {2}: overIndex + 1
 #. placeholder {3}: columnOrder.length
+#: apps/mes/app/components/Kanban/Kanban.tsx:97
 msgid "Column {0} was moved over {1} at position {2} of {3}"
 msgstr "カラム {0} が {1} の上に移動し、{3} 中の位置 {2} になりました"
 
-#: apps/mes/app/components/Kanban/components/ColumnCard.tsx:71
 #. placeholder {0}: column.title
+#: apps/mes/app/components/Kanban/components/ColumnCard.tsx:71
 msgid "Column: {0}"
 msgstr "カラム: {0}"
 
@@ -291,10 +291,10 @@ msgstr "コンソール"
 msgid "Console Mode"
 msgstr "コンソールモード"
 
-#: packages/react/src/CreateableCombobox.tsx:291
-#: packages/react/src/CreateableMultiSelect.tsx:344
 #. placeholder {0}: search.trim() === "" ? (createLabel ?? label) : search
 #. placeholder {0}: search.trim() === "" ? label : search
+#: packages/react/src/CreateableCombobox.tsx:291
+#: packages/react/src/CreateableMultiSelect.tsx:344
 msgid "Create {0}"
 msgstr "{0}を作成"
 
@@ -329,8 +329,8 @@ msgstr "削除"
 msgid "Delete Step"
 msgstr "ステップを削除"
 
-#: apps/mes/app/routes/x+/timecard.tsx:488
 #. placeholder {0}: new Date(deletingEntry.clockIn).toLocaleString()
+#: apps/mes/app/routes/x+/timecard.tsx:488
 msgid "Delete Timecard ({0})"
 msgstr "タイムカードを削除（{0}）"
 
@@ -365,19 +365,19 @@ msgstr "ダウンロード"
 msgid "Drag and drop a file here, or click to select a file"
 msgstr "ファイルをここにドラッグ＆ドロップするか、クリックしてファイルを選択してください"
 
-#: apps/mes/app/components/Kanban/Kanban.tsx:122
 #. placeholder {0}: active.data.current?.type
+#: apps/mes/app/components/Kanban/Kanban.tsx:122
 msgid "Dragging {0} cancelled."
 msgstr "{0} のドラッグがキャンセルされました。"
 
+#. placeholder {0}: formatRelativeTime( convertDateStringToIsoString( operation.operationDueDate ) )
+#. placeholder {0}: formatRelativeTime( convertDateStringToIsoString(operation.jobDueDate) )
+#. placeholder {0}: formatRelativeTime( convertDateStringToIsoString(item.dueDate) )
 #: apps/mes/app/components/JobOperation/JobOperation.tsx:578
 #: apps/mes/app/components/JobOperation/JobOperation.tsx:679
 #: apps/mes/app/components/JobOperation/JobOperation.tsx:2031
 #: apps/mes/app/components/Kanban/components/ItemCard.tsx:229
 #: apps/mes/app/components/OperationsList.tsx:187
-#. placeholder {0}: formatRelativeTime( convertDateStringToIsoString( operation.operationDueDate ) )
-#. placeholder {0}: formatRelativeTime( convertDateStringToIsoString(operation.jobDueDate) )
-#. placeholder {0}: formatRelativeTime( convertDateStringToIsoString(item.dueDate) )
 msgid "Due {0}"
 msgstr "期限 {0}"
 
@@ -414,8 +414,8 @@ msgstr "メールアドレス"
 msgid "End Operations"
 msgstr "工程を終了"
 
-#: apps/mes/app/components/PinInOverlay.tsx:290
 #. placeholder {0}: selectedPerson.name
+#: apps/mes/app/components/PinInOverlay.tsx:290
 msgid "Enter PIN for {0}"
 msgstr "{0} のPINを入力"
 
@@ -443,8 +443,8 @@ msgstr "アクティブな工程の取得に失敗しました"
 msgid "Failed to fetch storageUnits"
 msgstr "storageUnitsの取得に失敗しました"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:385
 #. placeholder {0}: fileUpload.name
+#: apps/mes/app/components/JobOperation/components/Step.tsx:385
 msgid "Failed to upload file: {0}"
 msgstr "ファイルのアップロードに失敗しました: {0}"
 
@@ -589,8 +589,8 @@ msgstr "ロケーション"
 msgid "Log Completed"
 msgstr "完了を記録"
 
-#: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:73
 #. placeholder {0}: operation.itemReadableId
+#: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:73
 msgid "Log completed for {0}"
 msgstr "{0} の完了を記録"
 
@@ -598,8 +598,8 @@ msgstr "{0} の完了を記録"
 msgid "Log Rework"
 msgstr "手直しを記録"
 
-#: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:72
 #. placeholder {0}: operation.itemReadableId
+#: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:72
 msgid "Log rework for {0}"
 msgstr "{0} の手直しを記録"
 
@@ -608,8 +608,8 @@ msgstr "{0} の手直しを記録"
 msgid "Log Scrap"
 msgstr "スクラップを記録"
 
-#: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:71
 #. placeholder {0}: operation.itemReadableId
+#: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:71
 msgid "Log scrap for {0}"
 msgstr "{0} のスクラップを記録"
 
@@ -660,8 +660,8 @@ msgstr "モデル"
 msgid "More options"
 msgstr "その他のオプション"
 
-#: apps/mes/app/components/Kanban/components/ColumnCard.tsx:153
 #. placeholder {0}: column.title
+#: apps/mes/app/components/Kanban/components/ColumnCard.tsx:153
 msgid "Move column: {0}"
 msgstr "カラムを移動: {0}"
 
@@ -816,8 +816,8 @@ msgstr "OEE影響度"
 msgid "OEM Required"
 msgstr "OEM対応必要"
 
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:183
 #. placeholder {0}: batch.quantity
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:183
 msgid "Only {0} available"
 msgstr "{0} のみ利用可能"
 
@@ -861,10 +861,10 @@ msgstr "検査合格"
 msgid "Pause"
 msgstr "一時停止"
 
-#: apps/mes/app/components/Kanban/Kanban.tsx:84
 #. placeholder {0}: startColumn?.title
 #. placeholder {1}: startIndex + 1
 #. placeholder {2}: columnOrder.length
+#: apps/mes/app/components/Kanban/Kanban.tsx:84
 msgid "Picked up Column {0} at position: {1} of {2}"
 msgstr "カラム {0} を位置 {1}/{2} で選択しました"
 
@@ -941,9 +941,9 @@ msgstr "最近"
 msgid "Record"
 msgstr "記録"
 
+#. placeholder {0}: activeStep + 1
 #: apps/mes/app/components/JobOperation/JobOperation.tsx:803
 #: apps/mes/app/components/JobOperation/JobOperation.tsx:1754
-#. placeholder {0}: activeStep + 1
 msgid "Record {0}"
 msgstr "レコード {0}"
 
@@ -1058,13 +1058,13 @@ msgstr "品目を選択し、払出数量を指定してください"
 msgid "Select an item..."
 msgstr "品目を選択..."
 
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:591
 #. placeholder {0}: index + 1
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:591
 msgid "Select Batch {0}"
 msgstr "バッチ {0} を選択"
 
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:439
 #. placeholder {0}: index + 1
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:439
 msgid "Select Serial {0}"
 msgstr "シリアル {0} を選択"
 
@@ -1082,13 +1082,13 @@ msgstr "送信"
 msgid "Serial"
 msgstr "シリアル"
 
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:128
 #. placeholder {0}: sn.readableId
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:128
 msgid "Serial {0}"
 msgstr "シリアル {0}"
 
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:381
 #. placeholder {0}: index + 1
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:381
 msgid "Serial Number {0}"
 msgstr "シリアル番号 {0}"
 
@@ -1210,8 +1210,8 @@ msgstr "オペレーターを切替"
 msgid "Tag"
 msgstr "タグ"
 
-#: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:212
 #. placeholder {0}: operation.operationQuantity
+#: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:212
 msgid "The completed quantity for this operation is less than the required quantity of {0}."
 msgstr "この工程の完了数量が必要数量 {0} を下回っています。"
 
@@ -1227,8 +1227,8 @@ msgstr "サムネイル"
 msgid "Time Entries"
 msgstr "タイムエントリー"
 
-#: apps/mes/app/routes/x+/dispatch.$dispatchId.tsx:306
 #. placeholder {0}: formatDuration(totalDuration)
+#: apps/mes/app/routes/x+/dispatch.$dispatchId.tsx:306
 msgid "Time Worked: {0}"
 msgstr "作業時間: {0}"
 
@@ -1244,13 +1244,13 @@ msgstr "工具"
 msgid "Total Quantity"
 msgstr "合計数量"
 
-#: apps/mes/app/routes/x+/dispatch.$dispatchId.tsx:546
 #. placeholder {0}: formatDuration(totalDuration)
+#: apps/mes/app/routes/x+/dispatch.$dispatchId.tsx:546
 msgid "Total time: {0}"
 msgstr "合計時間: {0}"
 
-#: apps/mes/app/routes/x+/timecard.tsx:471
 #. placeholder {0}: formatTotalHours(entries)
+#: apps/mes/app/routes/x+/timecard.tsx:471
 msgid "Total: {0}"
 msgstr "合計: {0}"
 
@@ -1278,13 +1278,13 @@ msgstr "更新"
 msgid "Updated successfully"
 msgstr "正常に更新されました"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:387
 #. placeholder {0}: fileUpload.name
+#: apps/mes/app/components/JobOperation/components/Step.tsx:387
 msgid "Uploaded: {0}"
 msgstr "アップロード完了: {0}"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:373
 #. placeholder {0}: fileUpload.name
+#: apps/mes/app/components/JobOperation/components/Step.tsx:373
 msgid "Uploading {0}"
 msgstr "{0} をアップロード中"
 
@@ -1307,8 +1307,8 @@ msgstr "仕掛品"
 msgid "Work Center"
 msgstr "ワークセンター"
 
-#: apps/mes/app/components/TimeCardWarning.tsx:119
 #. placeholder {0}: new Date(openClockEntry.clockIn).toLocaleString()
+#: apps/mes/app/components/TimeCardWarning.tsx:119
 msgid "You clocked in at {0}. You can edit your clock-out time below or acknowledge that you're still working."
 msgstr "{0} に出勤打刻しました。下記で退勤時間を編集するか、まだ作業中であることを確認してください。"
 

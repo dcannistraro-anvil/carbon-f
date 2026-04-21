@@ -227,6 +227,31 @@ The `requirePermissions` function validates:
 - Company context for multi-tenant access
 - Role-based restrictions
 
+### Employee Permission Management
+
+**Location**: `apps/erp/app/modules/users/ui/Employees/EmployeePermissionsForm.tsx`
+
+When editing an employee's permissions, administrators can:
+
+1. View and modify individual permissions via the `PermissionMatrix` component
+2. Change the employee type via a dropdown
+3. When employee type changes, a confirmation dialog appears offering:
+   - **Keep Current**: Retains the user's existing permissions
+   - **Overwrite Permissions**: Replaces permissions with the defaults from the selected employee type
+
+**Employee Type Permissions API**:
+
+- **Endpoint**: `GET /api/users/employee-type-permissions?employeeTypeId=<id>`
+- **File**: `apps/erp/app/routes/api+/users.employee-type-permissions.ts`
+- **Purpose**: Fetches default permissions for a given employee type
+- **Uses**: `getPermissionsByEmployeeType()` and `makeCompanyPermissionsFromEmployeeType()` from users module
+
+**Permission Conversion Helpers** (in `usePermissionMatrix` hook):
+
+- `fromCompanyPermissions()`: Converts stored permissions to matrix state
+- `fromEmployeeTypePermissions()`: Converts employee type permissions to matrix state
+- `toCompanyPermissions()`: Converts matrix state back to storable format
+
 ## API Authentication
 
 ### Access Token Authentication

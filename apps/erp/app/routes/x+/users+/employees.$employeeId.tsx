@@ -12,11 +12,13 @@ import {
   employeeValidator,
   getEmployee,
   getEmployeeTypes,
+  getPermissionsByEmployeeType,
   userPermissionsValidator
 } from "~/modules/users";
 import {
   getClaims,
   makeCompanyPermissionsFromClaims,
+  makeCompanyPermissionsFromEmployeeType,
   updateEmployee
 } from "~/modules/users/users.server";
 import { path } from "~/utils/path";
@@ -61,10 +63,32 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     );
   }
 
+  const types = employeeTypes.data ?? [];
+  const permissionsByType = await Promise.all(
+    types.map((t) => getPermissionsByEmployeeType(client, t.id))
+  );
+  const employeeTypePermissions: Record<
+    string,
+    Record<string, CompanyPermission>
+  > = {};
+  types.forEach((t, i) => {
+    const result = permissionsByType[i];
+    const raw = makeCompanyPermissionsFromEmployeeType(
+      result.data ?? [],
+      companyId
+    );
+    const perms: Record<string, CompanyPermission> = {};
+    for (const [mod, entry] of Object.entries(raw)) {
+      perms[mod.toLowerCase()] = entry.permission;
+    }
+    employeeTypePermissions[t.id] = perms;
+  });
+
   return {
     permissions: claims?.permissions,
     employee: employee.data,
-    employeeTypes: employeeTypes.data ?? []
+    employeeTypes: types,
+    employeeTypePermissions
   };
 }
 
@@ -110,7 +134,7 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export default function UsersEmployeeRoute() {
-  const { permissions, employee, employeeTypes } =
+  const { permissions, employee, employeeTypes, employeeTypePermissions } =
     useLoaderData<typeof loader>();
 
   const initialValues = {
@@ -124,6 +148,7 @@ export default function UsersEmployeeRoute() {
       key={initialValues.id}
       name={employee?.name || ""}
       employeeTypes={employeeTypes}
+      employeeTypePermissions={employeeTypePermissions}
       // @ts-expect-error
       initialValues={initialValues}
     />
