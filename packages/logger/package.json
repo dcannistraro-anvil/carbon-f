@@ -2,9 +2,9 @@
   "name": "@carbon/logger",
   "devDependencies": {
     "@carbon/config": "*",
-    "tsup": "^8.5.1",
-    "typescript": "^5.2.2",
-    "vitest": "^4.1.0"
+    "tsup": "8.5.1",
+    "typescript": "5.8.3",
+    "vitest": "4.1.4"
   },
   "exports": {
     ".": "./src/index.ts"
@@ -20,7 +20,7 @@
   "version": "*",
   "dependencies": {
     "cookie": "1.1.1",
-    "dompurify": "^3.4.0",
+    "dompurify": "3.4.0",
     "nanoid": "5.1.7"
   }
 }

@@ -2,14 +2,14 @@
   "name": "@carbon/notifications",
   "type": "module",
   "dependencies": {
-    "@novu/node": "^2.0.1",
+    "@novu/node": "2.6.6",
     "cookie": "1.1.1",
-    "nanoid": "^5.1.7"
+    "nanoid": "5.1.7"
   },
   "devDependencies": {
     "@carbon/config": "*",
     "@carbon/database": "*",
-    "typescript": "^5.2.2"
+    "typescript": "5.8.3"
   },
   "exports": {
     ".": "./src/index.ts"

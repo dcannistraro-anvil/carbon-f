@@ -2,21 +2,21 @@
   "name": "@carbon/remix",
   "dependencies": {
     "cookie": "1.1.1",
-    "dompurify": "^3.4.0",
+    "dompurify": "3.4.0",
     "nanoid": "5.1.7",
-    "nprogress": "^0.2.0",
-    "react": "^18.3.1",
-    "react-icons": "^5.4.0",
+    "nprogress": "0.2.0",
+    "react": "18.3.1",
+    "react-icons": "5.6.0",
     "react-router": "7.12.0"
   },
   "devDependencies": {
     "@carbon/config": "*",
     "@carbon/react": "*",
     "@carbon/utils": "*",
-    "@types/react": "^18.2.74",
-    "tsup": "^8.5.1",
-    "typescript": "^5.2.2",
-    "vitest": "^4.1.0"
+    "@types/react": "18.3.28",
+    "tsup": "8.5.1",
+    "typescript": "5.8.3",
+    "vitest": "4.1.4"
   },
   "exports": {
     ".": "./src/index.ts"

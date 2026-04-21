@@ -18,9 +18,9 @@
   },
   "dependencies": {
     "cookie": "1.1.1",
-    "dompurify": "^3.4.0",
+    "dompurify": "3.4.0",
     "nanoid": "5.1.7",
-    "vitest": "^4.1.0"
+    "vitest": "4.1.4"
   },
   "peerDependencies": {
     "@tailwindcss/container-queries": "^0.1.1",
@@ -37,6 +37,6 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "tsup": "^8.5.1"
+    "tsup": "8.5.1"
   }
 }

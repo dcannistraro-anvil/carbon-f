@@ -28,27 +28,27 @@
     "typecheck": "tsgo --noEmit"
   },
   "dependencies": {
-    "@ai-sdk/openai": "^2.0.60",
+    "@ai-sdk/openai": "2.0.102",
     "@carbon/auth": "*",
     "@carbon/react": "*",
     "@carbon/utils": "*",
-    "@slack/bolt": "~4.4.0",
-    "@slack/oauth": "~3.0.3",
-    "@slack/web-api": "~7.10.0",
+    "@slack/bolt": "4.4.0",
+    "@slack/oauth": "3.0.5",
+    "@slack/web-api": "7.10.0",
     "@supabase/supabase-js": "2.80.0",
-    "ai": "^5.0.88",
+    "ai": "5.0.172",
     "cookie": "1.1.1",
-    "dompurify": "^3.4.0",
+    "dompurify": "3.4.0",
     "nanoid": "5.1.7",
     "react-pdf": "10.4.1",
     "sst": "4.6.9",
     "supabase": "2.84.5",
     "tsup": "8.5.1",
-    "zod": "^3.25.76"
+    "zod": "3.25.76"
   },
   "devDependencies": {
     "@carbon/config": "*",
-    "typescript": "^5.2.2",
-    "vitest": "^4.1.0"
+    "typescript": "5.8.3",
+    "vitest": "4.1.4"
   }
 }
