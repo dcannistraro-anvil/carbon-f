@@ -16,11 +16,15 @@ export interface AuditMetadata {
 }
 
 /**
- * Represents a single field change in the diff
+ * Represents a single field change in the diff.
+ *
+ * Both `old` and `new` are optional: INSERT entries populated via a table's
+ * `createFields` config only include `new`, and the UI hides the "old" pill
+ * when the key is absent.
  */
 export interface AuditDiffEntry {
-  old: unknown;
-  new: unknown;
+  old?: unknown;
+  new?: unknown;
 }
 
 /**

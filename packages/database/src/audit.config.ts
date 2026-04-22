@@ -6,43 +6,99 @@
  * When a row in any of those tables changes, the audit system attributes the change
  * to the correct business entity and records the actual field-level diff.
  *
+ * The generated Supabase `Database` type (`./types`) is the source of truth for
+ * table names and column names used throughout this config.
+ *
  * Table roles:
  * - "root": The primary table for this entity. Its PK is the entity ID.
  * - "extension": A 1:1 extension table whose PK equals the parent FK
  *           (e.g., customerPayment PK = customerId). Entity ID resolution
  *           is the same as root, but INSERT events are skipped.
- * - { entityIdColumn: string }: A child table with its own surrogate PK.
- *           The named column contains the parent entity ID.
+ * - { entityIdColumn }: A child table with its own surrogate PK. The named
+ *           column contains the parent entity ID.
  * - { resolve: { junction, fk, entityIdColumn } }: An indirect child linked
  *           through a junction table. Requires a DB query at audit time.
  */
 
+import type { Database } from "./types";
+
 // ---------------------------------------------------------------------------
-// Config types
+// Schema-derived helpers
 // ---------------------------------------------------------------------------
 
-type RootTable = { role: "root" };
+type PublicSchema = Database["public"];
 
-type ExtensionTable = { role: "extension" };
+/** All table names present in the public schema. */
+export type TableName = Extract<keyof PublicSchema["Tables"], string>;
 
-type ChildTable = { entityIdColumn: string };
+/** All column names of a given public table. */
+export type ColumnOf<T extends TableName> = Extract<
+  keyof PublicSchema["Tables"][T]["Row"],
+  string
+>;
 
-type IndirectTable = {
-  resolve: {
-    /** Junction table name (e.g. "customerContact") */
-    junction: string;
-    /** Column in junction table pointing to this table's PK (e.g. "contactId") */
-    fk: string;
-    /** Column in junction table pointing to the parent entity (e.g. "customerId") */
-    entityIdColumn: string;
-  };
+// ---------------------------------------------------------------------------
+// Config types (generic on the table they describe)
+// ---------------------------------------------------------------------------
+
+/**
+ * `createFields` controls which columns appear in the diff for INSERT events.
+ * By default, INSERT audit entries carry a null diff (rendered as "Created").
+ * List columns here to surface their initial values. Only meaningful on
+ * tables that log INSERTs (today: root tables).
+ *
+ * Each variant declares `createFields` directly (rather than sharing a base
+ * via intersection) so TS can narrow `T` — and autocomplete column names —
+ * inside object-literal config entries.
+ */
+type RootTable<T extends TableName> = {
+  role: "root";
+  createFields?: readonly ColumnOf<T>[];
 };
 
-type TableConfig = RootTable | ExtensionTable | ChildTable | IndirectTable;
+type ExtensionTable<T extends TableName> = {
+  role: "extension";
+  createFields?: readonly ColumnOf<T>[];
+};
+
+type ChildTable<T extends TableName> = {
+  entityIdColumn: ColumnOf<T>;
+  createFields?: readonly ColumnOf<T>[];
+};
+
+/**
+ * Distributed union so `fk` and `entityIdColumn` are checked against the
+ * chosen `junction` table's columns.
+ */
+type IndirectResolve = {
+  [J in TableName]: {
+    /** Junction table name (e.g. "customerContact"). */
+    junction: J;
+    /** Column in the junction pointing to this table's PK (e.g. "contactId"). */
+    fk: ColumnOf<J>;
+    /** Column in the junction pointing to the parent entity (e.g. "customerId"). */
+    entityIdColumn: ColumnOf<J>;
+  };
+}[TableName];
+
+type IndirectTable<T extends TableName> = {
+  resolve: IndirectResolve;
+  createFields?: readonly ColumnOf<T>[];
+};
+
+export type TableConfig<T extends TableName = TableName> =
+  | RootTable<T>
+  | ExtensionTable<T>
+  | ChildTable<T>
+  | IndirectTable<T>;
+
+type EntityTables = {
+  [T in TableName]?: TableConfig<T>;
+};
 
 type EntityConfig = {
   label: string;
-  tables: Record<string, TableConfig>;
+  tables: EntityTables;
 };
 
 // ---------------------------------------------------------------------------
@@ -115,8 +171,8 @@ export const auditConfig = {
       tables: {
         salesOrder: { role: "root" },
         salesOrderLine: { entityIdColumn: "salesOrderId" },
-        salesOrderPayment: { entityIdColumn: "salesOrderId" },
-        salesOrderShipment: { entityIdColumn: "salesOrderId" }
+        salesOrderPayment: { role: "extension" }, // PK = salesOrderId
+        salesOrderShipment: { role: "extension" } // PK = salesOrderId
       }
     },
 
@@ -125,8 +181,8 @@ export const auditConfig = {
       tables: {
         purchaseOrder: { role: "root" },
         purchaseOrderLine: { entityIdColumn: "purchaseOrderId" },
-        purchaseOrderPayment: { entityIdColumn: "purchaseOrderId" },
-        purchaseOrderDelivery: { entityIdColumn: "purchaseOrderId" }
+        purchaseOrderPayment: { role: "extension" }, // PK = purchaseOrderId
+        purchaseOrderDelivery: { role: "extension" } // PK = purchaseOrderId
       }
     },
 
@@ -134,7 +190,7 @@ export const auditConfig = {
       label: "Sales Invoice",
       tables: {
         salesInvoice: { role: "root" },
-        salesInvoiceLine: { entityIdColumn: "salesInvoiceId" },
+        salesInvoiceLine: { entityIdColumn: "invoiceId" },
         salesInvoiceShipment: { role: "extension" } // PK = salesInvoiceId
       }
     },
@@ -143,7 +199,7 @@ export const auditConfig = {
       label: "Purchase Invoice",
       tables: {
         purchaseInvoice: { role: "root" },
-        purchaseInvoiceLine: { entityIdColumn: "purchaseInvoiceId" }
+        purchaseInvoiceLine: { entityIdColumn: "invoiceId" }
       }
     },
 
@@ -280,7 +336,10 @@ export const auditConfig = {
     priceOverrideBreak: {
       label: "Price Override Break",
       tables: {
-        customerItemPriceOverrideBreak: { role: "root" }
+        customerItemPriceOverrideBreak: {
+          role: "root",
+          createFields: ["quantity", "overridePrice", "active"]
+        }
       }
     }
   } satisfies Record<string, EntityConfig>,
@@ -353,7 +412,7 @@ export const auditConfig = {
     pricingRule: "Pricing Rule",
     customerItemPriceOverride: "Price Override",
     customerItemPriceOverrideBreak: "Quantity Break"
-  } as Record<string, string>,
+  } satisfies Partial<Record<TableName, string>>,
 
   /** Fields to skip in diff computation */
   skipFields: ["updatedAt", "updatedBy", "embedding"],
@@ -418,6 +477,14 @@ export function isAuditableTable(table: string): boolean {
   return _tableIndex.has(table);
 }
 
+/**
+ * Columns to include in the diff for INSERT events on this table.
+ * Returns an empty array when no createFields are configured.
+ */
+export function getCreateFields(config: TableConfig): readonly string[] {
+  return config.createFields ?? [];
+}
+
 /** @deprecated Use isAuditableTable instead */
 export function isAuditableEntity(table: string): boolean {
   return isAuditableTable(table);
@@ -451,16 +518,16 @@ export function getEntityLabel(entityType: AuditEntityType): string {
 
 /** Get human-readable label for a table name */
 export function getTableLabel(tableName: string): string {
-  return (
-    auditConfig.tableLabels[tableName] ??
-    tableName.replace(/([A-Z])/g, " $1").trim()
-  );
+  const labels = auditConfig.tableLabels as Record<string, string | undefined>;
+  return labels[tableName] ?? tableName.replace(/([A-Z])/g, " $1").trim();
 }
 
 /**
  * Check if a table config is a root table (PK = entity ID)
  */
-export function isRootTable(config: TableConfig): config is RootTable {
+export function isRootTable(
+  config: TableConfig
+): config is RootTable<TableName> {
   return "role" in config && config.role === "root";
 }
 
@@ -471,20 +538,24 @@ export function isRootTable(config: TableConfig): config is RootTable {
  */
 export function isExtensionTable(
   config: TableConfig
-): config is ExtensionTable {
+): config is ExtensionTable<TableName> {
   return "role" in config && config.role === "extension";
 }
 
 /**
  * Check if a table config is a direct child (has entityIdColumn)
  */
-export function isChildTable(config: TableConfig): config is ChildTable {
+export function isChildTable(
+  config: TableConfig
+): config is ChildTable<TableName> {
   return "entityIdColumn" in config && !("resolve" in config);
 }
 
 /**
  * Check if a table config requires junction table resolution
  */
-export function isIndirectTable(config: TableConfig): config is IndirectTable {
+export function isIndirectTable(
+  config: TableConfig
+): config is IndirectTable<TableName> {
   return "resolve" in config;
 }

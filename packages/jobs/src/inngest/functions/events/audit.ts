@@ -1,6 +1,7 @@
 import { getCarbonServiceRole } from "@carbon/auth/client.server";
 import {
   auditConfig,
+  getCreateFields,
   getEntityConfigsForTable,
   isAuditableTable,
   isChildTable,
@@ -72,6 +73,26 @@ function computeDiff(
       } else {
         diff[key] = { old: oldValue, new: newValue };
       }
+    }
+  }
+
+  return Object.keys(diff).length > 0 ? diff : null;
+}
+
+/**
+ * Build a diff for INSERT events from an allowlist of columns.
+ * Returns null when no fields are configured or none are present on the record.
+ */
+function computeCreateDiff(
+  newRecord: Record<string, unknown>,
+  createFields: readonly string[]
+): AuditDiff | null {
+  if (createFields.length === 0) return null;
+
+  const diff: AuditDiff = {};
+  for (const field of createFields) {
+    if (field in newRecord) {
+      diff[field] = { new: newRecord[field] };
     }
   }
 
@@ -235,6 +256,14 @@ export const auditFunction = inngest.createFunction(
                 continue;
               }
 
+              const effectiveDiff =
+                record.event.operation === "INSERT" && record.event.new
+                  ? computeCreateDiff(
+                      record.event.new as Record<string, unknown>,
+                      getCreateFields(tableConfig)
+                    )
+                  : diff;
+
               if (isRootTable(tableConfig)) {
                 entries.push({
                   tableName,
@@ -243,7 +272,7 @@ export const auditFunction = inngest.createFunction(
                   recordId: record.event.recordId,
                   operation,
                   actorId: entryActorId,
-                  diff,
+                  diff: effectiveDiff,
                   metadata: entryMetadata
                 });
                 entriesCreatedForRecord++;
@@ -255,7 +284,7 @@ export const auditFunction = inngest.createFunction(
                   recordId: record.event.recordId,
                   operation,
                   actorId: entryActorId,
-                  diff,
+                  diff: effectiveDiff,
                   metadata: entryMetadata
                 });
                 entriesCreatedForRecord++;
@@ -277,7 +306,7 @@ export const auditFunction = inngest.createFunction(
                   recordId: record.event.recordId,
                   operation,
                   actorId: entryActorId,
-                  diff,
+                  diff: effectiveDiff,
                   metadata: entryMetadata
                 });
                 entriesCreatedForRecord++;
@@ -303,7 +332,7 @@ export const auditFunction = inngest.createFunction(
                     recordId: record.event.recordId,
                     operation,
                     actorId: entryActorId,
-                    diff,
+                    diff: effectiveDiff,
                     metadata: entryMetadata
                   });
                   entriesCreatedForRecord++;
