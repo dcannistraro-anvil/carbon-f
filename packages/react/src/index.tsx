@@ -304,6 +304,7 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from "./Tooltip";
+import { TruncatedTooltipText } from "./TruncatedTooltipText";
 import { cn } from "./utils/cn";
 import { copyToClipboard } from "./utils/dom";
 import { getValidChildren, reactNodeToString } from "./utils/react";
@@ -563,6 +564,7 @@ export {
   Toggle,
   ToggleGroup,
   ToggleGroupItem,
+  TruncatedTooltipText,
   Tooltip,
   TooltipContent,
   TooltipProvider,
