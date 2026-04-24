@@ -79,7 +79,7 @@ msgstr "Actual"
 msgid "Add"
 msgstr "Add"
 
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:667
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:668
 msgid "Add & Issue"
 msgstr "Add & Issue"
 
@@ -90,7 +90,7 @@ msgstr "Add & Issue"
 msgid "Add Inventory"
 msgstr "Add Inventory"
 
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:302
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:303
 msgid "Add Spare Part"
 msgstr "Add Spare Part"
 
@@ -147,7 +147,7 @@ msgid "Batch is not available"
 msgstr "Batch is not available"
 
 #. placeholder {0}: index + 1
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:501
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:502
 msgid "Batch Number {0}"
 msgstr "Batch Number {0}"
 
@@ -179,7 +179,7 @@ msgstr "By signing in, you agree to the <0>Terms of Service</0> and <1>Privacy P
 #: apps/mes/app/components/JobOperation/components/SerialSelectorModal.tsx:139
 #: apps/mes/app/components/JobOperation/components/Step.tsx:556
 #: apps/mes/app/components/JobOperation/components/Step.tsx:604
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:657
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:658
 #: apps/mes/app/components/Suggestion.tsx:199
 #: apps/mes/app/routes/x+/timecard.tsx:408
 #: apps/mes/app/routes/x+/timecard.tsx:505
@@ -537,7 +537,7 @@ msgstr "Issue Material"
 
 #: apps/mes/app/components/AdjustInventory.tsx:164
 #: apps/mes/app/components/JobOperation/JobOperation.tsx:1962
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:313
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:314
 msgid "Item"
 msgstr "Item"
 
@@ -571,7 +571,7 @@ msgstr "Labor"
 msgid "Let's build something"
 msgstr "Let's build something"
 
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:325
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:326
 msgid "Loading item details..."
 msgstr "Loading item details..."
 
@@ -921,7 +921,7 @@ msgstr "Progress"
 #: apps/mes/app/components/AdjustInventory.tsx:170
 #: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:236
 #: apps/mes/app/components/JobOperation/JobOperation.tsx:2228
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:335
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:336
 msgid "Quantity"
 msgstr "Quantity"
 
@@ -977,8 +977,8 @@ msgstr "Save"
 
 #: apps/mes/app/components/JobOperation/components/SerialSelectorModal.tsx:65
 #: apps/mes/app/components/JobOperation/JobOperation.tsx:1582
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:363
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:483
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:364
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:484
 msgid "Scan"
 msgstr "Scan"
 
@@ -1026,8 +1026,8 @@ msgstr "Search..."
 #: apps/mes/app/components/JobOperation/components/SerialSelectorModal.tsx:69
 #: apps/mes/app/components/JobOperation/components/SerialSelectorModal.tsx:94
 #: apps/mes/app/components/JobOperation/JobOperation.tsx:1649
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:367
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:487
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:368
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:488
 #: packages/react/src/Combobox.tsx:111
 #: packages/react/src/CreateableCombobox.tsx:121
 #: packages/react/src/MultiSelect.tsx:178
@@ -1050,21 +1050,21 @@ msgstr "Select a scrap quantity and reason"
 msgid "Select a serial number to continue with this operation"
 msgstr "Select a serial number to continue with this operation"
 
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:305
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:306
 msgid "Select an item and specify the quantity to issue"
 msgstr "Select an item and specify the quantity to issue"
 
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:316
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:317
 msgid "Select an item..."
 msgstr "Select an item..."
 
 #. placeholder {0}: index + 1
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:591
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:592
 msgid "Select Batch {0}"
 msgstr "Select Batch {0}"
 
 #. placeholder {0}: index + 1
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:439
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:440
 msgid "Select Serial {0}"
 msgstr "Select Serial {0}"
 
@@ -1088,7 +1088,7 @@ msgid "Serial {0}"
 msgstr "Serial {0}"
 
 #. placeholder {0}: index + 1
-#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:381
+#: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:382
 msgid "Serial Number {0}"
 msgstr "Serial Number {0}"
 

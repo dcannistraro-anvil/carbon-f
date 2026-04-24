@@ -1,4 +1,5 @@
 import {
+  buttonVariants,
   Select as CarbonSelect,
   cn,
   FormControl,
@@ -110,6 +111,9 @@ const Select = ({
 
 Select.displayName = "Select";
 
+const iconSizeClass = (size: "sm" | "md" | "lg") =>
+  size === "lg" ? "size-5" : size === "md" ? "size-4" : "size-3.5";
+
 export default Select;
 
 export type SelectBaseProps = Omit<
@@ -177,13 +181,23 @@ export const SelectBase = forwardRef<HTMLButtonElement, SelectBaseProps>(
             hideIcon={isLoading}
           >
             {isInlinePreview ? (
-              <IconButton
-                size={size ?? "sm"}
-                variant="secondary"
-                aria-label={value ? "Edit" : "Add"}
-                icon={value ? <LuSettings2 /> : <LuPlus />}
-                isDisabled={isNonInteractive}
-              />
+              <span
+                aria-hidden
+                className={cn(
+                  buttonVariants({
+                    variant: "secondary",
+                    size: size ?? "sm",
+                    isIcon: true,
+                    isDisabled: isNonInteractive
+                  })
+                )}
+              >
+                {value ? (
+                  <LuSettings2 className={iconSizeClass(size ?? "sm")} />
+                ) : (
+                  <LuPlus className={iconSizeClass(size ?? "sm")} />
+                )}
+              </span>
             ) : (
               <div>
                 <SelectValue placeholder={placeholder} />

@@ -6,7 +6,7 @@ import { Spinner, useMount, VStack } from "@carbon/react";
 import { Suspense } from "react";
 import type { LoaderFunctionArgs } from "react-router";
 import { Await, redirect, useLoaderData, useParams } from "react-router";
-import { CadModel } from "~/components";
+import { CadModel, DeferredFiles } from "~/components";
 import { usePanels } from "~/components/Layout";
 import { usePermissions, useRouteData } from "~/hooks";
 import type { Job } from "~/modules/production";
@@ -183,7 +183,7 @@ export default function JobMakeMethodRoute() {
           )}
         </Await>
       </Suspense>
-      <Await resolve={files}>
+      <DeferredFiles resolve={files}>
         {(files) => (
           <JobDocuments
             files={files}
@@ -193,7 +193,7 @@ export default function JobMakeMethodRoute() {
             modelUpload={{ ...job }}
           />
         )}
-      </Await>
+      </DeferredFiles>
       <Suspense fallback={null}>
         <Await resolve={loaderData.model}>
           {(model) => (

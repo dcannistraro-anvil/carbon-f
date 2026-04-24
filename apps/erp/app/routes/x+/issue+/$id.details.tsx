@@ -8,7 +8,7 @@ import { useLingui } from "@lingui/react/macro";
 import { Suspense } from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import { Await, redirect, useLoaderData, useParams } from "react-router";
-import { Documents } from "~/components";
+import { DeferredFiles, Documents } from "~/components";
 import { useRouteData } from "~/hooks";
 import type { IssueAssociationNode } from "~/modules/quality";
 import {
@@ -154,25 +154,17 @@ export default function IssueDetailsRoute() {
         </Await>
       </Suspense>
 
-      <Suspense
-        fallback={
-          <div className="flex min-h-[420px] w-full h-full rounded bg-gradient-to-tr from-background to-card items-center justify-center">
-            <Spinner className="size-10" />
-          </div>
-        }
-      >
-        <Await resolve={routeData?.files}>
-          {(resolvedFiles) => (
-            <Documents
-              files={resolvedFiles}
-              sourceDocument="Issue"
-              sourceDocumentId={id}
-              writeBucket="parts"
-              writeBucketPermission="parts"
-            />
-          )}
-        </Await>
-      </Suspense>
+      <DeferredFiles resolve={routeData?.files}>
+        {(resolvedFiles) => (
+          <Documents
+            files={resolvedFiles}
+            sourceDocument="Issue"
+            sourceDocumentId={id}
+            writeBucket="parts"
+            writeBucketPermission="parts"
+          />
+        )}
+      </DeferredFiles>
 
       <Suspense
         fallback={

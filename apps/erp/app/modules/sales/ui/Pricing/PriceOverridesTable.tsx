@@ -325,7 +325,8 @@ const PriceListTable = memo(
         hasScope,
         navigate,
         searchParams,
-        t
+        t,
+        permissions.can
       ]
     );
 

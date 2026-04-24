@@ -115,7 +115,7 @@ const MakeMethodTools = ({
   // Reset selectedVersion when itemId or activeMethod changes
   useEffect(() => {
     setSelectedVersion(activeMethod);
-  }, [itemId, activeMethod]);
+  }, [activeMethod]);
 
   // State for Get and Save Method modals
   const { carbon } = useCarbon();

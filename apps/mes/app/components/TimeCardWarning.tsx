@@ -69,7 +69,7 @@ export function TimeCardWarning({ openClockEntry }: TimeCardWarningProps) {
         setShowClockWarning(false);
       }
     }
-  }, [fetcher.data, fetcher.state]);
+  }, [fetcher.data, fetcher.state, t]);
 
   const handleClockAcknowledge = () => {
     if (openClockEntry) {

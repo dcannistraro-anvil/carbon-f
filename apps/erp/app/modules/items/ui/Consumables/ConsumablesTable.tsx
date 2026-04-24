@@ -67,20 +67,26 @@ type ConsumablesTableProps = {
 const ConsumablesTable = memo(
   ({ data, count, tags }: ConsumablesTableProps) => {
     const { t } = useLingui();
-    const translateMethodType = (v: string) =>
-      v === "Purchase to Order"
-        ? t`Purchase to Order`
-        : v === "Pull from Inventory"
-          ? t`Pull from Inventory`
-          : t`Make to Order`;
-    const translateTrackingType = (v: string) =>
-      v === "Inventory"
-        ? t`Inventory`
-        : v === "Non-Inventory"
-          ? t`Non-Inventory`
-          : v === "Serial"
-            ? t`Serial`
-            : t`Batch`;
+    const translateMethodType = useCallback(
+      (v: string) =>
+        v === "Purchase to Order"
+          ? t`Purchase to Order`
+          : v === "Pull from Inventory"
+            ? t`Pull from Inventory`
+            : t`Make to Order`,
+      [t]
+    );
+    const translateTrackingType = useCallback(
+      (v: string) =>
+        v === "Inventory"
+          ? t`Inventory`
+          : v === "Non-Inventory"
+            ? t`Non-Inventory`
+            : v === "Serial"
+              ? t`Serial`
+              : t`Batch`,
+      [t]
+    );
     const navigate = useNavigate();
     const permissions = usePermissions();
 
@@ -310,7 +316,15 @@ const ConsumablesTable = memo(
         }
       ];
       return [...defaultColumns, ...customColumns];
-    }, [tags, people, customColumns, itemPostingGroups, t]);
+    }, [
+      tags,
+      people,
+      customColumns,
+      itemPostingGroups,
+      t,
+      translateMethodType,
+      translateTrackingType
+    ]);
 
     const fetcher = useFetcher<typeof action>();
     useEffect(() => {
@@ -422,7 +436,12 @@ const ConsumablesTable = memo(
           </DropdownMenuContent>
         );
       },
-      [onBulkUpdate, itemPostingGroups]
+      [
+        onBulkUpdate,
+        itemPostingGroups,
+        translateMethodType,
+        translateTrackingType
+      ]
     );
 
     const renderContextMenu = useMemo(() => {

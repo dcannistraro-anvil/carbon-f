@@ -4749,195 +4749,6 @@ export default {
         tags: ["jobOperationsWithDependencies"]
       }
     },
-    "/searchIndex_EUPeRM3Kae6DBG3tra2deZ": {
-      get: {
-        parameters: [
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.id"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.entityType"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.entityId"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.title"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.description"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.link"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.tags"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.metadata"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.searchVector"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.createdAt"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.updatedAt"
-          },
-          {
-            $ref: "#/parameters/select"
-          },
-          {
-            $ref: "#/parameters/order"
-          },
-          {
-            $ref: "#/parameters/range"
-          },
-          {
-            $ref: "#/parameters/rangeUnit"
-          },
-          {
-            $ref: "#/parameters/offset"
-          },
-          {
-            $ref: "#/parameters/limit"
-          },
-          {
-            $ref: "#/parameters/preferCount"
-          }
-        ],
-        responses: {
-          "200": {
-            description: "OK",
-            schema: {
-              items: {
-                $ref: "#/definitions/searchIndex_EUPeRM3Kae6DBG3tra2deZ"
-              },
-              type: "array"
-            }
-          },
-          "206": {
-            description: "Partial Content"
-          }
-        },
-        tags: ["searchIndex_EUPeRM3Kae6DBG3tra2deZ"]
-      },
-      post: {
-        parameters: [
-          {
-            $ref: "#/parameters/body.searchIndex_EUPeRM3Kae6DBG3tra2deZ"
-          },
-          {
-            $ref: "#/parameters/select"
-          },
-          {
-            $ref: "#/parameters/preferPost"
-          }
-        ],
-        responses: {
-          "201": {
-            description: "Created"
-          }
-        },
-        tags: ["searchIndex_EUPeRM3Kae6DBG3tra2deZ"]
-      },
-      delete: {
-        parameters: [
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.id"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.entityType"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.entityId"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.title"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.description"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.link"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.tags"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.metadata"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.searchVector"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.createdAt"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.updatedAt"
-          },
-          {
-            $ref: "#/parameters/preferReturn"
-          }
-        ],
-        responses: {
-          "204": {
-            description: "No Content"
-          }
-        },
-        tags: ["searchIndex_EUPeRM3Kae6DBG3tra2deZ"]
-      },
-      patch: {
-        parameters: [
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.id"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.entityType"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.entityId"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.title"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.description"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.link"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.tags"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.metadata"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.searchVector"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.createdAt"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.updatedAt"
-          },
-          {
-            $ref: "#/parameters/body.searchIndex_EUPeRM3Kae6DBG3tra2deZ"
-          },
-          {
-            $ref: "#/parameters/preferReturn"
-          }
-        ],
-        responses: {
-          "204": {
-            description: "No Content"
-          }
-        },
-        tags: ["searchIndex_EUPeRM3Kae6DBG3tra2deZ"]
-      }
-    },
     "/purchaseInvoicePriceChange": {
       get: {
         parameters: [
@@ -6094,195 +5905,6 @@ export default {
           }
         },
         tags: ["purchaseOrderLocations"]
-      }
-    },
-    "/searchIndex_S32bAHJrJi7z4Pktoac6xN": {
-      get: {
-        parameters: [
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.id"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.entityType"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.entityId"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.title"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.description"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.link"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.tags"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.metadata"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.searchVector"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.createdAt"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.updatedAt"
-          },
-          {
-            $ref: "#/parameters/select"
-          },
-          {
-            $ref: "#/parameters/order"
-          },
-          {
-            $ref: "#/parameters/range"
-          },
-          {
-            $ref: "#/parameters/rangeUnit"
-          },
-          {
-            $ref: "#/parameters/offset"
-          },
-          {
-            $ref: "#/parameters/limit"
-          },
-          {
-            $ref: "#/parameters/preferCount"
-          }
-        ],
-        responses: {
-          "200": {
-            description: "OK",
-            schema: {
-              items: {
-                $ref: "#/definitions/searchIndex_S32bAHJrJi7z4Pktoac6xN"
-              },
-              type: "array"
-            }
-          },
-          "206": {
-            description: "Partial Content"
-          }
-        },
-        tags: ["searchIndex_S32bAHJrJi7z4Pktoac6xN"]
-      },
-      post: {
-        parameters: [
-          {
-            $ref: "#/parameters/body.searchIndex_S32bAHJrJi7z4Pktoac6xN"
-          },
-          {
-            $ref: "#/parameters/select"
-          },
-          {
-            $ref: "#/parameters/preferPost"
-          }
-        ],
-        responses: {
-          "201": {
-            description: "Created"
-          }
-        },
-        tags: ["searchIndex_S32bAHJrJi7z4Pktoac6xN"]
-      },
-      delete: {
-        parameters: [
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.id"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.entityType"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.entityId"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.title"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.description"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.link"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.tags"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.metadata"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.searchVector"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.createdAt"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.updatedAt"
-          },
-          {
-            $ref: "#/parameters/preferReturn"
-          }
-        ],
-        responses: {
-          "204": {
-            description: "No Content"
-          }
-        },
-        tags: ["searchIndex_S32bAHJrJi7z4Pktoac6xN"]
-      },
-      patch: {
-        parameters: [
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.id"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.entityType"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.entityId"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.title"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.description"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.link"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.tags"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.metadata"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.searchVector"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.createdAt"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.updatedAt"
-          },
-          {
-            $ref: "#/parameters/body.searchIndex_S32bAHJrJi7z4Pktoac6xN"
-          },
-          {
-            $ref: "#/parameters/preferReturn"
-          }
-        ],
-        responses: {
-          "204": {
-            description: "No Content"
-          }
-        },
-        tags: ["searchIndex_S32bAHJrJi7z4Pktoac6xN"]
       }
     },
     "/journal": {
@@ -28509,195 +28131,6 @@ export default {
         tags: ["warehouse"]
       }
     },
-    "/searchIndex_87xR14oHMLgpGLQGc4AnUt": {
-      get: {
-        parameters: [
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.id"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.entityType"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.entityId"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.title"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.description"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.link"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.tags"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.metadata"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.searchVector"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.createdAt"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.updatedAt"
-          },
-          {
-            $ref: "#/parameters/select"
-          },
-          {
-            $ref: "#/parameters/order"
-          },
-          {
-            $ref: "#/parameters/range"
-          },
-          {
-            $ref: "#/parameters/rangeUnit"
-          },
-          {
-            $ref: "#/parameters/offset"
-          },
-          {
-            $ref: "#/parameters/limit"
-          },
-          {
-            $ref: "#/parameters/preferCount"
-          }
-        ],
-        responses: {
-          "200": {
-            description: "OK",
-            schema: {
-              items: {
-                $ref: "#/definitions/searchIndex_87xR14oHMLgpGLQGc4AnUt"
-              },
-              type: "array"
-            }
-          },
-          "206": {
-            description: "Partial Content"
-          }
-        },
-        tags: ["searchIndex_87xR14oHMLgpGLQGc4AnUt"]
-      },
-      post: {
-        parameters: [
-          {
-            $ref: "#/parameters/body.searchIndex_87xR14oHMLgpGLQGc4AnUt"
-          },
-          {
-            $ref: "#/parameters/select"
-          },
-          {
-            $ref: "#/parameters/preferPost"
-          }
-        ],
-        responses: {
-          "201": {
-            description: "Created"
-          }
-        },
-        tags: ["searchIndex_87xR14oHMLgpGLQGc4AnUt"]
-      },
-      delete: {
-        parameters: [
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.id"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.entityType"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.entityId"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.title"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.description"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.link"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.tags"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.metadata"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.searchVector"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.createdAt"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.updatedAt"
-          },
-          {
-            $ref: "#/parameters/preferReturn"
-          }
-        ],
-        responses: {
-          "204": {
-            description: "No Content"
-          }
-        },
-        tags: ["searchIndex_87xR14oHMLgpGLQGc4AnUt"]
-      },
-      patch: {
-        parameters: [
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.id"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.entityType"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.entityId"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.title"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.description"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.link"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.tags"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.metadata"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.searchVector"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.createdAt"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.updatedAt"
-          },
-          {
-            $ref: "#/parameters/body.searchIndex_87xR14oHMLgpGLQGc4AnUt"
-          },
-          {
-            $ref: "#/parameters/preferReturn"
-          }
-        ],
-        responses: {
-          "204": {
-            description: "No Content"
-          }
-        },
-        tags: ["searchIndex_87xR14oHMLgpGLQGc4AnUt"]
-      }
-    },
     "/salesOrderCustomers": {
       get: {
         parameters: [
@@ -30310,9 +29743,6 @@ export default {
             $ref: "#/parameters/rowFilter.purchaseInvoice.invoiceId"
           },
           {
-            $ref: "#/parameters/rowFilter.purchaseInvoice.status"
-          },
-          {
             $ref: "#/parameters/rowFilter.purchaseInvoice.supplierId"
           },
           {
@@ -30398,6 +29828,9 @@ export default {
           },
           {
             $ref: "#/parameters/rowFilter.purchaseInvoice.locationId"
+          },
+          {
+            $ref: "#/parameters/rowFilter.purchaseInvoice.status"
           },
           {
             $ref: "#/parameters/select"
@@ -30465,9 +29898,6 @@ export default {
             $ref: "#/parameters/rowFilter.purchaseInvoice.invoiceId"
           },
           {
-            $ref: "#/parameters/rowFilter.purchaseInvoice.status"
-          },
-          {
             $ref: "#/parameters/rowFilter.purchaseInvoice.supplierId"
           },
           {
@@ -30553,6 +29983,9 @@ export default {
           },
           {
             $ref: "#/parameters/rowFilter.purchaseInvoice.locationId"
+          },
+          {
+            $ref: "#/parameters/rowFilter.purchaseInvoice.status"
           },
           {
             $ref: "#/parameters/preferReturn"
@@ -30574,9 +30007,6 @@ export default {
             $ref: "#/parameters/rowFilter.purchaseInvoice.invoiceId"
           },
           {
-            $ref: "#/parameters/rowFilter.purchaseInvoice.status"
-          },
-          {
             $ref: "#/parameters/rowFilter.purchaseInvoice.supplierId"
           },
           {
@@ -30664,6 +30094,9 @@ export default {
             $ref: "#/parameters/rowFilter.purchaseInvoice.locationId"
           },
           {
+            $ref: "#/parameters/rowFilter.purchaseInvoice.status"
+          },
+          {
             $ref: "#/parameters/body.purchaseInvoice"
           },
           {
@@ -30676,195 +30109,6 @@ export default {
           }
         },
         tags: ["purchaseInvoice"]
-      }
-    },
-    "/searchIndex_VaGcmY4pUrc7nKHotAH6Ku": {
-      get: {
-        parameters: [
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.id"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.entityType"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.entityId"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.title"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.description"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.link"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.tags"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.metadata"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.searchVector"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.createdAt"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.updatedAt"
-          },
-          {
-            $ref: "#/parameters/select"
-          },
-          {
-            $ref: "#/parameters/order"
-          },
-          {
-            $ref: "#/parameters/range"
-          },
-          {
-            $ref: "#/parameters/rangeUnit"
-          },
-          {
-            $ref: "#/parameters/offset"
-          },
-          {
-            $ref: "#/parameters/limit"
-          },
-          {
-            $ref: "#/parameters/preferCount"
-          }
-        ],
-        responses: {
-          "200": {
-            description: "OK",
-            schema: {
-              items: {
-                $ref: "#/definitions/searchIndex_VaGcmY4pUrc7nKHotAH6Ku"
-              },
-              type: "array"
-            }
-          },
-          "206": {
-            description: "Partial Content"
-          }
-        },
-        tags: ["searchIndex_VaGcmY4pUrc7nKHotAH6Ku"]
-      },
-      post: {
-        parameters: [
-          {
-            $ref: "#/parameters/body.searchIndex_VaGcmY4pUrc7nKHotAH6Ku"
-          },
-          {
-            $ref: "#/parameters/select"
-          },
-          {
-            $ref: "#/parameters/preferPost"
-          }
-        ],
-        responses: {
-          "201": {
-            description: "Created"
-          }
-        },
-        tags: ["searchIndex_VaGcmY4pUrc7nKHotAH6Ku"]
-      },
-      delete: {
-        parameters: [
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.id"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.entityType"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.entityId"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.title"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.description"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.link"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.tags"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.metadata"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.searchVector"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.createdAt"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.updatedAt"
-          },
-          {
-            $ref: "#/parameters/preferReturn"
-          }
-        ],
-        responses: {
-          "204": {
-            description: "No Content"
-          }
-        },
-        tags: ["searchIndex_VaGcmY4pUrc7nKHotAH6Ku"]
-      },
-      patch: {
-        parameters: [
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.id"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.entityType"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.entityId"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.title"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.description"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.link"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.tags"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.metadata"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.searchVector"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.createdAt"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.updatedAt"
-          },
-          {
-            $ref: "#/parameters/body.searchIndex_VaGcmY4pUrc7nKHotAH6Ku"
-          },
-          {
-            $ref: "#/parameters/preferReturn"
-          }
-        ],
-        responses: {
-          "204": {
-            description: "No Content"
-          }
-        },
-        tags: ["searchIndex_VaGcmY4pUrc7nKHotAH6Ku"]
       }
     },
     "/userAttribute": {
@@ -40993,10 +40237,10 @@ export default {
             $ref: "#/parameters/rowFilter.purchaseInvoiceStatusHistory.invoiceId"
           },
           {
-            $ref: "#/parameters/rowFilter.purchaseInvoiceStatusHistory.status"
+            $ref: "#/parameters/rowFilter.purchaseInvoiceStatusHistory.createdAt"
           },
           {
-            $ref: "#/parameters/rowFilter.purchaseInvoiceStatusHistory.createdAt"
+            $ref: "#/parameters/rowFilter.purchaseInvoiceStatusHistory.status"
           },
           {
             $ref: "#/parameters/select"
@@ -41064,10 +40308,10 @@ export default {
             $ref: "#/parameters/rowFilter.purchaseInvoiceStatusHistory.invoiceId"
           },
           {
-            $ref: "#/parameters/rowFilter.purchaseInvoiceStatusHistory.status"
+            $ref: "#/parameters/rowFilter.purchaseInvoiceStatusHistory.createdAt"
           },
           {
-            $ref: "#/parameters/rowFilter.purchaseInvoiceStatusHistory.createdAt"
+            $ref: "#/parameters/rowFilter.purchaseInvoiceStatusHistory.status"
           },
           {
             $ref: "#/parameters/preferReturn"
@@ -41089,10 +40333,10 @@ export default {
             $ref: "#/parameters/rowFilter.purchaseInvoiceStatusHistory.invoiceId"
           },
           {
-            $ref: "#/parameters/rowFilter.purchaseInvoiceStatusHistory.status"
+            $ref: "#/parameters/rowFilter.purchaseInvoiceStatusHistory.createdAt"
           },
           {
-            $ref: "#/parameters/rowFilter.purchaseInvoiceStatusHistory.createdAt"
+            $ref: "#/parameters/rowFilter.purchaseInvoiceStatusHistory.status"
           },
           {
             $ref: "#/parameters/body.purchaseInvoiceStatusHistory"
@@ -41107,195 +40351,6 @@ export default {
           }
         },
         tags: ["purchaseInvoiceStatusHistory"]
-      }
-    },
-    "/searchIndex_LkbVbjKfkhNUKHqV2mes8d": {
-      get: {
-        parameters: [
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.id"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.entityType"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.entityId"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.title"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.description"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.link"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.tags"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.metadata"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.searchVector"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.createdAt"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.updatedAt"
-          },
-          {
-            $ref: "#/parameters/select"
-          },
-          {
-            $ref: "#/parameters/order"
-          },
-          {
-            $ref: "#/parameters/range"
-          },
-          {
-            $ref: "#/parameters/rangeUnit"
-          },
-          {
-            $ref: "#/parameters/offset"
-          },
-          {
-            $ref: "#/parameters/limit"
-          },
-          {
-            $ref: "#/parameters/preferCount"
-          }
-        ],
-        responses: {
-          "200": {
-            description: "OK",
-            schema: {
-              items: {
-                $ref: "#/definitions/searchIndex_LkbVbjKfkhNUKHqV2mes8d"
-              },
-              type: "array"
-            }
-          },
-          "206": {
-            description: "Partial Content"
-          }
-        },
-        tags: ["searchIndex_LkbVbjKfkhNUKHqV2mes8d"]
-      },
-      post: {
-        parameters: [
-          {
-            $ref: "#/parameters/body.searchIndex_LkbVbjKfkhNUKHqV2mes8d"
-          },
-          {
-            $ref: "#/parameters/select"
-          },
-          {
-            $ref: "#/parameters/preferPost"
-          }
-        ],
-        responses: {
-          "201": {
-            description: "Created"
-          }
-        },
-        tags: ["searchIndex_LkbVbjKfkhNUKHqV2mes8d"]
-      },
-      delete: {
-        parameters: [
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.id"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.entityType"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.entityId"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.title"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.description"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.link"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.tags"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.metadata"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.searchVector"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.createdAt"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.updatedAt"
-          },
-          {
-            $ref: "#/parameters/preferReturn"
-          }
-        ],
-        responses: {
-          "204": {
-            description: "No Content"
-          }
-        },
-        tags: ["searchIndex_LkbVbjKfkhNUKHqV2mes8d"]
-      },
-      patch: {
-        parameters: [
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.id"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.entityType"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.entityId"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.title"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.description"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.link"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.tags"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.metadata"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.searchVector"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.createdAt"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.updatedAt"
-          },
-          {
-            $ref: "#/parameters/body.searchIndex_LkbVbjKfkhNUKHqV2mes8d"
-          },
-          {
-            $ref: "#/parameters/preferReturn"
-          }
-        ],
-        responses: {
-          "204": {
-            description: "No Content"
-          }
-        },
-        tags: ["searchIndex_LkbVbjKfkhNUKHqV2mes8d"]
       }
     },
     "/accountingPeriod": {
@@ -51967,195 +51022,6 @@ export default {
           }
         },
         tags: ["materialTypes"]
-      }
-    },
-    "/searchIndex_USPpoeaKcnEMHdu3QKv6Bo": {
-      get: {
-        parameters: [
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.id"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.entityType"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.entityId"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.title"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.description"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.link"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.tags"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.metadata"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.searchVector"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.createdAt"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.updatedAt"
-          },
-          {
-            $ref: "#/parameters/select"
-          },
-          {
-            $ref: "#/parameters/order"
-          },
-          {
-            $ref: "#/parameters/range"
-          },
-          {
-            $ref: "#/parameters/rangeUnit"
-          },
-          {
-            $ref: "#/parameters/offset"
-          },
-          {
-            $ref: "#/parameters/limit"
-          },
-          {
-            $ref: "#/parameters/preferCount"
-          }
-        ],
-        responses: {
-          "200": {
-            description: "OK",
-            schema: {
-              items: {
-                $ref: "#/definitions/searchIndex_USPpoeaKcnEMHdu3QKv6Bo"
-              },
-              type: "array"
-            }
-          },
-          "206": {
-            description: "Partial Content"
-          }
-        },
-        tags: ["searchIndex_USPpoeaKcnEMHdu3QKv6Bo"]
-      },
-      post: {
-        parameters: [
-          {
-            $ref: "#/parameters/body.searchIndex_USPpoeaKcnEMHdu3QKv6Bo"
-          },
-          {
-            $ref: "#/parameters/select"
-          },
-          {
-            $ref: "#/parameters/preferPost"
-          }
-        ],
-        responses: {
-          "201": {
-            description: "Created"
-          }
-        },
-        tags: ["searchIndex_USPpoeaKcnEMHdu3QKv6Bo"]
-      },
-      delete: {
-        parameters: [
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.id"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.entityType"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.entityId"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.title"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.description"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.link"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.tags"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.metadata"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.searchVector"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.createdAt"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.updatedAt"
-          },
-          {
-            $ref: "#/parameters/preferReturn"
-          }
-        ],
-        responses: {
-          "204": {
-            description: "No Content"
-          }
-        },
-        tags: ["searchIndex_USPpoeaKcnEMHdu3QKv6Bo"]
-      },
-      patch: {
-        parameters: [
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.id"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.entityType"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.entityId"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.title"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.description"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.link"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.tags"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.metadata"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.searchVector"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.createdAt"
-          },
-          {
-            $ref: "#/parameters/rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.updatedAt"
-          },
-          {
-            $ref: "#/parameters/body.searchIndex_USPpoeaKcnEMHdu3QKv6Bo"
-          },
-          {
-            $ref: "#/parameters/preferReturn"
-          }
-        ],
-        responses: {
-          "204": {
-            description: "No Content"
-          }
-        },
-        tags: ["searchIndex_USPpoeaKcnEMHdu3QKv6Bo"]
       }
     },
     "/user": {
@@ -70302,20 +69168,20 @@ export default {
             in: "query",
             name: "",
             required: true,
-            type: "string",
-          },
+            type: "string"
+          }
         ],
         produces: [
           "application/json",
           "application/vnd.pgrst.object+json;nulls=stripped",
-          "application/vnd.pgrst.object+json",
+          "application/vnd.pgrst.object+json"
         ],
         responses: {
           "200": {
-            description: "OK",
-          },
+            description: "OK"
+          }
         },
-        tags: ["(rpc) show_trgm"],
+        tags: ["(rpc) show_trgm"]
       },
       post: {
         parameters: [
@@ -70327,29 +69193,29 @@ export default {
               properties: {
                 "": {
                   format: "text",
-                  type: "string",
-                },
+                  type: "string"
+                }
               },
               required: [""],
-              type: "object",
-            },
+              type: "object"
+            }
           },
           {
-            $ref: "#/parameters/preferParams",
-          },
+            $ref: "#/parameters/preferParams"
+          }
         ],
         produces: [
           "application/json",
           "application/vnd.pgrst.object+json;nulls=stripped",
-          "application/vnd.pgrst.object+json",
+          "application/vnd.pgrst.object+json"
         ],
         responses: {
           "200": {
-            description: "OK",
-          },
+            description: "OK"
+          }
         },
-        tags: ["(rpc) show_trgm"],
-      },
+        tags: ["(rpc) show_trgm"]
+      }
     },
     "/rpc/create_rfq_from_model_v1": {
       post: {
@@ -73061,14 +71927,14 @@ export default {
         produces: [
           "application/json",
           "application/vnd.pgrst.object+json;nulls=stripped",
-          "application/vnd.pgrst.object+json",
+          "application/vnd.pgrst.object+json"
         ],
         responses: {
           "200": {
-            description: "OK",
-          },
+            description: "OK"
+          }
         },
-        tags: ["(rpc) show_limit"],
+        tags: ["(rpc) show_limit"]
       },
       post: {
         parameters: [
@@ -73077,25 +71943,25 @@ export default {
             name: "args",
             required: true,
             schema: {
-              type: "object",
-            },
+              type: "object"
+            }
           },
           {
-            $ref: "#/parameters/preferParams",
-          },
+            $ref: "#/parameters/preferParams"
+          }
         ],
         produces: [
           "application/json",
           "application/vnd.pgrst.object+json;nulls=stripped",
-          "application/vnd.pgrst.object+json",
+          "application/vnd.pgrst.object+json"
         ],
         responses: {
           "200": {
-            description: "OK",
-          },
+            description: "OK"
+          }
         },
-        tags: ["(rpc) show_limit"],
-      },
+        tags: ["(rpc) show_limit"]
+      }
     },
     "/rpc/search_company_index": {
       post: {
@@ -76895,61 +75761,6 @@ export default {
       },
       type: "object"
     },
-    searchIndex_EUPeRM3Kae6DBG3tra2deZ: {
-      required: ["id", "entityType", "entityId", "title", "link", "createdAt"],
-      properties: {
-        id: {
-          description: "Note:\nThis is a Primary Key.<pk/>",
-          format: "int64",
-          type: "integer"
-        },
-        entityType: {
-          format: "text",
-          type: "string"
-        },
-        entityId: {
-          format: "text",
-          type: "string"
-        },
-        title: {
-          format: "text",
-          type: "string"
-        },
-        description: {
-          default: "",
-          format: "text",
-          type: "string"
-        },
-        link: {
-          format: "text",
-          type: "string"
-        },
-        tags: {
-          format: "text[]",
-          items: {
-            type: "string"
-          },
-          type: "array"
-        },
-        metadata: {
-          format: "jsonb"
-        },
-        searchVector: {
-          format: "tsvector",
-          type: "string"
-        },
-        createdAt: {
-          default: "now()",
-          format: "timestamp with time zone",
-          type: "string"
-        },
-        updatedAt: {
-          format: "timestamp with time zone",
-          type: "string"
-        }
-      },
-      type: "object"
-    },
     purchaseInvoicePriceChange: {
       required: [
         "id",
@@ -77585,61 +76396,6 @@ export default {
         },
         customerCountryName: {
           format: "text",
-          type: "string"
-        }
-      },
-      type: "object"
-    },
-    searchIndex_S32bAHJrJi7z4Pktoac6xN: {
-      required: ["id", "entityType", "entityId", "title", "link", "createdAt"],
-      properties: {
-        id: {
-          description: "Note:\nThis is a Primary Key.<pk/>",
-          format: "int64",
-          type: "integer"
-        },
-        entityType: {
-          format: "text",
-          type: "string"
-        },
-        entityId: {
-          format: "text",
-          type: "string"
-        },
-        title: {
-          format: "text",
-          type: "string"
-        },
-        description: {
-          default: "",
-          format: "text",
-          type: "string"
-        },
-        link: {
-          format: "text",
-          type: "string"
-        },
-        tags: {
-          format: "text[]",
-          items: {
-            type: "string"
-          },
-          type: "array"
-        },
-        metadata: {
-          format: "jsonb"
-        },
-        searchVector: {
-          format: "tsvector",
-          type: "string"
-        },
-        createdAt: {
-          default: "now()",
-          format: "timestamp with time zone",
-          type: "string"
-        },
-        updatedAt: {
-          format: "timestamp with time zone",
           type: "string"
         }
       },
@@ -88098,61 +86854,6 @@ export default {
       },
       type: "object"
     },
-    searchIndex_87xR14oHMLgpGLQGc4AnUt: {
-      required: ["id", "entityType", "entityId", "title", "link", "createdAt"],
-      properties: {
-        id: {
-          description: "Note:\nThis is a Primary Key.<pk/>",
-          format: "int64",
-          type: "integer"
-        },
-        entityType: {
-          format: "text",
-          type: "string"
-        },
-        entityId: {
-          format: "text",
-          type: "string"
-        },
-        title: {
-          format: "text",
-          type: "string"
-        },
-        description: {
-          default: "",
-          format: "text",
-          type: "string"
-        },
-        link: {
-          format: "text",
-          type: "string"
-        },
-        tags: {
-          format: "text[]",
-          items: {
-            type: "string"
-          },
-          type: "array"
-        },
-        metadata: {
-          format: "jsonb"
-        },
-        searchVector: {
-          format: "tsvector",
-          type: "string"
-        },
-        createdAt: {
-          default: "now()",
-          format: "timestamp with time zone",
-          type: "string"
-        },
-        updatedAt: {
-          format: "timestamp with time zone",
-          type: "string"
-        }
-      },
-      type: "object"
-    },
     salesOrderCustomers: {
       properties: {
         id: {
@@ -88911,7 +87612,6 @@ export default {
       required: [
         "id",
         "invoiceId",
-        "status",
         "currencyCode",
         "exchangeRate",
         "subtotal",
@@ -88922,7 +87622,8 @@ export default {
         "companyId",
         "createdBy",
         "createdAt",
-        "supplierInteractionId"
+        "supplierInteractionId",
+        "status"
       ],
       properties: {
         id: {
@@ -88933,22 +87634,6 @@ export default {
         },
         invoiceId: {
           format: "text",
-          type: "string"
-        },
-        status: {
-          default: "Draft",
-          enum: [
-            "Draft",
-            "Pending",
-            "Open",
-            "Return",
-            "Debit Note Issued",
-            "Paid",
-            "Partially Paid",
-            "Overdue",
-            "Voided"
-          ],
-          format: 'public."purchaseInvoiceStatus"',
           type: "string"
         },
         supplierId: {
@@ -89096,60 +87781,21 @@ export default {
             "Note:\nThis is a Foreign Key to `location.id`.<fk table='location' column='id'/>",
           format: "text",
           type: "string"
-        }
-      },
-      type: "object"
-    },
-    searchIndex_VaGcmY4pUrc7nKHotAH6Ku: {
-      required: ["id", "entityType", "entityId", "title", "link", "createdAt"],
-      properties: {
-        id: {
-          description: "Note:\nThis is a Primary Key.<pk/>",
-          format: "int64",
-          type: "integer"
         },
-        entityType: {
-          format: "text",
-          type: "string"
-        },
-        entityId: {
-          format: "text",
-          type: "string"
-        },
-        title: {
-          format: "text",
-          type: "string"
-        },
-        description: {
-          default: "",
-          format: "text",
-          type: "string"
-        },
-        link: {
-          format: "text",
-          type: "string"
-        },
-        tags: {
-          format: "text[]",
-          items: {
-            type: "string"
-          },
-          type: "array"
-        },
-        metadata: {
-          format: "jsonb"
-        },
-        searchVector: {
-          format: "tsvector",
-          type: "string"
-        },
-        createdAt: {
-          default: "now()",
-          format: "timestamp with time zone",
-          type: "string"
-        },
-        updatedAt: {
-          format: "timestamp with time zone",
+        status: {
+          default: "Draft",
+          enum: [
+            "Draft",
+            "Pending",
+            "Open",
+            "Return",
+            "Debit Note Issued",
+            "Paid",
+            "Partially Paid",
+            "Overdue",
+            "Voided"
+          ],
+          format: 'public."purchaseInvoiceStatus"',
           type: "string"
         }
       },
@@ -93737,7 +92383,7 @@ export default {
       type: "object"
     },
     purchaseInvoiceStatusHistory: {
-      required: ["id", "invoiceId", "status", "createdAt"],
+      required: ["id", "invoiceId", "createdAt", "status"],
       properties: {
         id: {
           default: "public.id()",
@@ -93749,6 +92395,11 @@ export default {
           description:
             "Note:\nThis is a Foreign Key to `purchaseInvoice.id`.<fk table='purchaseInvoice' column='id'/>",
           format: "text",
+          type: "string"
+        },
+        createdAt: {
+          default: "now()",
+          format: "timestamp with time zone",
           type: "string"
         },
         status: {
@@ -93764,66 +92415,6 @@ export default {
             "Voided"
           ],
           format: 'public."purchaseInvoiceStatus"',
-          type: "string"
-        },
-        createdAt: {
-          default: "now()",
-          format: "timestamp with time zone",
-          type: "string"
-        }
-      },
-      type: "object"
-    },
-    searchIndex_LkbVbjKfkhNUKHqV2mes8d: {
-      required: ["id", "entityType", "entityId", "title", "link", "createdAt"],
-      properties: {
-        id: {
-          description: "Note:\nThis is a Primary Key.<pk/>",
-          format: "int64",
-          type: "integer"
-        },
-        entityType: {
-          format: "text",
-          type: "string"
-        },
-        entityId: {
-          format: "text",
-          type: "string"
-        },
-        title: {
-          format: "text",
-          type: "string"
-        },
-        description: {
-          default: "",
-          format: "text",
-          type: "string"
-        },
-        link: {
-          format: "text",
-          type: "string"
-        },
-        tags: {
-          format: "text[]",
-          items: {
-            type: "string"
-          },
-          type: "array"
-        },
-        metadata: {
-          format: "jsonb"
-        },
-        searchVector: {
-          format: "tsvector",
-          type: "string"
-        },
-        createdAt: {
-          default: "now()",
-          format: "timestamp with time zone",
-          type: "string"
-        },
-        updatedAt: {
-          format: "timestamp with time zone",
           type: "string"
         }
       },
@@ -99194,61 +97785,6 @@ export default {
         },
         formName: {
           format: "text",
-          type: "string"
-        }
-      },
-      type: "object"
-    },
-    searchIndex_USPpoeaKcnEMHdu3QKv6Bo: {
-      required: ["id", "entityType", "entityId", "title", "link", "createdAt"],
-      properties: {
-        id: {
-          description: "Note:\nThis is a Primary Key.<pk/>",
-          format: "int64",
-          type: "integer"
-        },
-        entityType: {
-          format: "text",
-          type: "string"
-        },
-        entityId: {
-          format: "text",
-          type: "string"
-        },
-        title: {
-          format: "text",
-          type: "string"
-        },
-        description: {
-          default: "",
-          format: "text",
-          type: "string"
-        },
-        link: {
-          format: "text",
-          type: "string"
-        },
-        tags: {
-          format: "text[]",
-          items: {
-            type: "string"
-          },
-          type: "array"
-        },
-        metadata: {
-          format: "jsonb"
-        },
-        searchVector: {
-          format: "tsvector",
-          type: "string"
-        },
-        createdAt: {
-          default: "now()",
-          format: "timestamp with time zone",
-          type: "string"
-        },
-        updatedAt: {
-          format: "timestamp with time zone",
           type: "string"
         }
       },
@@ -108812,81 +107348,6 @@ export default {
       in: "query",
       type: "string"
     },
-    "body.searchIndex_EUPeRM3Kae6DBG3tra2deZ": {
-      name: "searchIndex_EUPeRM3Kae6DBG3tra2deZ",
-      description: "searchIndex_EUPeRM3Kae6DBG3tra2deZ",
-      required: false,
-      in: "body",
-      schema: {
-        $ref: "#/definitions/searchIndex_EUPeRM3Kae6DBG3tra2deZ"
-      }
-    },
-    "rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.id": {
-      name: "id",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.entityType": {
-      name: "entityType",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.entityId": {
-      name: "entityId",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.title": {
-      name: "title",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.description": {
-      name: "description",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.link": {
-      name: "link",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.tags": {
-      name: "tags",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.metadata": {
-      name: "metadata",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.searchVector": {
-      name: "searchVector",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.createdAt": {
-      name: "createdAt",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_EUPeRM3Kae6DBG3tra2deZ.updatedAt": {
-      name: "updatedAt",
-      required: false,
-      in: "query",
-      type: "string"
-    },
     "body.purchaseInvoicePriceChange": {
       name: "purchaseInvoicePriceChange",
       description: "purchaseInvoicePriceChange",
@@ -109618,81 +108079,6 @@ export default {
     },
     "rowFilter.purchaseOrderLocations.customerCountryName": {
       name: "customerCountryName",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "body.searchIndex_S32bAHJrJi7z4Pktoac6xN": {
-      name: "searchIndex_S32bAHJrJi7z4Pktoac6xN",
-      description: "searchIndex_S32bAHJrJi7z4Pktoac6xN",
-      required: false,
-      in: "body",
-      schema: {
-        $ref: "#/definitions/searchIndex_S32bAHJrJi7z4Pktoac6xN"
-      }
-    },
-    "rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.id": {
-      name: "id",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.entityType": {
-      name: "entityType",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.entityId": {
-      name: "entityId",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.title": {
-      name: "title",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.description": {
-      name: "description",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.link": {
-      name: "link",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.tags": {
-      name: "tags",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.metadata": {
-      name: "metadata",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.searchVector": {
-      name: "searchVector",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.createdAt": {
-      name: "createdAt",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_S32bAHJrJi7z4Pktoac6xN.updatedAt": {
-      name: "updatedAt",
       required: false,
       in: "query",
       type: "string"
@@ -121544,81 +119930,6 @@ export default {
       in: "query",
       type: "string"
     },
-    "body.searchIndex_87xR14oHMLgpGLQGc4AnUt": {
-      name: "searchIndex_87xR14oHMLgpGLQGc4AnUt",
-      description: "searchIndex_87xR14oHMLgpGLQGc4AnUt",
-      required: false,
-      in: "body",
-      schema: {
-        $ref: "#/definitions/searchIndex_87xR14oHMLgpGLQGc4AnUt"
-      }
-    },
-    "rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.id": {
-      name: "id",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.entityType": {
-      name: "entityType",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.entityId": {
-      name: "entityId",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.title": {
-      name: "title",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.description": {
-      name: "description",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.link": {
-      name: "link",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.tags": {
-      name: "tags",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.metadata": {
-      name: "metadata",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.searchVector": {
-      name: "searchVector",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.createdAt": {
-      name: "createdAt",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_87xR14oHMLgpGLQGc4AnUt.updatedAt": {
-      name: "updatedAt",
-      required: false,
-      in: "query",
-      type: "string"
-    },
     "body.salesOrderCustomers": {
       name: "salesOrderCustomers",
       description: "salesOrderCustomers",
@@ -122471,12 +120782,6 @@ export default {
       in: "query",
       type: "string"
     },
-    "rowFilter.purchaseInvoice.status": {
-      name: "status",
-      required: false,
-      in: "query",
-      type: "string"
-    },
     "rowFilter.purchaseInvoice.supplierId": {
       name: "supplierId",
       required: false,
@@ -122651,77 +120956,8 @@ export default {
       in: "query",
       type: "string"
     },
-    "body.searchIndex_VaGcmY4pUrc7nKHotAH6Ku": {
-      name: "searchIndex_VaGcmY4pUrc7nKHotAH6Ku",
-      description: "searchIndex_VaGcmY4pUrc7nKHotAH6Ku",
-      required: false,
-      in: "body",
-      schema: {
-        $ref: "#/definitions/searchIndex_VaGcmY4pUrc7nKHotAH6Ku"
-      }
-    },
-    "rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.id": {
-      name: "id",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.entityType": {
-      name: "entityType",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.entityId": {
-      name: "entityId",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.title": {
-      name: "title",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.description": {
-      name: "description",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.link": {
-      name: "link",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.tags": {
-      name: "tags",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.metadata": {
-      name: "metadata",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.searchVector": {
-      name: "searchVector",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.createdAt": {
-      name: "createdAt",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_VaGcmY4pUrc7nKHotAH6Ku.updatedAt": {
-      name: "updatedAt",
+    "rowFilter.purchaseInvoice.status": {
+      name: "status",
       required: false,
       in: "query",
       type: "string"
@@ -127865,89 +126101,14 @@ export default {
       in: "query",
       type: "string"
     },
-    "rowFilter.purchaseInvoiceStatusHistory.status": {
-      name: "status",
-      required: false,
-      in: "query",
-      type: "string"
-    },
     "rowFilter.purchaseInvoiceStatusHistory.createdAt": {
       name: "createdAt",
       required: false,
       in: "query",
       type: "string"
     },
-    "body.searchIndex_LkbVbjKfkhNUKHqV2mes8d": {
-      name: "searchIndex_LkbVbjKfkhNUKHqV2mes8d",
-      description: "searchIndex_LkbVbjKfkhNUKHqV2mes8d",
-      required: false,
-      in: "body",
-      schema: {
-        $ref: "#/definitions/searchIndex_LkbVbjKfkhNUKHqV2mes8d"
-      }
-    },
-    "rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.id": {
-      name: "id",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.entityType": {
-      name: "entityType",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.entityId": {
-      name: "entityId",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.title": {
-      name: "title",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.description": {
-      name: "description",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.link": {
-      name: "link",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.tags": {
-      name: "tags",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.metadata": {
-      name: "metadata",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.searchVector": {
-      name: "searchVector",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.createdAt": {
-      name: "createdAt",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_LkbVbjKfkhNUKHqV2mes8d.updatedAt": {
-      name: "updatedAt",
+    "rowFilter.purchaseInvoiceStatusHistory.status": {
+      name: "status",
       required: false,
       in: "query",
       type: "string"
@@ -134100,81 +132261,6 @@ export default {
     },
     "rowFilter.materialTypes.formName": {
       name: "formName",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "body.searchIndex_USPpoeaKcnEMHdu3QKv6Bo": {
-      name: "searchIndex_USPpoeaKcnEMHdu3QKv6Bo",
-      description: "searchIndex_USPpoeaKcnEMHdu3QKv6Bo",
-      required: false,
-      in: "body",
-      schema: {
-        $ref: "#/definitions/searchIndex_USPpoeaKcnEMHdu3QKv6Bo"
-      }
-    },
-    "rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.id": {
-      name: "id",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.entityType": {
-      name: "entityType",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.entityId": {
-      name: "entityId",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.title": {
-      name: "title",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.description": {
-      name: "description",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.link": {
-      name: "link",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.tags": {
-      name: "tags",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.metadata": {
-      name: "metadata",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.searchVector": {
-      name: "searchVector",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.createdAt": {
-      name: "createdAt",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.searchIndex_USPpoeaKcnEMHdu3QKv6Bo.updatedAt": {
-      name: "updatedAt",
       required: false,
       in: "query",
       type: "string"

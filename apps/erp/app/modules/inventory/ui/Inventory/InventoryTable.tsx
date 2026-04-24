@@ -12,7 +12,7 @@ import {
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useNumberFormatter } from "@react-aria/i18n";
 import type { ColumnDef } from "@tanstack/react-table";
-import { memo, useMemo } from "react";
+import { memo, useCallback, useMemo } from "react";
 import {
   LuBookMarked,
   LuBox,
@@ -82,8 +82,11 @@ const InventoryTable = memo(
     const [params] = useUrlParams();
     const { t } = useLingui();
 
-    const translateReplenishment = (v: string) =>
-      v === "Buy" ? t`Buy` : v === "Make" ? t`Make` : t`Buy and Make`;
+    const translateReplenishment = useCallback(
+      (v: string) =>
+        v === "Buy" ? t`Buy` : v === "Make" ? t`Make` : t`Buy and Make`,
+      [t]
+    );
 
     const locations = useLocations();
     const unitOfMeasures = useUnitOfMeasure();
@@ -488,7 +491,8 @@ const InventoryTable = memo(
       substances,
       tags,
       unitOfMeasures,
-      t
+      t,
+      translateReplenishment
     ]);
 
     const defaultColumnVisibility = {

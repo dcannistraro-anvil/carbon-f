@@ -3,13 +3,13 @@ import { requirePermissions } from "@carbon/auth/auth.server";
 import { flash } from "@carbon/auth/session.server";
 import { validationError, validator } from "@carbon/form";
 import type { JSONContent } from "@carbon/react";
-import { Menubar, Spinner, VStack } from "@carbon/react";
+import { Menubar, VStack } from "@carbon/react";
 import { useLingui } from "@lingui/react/macro";
 import type { PostgrestResponse } from "@supabase/supabase-js";
 import { Suspense } from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import { Await, redirect, useLoaderData, useParams } from "react-router";
-import { CadModel } from "~/components";
+import { CadModel, DeferredFiles } from "~/components";
 import { usePermissions, useRouteData } from "~/hooks";
 import type { ItemFile, MakeMethod, ToolSummary } from "~/modules/items";
 import {
@@ -251,24 +251,16 @@ export default function ToolDetailsRoute() {
       )}
       {permissions.is("employee") && (
         <>
-          <Suspense
-            fallback={
-              <div className="flex w-full h-full rounded bg-gradient-to-tr from-background to-card items-center justify-center">
-                <Spinner className="h-10 w-10" />
-              </div>
-            }
-          >
-            <Await resolve={toolData?.files}>
-              {(resolvedFiles) => (
-                <ItemDocuments
-                  files={resolvedFiles}
-                  itemId={itemId}
-                  modelUpload={toolData.toolSummary ?? undefined}
-                  type="Tool"
-                />
-              )}
-            </Await>
-          </Suspense>
+          <DeferredFiles resolve={toolData?.files}>
+            {(resolvedFiles) => (
+              <ItemDocuments
+                files={resolvedFiles}
+                itemId={itemId}
+                modelUpload={toolData.toolSummary ?? undefined}
+                type="Tool"
+              />
+            )}
+          </DeferredFiles>
 
           <CadModel
             isReadOnly={!permissions.can("update", "parts")}

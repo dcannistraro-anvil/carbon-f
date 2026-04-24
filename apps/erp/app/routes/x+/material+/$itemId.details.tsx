@@ -3,10 +3,10 @@ import { requirePermissions } from "@carbon/auth/auth.server";
 import { flash } from "@carbon/auth/session.server";
 import { validationError, validator } from "@carbon/form";
 import type { JSONContent } from "@carbon/react";
-import { Spinner, VStack } from "@carbon/react";
-import { Suspense } from "react";
+import { VStack } from "@carbon/react";
 import type { ActionFunctionArgs } from "react-router";
-import { Await, redirect, useParams } from "react-router";
+import { redirect, useParams } from "react-router";
+import { DeferredFiles } from "~/components";
 import { usePermissions, useRouteData } from "~/hooks";
 import type { ItemFile, MaterialSummary } from "~/modules/items";
 import { materialValidator, upsertMaterial } from "~/modules/items";
@@ -78,23 +78,15 @@ export default function MaterialDetailsRoute() {
       />
       {permissions.is("employee") && (
         <>
-          <Suspense
-            fallback={
-              <div className="flex w-full h-full rounded bg-gradient-to-tr from-background to-card items-center justify-center">
-                <Spinner className="h-10 w-10" />
-              </div>
-            }
-          >
-            <Await resolve={materialData?.files}>
-              {(resolvedFiles) => (
-                <ItemDocuments
-                  files={resolvedFiles}
-                  itemId={itemId}
-                  type="Material"
-                />
-              )}
-            </Await>
-          </Suspense>
+          <DeferredFiles resolve={materialData?.files}>
+            {(resolvedFiles) => (
+              <ItemDocuments
+                files={resolvedFiles}
+                itemId={itemId}
+                type="Material"
+              />
+            )}
+          </DeferredFiles>
 
           <ItemRiskRegister itemId={itemId} />
         </>

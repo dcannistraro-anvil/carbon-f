@@ -378,7 +378,7 @@ export default function MaintenanceRoute() {
         }
       }
     ];
-  }, [workCenters]);
+  }, [workCenters, t]);
 
   const getActiveDispatches = () => {
     switch (activeTab) {

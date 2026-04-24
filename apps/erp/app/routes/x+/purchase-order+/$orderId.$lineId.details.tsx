@@ -3,18 +3,10 @@ import { requirePermissions } from "@carbon/auth/auth.server";
 import { flash } from "@carbon/auth/session.server";
 import { validationError, validator } from "@carbon/form";
 import type { JSONContent } from "@carbon/react";
-import { Spinner } from "@carbon/react";
-import { Suspense } from "react";
 import { Fragment } from "react/jsx-runtime";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
-import {
-  Await,
-  Outlet,
-  redirect,
-  useLoaderData,
-  useParams
-} from "react-router";
-import { CadModel } from "~/components";
+import { Outlet, redirect, useLoaderData, useParams } from "react-router";
+import { CadModel, DeferredFiles } from "~/components";
 import { usePermissions, useRouteData } from "~/hooks";
 import {
   getPurchaseOrder,
@@ -195,25 +187,17 @@ export default function EditPurchaseOrderLineRoute() {
         externalNotes={line.externalNotes as JSONContent}
       />
 
-      <Suspense
-        fallback={
-          <div className="flex w-full h-full rounded bg-gradient-to-tr from-background to-card items-center justify-center">
-            <Spinner className="h-10 w-10" />
-          </div>
-        }
-      >
-        <Await resolve={files}>
-          {(resolvedFiles) => (
-            <SupplierInteractionLineDocuments
-              files={resolvedFiles ?? []}
-              id={orderId}
-              lineId={lineId}
-              type="Purchase Order"
-              isReadOnly={isReadOnly}
-            />
-          )}
-        </Await>
-      </Suspense>
+      <DeferredFiles resolve={files}>
+        {(resolvedFiles) => (
+          <SupplierInteractionLineDocuments
+            files={resolvedFiles ?? []}
+            id={orderId}
+            lineId={lineId}
+            type="Purchase Order"
+            isReadOnly={isReadOnly}
+          />
+        )}
+      </DeferredFiles>
       <CadModel
         isReadOnly={isReadOnly || !permissions.can("update", "purchasing")}
         metadata={{

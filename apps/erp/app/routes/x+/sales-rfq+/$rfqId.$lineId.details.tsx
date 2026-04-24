@@ -4,18 +4,11 @@ import { getCarbonServiceRole } from "@carbon/auth/client.server";
 import { flash } from "@carbon/auth/session.server";
 import { validationError, validator } from "@carbon/form";
 import type { JSONContent } from "@carbon/react";
-import { Spinner } from "@carbon/react";
 import { useLingui } from "@lingui/react/macro";
-import { Fragment, Suspense } from "react";
+import { Fragment } from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
-import {
-  Await,
-  Outlet,
-  redirect,
-  useLoaderData,
-  useParams
-} from "react-router";
-import { CadModel } from "~/components";
+import { Outlet, redirect, useLoaderData, useParams } from "react-router";
+import { CadModel, DeferredFiles } from "~/components";
 import { usePermissions, useRouteData } from "~/hooks";
 import type { SalesRFQ } from "~/modules/sales";
 import {
@@ -159,27 +152,19 @@ export default function SalesRFQLine() {
         externalNotes={line.externalNotes as JSONContent}
       />
 
-      <Suspense
-        fallback={
-          <div className="flex w-full h-full rounded bg-gradient-to-tr from-background to-card items-center justify-center">
-            <Spinner className="h-10 w-10" />
-          </div>
-        }
-      >
-        <Await resolve={files}>
-          {(resolvedFiles) => (
-            <OpportunityLineDocuments
-              files={resolvedFiles ?? []}
-              id={rfqId}
-              lineId={lineId}
-              itemId={line?.itemId}
-              modelUpload={line ?? undefined}
-              type="Request for Quote"
-              isReadOnly={isReadOnly}
-            />
-          )}
-        </Await>
-      </Suspense>
+      <DeferredFiles resolve={files}>
+        {(resolvedFiles) => (
+          <OpportunityLineDocuments
+            files={resolvedFiles ?? []}
+            id={rfqId}
+            lineId={lineId}
+            itemId={line?.itemId}
+            modelUpload={line ?? undefined}
+            type="Request for Quote"
+            isReadOnly={isReadOnly}
+          />
+        )}
+      </DeferredFiles>
       <CadModel
         isReadOnly={isReadOnly || !permissions.can("update", "sales")}
         metadata={{

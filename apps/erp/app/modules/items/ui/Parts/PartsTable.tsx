@@ -77,22 +77,31 @@ const PartsTable = memo(({ data, tags, count }: PartsTableProps) => {
   const navigate = useNavigate();
   const permissions = usePermissions();
 
-  const translateReplenishment = (v: string) =>
-    v === "Buy" ? t`Buy` : v === "Make" ? t`Make` : t`Buy and Make`;
-  const translateMethodType = (v: string) =>
-    v === "Purchase to Order"
-      ? t`Purchase to Order`
-      : v === "Pull from Inventory"
-        ? t`Pull from Inventory`
-        : t`Make to Order`;
-  const translateTrackingType = (v: string) =>
-    v === "Inventory"
-      ? t`Inventory`
-      : v === "Non-Inventory"
-        ? t`Non-Inventory`
-        : v === "Serial"
-          ? t`Serial`
-          : t`Batch`;
+  const translateReplenishment = useCallback(
+    (v: string) =>
+      v === "Buy" ? t`Buy` : v === "Make" ? t`Make` : t`Buy and Make`,
+    [t]
+  );
+  const translateMethodType = useCallback(
+    (v: string) =>
+      v === "Purchase to Order"
+        ? t`Purchase to Order`
+        : v === "Pull from Inventory"
+          ? t`Pull from Inventory`
+          : t`Make to Order`,
+    [t]
+  );
+  const translateTrackingType = useCallback(
+    (v: string) =>
+      v === "Inventory"
+        ? t`Inventory`
+        : v === "Non-Inventory"
+          ? t`Non-Inventory`
+          : v === "Serial"
+            ? t`Serial`
+            : t`Batch`,
+    [t]
+  );
 
   const deleteItemModal = useDisclosure();
   const [selectedItem, setSelectedItem] = useState<Part | null>(null);
@@ -333,7 +342,16 @@ const PartsTable = memo(({ data, tags, count }: PartsTableProps) => {
       }
     ];
     return [...defaultColumns, ...customColumns];
-  }, [tags, people, customColumns, itemPostingGroups, t]);
+  }, [
+    tags,
+    people,
+    customColumns,
+    itemPostingGroups,
+    t,
+    translateMethodType,
+    translateReplenishment,
+    translateTrackingType
+  ]);
 
   const fetcher = useFetcher<typeof action>();
   useEffect(() => {
@@ -472,7 +490,13 @@ const PartsTable = memo(({ data, tags, count }: PartsTableProps) => {
         </DropdownMenuContent>
       );
     },
-    [onBulkUpdate, itemPostingGroups]
+    [
+      onBulkUpdate,
+      itemPostingGroups,
+      translateMethodType,
+      translateReplenishment,
+      translateTrackingType
+    ]
   );
 
   const renderContextMenu = useMemo(() => {

@@ -393,7 +393,7 @@ function KanbanSchedule() {
         }
       }
     ];
-  }, [processes, workCenters, availableTags, people]);
+  }, [processes, workCenters, availableTags, people, t]);
 
   return (
     <div className="flex flex-col h-screen w-[calc(100dvw-var(--sidebar-width-icon))]">

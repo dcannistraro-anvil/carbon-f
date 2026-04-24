@@ -3,12 +3,12 @@ import { requirePermissions } from "@carbon/auth/auth.server";
 import { flash } from "@carbon/auth/session.server";
 import { validationError, validator } from "@carbon/form";
 import type { JSONContent } from "@carbon/react";
-import { Spinner, VStack } from "@carbon/react";
+import { VStack } from "@carbon/react";
 import { useLingui } from "@lingui/react/macro";
 import type { FileObject } from "@supabase/storage-js";
-import { Suspense } from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
-import { Await, redirect, useLoaderData, useParams } from "react-router";
+import { redirect, useLoaderData, useParams } from "react-router";
+import { DeferredFiles } from "~/components";
 import { useRouteData } from "~/hooks";
 import type { Opportunity, SalesRFQ, SalesRFQLine } from "~/modules/sales";
 import {
@@ -131,26 +131,17 @@ export default function SalesRFQDetailsRoute() {
         internalNotes={internalNotes}
         externalNotes={externalNotes}
       />
-      <Suspense
-        key={`documents-${rfqId}`}
-        fallback={
-          <div className="flex w-full min-h-[480px] h-full rounded bg-gradient-to-tr from-background to-card items-center justify-center">
-            <Spinner className="h-10 w-10" />
-          </div>
-        }
-      >
-        <Await resolve={rfqData.files}>
-          {(resolvedFiles) => (
-            <OpportunityDocuments
-              opportunity={rfqData.opportunity}
-              attachments={resolvedFiles}
-              id={rfqId}
-              type="Request for Quote"
-              isReadOnly={isReadOnly}
-            />
-          )}
-        </Await>
-      </Suspense>
+      <DeferredFiles key={`documents-${rfqId}`} resolve={rfqData.files}>
+        {(resolvedFiles) => (
+          <OpportunityDocuments
+            opportunity={rfqData.opportunity}
+            attachments={resolvedFiles}
+            id={rfqId}
+            type="Request for Quote"
+            isReadOnly={isReadOnly}
+          />
+        )}
+      </DeferredFiles>
     </VStack>
   );
 }

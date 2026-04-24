@@ -153,7 +153,7 @@ export function MaintenanceAddPartModal({
         setIsLoadingItem(false);
       }
     },
-    [carbon]
+    [carbon, t]
   );
 
   const validateSerialNumber = useCallback(
@@ -167,7 +167,7 @@ export function MaintenanceAddPartModal({
       if (!isValid) return t`Serial number is not available`;
       return null;
     },
-    [selectedSerialNumbers, serialOptions]
+    [selectedSerialNumbers, serialOptions, t]
   );
 
   const validateBatch = useCallback(
@@ -183,7 +183,7 @@ export function MaintenanceAddPartModal({
       if (qty > batch.quantity) return t`Only ${batch.quantity} available`;
       return null;
     },
-    [selectedBatches, batchOptions]
+    [selectedBatches, batchOptions, t]
   );
 
   const handleSubmit = useCallback(() => {
@@ -280,7 +280,8 @@ export function MaintenanceAddPartModal({
     validateSerialNumber,
     validateBatch,
     dispatchId,
-    fetcher
+    fetcher,
+    t
   ]);
 
   useEffect(() => {

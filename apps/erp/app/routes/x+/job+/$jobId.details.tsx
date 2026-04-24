@@ -20,7 +20,12 @@ import { Suspense } from "react";
 import { LuShoppingCart } from "react-icons/lu";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import { Await, redirect, useLoaderData, useParams } from "react-router";
-import { CadModel, Hyperlink, SupplierAvatar } from "~/components";
+import {
+  CadModel,
+  DeferredFiles,
+  Hyperlink,
+  SupplierAvatar
+} from "~/components";
 import { usePanels } from "~/components/Layout";
 import { usePermissions, useRealtime, useRouteData } from "~/hooks";
 import type { Job, JobPurchaseOrderLine } from "~/modules/production";
@@ -302,26 +307,18 @@ export default function JobDetailsRoute() {
           </Await>
         </Suspense>
 
-        <Suspense
-          fallback={
-            <div className="flex w-full h-full rounded bg-gradient-to-tr from-background to-card items-center justify-center min-h-[420px] max-h-[70vh]">
-              <Spinner className="h-10 w-10" />
-            </div>
-          }
-        >
-          <Await resolve={files}>
-            {(resolvedFiles) => (
-              <JobDocuments
-                files={resolvedFiles}
-                jobId={jobData.job.id ?? ""}
-                bucket="parts"
-                itemId={makeMethod?.itemId ?? jobData.job.itemId}
-                modelUpload={{ ...jobData.job }}
-                isReadOnly={isReadOnly}
-              />
-            )}
-          </Await>
-        </Suspense>
+        <DeferredFiles resolve={files}>
+          {(resolvedFiles) => (
+            <JobDocuments
+              files={resolvedFiles}
+              jobId={jobData.job.id ?? ""}
+              bucket="parts"
+              itemId={makeMethod?.itemId ?? jobData.job.itemId}
+              modelUpload={{ ...jobData.job }}
+              isReadOnly={isReadOnly}
+            />
+          )}
+        </DeferredFiles>
 
         <CadModel
           isReadOnly={!permissions.can("update", "production")}

@@ -3,13 +3,13 @@ import { requirePermissions } from "@carbon/auth/auth.server";
 import { flash } from "@carbon/auth/session.server";
 import { validationError, validator } from "@carbon/form";
 import type { JSONContent } from "@carbon/react";
-import { Spinner } from "@carbon/react";
 import { useLingui } from "@lingui/react/macro";
 import type { FileObject } from "@supabase/storage-js";
-import { Suspense, useRef } from "react";
+import { useRef } from "react";
 import { Fragment } from "react/jsx-runtime";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
-import { Await, redirect, useLoaderData, useParams } from "react-router";
+import { redirect, useLoaderData, useParams } from "react-router";
+import { DeferredFiles } from "~/components";
 import { useRouteData, useUser } from "~/hooks";
 import type {
   PurchaseInvoice,
@@ -189,26 +189,17 @@ export default function PurchaseInvoiceBasicRoute() {
         table="purchaseInvoice"
         internalNotes={internalNotes}
       />
-      <Suspense
-        key={`documents-${invoiceId}`}
-        fallback={
-          <div className="flex w-full min-h-[480px] h-full rounded bg-gradient-to-tr from-background to-card items-center justify-center">
-            <Spinner className="h-10 w-10" />
-          </div>
-        }
-      >
-        <Await resolve={invoiceData.files}>
-          {(resolvedFiles) => (
-            <SupplierInteractionDocuments
-              interactionId={invoiceData.interaction.id}
-              attachments={resolvedFiles}
-              id={invoiceId}
-              type="Purchase Invoice"
-              isReadOnly={isReadOnly}
-            />
-          )}
-        </Await>
-      </Suspense>
+      <DeferredFiles key={`documents-${invoiceId}`} resolve={invoiceData.files}>
+        {(resolvedFiles) => (
+          <SupplierInteractionDocuments
+            interactionId={invoiceData.interaction.id}
+            attachments={resolvedFiles}
+            id={invoiceId}
+            type="Purchase Invoice"
+            isReadOnly={isReadOnly}
+          />
+        )}
+      </DeferredFiles>
       <PurchaseInvoiceDeliveryForm
         key={`delivery-${invoiceId}`}
         ref={deliveryFormRef}

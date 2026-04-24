@@ -6,6 +6,7 @@ import CadModel from "./CadModel";
 import Contact from "./Contact";
 import CustomerAvatar from "./CustomerAvatar";
 import { DateSelect } from "./DateSelect";
+import { DeferredFiles } from "./DeferredFiles";
 import { DirectionAwareTabs } from "./DirectionAwareTabs";
 import DocumentPreview from "./DocumentPreview";
 import Documents from "./Documents";
@@ -44,6 +45,7 @@ export {
   Contact,
   CustomerAvatar,
   DateSelect,
+  DeferredFiles,
   DirectionAwareTabs,
   DocumentPreview,
   Documents,

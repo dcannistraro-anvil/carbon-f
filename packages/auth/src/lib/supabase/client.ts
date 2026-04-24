@@ -5,26 +5,37 @@ import type { MutableRefObject } from "react";
 import type { StoreApi } from "zustand";
 import { SUPABASE_ANON_KEY, SUPABASE_URL } from "../../config/env";
 
-const STORAGE_TIMEOUT_MS = 30_000;
+const PER_ATTEMPT_TIMEOUT_MS = 25_000;
+const MAX_RETRIES = 2;
+const BACKOFF_MS = [500, 1000];
+const RETRYABLE_STATUS = new Set([500, 502, 503, 504, 512, 408, 524]);
 
-const fetchWithStorageTimeout: typeof fetch = (input, init) => {
-  const url =
-    typeof input === "string"
-      ? input
-      : input instanceof URL
-        ? input.href
-        : input.url;
+const sleep = (ms: number) =>
+  new Promise<void>((resolve) => setTimeout(resolve, ms));
 
-  if (!url.includes("/storage/v1/")) {
-    return fetch(input, init);
+const fetchWithRetry: typeof fetch = async (input, init) => {
+  let lastError: unknown;
+  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+    const timeoutSignal = AbortSignal.timeout(PER_ATTEMPT_TIMEOUT_MS);
+    const signal = init?.signal
+      ? AbortSignal.any([init.signal, timeoutSignal])
+      : timeoutSignal;
+
+    try {
+      const response = await fetch(input, { ...init, signal });
+      if (RETRYABLE_STATUS.has(response.status) && attempt < MAX_RETRIES) {
+        await sleep(BACKOFF_MS[attempt] ?? 1000);
+        continue;
+      }
+      return response;
+    } catch (error) {
+      lastError = error;
+      if (init?.signal?.aborted) throw error;
+      if (attempt >= MAX_RETRIES) throw error;
+      await sleep(BACKOFF_MS[attempt] ?? 1000);
+    }
   }
-
-  const timeoutSignal = AbortSignal.timeout(STORAGE_TIMEOUT_MS);
-  const signal = init?.signal
-    ? AbortSignal.any([init.signal, timeoutSignal])
-    : timeoutSignal;
-
-  return fetch(input, { ...init, signal });
+  throw lastError;
 };
 
 export const getCarbonClient = (
@@ -41,7 +52,7 @@ export const getCarbonClient = (
       persistSession: false
     },
     global: {
-      fetch: fetchWithStorageTimeout,
+      fetch: fetchWithRetry,
       ...(headers ? { headers } : {})
     }
   });
@@ -55,7 +66,7 @@ export const getCarbonAPIKeyClient = (apiKey: string) => {
     SUPABASE_ANON_KEY!,
     {
       global: {
-        fetch: fetchWithStorageTimeout,
+        fetch: fetchWithRetry,
         headers: {
           "carbon-key": apiKey
         }
@@ -75,7 +86,7 @@ export const createCarbonWithAuthGetter = (
       persistSession: false
     },
     global: {
-      fetch: fetchWithStorageTimeout
+      fetch: fetchWithRetry
     },
     async accessToken() {
       if (!store.current) return null;

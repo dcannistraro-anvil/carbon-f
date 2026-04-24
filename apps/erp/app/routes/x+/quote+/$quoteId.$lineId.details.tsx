@@ -4,7 +4,7 @@ import { getCarbonServiceRole } from "@carbon/auth/client.server";
 import { flash } from "@carbon/auth/session.server";
 import { validationError, validator } from "@carbon/form";
 import type { JSONContent } from "@carbon/react";
-import { Spinner, VStack } from "@carbon/react";
+import { VStack } from "@carbon/react";
 import { useLingui } from "@lingui/react/macro";
 import { Fragment, Suspense, useMemo } from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
@@ -15,7 +15,7 @@ import {
   useLoaderData,
   useParams
 } from "react-router";
-import { CadModel } from "~/components";
+import { CadModel, DeferredFiles } from "~/components";
 import type { Tree } from "~/components/TreeView";
 import { usePermissions, useRealtime, useRouteData, useUser } from "~/hooks";
 import type {
@@ -410,27 +410,19 @@ export default function QuoteLine() {
         </>
       )}
 
-      <Suspense
-        fallback={
-          <div className="flex w-full h-full rounded bg-gradient-to-tr from-background to-card items-center justify-center">
-            <Spinner className="h-10 w-10" />
-          </div>
-        }
-      >
-        <Await resolve={files}>
-          {(resolvedFiles) => (
-            <OpportunityLineDocuments
-              files={resolvedFiles ?? []}
-              id={quoteId}
-              lineId={lineId}
-              itemId={line?.itemId}
-              modelUpload={line ?? undefined}
-              type="Quote"
-              isReadOnly={isReadOnly}
-            />
-          )}
-        </Await>
-      </Suspense>
+      <DeferredFiles resolve={files}>
+        {(resolvedFiles) => (
+          <OpportunityLineDocuments
+            files={resolvedFiles ?? []}
+            id={quoteId}
+            lineId={lineId}
+            itemId={line?.itemId}
+            modelUpload={line ?? undefined}
+            type="Quote"
+            isReadOnly={isReadOnly}
+          />
+        )}
+      </DeferredFiles>
 
       {methodData ? (
         <Suspense fallback={null}>

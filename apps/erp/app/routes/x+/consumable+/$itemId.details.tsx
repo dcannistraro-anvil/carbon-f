@@ -3,10 +3,10 @@ import { requirePermissions } from "@carbon/auth/auth.server";
 import { flash } from "@carbon/auth/session.server";
 import { validationError, validator } from "@carbon/form";
 import type { JSONContent } from "@carbon/react";
-import { Spinner, VStack } from "@carbon/react";
-import { Suspense } from "react";
+import { VStack } from "@carbon/react";
 import type { ActionFunctionArgs } from "react-router";
-import { Await, redirect, useParams } from "react-router";
+import { redirect, useParams } from "react-router";
+import { DeferredFiles } from "~/components";
 import { usePermissions, useRouteData } from "~/hooks";
 import type { ConsumableSummary, ItemFile } from "~/modules/items";
 import { consumableValidator, upsertConsumable } from "~/modules/items";
@@ -81,23 +81,15 @@ export default function ConsumableDetailsRoute() {
       />
       {permissions.is("employee") && (
         <>
-          <Suspense
-            fallback={
-              <div className="flex w-full h-full rounded bg-gradient-to-tr from-background to-card items-center justify-center">
-                <Spinner className="h-10 w-10" />
-              </div>
-            }
-          >
-            <Await resolve={consumableData?.files}>
-              {(resolvedFiles) => (
-                <ItemDocuments
-                  files={resolvedFiles}
-                  itemId={itemId}
-                  type="Consumable"
-                />
-              )}
-            </Await>
-          </Suspense>
+          <DeferredFiles resolve={consumableData?.files}>
+            {(resolvedFiles) => (
+              <ItemDocuments
+                files={resolvedFiles}
+                itemId={itemId}
+                type="Consumable"
+              />
+            )}
+          </DeferredFiles>
 
           <ItemRiskRegister itemId={itemId} />
         </>

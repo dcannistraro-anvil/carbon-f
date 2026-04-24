@@ -2,13 +2,13 @@ import { assertIsPost, error, success } from "@carbon/auth";
 import { requirePermissions } from "@carbon/auth/auth.server";
 import { flash } from "@carbon/auth/session.server";
 import { validationError, validator } from "@carbon/form";
-import { Spinner } from "@carbon/react";
 import { useLingui } from "@lingui/react/macro";
 import type { FileObject } from "@supabase/storage-js";
 import type { JSONContent } from "@tiptap/react";
-import { Suspense, useRef } from "react";
+import { useRef } from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
-import { Await, redirect, useLoaderData, useParams } from "react-router";
+import { redirect, useLoaderData, useParams } from "react-router";
+import { DeferredFiles } from "~/components";
 import { useRouteData } from "~/hooks";
 import type { Opportunity, SalesOrder, SalesOrderLine } from "~/modules/sales";
 import {
@@ -208,26 +208,17 @@ export default function SalesOrderDetailsRoute() {
         internalNotes={internalNotes}
         externalNotes={externalNotes}
       />
-      <Suspense
-        key={`documents-${orderId}`}
-        fallback={
-          <div className="flex w-full min-h-[480px] h-full rounded bg-gradient-to-tr from-background to-card items-center justify-center">
-            <Spinner className="h-10 w-10" />
-          </div>
-        }
-      >
-        <Await resolve={orderData.files}>
-          {(resolvedFiles) => (
-            <OpportunityDocuments
-              opportunity={orderData.opportunity}
-              attachments={resolvedFiles}
-              id={orderId}
-              type="Sales Order"
-              isReadOnly={isReadOnly}
-            />
-          )}
-        </Await>
-      </Suspense>
+      <DeferredFiles key={`documents-${orderId}`} resolve={orderData.files}>
+        {(resolvedFiles) => (
+          <OpportunityDocuments
+            opportunity={orderData.opportunity}
+            attachments={resolvedFiles}
+            id={orderId}
+            type="Sales Order"
+            isReadOnly={isReadOnly}
+          />
+        )}
+      </DeferredFiles>
 
       <SalesOrderShipmentForm
         key={`shipment-${orderId}`}

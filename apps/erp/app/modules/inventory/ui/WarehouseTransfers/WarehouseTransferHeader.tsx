@@ -396,7 +396,7 @@ export const useWarehouseTransferRelatedDocuments = (
         setHasShippedItems(hasShipped);
       }
     },
-    [carbon]
+    [carbon, t]
   );
 
   useEffect(() => {
