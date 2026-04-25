@@ -2370,7 +2370,7 @@ msgstr "Configure quem deve receber notificações quando um fornecedor envia um
 
 #: apps/erp/app/modules/items/ui/Item/BillOfProcess.tsx:2373
 #: apps/erp/app/modules/items/ui/Item/BillOfProcess.tsx:2679
-#: apps/erp/app/modules/items/ui/Item/ItemManufacturingForm.tsx:76
+#: apps/erp/app/modules/items/ui/Item/ItemManufacturingForm.tsx:74
 msgid "Configured"
 msgstr "Configurado"
 
@@ -9018,6 +9018,10 @@ msgstr "Detalhes da Peça"
 #: apps/erp/app/modules/production/ui/Projection/DemandProjectionTable.tsx:97
 msgid "Part ID"
 msgstr "ID da Peça"
+
+#: apps/erp/app/modules/items/ui/Item/ItemManufacturingForm.tsx:76
+msgid "Part is configured for manufacturing"
+msgstr "Peça configurada para fabricação"
 
 #: apps/erp/app/routes/x+/settings+/purchasing.tsx:779
 msgid "Part thumbnails are shown on purchase order PDFs."

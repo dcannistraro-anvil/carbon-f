@@ -37,7 +37,7 @@ const Switch = forwardRef<
   return (
     <SwitchPrimitives.Root
       className={cn(
-        "group flex items-center transition-colors hover:bg-muted focus-visible:outline-none",
+        "group flex items-center transition-colors focus-visible:outline-none",
         container,
         className
       )}

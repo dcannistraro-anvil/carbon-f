@@ -67,13 +67,14 @@ const ItemManufacturingForm = ({
               name="manufacturingBlocked"
               label={t`Manufacturing Blocked`}
             /> */}
-            <div className="col-span-2" />
 
             {withConfiguration && (
               <Boolean
                 name="requiresConfiguration"
-                label=""
-                description={t`Configured`}
+                label={t`Configured`}
+                bordered
+                description={t`Part is configured for manufacturing`}
+                className="col-span-3"
               />
             )}
             <CustomFormFields table="partReplenishment" />

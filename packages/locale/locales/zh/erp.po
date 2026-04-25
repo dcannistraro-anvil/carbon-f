@@ -2370,7 +2370,7 @@ msgstr "配置供应商提交报价时谁应该收到通知。"
 
 #: apps/erp/app/modules/items/ui/Item/BillOfProcess.tsx:2373
 #: apps/erp/app/modules/items/ui/Item/BillOfProcess.tsx:2679
-#: apps/erp/app/modules/items/ui/Item/ItemManufacturingForm.tsx:76
+#: apps/erp/app/modules/items/ui/Item/ItemManufacturingForm.tsx:74
 msgid "Configured"
 msgstr "已配置"
 
@@ -9018,6 +9018,10 @@ msgstr "零件详情"
 #: apps/erp/app/modules/production/ui/Projection/DemandProjectionTable.tsx:97
 msgid "Part ID"
 msgstr "零件ID"
+
+#: apps/erp/app/modules/items/ui/Item/ItemManufacturingForm.tsx:76
+msgid "Part is configured for manufacturing"
+msgstr "零件已配置用于制造"
 
 #: apps/erp/app/routes/x+/settings+/purchasing.tsx:779
 msgid "Part thumbnails are shown on purchase order PDFs."
