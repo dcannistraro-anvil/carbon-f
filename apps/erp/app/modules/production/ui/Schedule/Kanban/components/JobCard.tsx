@@ -5,6 +5,7 @@ import {
   CardFooter,
   CardHeader,
   cn,
+  DatePicker as DatePickerInput,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuIcon,
@@ -19,6 +20,7 @@ import {
 import { formatDate } from "@carbon/utils";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { parseDate } from "@internationalized/date";
 import { useLingui } from "@lingui/react/macro";
 import { cva } from "class-variance-authority";
 import { AiOutlinePartition } from "react-icons/ai";
@@ -36,7 +38,7 @@ import {
   LuUsers
 } from "react-icons/lu";
 import { RiProgress8Line } from "react-icons/ri";
-import { Link } from "react-router";
+import { Link, useSubmit } from "react-router";
 import { Assignee, EmployeeAvatarGroup } from "~/components";
 import { getDeadlineIcon } from "~/modules/production/ui/Jobs/Deadline";
 import { useCustomers } from "~/stores";
@@ -50,6 +52,60 @@ interface Progress {
   progress: number;
   active: boolean;
   employees?: Set<string>;
+}
+
+const DATE_COLUMN_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+
+function getDateOnly(value?: string | null) {
+  return value?.split("T")[0] ?? null;
+}
+
+function getOptimisticColumnId(dueDate: string, columnIds: string[]) {
+  if (columnIds.includes(dueDate)) {
+    return dueDate;
+  }
+
+  if (columnIds.includes("next-week")) {
+    return "next-week";
+  }
+
+  if (columnIds.includes("next-month")) {
+    const selectedDate = parseDate(dueDate);
+    const dateColumns = columnIds
+      .filter((id) => DATE_COLUMN_PATTERN.test(id))
+      .sort();
+
+    for (const columnId of dateColumns) {
+      const weekStart = parseDate(columnId);
+      const weekEnd = weekStart.add({ days: 6 });
+
+      if (
+        selectedDate.compare(weekStart) >= 0 &&
+        selectedDate.compare(weekEnd) <= 0
+      ) {
+        return columnId;
+      }
+    }
+
+    return "next-month";
+  }
+
+  return dueDate;
+}
+
+function getEmptyDueDateColumnId(
+  columnIds: string[],
+  fallbackColumnId: string
+) {
+  if (columnIds.includes("next-week")) {
+    return "next-week";
+  }
+
+  if (columnIds.includes("next-month")) {
+    return "next-month";
+  }
+
+  return fallbackColumnId;
 }
 
 const cardVariants = cva(
@@ -90,8 +146,9 @@ type JobCardProps = {
 
 export function JobCard({ item, isOverlay, progressByItemId }: JobCardProps) {
   const { t } = useLingui();
+  const submit = useSubmit();
   // biome-ignore lint/correctness/noUnusedVariables: suppressed due to migration
-  const { displaySettings, selectedGroup, setSelectedGroup, tags } =
+  const { displaySettings, selectedGroup, setSelectedGroup, tags, columnIds } =
     useKanban();
   const {
     setNodeRef,
@@ -128,6 +185,34 @@ export function JobCard({ item, isOverlay, progressByItemId }: JobCardProps) {
   const [customers] = useCustomers();
 
   const customer = customers.find((s) => s.id === item.customerId);
+  const dueDate = getDateOnly(item.dueDate);
+  const isDueDateValid = Boolean(dueDate && DATE_COLUMN_PATTERN.test(dueDate));
+  const dueDateValue = isDueDateValid && dueDate ? dueDate : null;
+  const scheduleColumnIds = columnIds ?? [];
+
+  function submitDueDate(nextDueDate: string | null) {
+    const columnId = nextDueDate
+      ? nextDueDate
+      : getEmptyDueDateColumnId(scheduleColumnIds, item.columnId);
+    const optimisticColumnId = nextDueDate
+      ? getOptimisticColumnId(nextDueDate, scheduleColumnIds)
+      : columnId;
+
+    submit(
+      {
+        id: item.id,
+        columnId,
+        optimisticColumnId,
+        priority: item.priority
+      },
+      {
+        method: "post",
+        action: path.to.scheduleDatesUpdate,
+        navigate: false,
+        fetcherKey: `job:${item.id}`
+      }
+    );
+  }
 
   const isOverdue =
     (item.dueDate &&
@@ -282,10 +367,25 @@ export function JobCard({ item, isOverlay, progressByItemId }: JobCardProps) {
             </Tooltip>
           </HStack>
         )}
-        {displaySettings.showDueDate && item.dueDate && (
+        {displaySettings.showDueDate && (
           <HStack className="justify-start space-x-2">
             <LuCalendarDays />
-            <span className="text-sm">{formatDate(item.dueDate)}</span>
+            <DatePickerInput
+              value={dueDateValue ? parseDate(dueDateValue) : null}
+              isPreviewInline
+              inline={
+                dueDateValue ? (
+                  <span className="text-sm">{formatDate(dueDateValue)}</span>
+                ) : (
+                  <span className="text-sm text-muted-foreground">
+                    {t`Set due date`}
+                  </span>
+                )
+              }
+              onChange={(value) => {
+                submitDueDate(value?.toString() ?? null);
+              }}
+            />
           </HStack>
         )}
         {displaySettings.showDueDate && item.completedDate && (

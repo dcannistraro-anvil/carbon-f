@@ -25,11 +25,12 @@ const DatePicker = (
     inline?: ReactNode;
     isPreviewInline?: boolean;
     helperText?: string;
+    closeOnSelect?: boolean;
   }
 ) => {
   const state = useDatePickerState({
     ...props,
-    shouldCloseOnSelect: false
+    shouldCloseOnSelect: props.closeOnSelect ?? false
   });
 
   const ref = useRef<HTMLDivElement>(null);

@@ -22,10 +22,12 @@ export async function action({ request }: ActionFunctionArgs) {
 
   // Parse the columnId to determine the due date
   // For date columns: columnId will be a date string like "2025-11-22"
-  // For special columns: "next-week" or "next-month" - we'll set dueDate to null
+  // For special columns: "next-week", "next-month", or "unscheduled"
+  // we'll set dueDate to null
   let dueDate: string | null = null;
 
   if (
+    validation.data.columnId !== "unscheduled" &&
     validation.data.columnId !== "next-week" &&
     validation.data.columnId !== "next-month"
   ) {

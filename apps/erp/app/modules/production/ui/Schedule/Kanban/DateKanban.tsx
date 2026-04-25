@@ -35,7 +35,10 @@ function usePendingItems() {
       return fetcher.formAction === path.to.scheduleDatesUpdate;
     })
     .map((fetcher) => {
-      let columnId = String(fetcher.formData.get("columnId"));
+      const optimisticColumnId = fetcher.formData.get("optimisticColumnId");
+      let columnId = optimisticColumnId
+        ? String(optimisticColumnId)
+        : String(fetcher.formData.get("columnId"));
       let id = String(fetcher.formData.get("id"));
       let priority = Number(fetcher.formData.get("priority"));
       let item: { id: string; priority: number; columnId: string } = {
@@ -242,6 +245,7 @@ const DateKanban = ({
       selectedGroup={selectedGroup}
       setSelectedGroup={setSelectedGroup}
       tags={tags}
+      columnIds={columns.map((col) => col.id)}
     >
       <DndContext
         sensors={sensors}

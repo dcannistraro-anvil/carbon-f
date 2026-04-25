@@ -7,6 +7,7 @@ interface KanbanContextType {
   selectedGroup: string | null;
   setSelectedGroup: (jobId: string | null) => void;
   tags: { name: string }[];
+  columnIds?: string[];
 }
 
 const KanbanContext = createContext<KanbanContextType | null>(null);
@@ -17,6 +18,7 @@ interface KanbanProviderProps {
   selectedGroup: string | null;
   setSelectedGroup: (jobId: string | null) => void;
   tags: { name: string }[];
+  columnIds?: string[];
 }
 
 export function KanbanProvider({
@@ -24,7 +26,8 @@ export function KanbanProvider({
   displaySettings,
   selectedGroup,
   setSelectedGroup,
-  tags
+  tags,
+  columnIds
 }: KanbanProviderProps) {
   return (
     <KanbanContext.Provider
@@ -32,7 +35,8 @@ export function KanbanProvider({
         displaySettings,
         selectedGroup,
         setSelectedGroup,
-        tags
+        tags,
+        columnIds
       }}
     >
       {children}
