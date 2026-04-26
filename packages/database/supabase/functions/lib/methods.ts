@@ -783,7 +783,8 @@ export async function calculateQuoteLinePrices(
     };
   });
 
-  // 7. Insert quoteLinePrice rows
+  // 7. Delete existing and insert quoteLinePrice rows
+  await client.from("quoteLinePrice").delete().eq("quoteLineId", quoteLineId);
   const insertResult = await client.from("quoteLinePrice").insert(priceRows);
   if (insertResult.error) throw new Error("Failed to insert quote line prices");
 }

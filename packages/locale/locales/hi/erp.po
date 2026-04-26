@@ -625,7 +625,7 @@ msgstr "पता लाइन 2"
 msgid "Adjustment Type"
 msgstr "समायोजन प्रकार"
 
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:683
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:705
 msgid "Advanced"
 msgstr "उन्नत"
 
@@ -1537,7 +1537,7 @@ msgstr "बीटा"
 #: apps/erp/app/modules/items/ui/Item/BillOfMaterial.tsx:507
 #: apps/erp/app/modules/items/ui/Item/BillOfMaterial.tsx:533
 #: apps/erp/app/modules/production/ui/Jobs/JobBillOfMaterial.tsx:602
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:699
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:721
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteBillOfMaterial.tsx:601
 msgid "Bill of Material"
 msgstr "सामग्री की बिल"
@@ -1548,7 +1548,7 @@ msgstr "सामग्री की सूची"
 
 #: apps/erp/app/modules/items/ui/Item/BillOfProcess.tsx:850
 #: apps/erp/app/modules/production/ui/Jobs/JobBillOfProcess.tsx:1023
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:713
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:735
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteBillOfProcess.tsx:856
 msgid "Bill of Process"
 msgstr "प्रक्रिया का विधेयक"
@@ -1743,9 +1743,9 @@ msgstr "केवल सक्रिय ब्रेक को अक्षम �
 #: apps/erp/app/modules/production/ui/Jobs/JobHeader.tsx:791
 #: apps/erp/app/modules/production/ui/Jobs/JobHeader.tsx:850
 #: apps/erp/app/modules/production/ui/Jobs/JobHeader.tsx:1203
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:431
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:552
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:609
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:442
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:563
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:619
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderApprovalModal.tsx:129
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderFinalizeModal.tsx:116
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:508
@@ -1807,9 +1807,9 @@ msgstr "केवल सक्रिय ब्रेक को अक्षम �
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteHeader.tsx:487
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteHeader.tsx:499
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteLineForm.tsx:489
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:411
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:537
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:590
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:420
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:546
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:598
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:165
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:411
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderLineJobs.tsx:265
@@ -2305,7 +2305,7 @@ msgstr "कॉन्फ़िगरेटर"
 #: apps/erp/app/modules/items/ui/Item/BillOfProcess.tsx:841
 #: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:97
 #: apps/erp/app/modules/people/ui/usePeopleSubmodules.tsx:38
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:297
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:308
 #: apps/erp/app/modules/production/ui/useProductionSubmodules.tsx:61
 #: apps/erp/app/modules/purchasing/ui/usePurchasingSubmodules.tsx:70
 #: apps/erp/app/modules/quality/ui/useQualitySubmodules.tsx:76
@@ -2327,8 +2327,8 @@ msgstr "गुणवत्ता डैशबोर्ड के लिए ड�
 msgid "Configure how preventative maintenance dispatches are automatically generated from maintenance schedules."
 msgstr "रखरखाव शेड्यूल से निवारक रखरखाव डिस्पैच को स्वचालित रूप से कैसे उत्पन्न किया जाए, इसे कॉन्फ़िगर करें।"
 
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:582
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:563
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:593
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:572
 msgid "Configure Item"
 msgstr "आइटम कॉन्फ़िगर करें"
 
@@ -2377,11 +2377,11 @@ msgstr "कॉन्फ़िगर किया गया"
 #: apps/erp/app/components/Form/ConversionFactor.tsx:324
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferHeader.tsx:128
 #: apps/erp/app/modules/items/ui/Item/MakeMethodTools.tsx:535
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:437
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:562
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:448
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:573
 #: apps/erp/app/modules/quality/ui/Calibrations/GaugeCalibrationRecordForm.tsx:451
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:417
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:543
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:426
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:552
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:168
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:387
 msgid "Confirm"
@@ -5891,9 +5891,9 @@ msgid "Generated IDs are enabled"
 msgstr "जेनरेट की गई आईडी सक्षम हैं"
 
 #: apps/erp/app/modules/items/ui/Item/MakeMethodTools.tsx:226
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:273
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:350
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:300
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:279
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:361
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:309
 msgid "Get Method"
 msgstr "विधि प्राप्त करें"
 
@@ -6124,8 +6124,8 @@ msgstr "इनबॉक्स"
 msgid "Include extra parts in shipment"
 msgstr "शिपमेंट में अतिरिक्त पार्ट्स शामिल करें"
 
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:412
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:543
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:423
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:554
 msgid "Include Inactive"
 msgstr "निष्क्रिय शामिल करें"
 
@@ -6496,7 +6496,7 @@ msgstr "समस्याएं"
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferLineForm.tsx:143
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoicePostModal.tsx:121
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoicePostModal.tsx:119
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:591
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:602
 #: apps/erp/app/modules/production/ui/Jobs/JobMaterialsTable.tsx:170
 #: apps/erp/app/modules/production/ui/Jobs/JobOperationsTable.tsx:129
 #: apps/erp/app/modules/production/ui/Jobs/JobsTable.tsx:200
@@ -6509,7 +6509,7 @@ msgstr "समस्याएं"
 #: apps/erp/app/modules/sales/ui/Pricing/PriceOverrideForm.tsx:150
 #: apps/erp/app/modules/sales/ui/Pricing/PriceOverridesTable.tsx:134
 #: apps/erp/app/modules/sales/ui/Pricing/PriceOverridesTable.tsx:403
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:572
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:581
 #: apps/erp/app/routes/x+/issue+/$id.tsx:104
 msgid "Item"
 msgstr "आइटम"
@@ -6561,7 +6561,7 @@ msgstr "आइटम समूह"
 msgid "Item ID"
 msgstr "आइटम आईडी"
 
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:303
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:314
 msgid "Item Master"
 msgstr "आइटम मास्टर"
 
@@ -8197,6 +8197,8 @@ msgstr "नया वर्क सेंटर"
 #: apps/erp/app/components/ImportCSVModal/FieldMappings.tsx:282
 #: apps/erp/app/components/Table/components/Pagination/Pagination.tsx:150
 #: apps/erp/app/components/Table/components/Pagination/Pagination.tsx:193
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:627
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:606
 #: apps/erp/app/routes/onboarding+/company.tsx:235
 #: apps/erp/app/routes/onboarding+/theme.tsx:237
 #: apps/erp/app/routes/onboarding+/user.tsx:121
@@ -8320,8 +8322,8 @@ msgid "No days off scheduled"
 msgstr "कोई दिन बंद निर्धारित नहीं है"
 
 #: apps/erp/app/modules/items/ui/Item/MakeMethodTools.tsx:508
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:529
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:515
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:540
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:524
 msgid "No draft versions available"
 msgstr "कोई ड्राफ्ट संस्करण उपलब्ध नहीं है"
 
@@ -8939,11 +8941,11 @@ msgstr "मौजूदा को अधिलेखित करें"
 msgid "Overwrite Permissions"
 msgstr "अनुमतियों को अधिलेखित करें"
 
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:303
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:312
 msgid "Overwrite the quote method with the source method"
 msgstr "उद्धरण विधि को स्रोत विधि से अधिलेखित करें"
 
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:455
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:464
 msgid "Overwrite the target manufacturing method with the quote method"
 msgstr "उद्धरण विधि के साथ लक्ष्य विनिर्माण विधि को अधिलेखित करें"
 
@@ -8962,7 +8964,7 @@ msgstr "भुगतान की गई तारीख"
 
 #: apps/erp/app/components/Configurator/ConfigurationEditor/ParameterPanel.ee.tsx:42
 #: apps/erp/app/modules/items/ui/Item/MakeMethodTools.tsx:654
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:662
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:684
 #: apps/erp/app/modules/production/ui/Procedures/ProcedureExplorer.tsx:257
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteBillOfProcess.tsx:649
 msgid "Parameters"
@@ -10008,7 +10010,7 @@ msgid "Question"
 msgstr "प्रश्न"
 
 #: apps/erp/app/components/Layout/Topbar/CreateMenu.tsx:96
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:365
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:376
 #: apps/erp/app/modules/purchasing/ui/SupplierInteraction/SupplierInteractionState.tsx:80
 #: apps/erp/app/modules/sales/ui/Opportunity/OpportunityState.tsx:143
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteForm.tsx:133
@@ -11066,9 +11068,9 @@ msgid "Save and Overwrite"
 msgstr "सहेजें और अधिलेखित करें"
 
 #: apps/erp/app/modules/items/ui/Item/MakeMethodTools.tsx:236
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:283
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:469
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:452
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:289
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:480
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:461
 msgid "Save Method"
 msgstr "विधि सहेजें"
 
@@ -11317,8 +11319,8 @@ msgstr "एक आइटम चुनें और जारी करने क
 msgid "Select an item first"
 msgstr "पहले एक आइटम चुनें"
 
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:585
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:566
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:596
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:575
 msgid "Select an item to configure"
 msgstr "कॉन्फ़िगर करने के लिए एक आइटम चुनें"
 
@@ -11923,9 +11925,9 @@ msgstr "स्रोत दस्तावेज़ ID"
 msgid "Source Item"
 msgstr "स्रोत आइटम"
 
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:395
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:336
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:383
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:406
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:345
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:392
 msgid "Source Method"
 msgstr "स्रोत विधि"
 
@@ -12134,7 +12136,7 @@ msgstr "चरण रिकॉर्ड"
 
 #: apps/erp/app/modules/items/ui/Item/MakeMethodTools.tsx:659
 #: apps/erp/app/modules/production/ui/Jobs/JobBillOfProcess.tsx:841
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:667
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:689
 #: apps/erp/app/modules/production/ui/Procedures/ProcedureExplorer.tsx:254
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteBillOfProcess.tsx:692
 msgid "Steps"
@@ -12598,8 +12600,8 @@ msgstr "लक्ष्य आइटम"
 msgid "Target Item"
 msgstr "लक्ष्य आइटम"
 
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:500
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:486
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:511
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:495
 msgid "Target Method"
 msgstr "लक्ष्य विधि"
 
@@ -12837,17 +12839,17 @@ msgstr "यह एप्लिकेशन के सभी उपयोगक�
 msgid "This will make this version read-only and replace any material make methods with this version."
 msgstr "यह इस संस्करण को केवल-पढ़ने योग्य बनाएगा और किसी भी सामग्री निर्माण विधि को इस संस्करण से बदल देगा।"
 
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:387
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:398
 msgid "This will overwrite the existing job method"
 msgstr "यह मौजूदा जॉब विधि को अधिलेखित करेगा"
 
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:492
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:478
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:503
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:487
 msgid "This will overwrite the existing manufacturing method and the latest versions of all subassemblies."
 msgstr "यह मौजूदा विनिर्माण विधि और सभी उप-विधानसभाओं के नवीनतम संस्करणों को अधिलेखित करेगा।"
 
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:328
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:375
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:337
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:384
 msgid "This will overwrite the existing quote method"
 msgstr "यह मौजूदा उद्धरण विधि को अधिलेखित करेगा"
 
@@ -13051,7 +13053,7 @@ msgstr "टूल आईडी"
 #: apps/erp/app/modules/items/ui/Tools/ToolsTable.tsx:575
 #: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:42
 #: apps/erp/app/modules/production/ui/Jobs/JobBillOfProcess.tsx:867
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:666
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:688
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteBillOfProcess.tsx:734
 #: apps/erp/app/routes/x+/items+/tools.tsx:16
 #: apps/erp/app/routes/x+/tool+/$itemId.tsx:50
@@ -13153,7 +13155,7 @@ msgstr "ट्रैकिंग आईडी"
 
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptHeader.tsx:140
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentHeader.tsx:166
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:324
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:335
 msgid "Tracking Labels"
 msgstr "ट्रैकिंग लेबल"
 
@@ -13764,8 +13766,8 @@ msgstr "सत्यापन त्रुटि"
 msgid "Verify your email"
 msgstr "अपनी ईमेल सत्यापित करें"
 
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:518
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:504
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:529
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:513
 msgid "Version"
 msgstr "संस्करण"
 
@@ -14212,7 +14214,7 @@ msgid "Work Centers"
 msgstr "कार्य केंद्र"
 
 #: apps/erp/app/modules/items/ui/Item/MakeMethodTools.tsx:662
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:670
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:692
 msgid "Work Instructions"
 msgstr "कार्य निर्देश"
 

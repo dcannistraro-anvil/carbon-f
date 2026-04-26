@@ -168,7 +168,13 @@ const QuoteMakeMethodTools = () => {
         type: "item",
         targetId: `${quoteId}:${lineId}`,
         sourceId,
-        configuration: JSON.stringify(configuration)
+        configuration: JSON.stringify(configuration),
+        billOfMaterial: "on",
+        billOfProcess: "on",
+        parameters: "on",
+        tools: "on",
+        steps: "on",
+        workInstructions: "on"
       },
       {
         method: "post",
@@ -262,7 +268,10 @@ const QuoteMakeMethodTools = () => {
                       !permissions.can("update", "sales") || isConfigureLoading
                     }
                     isLoading={isConfigureLoading}
-                    onClick={configureSelectModal.onOpen}
+                    onClick={() => {
+                      setSelectedConfigureItemId(line?.itemId ?? null);
+                      configureSelectModal.onOpen();
+                    }}
                   >
                     Configure
                   </MenubarItem>
@@ -570,15 +579,14 @@ const QuoteMakeMethodTools = () => {
                 <Item
                   name="sourceId"
                   label={t`Item`}
+                  value={selectedConfigureItemId ?? undefined}
                   type={(line?.itemType ?? "Part") as "Part"}
                   includeInactive={includeInactive === true}
                   whitelist={configurableItemIds}
                   locationId={routeData?.quote?.locationId ?? undefined}
                   replenishmentSystem="Make"
                   onChange={(value) => {
-                    if (value) {
-                      handleConfigureItemSelect(value.value);
-                    }
+                    setSelectedConfigureItemId(value?.value ?? null);
                   }}
                 />
               </ModalBody>
@@ -589,6 +597,14 @@ const QuoteMakeMethodTools = () => {
                 >
                   <Trans>Cancel</Trans>
                 </Button>
+                <Button
+                  isDisabled={!selectedConfigureItemId}
+                  onClick={() =>
+                    handleConfigureItemSelect(selectedConfigureItemId)
+                  }
+                >
+                  <Trans>Next</Trans>
+                </Button>
               </ModalFooter>
             </ValidatedForm>
           </ModalContent>
@@ -598,7 +614,11 @@ const QuoteMakeMethodTools = () => {
         <ConfiguratorModal
           open
           destructive
-          initialValues={{}}
+          initialValues={
+            line?.configuration
+              ? (line.configuration as Record<string, any>)
+              : {}
+          }
           groups={configurationParameters.groups}
           parameters={configurationParameters.parameters}
           onClose={() => {

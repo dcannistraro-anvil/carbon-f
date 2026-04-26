@@ -625,7 +625,7 @@ msgstr "Ligne d'adresse 2"
 msgid "Adjustment Type"
 msgstr "Type d'ajustement"
 
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:683
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:705
 msgid "Advanced"
 msgstr "Avancé"
 
@@ -1537,7 +1537,7 @@ msgstr "Bêta"
 #: apps/erp/app/modules/items/ui/Item/BillOfMaterial.tsx:507
 #: apps/erp/app/modules/items/ui/Item/BillOfMaterial.tsx:533
 #: apps/erp/app/modules/production/ui/Jobs/JobBillOfMaterial.tsx:602
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:699
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:721
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteBillOfMaterial.tsx:601
 msgid "Bill of Material"
 msgstr "Nomenclature"
@@ -1548,7 +1548,7 @@ msgstr "Nomenclature"
 
 #: apps/erp/app/modules/items/ui/Item/BillOfProcess.tsx:850
 #: apps/erp/app/modules/production/ui/Jobs/JobBillOfProcess.tsx:1023
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:713
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:735
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteBillOfProcess.tsx:856
 msgid "Bill of Process"
 msgstr "Nomenclature de fabrication"
@@ -1743,9 +1743,9 @@ msgstr "Impossible de désactiver le seul palier actif. Ajoutez un autre palier 
 #: apps/erp/app/modules/production/ui/Jobs/JobHeader.tsx:791
 #: apps/erp/app/modules/production/ui/Jobs/JobHeader.tsx:850
 #: apps/erp/app/modules/production/ui/Jobs/JobHeader.tsx:1203
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:431
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:552
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:609
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:442
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:563
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:619
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderApprovalModal.tsx:129
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderFinalizeModal.tsx:116
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:508
@@ -1807,9 +1807,9 @@ msgstr "Impossible de désactiver le seul palier actif. Ajoutez un autre palier 
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteHeader.tsx:487
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteHeader.tsx:499
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteLineForm.tsx:489
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:411
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:537
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:590
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:420
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:546
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:598
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:165
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:411
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderLineJobs.tsx:265
@@ -2305,7 +2305,7 @@ msgstr "Configurateur"
 #: apps/erp/app/modules/items/ui/Item/BillOfProcess.tsx:841
 #: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:97
 #: apps/erp/app/modules/people/ui/usePeopleSubmodules.tsx:38
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:297
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:308
 #: apps/erp/app/modules/production/ui/useProductionSubmodules.tsx:61
 #: apps/erp/app/modules/purchasing/ui/usePurchasingSubmodules.tsx:70
 #: apps/erp/app/modules/quality/ui/useQualitySubmodules.tsx:76
@@ -2327,8 +2327,8 @@ msgstr "Configurez les paramètres par défaut du tableau de bord qualité."
 msgid "Configure how preventative maintenance dispatches are automatically generated from maintenance schedules."
 msgstr "Configurez la façon dont les ordres de travail de maintenance préventive sont générés automatiquement à partir des calendriers de maintenance."
 
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:582
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:563
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:593
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:572
 msgid "Configure Item"
 msgstr "Configurer l'article"
 
@@ -2377,11 +2377,11 @@ msgstr "Configuré"
 #: apps/erp/app/components/Form/ConversionFactor.tsx:324
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferHeader.tsx:128
 #: apps/erp/app/modules/items/ui/Item/MakeMethodTools.tsx:535
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:437
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:562
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:448
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:573
 #: apps/erp/app/modules/quality/ui/Calibrations/GaugeCalibrationRecordForm.tsx:451
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:417
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:543
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:426
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:552
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:168
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:387
 msgid "Confirm"
@@ -5891,9 +5891,9 @@ msgid "Generated IDs are enabled"
 msgstr "Les IDs générés sont activés"
 
 #: apps/erp/app/modules/items/ui/Item/MakeMethodTools.tsx:226
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:273
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:350
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:300
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:279
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:361
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:309
 msgid "Get Method"
 msgstr "Obtenir la méthode"
 
@@ -6124,8 +6124,8 @@ msgstr "Boîte de réception"
 msgid "Include extra parts in shipment"
 msgstr "Inclure les pièces supplémentaires dans l'expédition"
 
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:412
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:543
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:423
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:554
 msgid "Include Inactive"
 msgstr "Inclure les inactifs"
 
@@ -6496,7 +6496,7 @@ msgstr "Problèmes"
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferLineForm.tsx:143
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoicePostModal.tsx:121
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoicePostModal.tsx:119
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:591
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:602
 #: apps/erp/app/modules/production/ui/Jobs/JobMaterialsTable.tsx:170
 #: apps/erp/app/modules/production/ui/Jobs/JobOperationsTable.tsx:129
 #: apps/erp/app/modules/production/ui/Jobs/JobsTable.tsx:200
@@ -6509,7 +6509,7 @@ msgstr "Problèmes"
 #: apps/erp/app/modules/sales/ui/Pricing/PriceOverrideForm.tsx:150
 #: apps/erp/app/modules/sales/ui/Pricing/PriceOverridesTable.tsx:134
 #: apps/erp/app/modules/sales/ui/Pricing/PriceOverridesTable.tsx:403
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:572
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:581
 #: apps/erp/app/routes/x+/issue+/$id.tsx:104
 msgid "Item"
 msgstr "Article"
@@ -6561,7 +6561,7 @@ msgstr "Groupes d'articles"
 msgid "Item ID"
 msgstr "ID Article"
 
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:303
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:314
 msgid "Item Master"
 msgstr "Maître d'article"
 
@@ -8197,6 +8197,8 @@ msgstr "Nouveau Centre de Travail"
 #: apps/erp/app/components/ImportCSVModal/FieldMappings.tsx:282
 #: apps/erp/app/components/Table/components/Pagination/Pagination.tsx:150
 #: apps/erp/app/components/Table/components/Pagination/Pagination.tsx:193
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:627
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:606
 #: apps/erp/app/routes/onboarding+/company.tsx:235
 #: apps/erp/app/routes/onboarding+/theme.tsx:237
 #: apps/erp/app/routes/onboarding+/user.tsx:121
@@ -8320,8 +8322,8 @@ msgid "No days off scheduled"
 msgstr "Aucun jour de congé prévu"
 
 #: apps/erp/app/modules/items/ui/Item/MakeMethodTools.tsx:508
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:529
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:515
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:540
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:524
 msgid "No draft versions available"
 msgstr "Aucune version brouillon disponible"
 
@@ -8939,11 +8941,11 @@ msgstr "Remplacer l'existant"
 msgid "Overwrite Permissions"
 msgstr "Remplacer les autorisations"
 
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:303
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:312
 msgid "Overwrite the quote method with the source method"
 msgstr "Remplacer la méthode de devis par la méthode source"
 
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:455
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:464
 msgid "Overwrite the target manufacturing method with the quote method"
 msgstr "Remplacer la méthode de fabrication cible par la méthode de devis"
 
@@ -8962,7 +8964,7 @@ msgstr "Date de paiement"
 
 #: apps/erp/app/components/Configurator/ConfigurationEditor/ParameterPanel.ee.tsx:42
 #: apps/erp/app/modules/items/ui/Item/MakeMethodTools.tsx:654
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:662
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:684
 #: apps/erp/app/modules/production/ui/Procedures/ProcedureExplorer.tsx:257
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteBillOfProcess.tsx:649
 msgid "Parameters"
@@ -10008,7 +10010,7 @@ msgid "Question"
 msgstr "Question"
 
 #: apps/erp/app/components/Layout/Topbar/CreateMenu.tsx:96
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:365
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:376
 #: apps/erp/app/modules/purchasing/ui/SupplierInteraction/SupplierInteractionState.tsx:80
 #: apps/erp/app/modules/sales/ui/Opportunity/OpportunityState.tsx:143
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteForm.tsx:133
@@ -11066,9 +11068,9 @@ msgid "Save and Overwrite"
 msgstr "Enregistrer et remplacer"
 
 #: apps/erp/app/modules/items/ui/Item/MakeMethodTools.tsx:236
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:283
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:469
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:452
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:289
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:480
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:461
 msgid "Save Method"
 msgstr "Enregistrer la méthode"
 
@@ -11317,8 +11319,8 @@ msgstr "Sélectionnez un article et spécifiez la quantité à émettre"
 msgid "Select an item first"
 msgstr "Sélectionnez d'abord un élément"
 
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:585
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:566
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:596
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:575
 msgid "Select an item to configure"
 msgstr "Sélectionnez un élément à configurer"
 
@@ -11923,9 +11925,9 @@ msgstr "ID du document source"
 msgid "Source Item"
 msgstr "Élément source"
 
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:395
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:336
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:383
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:406
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:345
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:392
 msgid "Source Method"
 msgstr "Méthode source"
 
@@ -12134,7 +12136,7 @@ msgstr "Enregistrements d'étapes"
 
 #: apps/erp/app/modules/items/ui/Item/MakeMethodTools.tsx:659
 #: apps/erp/app/modules/production/ui/Jobs/JobBillOfProcess.tsx:841
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:667
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:689
 #: apps/erp/app/modules/production/ui/Procedures/ProcedureExplorer.tsx:254
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteBillOfProcess.tsx:692
 msgid "Steps"
@@ -12598,8 +12600,8 @@ msgstr "Élément cible"
 msgid "Target Item"
 msgstr "Élément cible"
 
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:500
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:486
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:511
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:495
 msgid "Target Method"
 msgstr "Méthode cible"
 
@@ -12837,17 +12839,17 @@ msgstr "Cela met à jour le thème pour tous les utilisateurs de l'application"
 msgid "This will make this version read-only and replace any material make methods with this version."
 msgstr "Cela rendra cette version en lecture seule et remplacera toutes les méthodes de fabrication de matériaux par cette version."
 
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:387
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:398
 msgid "This will overwrite the existing job method"
 msgstr "Cela remplacera la méthode de travail existante"
 
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:492
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:478
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:503
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:487
 msgid "This will overwrite the existing manufacturing method and the latest versions of all subassemblies."
 msgstr "Cela remplacera la méthode de fabrication existante et les dernières versions de tous les sous-ensembles."
 
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:328
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:375
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:337
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:384
 msgid "This will overwrite the existing quote method"
 msgstr "Cela remplacera la méthode de devis existante"
 
@@ -13051,7 +13053,7 @@ msgstr "ID Outil"
 #: apps/erp/app/modules/items/ui/Tools/ToolsTable.tsx:575
 #: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:42
 #: apps/erp/app/modules/production/ui/Jobs/JobBillOfProcess.tsx:867
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:666
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:688
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteBillOfProcess.tsx:734
 #: apps/erp/app/routes/x+/items+/tools.tsx:16
 #: apps/erp/app/routes/x+/tool+/$itemId.tsx:50
@@ -13153,7 +13155,7 @@ msgstr "ID de suivi"
 
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptHeader.tsx:140
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentHeader.tsx:166
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:324
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:335
 msgid "Tracking Labels"
 msgstr "Étiquettes de suivi"
 
@@ -13764,8 +13766,8 @@ msgstr "Erreur de vérification"
 msgid "Verify your email"
 msgstr "Vérifiez votre email"
 
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:518
-#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:504
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:529
+#: apps/erp/app/modules/sales/ui/Quotes/QuoteMakeMethodTools.tsx:513
 msgid "Version"
 msgstr "Version"
 
@@ -14212,7 +14214,7 @@ msgid "Work Centers"
 msgstr "Centres de travail"
 
 #: apps/erp/app/modules/items/ui/Item/MakeMethodTools.tsx:662
-#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:670
+#: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:692
 msgid "Work Instructions"
 msgstr "Instructions de travail"
 
