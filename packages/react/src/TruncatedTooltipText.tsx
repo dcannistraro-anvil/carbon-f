@@ -26,7 +26,6 @@ function TruncatedTooltipText({
 }: TruncatedTooltipTextProps) {
   const triggerRef = useRef<HTMLSpanElement>(null);
   const [isTruncated, setIsTruncated] = useState(false);
-  const nativeTitle = typeof tooltip === "string" ? tooltip : undefined;
 
   const measureTruncation = useCallback(() => {
     if (!enabled || !tooltip || !triggerRef.current) {
@@ -49,7 +48,7 @@ function TruncatedTooltipText({
     observer.observe(triggerRef.current);
 
     return () => observer.disconnect();
-  }, [children, measureTruncation, tooltip]);
+  }, [measureTruncation]);
 
   if (!enabled || !tooltip) {
     return <span className={className}>{children}</span>;
@@ -61,7 +60,6 @@ function TruncatedTooltipText({
         <span
           ref={triggerRef}
           className={cn("min-w-0", className)}
-          title={isTruncated ? nativeTitle : undefined}
           onMouseEnter={measureTruncation}
           onFocus={measureTruncation}
         >
