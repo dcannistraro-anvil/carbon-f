@@ -29,7 +29,7 @@
     "@supabase/functions-js": "2.1.5",
     "@supabase/supabase-js": "2.80.0",
     "ai": "5.0.172",
-    "inngest": "3.52.7",
+    "inngest": "~3.54.0",
     "kysely": "0.28.15",
     "nanoid": "5.1.7",
     "nodemailer": "6.10.1",
