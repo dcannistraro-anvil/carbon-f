@@ -1710,7 +1710,7 @@ msgstr "Logując się, wyrażasz zgodę na <0>Warunki korzystania z usługi</0> 
 msgid "CAD Model"
 msgstr "Model CAD"
 
-#: apps/erp/app/routes/x+/settings+/inventory.tsx:331
+#: apps/erp/app/routes/x+/settings+/inventory.tsx:337
 msgid "Calculate from BOM"
 msgstr "Oblicz z BOM"
 
@@ -5303,11 +5303,11 @@ msgstr "Wygasa (opcjonalnie)"
 msgid "Expiry"
 msgstr "Wygaśnięcie"
 
-#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:93
+#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:99
 msgid "Expiry begins when the selected process completes."
 msgstr "Wygaśnięcie rozpoczyna się po zakończeniu wybranego procesu."
 
-#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:99
+#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:93
 msgid "Expiry begins when the selected process starts."
 msgstr "Wygaśnięcie rozpoczyna się, gdy wybrany proces się zaczyna."
 
@@ -9145,12 +9145,12 @@ msgid "Operator"
 msgstr "Operator"
 
 #: apps/erp/app/routes/x+/settings+/inventory.tsx:365
-msgid "Operator gets a warning. Issue still goes through."
-msgstr "Operator otrzymuje ostrzeżenie. Problem nadal przechodzi."
+msgid "Operator gets a warning. Stock still goes through."
+msgstr ""
 
 #: apps/erp/app/routes/x+/settings+/inventory.tsx:371
-msgid "Operator must pick a different lot."
-msgstr "Operator musi wybrać inną partię."
+msgid "Operator must pick a different batch/serial."
+msgstr ""
 
 #: apps/erp/app/modules/users/ui/useUsersSubmodules.tsx:21
 #: apps/erp/app/routes/x+/users+/operators.tsx:31
@@ -12402,7 +12402,7 @@ msgstr "Pomiń istniejące"
 msgid "Skip Holidays"
 msgstr "Pomiń Święta"
 
-#: apps/erp/app/routes/x+/settings+/inventory.tsx:338
+#: apps/erp/app/routes/x+/settings+/inventory.tsx:332
 msgid "Skip raw-material dates set at receipt. Only inputs with their own shelf-life policy count."
 msgstr "Pomiń daty materiałów surowych ustawione przy odbiorze. Liczyć się będą tylko wejścia z własną polityką przydatności do spożycia."
 
@@ -12418,7 +12418,7 @@ msgstr "Pominięte"
 msgid "Something went wrong. Please try again."
 msgstr "Coś poszło nie tak. Spróbuj ponownie."
 
-#: apps/erp/app/routes/x+/settings+/inventory.tsx:332
+#: apps/erp/app/routes/x+/settings+/inventory.tsx:338
 msgid "Soonest expiry across every material sets the finished good."
 msgstr "Najwcześniejsza data wygaśnięcia spośród wszystkich materiałów określa produkt gotowy."
 
@@ -12588,11 +12588,11 @@ msgstr "Data początkowa"
 msgid "Start Expiration"
 msgstr "Rozpocznij wygaśnięcie"
 
-#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:92
+#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:98
 msgid "Start expiration on process end"
 msgstr "Rozpocznij wygaśnięcie na koniec procesu"
 
-#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:98
+#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:92
 msgid "Start expiration on process start"
 msgstr "Rozpocznij wygaśnięcie na starcie procesu"
 
@@ -12811,7 +12811,7 @@ msgstr "Przechowuj stałą liczbę dni dla tego artykułu. Data rozpoczęcia wyg
 msgid "Style of kanban output to show in the Kanban table"
 msgstr "Styl wyjścia kanban do wyświetlenia w tabeli Kanban"
 
-#: apps/erp/app/routes/x+/settings+/inventory.tsx:337
+#: apps/erp/app/routes/x+/settings+/inventory.tsx:331
 msgid "Sub-assembly expiries only"
 msgstr "Tylko wygaśnięcia podzespołów"
 

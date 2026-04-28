@@ -327,16 +327,16 @@ function CalculatedInputScopeChoice() {
         onChange={setValue}
         options={[
           {
-            value: "AllInputs",
-            title: t`Calculate from BOM`,
-            description: t`Soonest expiry across every material sets the finished good.`,
-            icon: <LuLayers />
-          },
-          {
             value: "ManagedInputsOnly",
             title: t`Sub-assembly expiries only`,
             description: t`Skip raw-material dates set at receipt. Only inputs with their own shelf-life policy count.`,
             icon: <LuShieldCheck />
+          },
+          {
+            value: "AllInputs",
+            title: t`Calculate from BOM`,
+            description: t`Soonest expiry across every material sets the finished good.`,
+            icon: <LuLayers />
           }
         ]}
       />
@@ -362,13 +362,13 @@ function ExpiredEntityPolicyChoice() {
           {
             value: "Warn",
             title: t`Warn but allow`,
-            description: t`Operator gets a warning. Issue still goes through.`,
+            description: t`Operator gets a warning. Stock still goes through.`,
             icon: <LuTriangleAlert />
           },
           {
             value: "Block",
             title: t`Block with an error`,
-            description: t`Operator must pick a different lot.`,
+            description: t`Operator must pick a different batch/serial.`,
             icon: <LuShield />
           },
           {

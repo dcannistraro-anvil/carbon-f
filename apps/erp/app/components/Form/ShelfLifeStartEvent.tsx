@@ -88,16 +88,16 @@ export const ShelfLifeStartTiming = ({ timingName, label }: TimingProps) => {
         direction="row"
         options={[
           {
-            value: "After",
-            title: t`Start expiration on process end`,
-            description: t`Expiry begins when the selected process completes.`,
-            icon: <LuCalendarArrowDown />
-          },
-          {
             value: "Before",
             title: t`Start expiration on process start`,
             description: t`Expiry begins when the selected process starts.`,
             icon: <LuCalendarArrowUp />
+          },
+          {
+            value: "After",
+            title: t`Start expiration on process end`,
+            description: t`Expiry begins when the selected process completes.`,
+            icon: <LuCalendarArrowDown />
           }
         ]}
       />

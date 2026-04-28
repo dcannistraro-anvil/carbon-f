@@ -1710,7 +1710,7 @@ msgstr "通过登录，您同意<0>服务条款</0>和<1>隐私政策。</1>"
 msgid "CAD Model"
 msgstr "CAD 模型"
 
-#: apps/erp/app/routes/x+/settings+/inventory.tsx:331
+#: apps/erp/app/routes/x+/settings+/inventory.tsx:337
 msgid "Calculate from BOM"
 msgstr "从物料清单计算"
 
@@ -5303,11 +5303,11 @@ msgstr "过期时间（可选）"
 msgid "Expiry"
 msgstr "过期"
 
-#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:93
+#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:99
 msgid "Expiry begins when the selected process completes."
 msgstr "过期期限从所选流程完成时开始。"
 
-#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:99
+#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:93
 msgid "Expiry begins when the selected process starts."
 msgstr "有效期从选定的流程开始时开始。"
 
@@ -9145,12 +9145,12 @@ msgid "Operator"
 msgstr "操作员"
 
 #: apps/erp/app/routes/x+/settings+/inventory.tsx:365
-msgid "Operator gets a warning. Issue still goes through."
-msgstr "操作员收到警告。问题仍然会继续进行。"
+msgid "Operator gets a warning. Stock still goes through."
+msgstr ""
 
 #: apps/erp/app/routes/x+/settings+/inventory.tsx:371
-msgid "Operator must pick a different lot."
-msgstr "操作员必须选择不同的批次。"
+msgid "Operator must pick a different batch/serial."
+msgstr ""
 
 #: apps/erp/app/modules/users/ui/useUsersSubmodules.tsx:21
 #: apps/erp/app/routes/x+/users+/operators.tsx:31
@@ -12402,7 +12402,7 @@ msgstr "跳过现有"
 msgid "Skip Holidays"
 msgstr "跳过假期"
 
-#: apps/erp/app/routes/x+/settings+/inventory.tsx:338
+#: apps/erp/app/routes/x+/settings+/inventory.tsx:332
 msgid "Skip raw-material dates set at receipt. Only inputs with their own shelf-life policy count."
 msgstr "跳过收货时设置的原材料日期。仅计算具有自己保质期政策的投入。"
 
@@ -12418,7 +12418,7 @@ msgstr "已跳过"
 msgid "Something went wrong. Please try again."
 msgstr "出现问题。请重试。"
 
-#: apps/erp/app/routes/x+/settings+/inventory.tsx:332
+#: apps/erp/app/routes/x+/settings+/inventory.tsx:338
 msgid "Soonest expiry across every material sets the finished good."
 msgstr "最早的过期日期决定了成品的保质期。"
 
@@ -12588,11 +12588,11 @@ msgstr "开始日期"
 msgid "Start Expiration"
 msgstr "开始过期"
 
-#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:92
+#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:98
 msgid "Start expiration on process end"
 msgstr "在流程结束时开始过期"
 
-#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:98
+#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:92
 msgid "Start expiration on process start"
 msgstr "在流程开始时开始过期"
 
@@ -12811,7 +12811,7 @@ msgstr "在此项目上存储固定天数。每个批次或序列号在收到时
 msgid "Style of kanban output to show in the Kanban table"
 msgstr "看板输出在看板表中显示的样式"
 
-#: apps/erp/app/routes/x+/settings+/inventory.tsx:337
+#: apps/erp/app/routes/x+/settings+/inventory.tsx:331
 msgid "Sub-assembly expiries only"
 msgstr "仅子组件过期日期"
 

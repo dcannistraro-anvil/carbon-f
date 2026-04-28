@@ -1710,7 +1710,7 @@ msgstr "By signing in, you agree to the <0>Terms of Service</0> and <1>Privacy P
 msgid "CAD Model"
 msgstr "CAD Model"
 
-#: apps/erp/app/routes/x+/settings+/inventory.tsx:331
+#: apps/erp/app/routes/x+/settings+/inventory.tsx:337
 msgid "Calculate from BOM"
 msgstr "Calculate from BOM"
 
@@ -5303,11 +5303,11 @@ msgstr "Expires At (optional)"
 msgid "Expiry"
 msgstr "Expiry"
 
-#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:93
+#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:99
 msgid "Expiry begins when the selected process completes."
 msgstr "Expiry begins when the selected process completes."
 
-#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:99
+#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:93
 msgid "Expiry begins when the selected process starts."
 msgstr "Expiry begins when the selected process starts."
 
@@ -9145,12 +9145,12 @@ msgid "Operator"
 msgstr "Operator"
 
 #: apps/erp/app/routes/x+/settings+/inventory.tsx:365
-msgid "Operator gets a warning. Issue still goes through."
-msgstr "Operator gets a warning. Issue still goes through."
+msgid "Operator gets a warning. Stock still goes through."
+msgstr "Operator gets a warning. Stock still goes through."
 
 #: apps/erp/app/routes/x+/settings+/inventory.tsx:371
-msgid "Operator must pick a different lot."
-msgstr "Operator must pick a different lot."
+msgid "Operator must pick a different batch/serial."
+msgstr "Operator must pick a different batch/serial."
 
 #: apps/erp/app/modules/users/ui/useUsersSubmodules.tsx:21
 #: apps/erp/app/routes/x+/users+/operators.tsx:31
@@ -12402,7 +12402,7 @@ msgstr "Skip Existing"
 msgid "Skip Holidays"
 msgstr "Skip Holidays"
 
-#: apps/erp/app/routes/x+/settings+/inventory.tsx:338
+#: apps/erp/app/routes/x+/settings+/inventory.tsx:332
 msgid "Skip raw-material dates set at receipt. Only inputs with their own shelf-life policy count."
 msgstr "Skip raw-material dates set at receipt. Only inputs with their own shelf-life policy count."
 
@@ -12418,7 +12418,7 @@ msgstr "Skipped"
 msgid "Something went wrong. Please try again."
 msgstr "Something went wrong. Please try again."
 
-#: apps/erp/app/routes/x+/settings+/inventory.tsx:332
+#: apps/erp/app/routes/x+/settings+/inventory.tsx:338
 msgid "Soonest expiry across every material sets the finished good."
 msgstr "Soonest expiry across every material sets the finished good."
 
@@ -12588,11 +12588,11 @@ msgstr "Start Date"
 msgid "Start Expiration"
 msgstr "Start Expiration"
 
-#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:92
+#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:98
 msgid "Start expiration on process end"
 msgstr "Start expiration on process end"
 
-#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:98
+#: apps/erp/app/components/Form/ShelfLifeStartEvent.tsx:92
 msgid "Start expiration on process start"
 msgstr "Start expiration on process start"
 
@@ -12811,7 +12811,7 @@ msgstr "Store a fixed number of days on this item. Expiry start date is set on e
 msgid "Style of kanban output to show in the Kanban table"
 msgstr "Style of kanban output to show in the Kanban table"
 
-#: apps/erp/app/routes/x+/settings+/inventory.tsx:337
+#: apps/erp/app/routes/x+/settings+/inventory.tsx:331
 msgid "Sub-assembly expiries only"
 msgstr "Sub-assembly expiries only"
 
