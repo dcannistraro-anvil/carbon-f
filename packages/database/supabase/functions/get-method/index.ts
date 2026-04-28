@@ -617,6 +617,8 @@ serve(async (req: Request) => {
                 }),
               ]);
 
+              if (processId === "") continue;
+
               jobOperationsInserts.push({
                 jobId,
                 jobMakeMethodId: parentJobMakeMethodId!,
@@ -835,6 +837,8 @@ serve(async (req: Request) => {
                 }),
               ]);
 
+              if (itemId === "") return null;
+
               let itemType = child.data.itemType;
               let unitCost = child.data.unitCost;
               let requiresSerialTracking =
@@ -924,9 +928,17 @@ serve(async (req: Request) => {
               };
             };
 
-            let materialsWithConfiguredFields = await Promise.all(
+            const jobMaterialResults = await Promise.all(
               node.children.map(mapMethodMaterialToJobMaterial)
             );
+            const validJobMaterialIndices = jobMaterialResults.reduce<number[]>((acc, m, i) => {
+              if (m !== null) acc.push(i);
+              return acc;
+            }, []);
+            let materialsWithConfiguredFields = jobMaterialResults.filter(
+              (m): m is NonNullable<typeof m> => m !== null
+            );
+            const configuredChildren = validJobMaterialIndices.map(i => node.children[i]);
 
             const bomConfigurationKey = `billOfMaterial:${nodeLevelConfigurationKey}`;
             let bomConfiguration: string[] | null = null;
@@ -964,7 +976,7 @@ serve(async (req: Request) => {
                 (material) => material.methodType !== "Make to Order"
               );
 
-            const madeChildren = node.children.filter(
+            const madeChildren = configuredChildren.filter(
               (child) => child.data.methodType === "Make to Order"
             );
 
@@ -1810,6 +1822,8 @@ serve(async (req: Request) => {
                 }),
               ]);
 
+              if (processId === "") continue;
+
               const operationRates = getLaborAndOverheadRates(
                 processId,
                 op.workCenterId
@@ -2030,6 +2044,8 @@ serve(async (req: Request) => {
                 }),
               ]);
 
+              if (itemId === "") return null;
+
               let itemType = child.data.itemType;
               let unitCost = child.data.unitCost;
 
@@ -2081,9 +2097,17 @@ serve(async (req: Request) => {
               };
             };
 
-            let materialsWithConfiguredFields = await Promise.all(
+            const quoteMaterialResults = await Promise.all(
               node.children.map(mapMethodMaterialToQuoteMaterial)
             );
+            const validQuoteMaterialIndices = quoteMaterialResults.reduce<number[]>((acc, m, i) => {
+              if (m !== null) acc.push(i);
+              return acc;
+            }, []);
+            let materialsWithConfiguredFields = quoteMaterialResults.filter(
+              (m): m is NonNullable<typeof m> => m !== null
+            );
+            const configuredChildren = validQuoteMaterialIndices.map(i => node.children[i]);
 
             const bomConfigurationKey = `billOfMaterial:${nodeLevelConfigurationKey}`;
             let bomConfiguration: string[] | null = null;
@@ -2121,7 +2145,7 @@ serve(async (req: Request) => {
                 (material) => material.methodType !== "Make to Order"
               );
 
-            const madeChildren = node.children.filter(
+            const madeChildren = configuredChildren.filter(
               (child) => child.data.methodType === "Make to Order"
             );
 
