@@ -144,7 +144,7 @@ msgstr "Charge {0} ({1} verfügbar)"
 
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:182
 msgid "Batch is not available"
-msgstr "Charge ist nicht verfügbar<<<<<<< Updated upstream"
+msgstr "Charge ist nicht verfügbar"
 
 #. placeholder {0}: index + 1
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:502
@@ -1072,7 +1072,7 @@ msgstr "Wählen Sie einen Artikel und geben Sie die auszugebende Menge an"
 
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:317
 msgid "Select an item..."
-msgstr "Artikel auswählen...<<<<<<< Updated upstream"
+msgstr "Artikel auswählen..."
 
 #. placeholder {0}: index + 1
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:592
@@ -1101,7 +1101,7 @@ msgstr "Serie"
 #. placeholder {0}: sn.readableId
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:128
 msgid "Serial {0}"
-msgstr "Serie {0}<<<<<<< Updated upstream"
+msgstr "Serie {0}"
 
 #. placeholder {0}: index + 1
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:382

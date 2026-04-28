@@ -144,7 +144,7 @@ msgstr "Lote {0} ({1} disponível)"
 
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:182
 msgid "Batch is not available"
-msgstr "Lote não disponível<<<<<<< Updated upstream"
+msgstr "Lote não disponível"
 
 #. placeholder {0}: index + 1
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:502
@@ -1072,7 +1072,7 @@ msgstr "Selecione um item e especifique a quantidade a emitir"
 
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:317
 msgid "Select an item..."
-msgstr "Selecione um item...<<<<<<< Updated upstream"
+msgstr "Selecione um item..."
 
 #. placeholder {0}: index + 1
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:592
@@ -1101,7 +1101,7 @@ msgstr "Série"
 #. placeholder {0}: sn.readableId
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:128
 msgid "Serial {0}"
-msgstr "Série {0}<<<<<<< Updated upstream"
+msgstr "Série {0}"
 
 #. placeholder {0}: index + 1
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:382

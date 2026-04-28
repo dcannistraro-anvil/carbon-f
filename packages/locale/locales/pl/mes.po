@@ -144,7 +144,7 @@ msgstr "Partia {0} ({1} dostępnych)"
 
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:182
 msgid "Batch is not available"
-msgstr "Partia jest niedostępna<<<<<<< Updated upstream"
+msgstr "Partia jest niedostępna"
 
 #. placeholder {0}: index + 1
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:502
@@ -1072,7 +1072,7 @@ msgstr "Wybierz pozycję i określ ilość do wydania"
 
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:317
 msgid "Select an item..."
-msgstr "Wybierz pozycję...<<<<<<< Updated upstream"
+msgstr "Wybierz pozycję..."
 
 #. placeholder {0}: index + 1
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:592
@@ -1101,7 +1101,7 @@ msgstr "Seryjny"
 #. placeholder {0}: sn.readableId
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:128
 msgid "Serial {0}"
-msgstr "Seryjny {0}<<<<<<< Updated upstream"
+msgstr "Seryjny {0}"
 
 #. placeholder {0}: index + 1
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:382

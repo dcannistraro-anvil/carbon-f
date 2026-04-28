@@ -144,7 +144,7 @@ msgstr "バッチ {0}（{1} 利用可能）"
 
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:182
 msgid "Batch is not available"
-msgstr "バッチは利用できません<<<<<<< Updated upstream"
+msgstr "バッチは利用できません"
 
 #. placeholder {0}: index + 1
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:502
@@ -1072,7 +1072,7 @@ msgstr "品目を選択し、払出数量を指定してください"
 
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:317
 msgid "Select an item..."
-msgstr "品目を選択...<<<<<<< Updated upstream"
+msgstr "品目を選択..."
 
 #. placeholder {0}: index + 1
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:592
@@ -1101,7 +1101,7 @@ msgstr "シリアル"
 #. placeholder {0}: sn.readableId
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:128
 msgid "Serial {0}"
-msgstr "シリアル {0}<<<<<<< Updated upstream"
+msgstr "シリアル {0}"
 
 #. placeholder {0}: index + 1
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:382

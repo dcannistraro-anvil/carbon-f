@@ -144,7 +144,7 @@ msgstr "बैच {0} ({1} उपलब्ध)"
 
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:182
 msgid "Batch is not available"
-msgstr "बैच उपलब्ध नहीं है<<<<<<< Updated upstream"
+msgstr "बैच उपलब्ध नहीं है"
 
 #. placeholder {0}: index + 1
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:502
@@ -1072,7 +1072,7 @@ msgstr "एक आइटम चुनें और जारी करने क
 
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:317
 msgid "Select an item..."
-msgstr "एक आइटम चुनें...<<<<<<< Updated upstream"
+msgstr "एक आइटम चुनें..."
 
 #. placeholder {0}: index + 1
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:592
@@ -1101,7 +1101,7 @@ msgstr "सीरीज़"
 #. placeholder {0}: sn.readableId
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:128
 msgid "Serial {0}"
-msgstr "सीरियल {0}<<<<<<< Updated upstream"
+msgstr "सीरियल {0}"
 
 #. placeholder {0}: index + 1
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:382
