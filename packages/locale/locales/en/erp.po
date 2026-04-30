@@ -1492,7 +1492,7 @@ msgstr "Back"
 msgid "Back to home"
 msgstr "Back to home"
 
-#: apps/erp/app/routes/x+/traceability+/graph.tsx:278
+#: apps/erp/app/routes/x+/traceability+/graph.tsx:226
 msgid "Back to traceability"
 msgstr "Back to traceability"
 
@@ -2106,10 +2106,6 @@ msgstr "Chinese"
 msgid "Choose another file"
 msgstr "Choose another file"
 
-#: apps/erp/app/modules/sales/ui/Pricing/PriceListScopeEmpty.tsx:35
-msgid "Choose scope to continue"
-msgstr "Choose scope to continue"
-
 #: apps/erp/app/modules/account/ui/Profile/ProfileLanguageForm.tsx:53
 msgid "Choose your preferred language for the interface."
 msgstr "Choose your preferred language for the interface."
@@ -2640,7 +2636,6 @@ msgstr "Copied link to clipboard"
 msgid "Copied!"
 msgstr "Copied!"
 
-#: apps/erp/app/modules/inventory/ui/Traceability/TraceabilityGraph.tsx:407
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceProperties.tsx:155
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoiceProperties.tsx:154
 #: apps/erp/app/modules/items/ui/Consumables/ConsumableProperties.tsx:196
@@ -2694,6 +2689,10 @@ msgstr "Copy document name"
 msgid "Copy document unique identifier"
 msgstr "Copy document unique identifier"
 
+#: apps/erp/app/modules/inventory/ui/Traceability/TraceabilitySidebar.tsx:216
+msgid "Copy ID"
+msgstr "Copy ID"
+
 #: apps/erp/app/modules/quality/ui/Issue/IssueProperties.tsx:227
 msgid "Copy issue number"
 msgstr "Copy issue number"
@@ -2705,6 +2704,10 @@ msgstr "Copy issue unique identifier"
 #: apps/erp/app/modules/production/ui/Jobs/JobProperties.tsx:214
 msgid "Copy Job number"
 msgstr "Copy Job number"
+
+#: apps/erp/app/modules/inventory/ui/Traceability/TraceabilitySidebar.tsx:202
+msgid "Copy link"
+msgstr "Copy link"
 
 #: apps/erp/app/modules/items/ui/Consumables/ConsumableProperties.tsx:187
 msgid "Copy link to consumable"
@@ -5041,6 +5044,7 @@ msgid "Entered At Receipt"
 msgstr "Entered At Receipt"
 
 #: apps/erp/app/modules/settings/ui/AuditLog/AuditLogTable.tsx:208
+#: apps/erp/app/routes/x+/traceability+/_index.tsx:174
 msgid "Entities"
 msgstr "Entities"
 
@@ -6492,10 +6496,6 @@ msgstr "Inv. Interim Accrual"
 msgid "Invalid Invite"
 msgstr "Invalid Invite"
 
-#: apps/erp/app/routes/x+/traceability+/_index.tsx:45
-msgid "Invalid tracking number"
-msgstr "Invalid tracking number"
-
 #: apps/erp/app/components/Form/ConversionFactor.tsx:274
 #: apps/erp/app/components/Form/ConversionFactor.tsx:299
 #: apps/erp/app/hooks/useModules.tsx:52
@@ -7213,7 +7213,6 @@ msgstr "Lines need internal part numbers"
 msgid "Lines need prices or lead times"
 msgstr "Lines need prices or lead times"
 
-#: apps/erp/app/modules/inventory/ui/Traceability/TraceabilityGraph.tsx:391
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceProperties.tsx:134
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoiceProperties.tsx:133
 #: apps/erp/app/modules/items/ui/Consumables/ConsumableProperties.tsx:173
@@ -8731,6 +8730,10 @@ msgstr "No issue types configured"
 msgid "No logo uploaded"
 msgstr "No logo uploaded"
 
+#: apps/erp/app/routes/x+/traceability+/_index.tsx:187
+msgid "No matches"
+msgstr "No matches"
+
 #: apps/erp/app/components/Layout/Topbar/Search/SearchEmptyState.tsx:46
 msgid "No matches for \"{query}\". Try a different search term."
 msgstr "No matches for \"{query}\". Try a different search term."
@@ -9596,13 +9599,13 @@ msgstr "Pick"
 msgid "Pick a column to sort by"
 msgstr "Pick a column to sort by"
 
+#: apps/erp/app/modules/sales/ui/Pricing/PriceListScopeEmpty.tsx:23
+msgid "Pick a customer or customer type to view their pricing."
+msgstr "Pick a customer or customer type to view their pricing."
+
 #: apps/erp/app/modules/inventory/ui/Traceability/EditExpiryModal.tsx:78
 msgid "Pick a date or leave blank to clear it."
 msgstr "Pick a date or leave blank to clear it."
-
-#: apps/erp/app/modules/sales/ui/Pricing/PriceListScopeEmpty.tsx:27
-msgid "Pick a scope to view resolved prices and create price overrides."
-msgstr "Pick a scope to view resolved prices and create price overrides."
 
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferHeader.tsx:142
 msgid "Pick List"
@@ -9861,6 +9864,7 @@ msgstr "Price Breaks"
 msgid "Price List"
 msgstr "Price List"
 
+#: apps/erp/app/modules/sales/ui/Pricing/PriceListScopeEmpty.tsx:22
 #: apps/erp/app/modules/sales/ui/useSalesSubmodules.tsx:73
 msgid "Price Lists"
 msgstr "Price Lists"
@@ -10667,6 +10671,7 @@ msgstr "Receiving Location"
 
 #: apps/erp/app/components/Layout/Topbar/Search.tsx:223
 #: apps/erp/app/modules/documents/ui/useDocumentsSubmodules.tsx:28
+#: apps/erp/app/routes/x+/traceability+/_index.tsx:193
 msgid "Recent"
 msgstr "Recent"
 
@@ -11608,13 +11613,17 @@ msgstr "Save View"
 msgid "Scan"
 msgstr "Scan"
 
-#: apps/erp/app/routes/x+/traceability+/_index.tsx:82
-msgid "Scan or enter a tracking number"
-msgstr "Scan or enter a tracking number"
+#: apps/erp/app/routes/x+/traceability+/_index.tsx:153
+msgid "Scan a label or search by ID, serial number, or batch number."
+msgstr "Scan a label or search by ID, serial number, or batch number."
 
 #: apps/erp/app/modules/quality/ui/InboundInspections/ScanInspectionSample.tsx:137
 msgid "Scan or enter tracked entity ID, serial, or batch"
 msgstr "Scan or enter tracked entity ID, serial, or batch"
+
+#: apps/erp/app/routes/x+/traceability+/_index.tsx:161
+msgid "Scan or search..."
+msgstr "Scan or search..."
 
 #: apps/erp/app/modules/quality/ui/InboundInspections/ScanInspectionSample.tsx:100
 msgid "Scan or select a tracked entity from this lot and record the inspection result."
@@ -11717,6 +11726,10 @@ msgstr "Search by linear issue title..."
 msgid "Search customers and types..."
 msgstr "Search customers and types..."
 
+#: apps/erp/app/modules/sales/ui/Pricing/PriceListScopeEmpty.tsx:31
+msgid "Search customers or types..."
+msgstr "Search customers or types..."
+
 #: apps/erp/app/modules/resources/ui/Training/TrainingAssignmentForm.tsx:210
 #: apps/erp/app/routes/x+/resources+/assignments.$trainingId.tsx:267
 msgid "Search employees..."
@@ -11795,10 +11808,6 @@ msgstr "Select"
 #: apps/erp/app/modules/quality/ui/Issue/Linear/CreateIssue.tsx:85
 msgid "Select a assignee"
 msgstr "Select a assignee"
-
-#: apps/erp/app/modules/sales/ui/Pricing/PriceListScopeEmpty.tsx:24
-msgid "Select a customer or customer type"
-msgstr "Select a customer or customer type"
 
 #: apps/erp/app/modules/settings/ui/Approvals/ApprovalRuleForm.tsx:127
 msgid "Select a default approver"
@@ -13756,9 +13765,9 @@ msgid "Totaling"
 msgstr "Totaling"
 
 #: apps/erp/app/modules/inventory/ui/useInventorySubmodules.tsx:76
-#: apps/erp/app/routes/x+/traceability+/_index.tsx:13
-#: apps/erp/app/routes/x+/traceability+/graph.tsx:35
-#: apps/erp/app/routes/x+/traceability+/graph.tsx:268
+#: apps/erp/app/routes/x+/traceability+/_index.tsx:25
+#: apps/erp/app/routes/x+/traceability+/_index.tsx:152
+#: apps/erp/app/routes/x+/traceability+/graph.tsx:26
 msgid "Traceability"
 msgstr "Traceability"
 

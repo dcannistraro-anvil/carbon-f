@@ -1,830 +1,601 @@
-import { useCarbon } from "@carbon/auth";
+import { cn } from "@carbon/react";
 import {
-  Button,
-  HStack,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  useMount,
-  VStack
-} from "@carbon/react";
-import type {
-  TrackedActivityAttributes,
-  TrackedEntityAttributes
-} from "@carbon/utils";
-import { useLingui } from "@lingui/react/macro";
-import * as d3 from "d3";
-import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { LuCopy, LuLink } from "react-icons/lu";
-import {
-  CustomerAvatar,
-  EmployeeAvatar,
-  Hyperlink,
-  SupplierAvatar
-} from "~/components";
-import { useWorkCenters } from "~/components/Form/WorkCenter";
+  Background,
+  BackgroundVariant,
+  type Edge,
+  type EdgeTypes,
+  MiniMap,
+  type Node,
+  type NodeMouseHandler,
+  type NodeTypes,
+  ReactFlow,
+  ReactFlowProvider,
+  useEdgesState,
+  useNodesInitialized,
+  useNodesState,
+  useReactFlow
+} from "@xyflow/react";
+import "@xyflow/react/dist/style.css";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router";
+import { useShallow } from "zustand/react/shallow";
 import type {
   Activity,
-  GraphData,
-  GraphLink,
-  GraphNode,
+  ActivityInput,
+  ActivityOutput,
   TrackedEntity
 } from "~/modules/inventory";
-import { path } from "~/utils/path";
-import { capitalize, copyToClipboard } from "~/utils/string";
-
-export function TraceabilityGraph({
-  data,
-  onNodeClick,
-  width,
-  height,
-  selectedId
-}: TraceabilityGraphProps) {
-  const svgRef = useRef<SVGSVGElement>(null);
-
-  useEffect(() => {
-    if (!svgRef.current || !data.nodes.length) return;
-
-    const svg = d3.select(svgRef.current);
-    svg.selectAll("*").remove();
-
-    // Add definitions for filters and markers
-    const defs = svg.append("defs");
-
-    // Arrow marker - increased size for bigger arrowheads
-    defs
-      .append("marker")
-      .attr("id", "arrow")
-      .attr("viewBox", "0 -4 8 8") // Increased viewBox size
-      .attr("refX", 24) // Adjusted refX to account for larger size
-      .attr("refY", 0)
-      .attr("markerWidth", 6) // Increased from 4 to 6
-      .attr("markerHeight", 6) // Increased from 4 to 6
-      .attr("orient", "auto")
-      .append("path")
-      .attr("d", "M0,-4L8,0L0,4") // Increased path size
-      .attr("fill", "currentColor"); // Use text-foreground color
-
-    // Calculate node depths and assign radial positions
-    const calculateNodeDepths = () => {
-      // Create a map to store node depths
-      const nodeDepths = new Map<string, number>();
-      const nodeParents = new Map<string, string>();
-
-      // Find root nodes (typically activities without incoming links)
-      const rootNodes = data.nodes.filter((node) => {
-        return (
-          node.type === "activity" &&
-          !data.links.some((link) => link.target === node.id)
-        );
-      });
-
-      // If no clear root nodes, use the first activity
-      const startNodes =
-        rootNodes.length > 0
-          ? rootNodes
-          : data.nodes.filter((node) => node.type === "activity").slice(0, 1);
-
-      // Initialize queue with root nodes at depth 0
-      const queue: [string, number, string | null][] = startNodes.map(
-        (node) => [node.id, 0, null]
-      );
-
-      // BFS to assign depths
-      while (queue.length > 0) {
-        const [nodeId, depth, parentId] = queue.shift()!;
-
-        // Skip if we've already processed this node with a shorter path
-        if (nodeDepths.has(nodeId) && nodeDepths.get(nodeId)! <= depth) {
-          continue;
-        }
-
-        // Assign depth and parent
-        nodeDepths.set(nodeId, depth);
-        if (parentId) nodeParents.set(nodeId, parentId);
-
-        // Find all connected nodes
-        const outgoingLinks = data.links.filter(
-          (link) => link.source === nodeId
-        );
-        for (const link of outgoingLinks) {
-          queue.push([link.target, depth + 1, nodeId]);
-        }
-
-        // Also consider incoming links for non-root nodes
-        if (depth > 0) {
-          const incomingLinks = data.links.filter(
-            (link) => link.target === nodeId && link.source !== parentId
-          );
-          for (const link of incomingLinks) {
-            queue.push([link.source, depth + 1, nodeId]);
-          }
-        }
-      }
-
-      return { nodeDepths, nodeParents };
-    };
-
-    const { nodeDepths, nodeParents } = calculateNodeDepths();
-
-    // Enhance nodes with depth information
-    data.nodes.forEach((node) => {
-      node.depth = nodeDepths.get(node.id) || 0;
-      node.parentId = nodeParents.get(node.id) || null;
-    });
-
-    // Create a force simulation with improved forces
-    const simulation = d3
-      .forceSimulation<d3.SimulationNodeDatum & GraphNode>(data.nodes as any)
-      .force(
-        "link",
-        d3
-          .forceLink<
-            d3.SimulationNodeDatum & GraphNode,
-            d3.SimulationLinkDatum<d3.SimulationNodeDatum & GraphNode> &
-              GraphLink
-          >(data.links as any)
-          .id((d) => (d as any).id)
-          .distance((d) => {
-            // Increase distance based on the depth of connected nodes
-            const sourceNode = data.nodes.find(
-              (n) => n.id === (d as any).source.id
-            );
-            const targetNode = data.nodes.find(
-              (n) => n.id === (d as any).target.id
-            );
-            if (sourceNode && targetNode) {
-              const depthDiff = Math.abs(
-                (sourceNode.depth || 0) - (targetNode.depth || 0)
-              );
-              return 150 + depthDiff * 50; // Base distance + additional for depth difference
-            }
-            return 150;
-          })
-      )
-      .force("charge", d3.forceManyBody().strength(-800)) // Stronger repulsion
-      .force("center", d3.forceCenter(width / 2, height / 2))
-      .force(
-        "collision",
-        d3.forceCollide().radius((d) => {
-          // Larger collision radius for nodes with higher depth
-          const node = d as GraphNode;
-          return 60 + (node.depth || 0) * 5;
-        })
-      )
-      .force("x", d3.forceX(width / 2).strength(0.1))
-      .force(
-        "y",
-        d3
-          .forceY()
-          .y((d) => {
-            // Position nodes vertically based on their level or type
-            const node = d as GraphNode;
-            if (node.type === "activity") {
-              return height * 0.4; // Activities in the middle
-            } else {
-              // For entities, check if they're inputs or outputs
-              const isInput = data.links.some(
-                (link) => link.target === node.id
-              );
-              const isOutput = data.links.some(
-                (link) => link.source === node.id
-              );
-
-              if (isInput && !isOutput) {
-                return height * 0.2; // Inputs at the top
-              } else if (isOutput && !isInput) {
-                return height * 0.6; // Outputs at the bottom
-              } else {
-                return height * 0.4; // Both input and output in the middle
-              }
-            }
-          })
-          .strength(0.3)
-      )
-      // Add radial force to push nodes outward based on depth
-      .force(
-        "radial",
-        d3
-          .forceRadial<d3.SimulationNodeDatum & GraphNode>(
-            (d) => {
-              const node = d as GraphNode;
-              // Radius increases with depth
-              return 100 + (node.depth || 0) * 120;
-            },
-            width / 2,
-            height / 2
-          )
-          .strength(0.8)
-      );
-
-    // Create curved links with uniform size
-    const link = svg
-      .append("g")
-      .attr("class", "links")
-      .selectAll("path")
-      .data(data.links)
-      .enter()
-      .append("path")
-      .attr("stroke-width", 1.5)
-      .attr("stroke", "currentColor") // Use text-foreground color
-      .attr("marker-end", "url(#arrow)")
-      .attr("fill", "none")
-      .style("opacity", 0.8); // Increased opacity for better visibility
-
-    // Create the nodes group
-    const node = svg
-      .append("g")
-      .attr("class", "nodes")
-      .selectAll("g")
-      .data(data.nodes)
-      .enter()
-      .append("g")
-      .call(
-        d3
-          .drag<SVGGElement, GraphNode>()
-          .on("start", dragstarted)
-          .on("drag", dragged)
-          .on("end", dragended) as any
-      );
-
-    // Add circles for the nodes with shadow and glow
-    node
-      .append("circle")
-      .attr("r", (d) => 20 + (d.depth || 0) * 2) // Slightly larger circles for deeper nodes
-      .attr("stroke", (d) => (d.data.id === selectedId ? "#2DD4BF" : "none"))
-      .attr("stroke-width", (d) => (d.data.id === selectedId ? 3 : 0))
-      .attr("fill", (d) => (d.type === "entity" ? "#2563EB" : "#7C3AED")) // blue-600 for entities, rose-600 for activities
-      .attr("filter", "url(#drop-shadow)")
-      .style("filter", "url(#glow)")
-      .on("click", (event, d) => {
-        event.stopPropagation();
-        onNodeClick(d);
-      });
-    // Add labels to the nodes
-    node
-      .append("text")
-      .text((d) => {
-        if (d.type === "entity") {
-          const entity = d.data as TrackedEntity;
-          return entity.sourceDocumentReadableId || entity.id.substring(0, 8);
-        } else {
-          const activity = d.data as Activity;
-          // Use optional chaining for properties that might not exist
-          return activity.type || activity.id?.substring(0, 8) || "Unknown";
-        }
-      })
-      .attr("text-anchor", "middle")
-      .attr("dy", (d) => 30 + (d.depth || 0) * 2) // Adjust label position for larger circles
-      .attr("font-size", "12px")
-      .attr("fill", "hsl(var(--foreground))") // Use white in dark mode and black in light mode
-      .attr("font-weight", "bold")
-      .attr("font-family", "Geist");
-
-    // Add serial number below the label
-    node
-      .append("text")
-      .text((d) => d.id?.substring(0, 8) || "")
-      .attr("text-anchor", "middle")
-      .attr("dy", (d) => 45 + (d.depth || 0) * 2) // Position below the main label
-      .attr("font-size", "10px")
-      .attr("fill", "currentColor")
-      .attr("font-family", "Geist");
-
-    // Add title for hover tooltip
-    node.append("title").text((d) => {
-      if (d.type === "entity") {
-        const entity = d.data as TrackedEntity;
-        return `Entity: ${
-          entity.sourceDocumentReadableId || entity.id
-        }\nQuantity: ${entity.quantity}`;
-      } else {
-        const activity = d.data as Activity;
-        return `Activity: ${activity.type || "Unknown"}\nID: ${
-          activity.id || "Unknown"
-        }`;
-      }
-    });
-
-    // Update positions on each tick of the simulation
-    simulation.on("tick", () => {
-      // Keep nodes within bounds
-      data.nodes.forEach((d: any) => {
-        d.x = Math.max(30, Math.min(width - 30, d.x));
-        d.y = Math.max(30, Math.min(height - 30, d.y));
-      });
-
-      // Update curved links
-      link.attr("d", (d: any) => {
-        const dx = d.target.x - d.source.x;
-        const dy = d.target.y - d.source.y;
-        const dr = Math.sqrt(dx * dx + dy * dy) * 1.5;
-        return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
-      });
-
-      node.attr("transform", (d) => `translate(${d.x},${d.y})`);
-    });
-
-    // Drag functions
-    function dragstarted(event: d3.D3DragEvent<SVGGElement, GraphNode, any>) {
-      if (!event.active) simulation.alphaTarget(0.3).restart();
-      event.subject.fx = event.subject.x;
-      event.subject.fy = event.subject.y;
-    }
-
-    function dragged(event: d3.D3DragEvent<SVGGElement, GraphNode, any>) {
-      event.subject.fx = event.x;
-      event.subject.fy = event.y;
-    }
-
-    function dragended(event: d3.D3DragEvent<SVGGElement, GraphNode, any>) {
-      if (!event.active) simulation.alphaTarget(0);
-      // Don't reset fx and fy to null to keep nodes in place after dragging
-      // This allows nodes to stay where they were dragged to
-    }
-
-    return () => {
-      simulation.stop();
-    };
-  }, [data, width, height, onNodeClick, selectedId]);
-
-  return (
-    <motion.div
-      className="relative"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
-    >
-      <svg ref={svgRef} width={width} height={height} />
-    </motion.div>
-  );
-}
-
-export function TraceabilitySidebar({
-  entity,
-  activity
-}: {
-  entity: TrackedEntity | null;
-  activity: Activity | null;
-}) {
-  const { t } = useLingui();
-  const selectedNode = entity ?? activity;
-  const selectedNodeType = entity ? "entity" : "activity";
-  const selectedNodeAttributes = (
-    entity ? (entity.attributes ?? {}) : (activity?.attributes ?? {})
-  ) as Record<string, any>;
-
-  return (
-    <VStack
-      spacing={4}
-      className="w-96 flex-shrink-0 bg-sidebar h-full overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-accent border-l border-border px-4 py-2 text-sm"
-    >
-      <VStack spacing={4}>
-        <HStack className="w-full justify-between">
-          <h3 className="text-xs text-muted-foreground">Attributes</h3>
-          <HStack spacing={1}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  aria-label={t`Link`}
-                  size="sm"
-                  className="p-1"
-                  onClick={() => copyToClipboard(window.location.href)}
-                >
-                  <LuLink className="w-3 h-3" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <span>Copy link</span>
-              </TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  aria-label={t`Copy`}
-                  size="sm"
-                  className="p-1"
-                  onClick={() => copyToClipboard(selectedNode?.id ?? "")}
-                >
-                  <LuCopy className="w-3 h-3" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <span>Copy {capitalize(selectedNodeType)} ID</span>
-              </TooltipContent>
-            </Tooltip>
-          </HStack>
-        </HStack>
-        <VStack spacing={0}>
-          <span className="text-sm font-medium">
-            {entity
-              ? entity.sourceDocumentReadableId
-              : activity
-                ? activity.type
-                : "No selection"}
-          </span>
-          <span className="text-xs text-muted-foreground">
-            {selectedNode?.id}
-          </span>
-        </VStack>
-
-        {selectedNodeType === "entity" && (
-          <VStack spacing={0}>
-            <span className="text-xs text-muted-foreground">Status</span>
-            <span className="text-sm">{entity?.status}</span>
-          </VStack>
-        )}
-
-        {selectedNodeType === "entity" && (
-          <VStack spacing={0}>
-            <span className="text-xs text-muted-foreground">Quantity</span>
-            <span className="text-sm">{entity?.quantity}</span>
-          </VStack>
-        )}
-
-        {selectedNodeType === "entity" && entity?.readableId && (
-          <VStack spacing={0}>
-            <span className="text-xs text-muted-foreground">
-              Serial/Batch #
-            </span>
-            <span className="text-sm">{entity.readableId}</span>
-          </VStack>
-        )}
-
-        {Object.entries(selectedNodeAttributes)
-          .sort((a, b) => a[0].localeCompare(b[0]))
-          .map(([key, value]) => {
-            if (key.startsWith("Operation ")) {
-              return null;
-            }
-
-            switch (
-              key as keyof (TrackedEntityAttributes & TrackedActivityAttributes)
-            ) {
-              case "Customer":
-                return <CustomerAttribute key={key} value={value} />;
-              case "Employee":
-                return <EmployeeAttribute key={key} value={value} />;
-              case "Inspector":
-                return <InspectorAttribute key={key} value={value} />;
-              case "Job":
-                return <JobAttribute key={key} jobId={value} />;
-              case "Job Material":
-                return null;
-              case "Job Make Method":
-                return (
-                  <JobMakeMethodAttribute
-                    key={key}
-                    // biome-ignore lint/complexity/useLiteralKeys: suppressed due to migration
-                    jobId={selectedNodeAttributes["Job"]}
-                    makeMethodId={value}
-                    materialId={selectedNodeAttributes["Job Material"]}
-                  />
-                );
-              case "Job Operation":
-                return (
-                  <JobOperationAttribute
-                    key={key}
-                    // biome-ignore lint/complexity/useLiteralKeys: suppressed due to migration
-                    jobId={selectedNodeAttributes["Job"]}
-                    operationId={value}
-                  />
-                );
-              case "Purchase Order":
-                return (
-                  <PurchaseOrderAttribute key={key} purchaseOrderId={value} />
-                );
-              case "Purchase Order Line":
-                return null;
-              case "Receipt":
-                return <ReceiptAttribute key={key} receiptId={value} />;
-              case "Receipt Line":
-                return null;
-              case "Sales Order":
-                return <SalesOrderAttribute key={key} salesOrderId={value} />;
-              case "Sales Order Line":
-                return null;
-              case "Shipment":
-                return <ShipmentAttribute key={key} shipmentId={value} />;
-              case "Shipment Line":
-                return null;
-              case "Production Event":
-                return (
-                  <JobProductionEvent
-                    key={key}
-                    // biome-ignore lint/complexity/useLiteralKeys: suppressed due to migration
-                    jobId={selectedNodeAttributes["Job"]}
-                    eventId={value}
-                  />
-                );
-              case "Supplier":
-                return <SupplierAttribute key={key} value={value} />;
-              case "Work Center":
-                return <WorkCenterAttribute key={key} value={value} />;
-              case "Consumed Quantity":
-              case "Original Quantity":
-              case "Remaining Quantity":
-              case "Receipt Line Index":
-              case "Shipment Line Index":
-              // Special cases can be handled here in the future
-              default: {
-                // Manual expiry-override history surfaces in the
-                // ExpiryTracePopover, not the graph sidebar. Render
-                // primitives only here — anything object-like would crash
-                // React's "objects are not valid as a child" guard.
-                if (key === "expiryOverrides") return null;
-                if (value === null || value === undefined) return null;
-                if (typeof value === "object") {
-                  return (
-                    <VStack spacing={0} key={key}>
-                      <span className="text-xs text-muted-foreground">
-                        {key}
-                      </span>
-                      <span className="text-sm font-mono break-all">
-                        {JSON.stringify(value)}
-                      </span>
-                    </VStack>
-                  );
-                }
-                return (
-                  <VStack spacing={0} key={key}>
-                    <span className="text-xs text-muted-foreground">{key}</span>
-                    <span className="text-sm">{String(value)}</span>
-                  </VStack>
-                );
-              }
-            }
-          })}
-      </VStack>
-    </VStack>
-  );
-}
-
-function CustomerAttribute({ value }: { value: string }) {
-  return (
-    <VStack spacing={1}>
-      <span className="text-xs text-muted-foreground">Customer</span>
-      <CustomerAvatar customerId={value} />
-    </VStack>
-  );
-}
-
-function EmployeeAttribute({ value }: { value: string }) {
-  return (
-    <VStack spacing={1}>
-      <span className="text-xs text-muted-foreground">Employee</span>
-      <EmployeeAvatar employeeId={value} />
-    </VStack>
-  );
-}
-
-function InspectorAttribute({ value }: { value: string }) {
-  return (
-    <VStack spacing={1}>
-      <span className="text-xs text-muted-foreground">Inspector</span>
-      <EmployeeAvatar employeeId={value} />
-    </VStack>
-  );
-}
-
-function JobAttribute({ jobId }: { jobId: string }) {
-  const [job, setJob] = useState<string | null>(null);
-  const { carbon } = useCarbon();
-
-  const getJob = async () => {
-    const response = await carbon
-      ?.from("job")
-      .select("jobId")
-      .eq("id", jobId)
-      .single();
-
-    setJob(response?.data?.jobId ?? null);
-  };
-
-  useMount(() => {
-    getJob();
-  });
-
-  return (
-    <VStack spacing={1}>
-      <span className="text-xs text-muted-foreground">Job</span>
-      <Hyperlink to={path.to.jobDetails(jobId)}>{job ?? jobId}</Hyperlink>
-    </VStack>
-  );
-}
-
-function JobProductionEvent({
-  jobId,
-  eventId
-}: {
-  jobId: string;
-  eventId: string;
-}) {
-  return (
-    <VStack spacing={1}>
-      <span className="text-xs text-muted-foreground">Production Event</span>
-      {jobId && eventId ? (
-        <Hyperlink to={path.to.jobProductionEvent(jobId, eventId)}>
-          {eventId}
-        </Hyperlink>
-      ) : (
-        <span className="text-sm text-muted-foreground">{eventId}</span>
-      )}
-    </VStack>
-  );
-}
-
-function JobOperationAttribute({
-  jobId,
-  operationId
-}: {
-  jobId: string;
-  operationId: string;
-}) {
-  return (
-    <VStack spacing={1}>
-      <span className="text-xs text-muted-foreground">Job Operation</span>
-      {jobId && operationId ? (
-        <Hyperlink
-          to={`${path.to.jobProductionEvents(
-            jobId
-          )}?filter=jobOperationId:eq:${operationId}`}
-        >
-          {operationId}
-        </Hyperlink>
-      ) : (
-        <span className="text-sm text-muted-foreground">{operationId}</span>
-      )}
-    </VStack>
-  );
-}
-
-function JobMakeMethodAttribute({
-  jobId,
-  makeMethodId,
-  materialId
-}: {
-  jobId: string;
-  makeMethodId: string;
-  materialId: string;
-}) {
-  return (
-    <VStack spacing={1}>
-      <span className="text-xs text-muted-foreground">Job Make Method</span>
-      <Hyperlink
-        to={
-          materialId
-            ? path.to.jobMakeMethod(jobId, makeMethodId)
-            : path.to.jobMethod(jobId, makeMethodId)
-        }
-      >
-        {makeMethodId}
-      </Hyperlink>
-    </VStack>
-  );
-}
-
-function PurchaseOrderAttribute({
-  purchaseOrderId
-}: {
-  purchaseOrderId: string;
-}) {
-  const [poNumber, setPoNumber] = useState<string | null>(null);
-  const { carbon } = useCarbon();
-
-  const getPurchaseOrder = async () => {
-    const response = await carbon
-      ?.from("purchaseOrder")
-      .select("purchaseOrderId")
-      .eq("id", purchaseOrderId)
-      .single();
-
-    setPoNumber(response?.data?.purchaseOrderId ?? null);
-  };
-
-  useMount(() => {
-    getPurchaseOrder();
-  });
-
-  return (
-    <VStack spacing={1}>
-      <span className="text-xs text-muted-foreground">Purchase Order</span>
-      <Hyperlink to={path.to.purchaseOrderDetails(purchaseOrderId)}>
-        {poNumber ?? purchaseOrderId}
-      </Hyperlink>
-    </VStack>
-  );
-}
-
-function SalesOrderAttribute({ salesOrderId }: { salesOrderId: string }) {
-  const [soNumber, setSoNumber] = useState<string | null>(null);
-  const { carbon } = useCarbon();
-
-  const getSalesOrder = async () => {
-    const response = await carbon
-      ?.from("salesOrder")
-      .select("salesOrderId")
-      .eq("id", salesOrderId)
-      .single();
-
-    setSoNumber(response?.data?.salesOrderId ?? null);
-  };
-
-  useMount(() => {
-    getSalesOrder();
-  });
-
-  return (
-    <VStack spacing={1}>
-      <span className="text-xs text-muted-foreground">Sales Order</span>
-      <Hyperlink to={path.to.salesOrderDetails(salesOrderId)}>
-        {soNumber ?? salesOrderId}
-      </Hyperlink>
-    </VStack>
-  );
-}
-
-function ReceiptAttribute({ receiptId }: { receiptId: string }) {
-  const [receiptNumber, setReceiptNumber] = useState<string | null>(null);
-  const { carbon } = useCarbon();
-
-  const getReceipt = async () => {
-    const response = await carbon
-      ?.from("receipt")
-      .select("receiptId")
-      .eq("id", receiptId)
-      .single();
-
-    setReceiptNumber(response?.data?.receiptId ?? null);
-  };
-
-  useMount(() => {
-    getReceipt();
-  });
-
-  return (
-    <VStack spacing={1}>
-      <span className="text-xs text-muted-foreground">Receipt</span>
-      <Hyperlink to={path.to.receiptDetails(receiptId)}>
-        {receiptNumber ?? receiptId}
-      </Hyperlink>
-    </VStack>
-  );
-}
-function ShipmentAttribute({ shipmentId }: { shipmentId: string }) {
-  const [shipmentNumber, setShipmentNumber] = useState<string | null>(null);
-  const { carbon } = useCarbon();
-
-  const getShipment = async () => {
-    const response = await carbon
-      ?.from("shipment")
-      .select("shipmentId")
-      .eq("id", shipmentId)
-      .single();
-
-    setShipmentNumber(response?.data?.shipmentId ?? null);
-  };
-
-  useMount(() => {
-    getShipment();
-  });
-
-  return (
-    <VStack spacing={1}>
-      <span className="text-xs text-muted-foreground">Shipment</span>
-      <Hyperlink to={path.to.shipmentDetails(shipmentId)}>
-        {shipmentNumber ?? shipmentId}
-      </Hyperlink>
-    </VStack>
-  );
-}
-
-function SupplierAttribute({ value }: { value: string }) {
-  return (
-    <VStack spacing={1}>
-      <span className="text-xs text-muted-foreground">Supplier</span>
-      <SupplierAvatar supplierId={value} />
-    </VStack>
-  );
-}
-
-function WorkCenterAttribute({ value }: { value: string }) {
-  const workCenters = useWorkCenters({});
-  const workCenter = workCenters.options.find((wc) => wc.value === value);
-  return (
-    <VStack spacing={0}>
-      <span className="text-xs text-muted-foreground">Work Center</span>
-      <span className="text-sm">{workCenter?.label}</span>
-    </VStack>
-  );
-}
-type TraceabilityGraphProps = {
-  data: GraphData;
-  selectedId: string | null;
-  onNodeClick: (node: GraphNode) => void;
+import { clampDepth } from "./constants";
+import { QuantityEdge } from "./edges/QuantityEdge";
+import { GraphLegend } from "./GraphLegend";
+import { GraphToolbar } from "./GraphToolbar";
+import { useExpandNode } from "./hooks/useExpandNode";
+import { useProbeBoundary } from "./hooks/useProbeBoundary";
+import {
+  ACTIVITY_KIND_META,
+  activityKindFor,
+  entityStatusMeta
+} from "./metadata";
+import { NodeSearchDialog } from "./NodeSearchDialog";
+import { ActivityNode } from "./nodes/ActivityNode";
+import { EntityNode } from "./nodes/EntityNode";
+import { useTraceabilityStore } from "./store";
+import { TraceabilityTable } from "./TraceabilityTable";
+import {
+  type LineageEdge,
+  type LineageNode,
+  type LineagePayload,
+  mergePayloads
+} from "./utils";
+import {
+  useAsyncLayout,
+  useAsyncSelectionPath,
+  useTracingGraphManager
+} from "./worker/hooks";
+
+const nodeTypes: NodeTypes = {
+  entity: EntityNode as any,
+  activity: ActivityNode as any
+};
+
+const edgeTypes: EdgeTypes = {
+  quantity: QuantityEdge as any
+};
+
+const proOptions = { hideAttribution: true };
+
+const EMPTY_NODES: LineageNode[] = [];
+const EMPTY_EDGES: LineageEdge[] = [];
+
+type Props = {
+  entities: TrackedEntity[];
+  activities: Activity[];
+  inputs: ActivityInput[];
+  outputs: ActivityOutput[];
+  stepRecords?: import("./utils").StepRecord[];
+  containments?: import("./utils").IssueContainment[];
+  rootId: string;
+  rootType: "entity" | "activity" | "job";
   width: number;
   height: number;
 };
+
+export function TraceabilityGraph(props: Props) {
+  return (
+    <ReactFlowProvider>
+      <TraceabilityGraphInner {...props} />
+    </ReactFlowProvider>
+  );
+}
+
+function TraceabilityGraphInner({
+  entities,
+  activities,
+  inputs,
+  outputs,
+  stepRecords,
+  containments,
+  rootId,
+  rootType,
+  width,
+  height
+}: Props) {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const { fitView } = useReactFlow();
+  const nodesInitialized = useNodesInitialized();
+  const lastFitSignatureRef = useRef<string>("");
+
+  const initialPayload = useMemo<LineagePayload>(
+    () => ({
+      entities,
+      activities,
+      inputs,
+      outputs,
+      stepRecords,
+      containments
+    }),
+    [entities, activities, inputs, outputs, stepRecords, containments]
+  );
+
+  const expansions = useTraceabilityStore((s) => s.expansions);
+  const expandable = useTraceabilityStore((s) => s.expandable);
+  const {
+    addExpansion,
+    removeExpansion,
+    markExpandable,
+    markExhausted,
+    reset: resetStore,
+    setDirection,
+    setView,
+    setSpacing,
+    setIsolate,
+    setSelectedSingle,
+    toggleSelected
+  } = useTraceabilityStore(
+    useShallow((s) => ({
+      addExpansion: s.addExpansion,
+      removeExpansion: s.removeExpansion,
+      markExpandable: s.markExpandable,
+      markExhausted: s.markExhausted,
+      reset: s.reset,
+      setDirection: s.setDirection,
+      setView: s.setView,
+      setSpacing: s.setSpacing,
+      setIsolate: s.setIsolate,
+      setSelectedSingle: s.setSelectedSingle,
+      toggleSelected: s.toggleSelected
+    }))
+  );
+  const probeCacheRef = useRef<Map<string, LineagePayload>>(new Map());
+  const probedRef = useRef<Set<string>>(new Set());
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: reset on payload identity change (loader refetch)
+  useEffect(() => {
+    resetStore(rootId);
+    probeCacheRef.current = new Map();
+    probedRef.current = new Set();
+  }, [initialPayload, resetStore, rootId]);
+
+  const payload = useMemo<LineagePayload>(() => {
+    let merged = initialPayload;
+    for (const exp of expansions.values()) {
+      merged = mergePayloads(merged, exp);
+    }
+    return merged;
+  }, [initialPayload, expansions]);
+
+  const direction = useTraceabilityStore((s) => s.direction);
+  const view = useTraceabilityStore((s) => s.view);
+  const spacing = useTraceabilityStore((s) => s.spacing);
+  const isolate = useTraceabilityStore((s) => s.isolate);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [layoutVersion, setLayoutVersion] = useState(0);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const isMeta = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k";
+      if (e.key === "/" || isMeta) {
+        const target = e.target as HTMLElement | null;
+        if (
+          target &&
+          (target.tagName === "INPUT" ||
+            target.tagName === "TEXTAREA" ||
+            target.isContentEditable)
+        ) {
+          if (!isMeta) return;
+        }
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+  const handleRelayout = useCallback(() => {
+    setLayoutVersion((v) => v + 1);
+  }, []);
+
+  const [draggedIds, setDraggedIds] = useState<Set<string>>(new Set());
+  const [fitted, setFitted] = useState(false);
+
+  useEffect(() => {
+    if (view === "graph") {
+      lastFitSignatureRef.current = "";
+      setFitted(false);
+    }
+  }, [view]);
+
+  const rejectIds = useMemo(() => {
+    const set = new Set<string>();
+    for (const e of payload.entities)
+      if (e.status === "Rejected") set.add(e.id);
+    return set;
+  }, [payload.entities]);
+
+  const tracingGraphManager = useTracingGraphManager();
+  const layoutResult = useAsyncLayout(
+    tracingGraphManager,
+    payload,
+    direction,
+    spacing,
+    rejectIds,
+    layoutVersion
+  );
+  const laidNodes = layoutResult?.nodes ?? EMPTY_NODES;
+  const laidEdges = layoutResult?.edges ?? EMPTY_EDGES;
+
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>(
+    laidNodes as Node[]
+  );
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>(
+    laidEdges as Edge[]
+  );
+
+  const [layoutAnimating, setLayoutAnimating] = useState(false);
+  useEffect(() => {
+    setNodes(laidNodes as Node[]);
+    setEdges(laidEdges as Edge[]);
+    setDraggedIds(new Set());
+    setLayoutAnimating(true);
+    const t = setTimeout(() => setLayoutAnimating(false), 260);
+    return () => clearTimeout(t);
+  }, [laidNodes, laidEdges, setNodes, setEdges]);
+
+  const selectedIds = useTraceabilityStore((s) => s.selectedIds);
+  const selectedIdSet = useMemo(() => new Set(selectedIds), [selectedIds]);
+  const selectedId = selectedIds[0] ?? null;
+
+  const onExpandResult = useCallback(
+    (incoming: LineagePayload, originId: string) => {
+      const knownEntityIds = new Set(payload.entities.map((e) => e.id));
+      const knownActivityIds = new Set(payload.activities.map((a) => a.id));
+      const hasNewEntity = incoming.entities.some(
+        (e) => !knownEntityIds.has(e.id)
+      );
+      const hasNewActivity = incoming.activities.some(
+        (a) => !knownActivityIds.has(a.id)
+      );
+
+      if (!hasNewEntity && !hasNewActivity) {
+        markExhausted(originId);
+        return;
+      }
+
+      addExpansion(originId, incoming);
+    },
+    [payload, markExhausted, addExpansion]
+  );
+
+  const { expand, isLoading: isExpanding } = useExpandNode(onExpandResult);
+
+  const onNodeClick = useCallback<NodeMouseHandler>(
+    (event, node) => {
+      const shift = event.shiftKey;
+      if (shift) {
+        toggleSelected(node.id);
+        return;
+      }
+      setSelectedSingle(node.id);
+    },
+    [setSelectedSingle, toggleSelected]
+  );
+
+  const onExpandNode = useCallback(
+    (id: string, direction: "up" | "down" | "both") => {
+      const cached = probeCacheRef.current.get(id);
+      if (cached) {
+        addExpansion(id, cached);
+        return;
+      }
+      expand(id, direction, 1);
+    },
+    [expand, addExpansion]
+  );
+
+  const onCollapseNode = useCallback(
+    (id: string) => {
+      removeExpansion(id);
+    },
+    [removeExpansion]
+  );
+
+  const onPaneClick = useCallback(() => {
+    setSelectedSingle(null);
+  }, [setSelectedSingle]);
+
+  const selectionPath = useAsyncSelectionPath(
+    tracingGraphManager,
+    edges as unknown as LineageEdge[],
+    selectedIds
+  );
+
+  const isolated = useMemo(() => {
+    if (!isolate || selectedIds.length === 0) return null;
+    if (selectionPath) return selectionPath;
+    return {
+      nodeIds: new Set(selectedIds),
+      edgeIds: new Set<string>()
+    };
+  }, [isolate, selectedIds, selectionPath]);
+
+  const boundaryByNode = useMemo(() => {
+    const incoming = new Set<string>();
+    const outgoing = new Set<string>();
+    for (const e of edges) {
+      incoming.add(e.target);
+      outgoing.add(e.source);
+    }
+    return { incoming, outgoing };
+  }, [edges]);
+
+  useProbeBoundary({
+    payload,
+    boundaryByNode,
+    markExpandable,
+    markExhausted,
+    probeCacheRef,
+    probedRef
+  });
+
+  const containmentByEntity = useMemo(() => {
+    const m = new Map<string, "Contained" | "Uncontained">();
+    for (const c of payload.containments ?? []) {
+      const prev = m.get(c.trackedEntityId);
+      if (c.containmentStatus === "Uncontained" || !prev) {
+        m.set(c.trackedEntityId, c.containmentStatus);
+      }
+    }
+    return m;
+  }, [payload.containments]);
+
+  const enrichedNodes = useMemo<Node[]>(() => {
+    const isJobRoot = rootType === "job";
+    return nodes.map((n) => {
+      const isRoot = !isJobRoot && n.id === rootId;
+      const selected = selectedIdSet.has(n.id);
+      const inPath = selectionPath?.nodeIds.has(n.id) ?? false;
+      const dimmed = isolated ? !isolated.nodeIds.has(n.id) : false;
+      const isExpanded = expansions.has(n.id);
+      const isEntity = (n.data as any)?.kind === "entity";
+      const isExpandable = expandable.has(n.id);
+      const canExpandUp =
+        isEntity && isExpandable && !boundaryByNode.incoming.has(n.id);
+      const canExpandDown =
+        isEntity && isExpandable && !boundaryByNode.outgoing.has(n.id);
+      const containmentStatus = isEntity
+        ? containmentByEntity.get(n.id)
+        : undefined;
+      return {
+        ...n,
+        data: {
+          ...(n.data as any),
+          isRoot,
+          selected,
+          inPath,
+          dimmed,
+          isExpanded,
+          canExpandUp,
+          canExpandDown,
+          containmentStatus,
+          onExpand: onExpandNode,
+          onCollapse: onCollapseNode
+        },
+        selected
+      };
+    });
+  }, [
+    nodes,
+    rootId,
+    rootType,
+    selectedIdSet,
+    isolated,
+    expansions,
+    boundaryByNode,
+    expandable,
+    selectionPath,
+    containmentByEntity,
+    onExpandNode,
+    onCollapseNode
+  ]);
+
+  const enrichedEdges = useMemo<Edge[]>(() => {
+    return edges.map((e) => {
+      const dimmed = isolated ? !isolated.edgeIds.has(e.id) : false;
+      const highlighted = selectionPath?.edgeIds.has(e.id) ?? false;
+      const touchesDragged =
+        draggedIds.has(e.source) || draggedIds.has(e.target);
+      const baseData = { ...((e.data as any) ?? {}) };
+      if (touchesDragged) baseData.points = undefined;
+      return {
+        ...e,
+        data: { ...baseData, dimmed, highlighted }
+      };
+    });
+  }, [edges, isolated, selectionPath, draggedIds]);
+
+  useEffect(() => {
+    if (!nodesInitialized) return;
+    if (view !== "graph") return;
+    if (nodes.length === 0) return;
+    if (width === 0 || height === 0) return;
+    const sig = `${nodes.length}:${edges.length}:${rootId}:${direction}:${width}x${height}`;
+    if (lastFitSignatureRef.current === sig) return;
+    const isFirstFit = lastFitSignatureRef.current === "";
+    lastFitSignatureRef.current = sig;
+    const raf = requestAnimationFrame(() => {
+      fitView({
+        padding: 0.2,
+        duration: isFirstFit ? 0 : 250,
+        maxZoom: 1
+      });
+      requestAnimationFrame(() => setFitted(true));
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [
+    nodesInitialized,
+    nodes.length,
+    edges.length,
+    rootId,
+    direction,
+    view,
+    width,
+    height,
+    fitView
+  ]);
+
+  const handleDepthChange = useCallback(
+    (next: number) => {
+      const params = new URLSearchParams(searchParams);
+      params.set("depth", String(next));
+      navigate(`/x/traceability/graph?${params.toString()}`);
+    },
+    [navigate, searchParams]
+  );
+
+  if (view === "table") {
+    return (
+      <div className="relative w-full h-full" style={{ width, height }}>
+        <div className="pt-14 w-full h-full overflow-auto">
+          <TraceabilityTable
+            payload={payload}
+            rootId={rootId}
+            selectedId={selectedId}
+            onSelect={(id) => setSelectedSingle(id)}
+          />
+        </div>
+        <GraphToolbar
+          depth={clampDepth(Number(searchParams.get("depth") ?? 1))}
+          onDepthChange={handleDepthChange}
+          direction={direction}
+          onDirectionChange={setDirection}
+          view={view}
+          onViewChange={setView}
+          isolate={isolate}
+          onIsolateChange={setIsolate}
+          hasSelection={selectedIds.length > 0}
+          onOpenSearch={() => setSearchOpen(true)}
+          spacing={spacing}
+          onSpacingChange={setSpacing}
+        />
+        <NodeSearchDialog
+          open={searchOpen}
+          onOpenChange={setSearchOpen}
+          payload={payload}
+          onSelect={(id) => setSelectedSingle(id)}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={cn(
+        "relative w-full h-full",
+        layoutAnimating && "trace-layout-animating"
+      )}
+      style={{ width, height }}
+    >
+      <style>{`
+        .trace-layout-animating .react-flow__node {
+          transition: transform 220ms cubic-bezier(0.645, 0.045, 0.355, 1);
+          will-change: transform;
+        }
+        .trace-fade-in {
+          transition: opacity 150ms cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        .trace-edge-path {
+          transition: opacity 150ms cubic-bezier(0.215, 0.61, 0.355, 1),
+                      stroke-width 150ms cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .trace-layout-animating .react-flow__node { transition: none; }
+          .trace-fade-in { transition: none; }
+          .trace-edge-path { transition: none; }
+        }
+      `}</style>
+      <ReactFlow
+        nodes={enrichedNodes as Node[]}
+        edges={enrichedEdges as Edge[]}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onNodeClick={onNodeClick}
+        onPaneClick={onPaneClick}
+        className="trace-fade-in"
+        style={{ opacity: fitted ? 1 : 0 }}
+        onNodeDragStart={(_, node) =>
+          setDraggedIds((prev) => {
+            if (prev.has(node.id)) return prev;
+            const next = new Set(prev);
+            next.add(node.id);
+            return next;
+          })
+        }
+        nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
+        proOptions={proOptions}
+        minZoom={0.15}
+        maxZoom={3}
+        nodesDraggable
+        nodesConnectable={false}
+        edgesFocusable={false}
+        elevateNodesOnSelect={false}
+        onlyRenderVisibleElements
+        defaultEdgeOptions={{ type: "quantity", zIndex: 0 }}
+      >
+        <Background
+          variant={BackgroundVariant.Dots}
+          gap={28}
+          size={1}
+          color="hsl(var(--muted-foreground) / 0.15)"
+        />
+        <MiniMap
+          pannable
+          zoomable
+          className="!bg-card !border-border"
+          nodeColor={(n) => {
+            const data = (n as any).data;
+            if (data?.kind === "entity") {
+              return entityStatusMeta(data.entity?.status).color;
+            }
+            return ACTIVITY_KIND_META[activityKindFor(data?.activity?.type)]
+              .color;
+          }}
+          nodeStrokeWidth={0}
+          maskColor="hsl(var(--background) / 0.7)"
+        />
+      </ReactFlow>
+
+      <GraphToolbar
+        depth={Math.min(Math.max(1, Number(searchParams.get("depth") ?? 1)), 5)}
+        onDepthChange={handleDepthChange}
+        direction={direction}
+        onDirectionChange={setDirection}
+        view={view}
+        onViewChange={setView}
+        isolate={isolate}
+        onIsolateChange={setIsolate}
+        hasSelection={selectedIds.length > 0}
+        onRelayout={handleRelayout}
+        onOpenSearch={() => setSearchOpen(true)}
+        spacing={spacing}
+        onSpacingChange={setSpacing}
+      />
+
+      <GraphLegend />
+
+      <NodeSearchDialog
+        open={searchOpen}
+        onOpenChange={setSearchOpen}
+        payload={payload}
+        onSelect={(id) => setSelectedSingle(id)}
+      />
+
+      {isExpanding && (
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 rounded-full border border-border bg-card px-3 py-1 text-xs shadow-sm">
+          Loading...
+        </div>
+      )}
+    </div>
+  );
+}
