@@ -6,18 +6,18 @@ import { forwardRef } from "react";
 import { cn } from "./utils/cn";
 
 const alertVariants = cva(
-  "relative flex flex-col gap-1.5 w-full rounded-lg border py-2 px-3 transition-colors [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-[10px] [&>svg]:text-foreground dark:inset-ring dark:inset-ring-white/5",
+  "relative flex flex-col gap-1.5 w-full rounded-lg border p-3 transition-colors [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-[10px] [&>svg]:text-foreground dark:inset-ring dark:inset-ring-white/5",
   {
     variants: {
       variant: {
         default: "bg-background text-foreground",
         success:
           "bg-gradient-fade border-emerald-600/70 from-emerald-600/20 text-emerald-700 [&>svg]:text-emerald-600 dark:text-emerald-100 dark:from-emerald-600/20 dark:border-emerald-500/30 dark:[&>svg]:text-emerald-400",
-        info: "bg-gradient-fade via-card to-card hover:to-muted/30 hover:via-muted/30 border-blue-500/70 from-blue-500/20 text-blue-800 [&>svg]:text-blue-600 dark:text-blue-100 dark:from-blue-500/20 dark:border-blue-500/30 dark:[&>svg]:text-blue-400",
+        info: "bg-gradient-fade border-blue-500/70 from-blue-500/20 text-blue-800 [&>svg]:text-blue-600 dark:text-blue-100 dark:from-blue-500/20 dark:border-blue-500/30 dark:[&>svg]:text-blue-400",
         warning:
-          "bg-gradient-fade via-card to-card hover:to-muted/30 hover:via-muted/30 border-amber-500/70 from-amber-500/20 text-amber-800 [&>svg]:text-amber-600 dark:text-amber-100 dark:from-amber-500/20 dark:border-amber-500/30 dark:[&>svg]:text-amber-400",
+          "bg-gradient-fade border-amber-500/70 from-amber-500/20 text-amber-800 [&>svg]:text-amber-600 dark:text-amber-100 dark:from-amber-500/20 dark:border-amber-500/30 dark:[&>svg]:text-amber-400",
         destructive:
-          "bg-gradient-fade via-card to-card hover:to-muted/30 hover:via-muted/30 border-red-500/70 from-red-500/20 text-destructive [&>svg]:text-destructive dark:text-red-100 dark:from-red-500/20 dark:border-red-500/30 dark:[&>svg]:text-red-400"
+          "bg-gradient-fade border-red-500/70 from-red-500/20 text-destructive [&>svg]:text-destructive dark:text-red-100 dark:from-red-500/20 dark:border-red-500/30 dark:[&>svg]:text-red-400"
       }
     },
     defaultVariants: {
