@@ -184,7 +184,7 @@ function ApiKeyView({ apiKey, onClose }: ApiKeyViewProps) {
         </ModalHeader>
         <ModalBody>
           <VStack spacing={4}>
-            <Alert variant="warning">
+            <Alert variant="info">
               <LuLock className="w-4 h-4" />
               <AlertTitle>
                 <Trans>You can only see this key once. Store it safely.</Trans>
