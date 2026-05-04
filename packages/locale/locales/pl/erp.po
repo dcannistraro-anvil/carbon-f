@@ -764,7 +764,7 @@ msgstr "Klucz API"
 
 #: apps/erp/app/modules/settings/ui/ApiKeys/ApiKeysTable.tsx:215
 #: apps/erp/app/modules/settings/ui/useSettingsSubmodules.tsx:124
-#: apps/erp/app/routes/x+/settings+/api-keys.tsx:13
+#: apps/erp/app/routes/x+/settings+/api-keys.tsx:15
 msgid "API Keys"
 msgstr "Klucze API"
 
@@ -985,7 +985,7 @@ msgid "Are you sure you want to delete the account: {0} ({1})? This cannot be un
 msgstr "Czy na pewno chcesz usunąć konto: {0} ({1})? Tej operacji nie można cofnąć."
 
 #. placeholder {0}: apiKey.name
-#: apps/erp/app/routes/x+/settings+/api-keys.delete.$id.tsx:56
+#: apps/erp/app/routes/x+/settings+/api-keys.delete.$id.tsx:64
 msgid "Are you sure you want to delete the API key: {0}? This cannot be undone."
 msgstr "Czy na pewno chcesz usunąć klucz API: {0}? Tej czynności nie można cofnąć."
 
@@ -1181,7 +1181,7 @@ msgid "Are you sure you want to delete the view \"{0}\"?"
 msgstr "Czy na pewno chcesz usunąć widok \"{0}\"?"
 
 #. placeholder {0}: webhook.name
-#: apps/erp/app/routes/x+/settings+/webhooks.delete.$id.tsx:76
+#: apps/erp/app/routes/x+/settings+/webhooks.delete.$id.tsx:84
 msgid "Are you sure you want to delete the webhook: {0}? This cannot be undone."
 msgstr "Czy na pewno chcesz usunąć webhook: {0}? Tej czynności nie można cofnąć."
 
@@ -14761,7 +14761,7 @@ msgstr "Adres URL webhooka"
 
 #: apps/erp/app/modules/settings/ui/useSettingsSubmodules.tsx:160
 #: apps/erp/app/modules/settings/ui/Webhooks/WebhooksTable.tsx:227
-#: apps/erp/app/routes/x+/settings+/webhooks.tsx:14
+#: apps/erp/app/routes/x+/settings+/webhooks.tsx:16
 msgid "Webhooks"
 msgstr "Webhooks"
 
