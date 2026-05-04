@@ -764,7 +764,7 @@ msgstr "API 密钥"
 
 #: apps/erp/app/modules/settings/ui/ApiKeys/ApiKeysTable.tsx:215
 #: apps/erp/app/modules/settings/ui/useSettingsSubmodules.tsx:124
-#: apps/erp/app/routes/x+/settings+/api-keys.tsx:13
+#: apps/erp/app/routes/x+/settings+/api-keys.tsx:15
 msgid "API Keys"
 msgstr "API 密钥"
 
@@ -985,7 +985,7 @@ msgid "Are you sure you want to delete the account: {0} ({1})? This cannot be un
 msgstr "您确定要删除账户：{0} ({1})？此操作无法撤销。"
 
 #. placeholder {0}: apiKey.name
-#: apps/erp/app/routes/x+/settings+/api-keys.delete.$id.tsx:56
+#: apps/erp/app/routes/x+/settings+/api-keys.delete.$id.tsx:64
 msgid "Are you sure you want to delete the API key: {0}? This cannot be undone."
 msgstr "您确定要删除 API 密钥：{0}？此操作无法撤销。"
 
@@ -1181,7 +1181,7 @@ msgid "Are you sure you want to delete the view \"{0}\"?"
 msgstr "你确定要删除视图\"{0}\"吗？"
 
 #. placeholder {0}: webhook.name
-#: apps/erp/app/routes/x+/settings+/webhooks.delete.$id.tsx:76
+#: apps/erp/app/routes/x+/settings+/webhooks.delete.$id.tsx:84
 msgid "Are you sure you want to delete the webhook: {0}? This cannot be undone."
 msgstr "您确定要删除webhook: {0}吗？此操作无法撤销。"
 
@@ -14761,7 +14761,7 @@ msgstr "Webhook URL"
 
 #: apps/erp/app/modules/settings/ui/useSettingsSubmodules.tsx:160
 #: apps/erp/app/modules/settings/ui/Webhooks/WebhooksTable.tsx:227
-#: apps/erp/app/routes/x+/settings+/webhooks.tsx:14
+#: apps/erp/app/routes/x+/settings+/webhooks.tsx:16
 msgid "Webhooks"
 msgstr "Webhooks"
 
