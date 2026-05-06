@@ -81,10 +81,16 @@ const SEARCH_ENTITY_CONFIGS: Record<string, SearchEntityConfig> = {
         .select("name")
         .eq("id", record.customerStatusId)
         .single();
+      const { data: tax } = await (client as any)
+        .from("customerTax")
+        .select("taxId")
+        .eq("customerId", record.id)
+        .single();
       return {
         ...record,
         customerTypeName: custType?.name,
-        customerStatusName: custStatus?.name
+        customerStatusName: custStatus?.name,
+        taxId: tax?.taxId
       };
     }
   },
@@ -100,9 +106,15 @@ const SEARCH_ENTITY_CONFIGS: Record<string, SearchEntityConfig> = {
         .select("name")
         .eq("id", record.supplierTypeId)
         .single();
+      const { data: tax } = await (client as any)
+        .from("supplierTax")
+        .select("taxId")
+        .eq("supplierId", record.id)
+        .single();
       return {
         ...record,
-        supplierTypeName: suppType?.name
+        supplierTypeName: suppType?.name,
+        taxId: tax?.taxId
       };
     }
   },

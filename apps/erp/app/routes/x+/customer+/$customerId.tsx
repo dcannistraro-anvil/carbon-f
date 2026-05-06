@@ -9,7 +9,8 @@ import { usePermissions } from "~/hooks";
 import {
   getCustomer,
   getCustomerContacts,
-  getCustomerLocations
+  getCustomerLocations,
+  getCustomerTax
 } from "~/modules/sales";
 import { CustomerHeader, CustomerSidebar } from "~/modules/sales/ui/Customer";
 import { getTagsList } from "~/modules/shared";
@@ -29,11 +30,12 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   const { customerId } = params;
   if (!customerId) throw new Error("Could not find customerId");
 
-  const [customer, contacts, locations, tags] = await Promise.all([
+  const [customer, contacts, locations, tags, customerTax] = await Promise.all([
     getCustomer(client, customerId),
     getCustomerContacts(client, customerId),
     getCustomerLocations(client, customerId),
-    getTagsList(client, companyId, "customer")
+    getTagsList(client, companyId, "customer"),
+    getCustomerTax(client, customerId)
   ]);
 
   if (customer.error) {
@@ -50,7 +52,8 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     customer: customer.data,
     contacts: contacts.data ?? [],
     locations: locations.data ?? [],
-    tags: tags.data ?? []
+    tags: tags.data ?? [],
+    customerTax: customerTax.data
   };
 }
 

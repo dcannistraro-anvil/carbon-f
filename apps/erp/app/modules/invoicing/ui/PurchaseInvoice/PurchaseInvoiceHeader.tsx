@@ -215,6 +215,21 @@ const PurchaseInvoiceHeader = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 {auditLogTrigger}
+                {isPosted && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      disabled={
+                        !canVoid || !permissions.can("update", "invoicing")
+                      }
+                      destructive
+                      onClick={voidModal.onOpen}
+                    >
+                      <DropdownMenuIcon icon={<LuTicketX />} />
+                      <Trans>Void</Trans>
+                    </DropdownMenuItem>
+                  </>
+                )}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   disabled={
@@ -317,17 +332,6 @@ const PurchaseInvoiceHeader = () => {
             >
               <Trans>Post</Trans>
             </Button>
-
-            {isPosted && (
-              <Button
-                leftIcon={<LuTicketX />}
-                variant="destructive"
-                onClick={voidModal.onOpen}
-                isDisabled={!canVoid || !permissions.can("update", "invoicing")}
-              >
-                <Trans>Void</Trans>
-              </Button>
-            )}
 
             {(() => {
               const isPaymentDisabled =

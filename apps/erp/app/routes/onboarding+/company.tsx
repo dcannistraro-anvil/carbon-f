@@ -104,7 +104,7 @@ export async function action({ request }: ActionFunctionArgs) {
   } else {
     if (!companyId) {
       const [companyInsert] = await Promise.all([
-        insertCompany(serviceRole, d, userId)
+        insertCompany(serviceRole, d)
       ]);
       if (companyInsert.error) {
         console.error(companyInsert.error);
@@ -170,7 +170,17 @@ export async function action({ request }: ActionFunctionArgs) {
     }
   }
 
-  const sessionCookie = await updateCompanySession(request, companyId!);
+  const { data: companyRecord } = await serviceRole
+    .from("company")
+    .select("companyGroupId")
+    .eq("id", companyId!)
+    .single();
+
+  const sessionCookie = await updateCompanySession(
+    request,
+    companyId!,
+    companyRecord?.companyGroupId ?? ""
+  );
   const companyIdCookie = setCompanyId(companyId!);
 
   throw redirect(next, {

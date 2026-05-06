@@ -10,10 +10,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  HStack
+  HStack,
+  ScrollArea
 } from "@carbon/react";
 import { useMode } from "@carbon/remix";
 import { Trans, useLingui } from "@lingui/react/macro";
+import { useMemo } from "react";
 import { BsFillHexagonFill } from "react-icons/bs";
 import { LuChevronsUpDown, LuHouse } from "react-icons/lu";
 import { Form, Link } from "react-router";
@@ -34,6 +36,47 @@ const CompanySwitcher = () => {
   );
 
   const canSwitchCompany = hasMultipleCompanies;
+
+  const companyGroups = useMemo(() => {
+    if (!routeData?.companies) return [];
+
+    const groups = new Map<string, { name: string; companies: Company[] }>();
+
+    for (const c of routeData.companies) {
+      const groupName = c.companyGroupName ?? t`Companies`;
+      const existing = groups.get(groupName);
+      if (existing) {
+        existing.companies.push(c);
+      } else {
+        groups.set(groupName, { name: groupName, companies: [c] });
+      }
+    }
+
+    // If a group has only one company, move it to "Companies"
+    const result = new Map<string, { name: string; companies: Company[] }>();
+    for (const [key, group] of groups) {
+      if (group.companies.length === 1 && key !== "Companies") {
+        const existing = result.get("Companies");
+        if (existing) {
+          existing.companies.push(...group.companies);
+        } else {
+          result.set("Companies", {
+            name: "Companies",
+            companies: [...group.companies]
+          });
+        }
+      } else {
+        const existing = result.get(key);
+        if (existing) {
+          existing.companies.push(...group.companies);
+        } else {
+          result.set(key, group);
+        }
+      }
+    }
+
+    return Array.from(result.values());
+  }, [routeData?.companies]);
 
   if (!canSwitchCompany) {
     // Just show the company logo without dropdown
@@ -91,42 +134,47 @@ const CompanySwitcher = () => {
             <Trans>Dashboard</Trans>
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuLabel>{t`Companies`}</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          {routeData?.companies.map((c) => {
-            const logo = mode === "dark" ? c.logoDarkIcon : c.logoLightIcon;
-            const isCurrent = c.companyId === user.company.id;
+        <ScrollArea className="max-h-[300px]">
+          {companyGroups.map((group, index) => (
+            <DropdownMenuGroup key={group.name}>
+              {index > 0 && <DropdownMenuSeparator />}
+              <DropdownMenuLabel>{group.name}</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {group.companies.map((c) => {
+                const logo = mode === "dark" ? c.logoDarkIcon : c.logoLightIcon;
+                const isCurrent = c.companyId === user.company.id;
 
-            return (
-              <Form
-                key={c.companyId}
-                method="post"
-                action={path.to.companySwitch(c.companyId!)}
-              >
-                <DropdownMenuItem
-                  className="flex items-center justify-between w-full"
-                  asChild
-                  disabled={isCurrent}
-                >
-                  <button type="submit">
-                    <HStack>
-                      <Avatar
-                        size="xs"
-                        name={c.name ?? undefined}
-                        src={logo ?? undefined}
-                      />
-                      <span>{c.name}</span>
-                    </HStack>
-                    <Badge variant="secondary" className="ml-2">
-                      {c.employeeType}
-                    </Badge>
-                  </button>
-                </DropdownMenuItem>
-              </Form>
-            );
-          })}
-        </DropdownMenuGroup>
+                return (
+                  <Form
+                    key={c.companyId}
+                    method="post"
+                    action={path.to.companySwitch(c.companyId!)}
+                  >
+                    <DropdownMenuItem
+                      className="flex items-center justify-between w-full"
+                      asChild
+                      disabled={isCurrent}
+                    >
+                      <button type="submit">
+                        <HStack>
+                          <Avatar
+                            size="xs"
+                            name={c.name ?? undefined}
+                            src={logo ?? undefined}
+                          />
+                          <span>{c.name}</span>
+                        </HStack>
+                        <Badge variant="secondary" className="ml-2">
+                          {c.employeeType}
+                        </Badge>
+                      </button>
+                    </DropdownMenuItem>
+                  </Form>
+                );
+              })}
+            </DropdownMenuGroup>
+          ))}
+        </ScrollArea>
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -104,10 +104,11 @@ export default function WarehouseTransferDetailsRoute() {
   };
 
   return (
-    <div className="flex flex-col gap-2 pb-16 w-full">
+    <>
       <WarehouseTransferForm
         key={initialValues.id}
         initialValues={initialValues}
+        warehouseTransfer={routeData.warehouseTransfer}
       />
 
       <WarehouseTransferLines
@@ -115,6 +116,6 @@ export default function WarehouseTransferDetailsRoute() {
         transferId={transferId}
         warehouseTransfer={routeData.warehouseTransfer}
       />
-    </div>
+    </>
   );
 }

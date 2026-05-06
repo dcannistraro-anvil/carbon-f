@@ -104,25 +104,9 @@ const categoryGroups: CategoryGroup[] = [
         badgeType: "Asset"
       },
       {
-        name: "inventoryInterimAccrualAccount",
-        label: "Inventory Interim Accrual",
-        description:
-          "Interim accrual for inventory received but not yet invoiced",
-        accountType: "balance",
-        badgeType: "Asset"
-      },
-      {
         name: "workInProgressAccount",
         label: "Work in Progress (WIP)",
         description: "Account for production orders not yet completed",
-        accountType: "balance",
-        badgeType: "Asset"
-      },
-      {
-        name: "inventoryInvoicedNotReceivedAccount",
-        label: "Inventory Invoiced Not Received",
-        description:
-          "Accrual for inventory invoiced but not yet physically received",
         accountType: "balance",
         badgeType: "Asset"
       },
@@ -187,9 +171,10 @@ const categoryGroups: CategoryGroup[] = [
         badgeType: "Liability"
       },
       {
-        name: "inventoryReceivedNotInvoicedAccount",
-        label: "Inventory Received Not Invoiced",
-        description: "Accrual for inventory received but not yet invoiced",
+        name: "goodsReceivedNotInvoicedAccount",
+        label: "GR/IR Clearing",
+        description:
+          "Clearing account for goods received / invoice received matching",
         accountType: "balance",
         badgeType: "Liability"
       }
@@ -235,6 +220,14 @@ const categoryGroups: CategoryGroup[] = [
         description: "Equity account for accumulated profits or losses",
         accountType: "balance",
         badgeType: "Equity"
+      },
+      {
+        name: "currencyTranslationAccount",
+        label: "Currency Translation",
+        description:
+          "Equity account for currency translation adjustments (CTA)",
+        accountType: "balance",
+        badgeType: "Equity"
       }
     ]
   },
@@ -274,52 +267,71 @@ const categoryGroups: CategoryGroup[] = [
         badgeType: "Expense"
       },
       {
-        name: "purchaseAccount",
-        label: "Purchases",
+        name: "indirectCostAccount",
+        label: "Indirect Materials & Services",
         description:
-          "Account for recording raw material and inventory purchases",
+          "Expense account for non-inventory purchases (services, supplies)",
         accountType: "income",
         badgeType: "Expense"
       },
       {
-        name: "directCostAppliedAccount",
-        label: "Direct Cost Applied",
-        description: "Account for direct costs applied to production orders",
-        accountType: "income",
-        badgeType: "Expense"
-      },
-      {
-        name: "overheadCostAppliedAccount",
-        label: "Overhead Cost Applied",
-        description: "Account for overhead costs applied to production orders",
+        name: "laborAbsorptionAccount",
+        label: "Labor & Machine Absorption",
+        description:
+          "Credit account when labor/machine time is absorbed into WIP",
         accountType: "income",
         badgeType: "Expense"
       },
       {
         name: "purchaseVarianceAccount",
-        label: "Purchase Variance",
-        description: "Variance between expected and actual purchase costs",
+        label: "Purchase Price Variance",
+        description: "Variance between actual purchase price and standard cost",
         accountType: "income",
         badgeType: "Expense"
       },
       {
         name: "inventoryAdjustmentVarianceAccount",
-        label: "Inventory Adjustment Variance",
+        label: "Inventory Adjustment",
         description: "Variance from physical inventory count adjustments",
         accountType: "income",
         badgeType: "Expense"
       },
       {
         name: "materialVarianceAccount",
-        label: "Material Variance",
-        description: "Variance between standard and actual material costs",
+        label: "Material Usage Variance",
+        description:
+          "Variance between actual and standard BOM component consumption",
         accountType: "income",
         badgeType: "Expense"
       },
       {
-        name: "capacityVarianceAccount",
-        label: "Capacity Variance",
-        description: "Variance between standard and actual capacity costs",
+        name: "laborAndMachineVarianceAccount",
+        label: "Labor & Machine Variance",
+        description:
+          "Variance between actual and standard routing hours and rates",
+        accountType: "income",
+        badgeType: "Expense"
+      },
+      {
+        name: "overheadVarianceAccount",
+        label: "Overhead Variance",
+        description:
+          "Variance between applied and actual manufacturing overhead",
+        accountType: "income",
+        badgeType: "Expense"
+      },
+      {
+        name: "lotSizeVarianceAccount",
+        label: "Lot Size Variance",
+        description:
+          "Fixed cost amortization variance when batch size differs from standard",
+        accountType: "income",
+        badgeType: "Expense"
+      },
+      {
+        name: "subcontractingVarianceAccount",
+        label: "Subcontracting Variance",
+        description: "Variance in outside processing costs",
         accountType: "income",
         badgeType: "Expense"
       }
@@ -330,13 +342,6 @@ const categoryGroups: CategoryGroup[] = [
     title: "Operating Expenses",
     description: "Default accounts for business expenses",
     fields: [
-      {
-        name: "overheadAccount",
-        label: "Overhead",
-        description: "General overhead expense account for indirect costs",
-        accountType: "income",
-        badgeType: "Expense"
-      },
       {
         name: "maintenanceAccount",
         label: "Maintenance Expense",
@@ -420,7 +425,7 @@ const AccountDefaultsForm = ({
   > = useMemo(
     () => ({
       income: incomeStatementAccounts.map((c) => ({
-        value: c.number,
+        value: c.id,
         label: (
           <div className="flex items-center gap-2">
             <span className="text-xs font-mono text-muted-foreground">
@@ -431,7 +436,7 @@ const AccountDefaultsForm = ({
         )
       })),
       balance: balanceSheetAccounts.map((c) => ({
-        value: c.number,
+        value: c.id,
         label: (
           <div className="flex items-center gap-2">
             <span className="text-xs font-mono text-muted-foreground">

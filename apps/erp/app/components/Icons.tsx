@@ -15,18 +15,25 @@ import type { ReactNode } from "react";
 import { AiOutlinePartition } from "react-icons/ai";
 import { FaCodePullRequest } from "react-icons/fa6";
 import {
+  LuArrowLeftRight,
   LuAtom,
   LuBarcode,
+  LuBookOpen,
   LuBox,
+  LuBuilding,
   LuCircle,
   LuCircleCheck,
   LuCircleDashed,
+  LuCircleDollarSign,
   LuCircleX,
   LuClipboardCheck,
   LuClock,
   LuClock3,
+  LuContainer,
   LuExternalLink,
   LuEye,
+  LuFactory,
+  LuFileText,
   LuFlaskConical,
   LuGroup,
   LuHammer,
@@ -34,15 +41,21 @@ import {
   LuHeadphones,
   LuImage,
   LuList,
+  LuMapPin,
+  LuPackage,
   LuPizza,
   LuQrCode,
+  LuReceipt,
+  LuRotateCcw,
   LuShoppingCart,
   LuSquare,
+  LuTags,
   LuTarget,
   LuTimer,
   LuToggleLeft,
   LuTruck,
-  LuUser
+  LuUser,
+  LuUsers
 } from "react-icons/lu";
 import { RxCodesandboxLogo } from "react-icons/rx";
 import { TbTargetOff } from "react-icons/tb";
@@ -50,6 +63,10 @@ import { Link } from "react-router";
 import { AlmostDoneIcon } from "~/assets/icons/AlmostDoneIcon";
 import { InProgressStatusIcon } from "~/assets/icons/InProgressStatusIcon";
 import { TodoStatusIcon } from "~/assets/icons/TodoStatusIcon";
+import type {
+  dimensionEntityTypes,
+  journalEntrySourceTypes
+} from "~/modules/accounting";
 import type { JobOperation } from "~/modules/production/types";
 import type { nonConformanceTaskStatus } from "~/modules/quality";
 import type { MethodType } from "~/modules/shared";
@@ -533,6 +550,74 @@ export const JiraIcon = (props: React.SVGProps<SVGSVGElement>) => {
       />
     </svg>
   );
+};
+
+export const JournalEntrySourceTypeIcon = ({
+  sourceType,
+  className
+}: {
+  sourceType: (typeof journalEntrySourceTypes)[number];
+  className?: string;
+}) => {
+  switch (sourceType) {
+    case "Manual":
+      return <LuBookOpen className={className} />;
+    case "Purchase Receipt":
+      return <LuReceipt className={className} />;
+    case "Purchase Invoice":
+      return <LuFileText className={className} />;
+    case "Purchase Return":
+      return <LuRotateCcw className={className} />;
+    case "Sales Invoice":
+      return <LuFileText className={className} />;
+    case "Sales Shipment":
+      return <LuTruck className={className} />;
+    case "Sales Return":
+      return <LuRotateCcw className={className} />;
+    case "Transfer Receipt":
+      return <LuArrowLeftRight className={className} />;
+    case "Inventory Adjustment":
+      return <LuPackage className={className} />;
+    case "Production Order":
+      return <LuFactory className={className} />;
+    case "Job Consumption":
+      return <LuHammer className={className} />;
+    case "Job Receipt":
+      return <LuClipboardCheck className={className} />;
+    case "Production Event":
+      return <LuHardHat className={className} />;
+    case "Job Close":
+      return <LuCircleCheck className={className} />;
+  }
+
+  return <LuSquare className={cn("text-muted-foreground", className)} />;
+};
+
+export const DimensionEntityTypeIcon = ({
+  entityType,
+  className
+}: {
+  entityType: (typeof dimensionEntityTypes)[number];
+  className?: string;
+}) => {
+  switch (entityType) {
+    case "Custom":
+      return <LuTags className={className} />;
+    case "Location":
+      return <LuMapPin className={className} />;
+    case "ItemPostingGroup":
+      return <LuGroup className={className} />;
+    case "SupplierType":
+      return <LuContainer className={className} />;
+    case "CustomerType":
+      return <LuUsers className={className} />;
+    case "Department":
+      return <LuBuilding className={className} />;
+    case "Employee":
+      return <LuUser className={className} />;
+    case "CostCenter":
+      return <LuCircleDollarSign className={className} />;
+  }
 };
 
 export const JiraIssueStatusBadge = (props: {

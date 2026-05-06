@@ -34,6 +34,7 @@ import type {
   supplierQuoteStatusType,
   supplierQuoteValidator,
   supplierShippingValidator,
+  supplierTaxValidator,
   supplierTypeValidator,
   supplierValidator
 } from "./purchasing.models";
@@ -1251,6 +1252,31 @@ export async function updateSupplierShipping(
     .from("supplierShipping")
     .update(sanitize(supplierShipping))
     .eq("supplierId", supplierShipping.supplierId);
+}
+
+export async function getSupplierTax(
+  client: SupabaseClient<Database>,
+  supplierId: string
+) {
+  return client
+    .from("supplierTax")
+    .select("*")
+    .eq("supplierId", supplierId)
+    .maybeSingle();
+}
+
+export async function updateSupplierTax(
+  client: SupabaseClient<Database>,
+  supplierTax: z.infer<typeof supplierTaxValidator> & {
+    companyId: string;
+    updatedBy: string;
+    taxExemptionCertificatePath?: string | null;
+  }
+) {
+  return client
+    .from("supplierTax")
+    .update(sanitize(supplierTax))
+    .eq("supplierId", supplierTax.supplierId);
 }
 
 export async function upsertPurchaseOrder(

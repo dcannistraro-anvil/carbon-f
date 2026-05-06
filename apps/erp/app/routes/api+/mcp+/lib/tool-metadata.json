@@ -1,6 +1,6 @@
 {
-  "generated": "2026-05-06T10:58:51.980Z",
-  "totalTools": 1015,
+  "generated": "2026-05-06T11:41:23.878Z",
+  "totalTools": 1075,
   "modules": 15,
   "tools": [
     {
@@ -156,6 +156,52 @@
       ]
     },
     {
+      "name": "accounting_getTrialBalance",
+      "module": "accounting",
+      "classification": "READ",
+      "description": "get trial balance",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyGroupId",
+        "companyId",
+        "args"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_getFinancialStatementBalances",
+      "module": "accounting",
+      "classification": "READ",
+      "description": "get financial statement balances",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyGroupId",
+        "companyId",
+        "args"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_getCompaniesInGroup",
+      "module": "accounting",
+      "classification": "READ",
+      "description": "get companies in group",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyGroupId"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
       "name": "accounting_deleteAccount",
       "module": "accounting",
       "classification": "DESTRUCTIVE",
@@ -175,10 +221,7 @@
       "classification": "DESTRUCTIVE",
       "description": "delete account category",
       "paramCount": 1,
-      "serviceParams": [
-        "client",
-        "accountCategoryId"
-      ],
+      "serviceParams": [],
       "injectAuth": [
         "companyId"
       ]
@@ -189,10 +232,7 @@
       "classification": "DESTRUCTIVE",
       "description": "delete account subcategory",
       "paramCount": 1,
-      "serviceParams": [
-        "client",
-        "accountSubcategoryId"
-      ],
+      "serviceParams": [],
       "injectAuth": [
         "companyId"
       ]
@@ -233,7 +273,7 @@
       "paramCount": 4,
       "serviceParams": [
         "client",
-        "companyId",
+        "companyGroupId",
         "args"
       ],
       "injectAuth": [
@@ -248,7 +288,7 @@
       "paramCount": 4,
       "serviceParams": [
         "client",
-        "companyId",
+        "companyGroupId",
         "args"
       ],
       "injectAuth": [
@@ -256,15 +296,14 @@
       ]
     },
     {
-      "name": "accounting_getAccountCategories",
+      "name": "accounting_getGroupAccounts",
       "module": "accounting",
       "classification": "READ",
       "description": "get account categories",
       "paramCount": 4,
       "serviceParams": [
         "client",
-        "companyId",
-        "args"
+        "companyGroupId"
       ],
       "injectAuth": [
         "companyId"
@@ -276,10 +315,7 @@
       "classification": "READ",
       "description": "get account categories list",
       "paramCount": 0,
-      "serviceParams": [
-        "client",
-        "companyId"
-      ],
+      "serviceParams": [],
       "injectAuth": [
         "companyId"
       ]
@@ -290,11 +326,7 @@
       "classification": "READ",
       "description": "get account category",
       "paramCount": 1,
-      "serviceParams": [
-        "client",
-        "accountCategoryId",
-        "companyId"
-      ],
+      "serviceParams": [],
       "injectAuth": [
         "companyId"
       ]
@@ -305,11 +337,7 @@
       "classification": "READ",
       "description": "get account subcategories",
       "paramCount": 4,
-      "serviceParams": [
-        "client",
-        "companyId",
-        "args"
-      ],
+      "serviceParams": [],
       "injectAuth": [
         "companyId"
       ]
@@ -320,11 +348,7 @@
       "classification": "READ",
       "description": "get account subcategories by category",
       "paramCount": 1,
-      "serviceParams": [
-        "client",
-        "accountCategoryId",
-        "companyId"
-      ],
+      "serviceParams": [],
       "injectAuth": [
         "companyId"
       ]
@@ -335,10 +359,7 @@
       "classification": "READ",
       "description": "get account subcategory",
       "paramCount": 1,
-      "serviceParams": [
-        "client",
-        "accountSubcategoryId"
-      ],
+      "serviceParams": [],
       "injectAuth": [
         "companyId"
       ]
@@ -362,10 +383,10 @@
       "module": "accounting",
       "classification": "READ",
       "description": "get chart of accounts",
-      "paramCount": 7,
+      "paramCount": 4,
       "serviceParams": [
         "client",
-        "companyId",
+        "companyGroupId",
         "args"
       ],
       "injectAuth": [
@@ -394,7 +415,7 @@
       "paramCount": 1,
       "serviceParams": [
         "client",
-        "companyId",
+        "companyGroupId",
         "currencyCode"
       ],
       "injectAuth": [
@@ -409,7 +430,7 @@
       "paramCount": 4,
       "serviceParams": [
         "client",
-        "companyId",
+        "companyGroupId",
         "args"
       ],
       "injectAuth": [
@@ -478,11 +499,7 @@
       "classification": "READ",
       "description": "get inventory posting group",
       "paramCount": 3,
-      "serviceParams": [
-        "client",
-        "companyId",
-        "args"
-      ],
+      "serviceParams": [],
       "injectAuth": [
         "companyId"
       ]
@@ -493,11 +510,7 @@
       "classification": "READ",
       "description": "get inventory posting groups",
       "paramCount": 3,
-      "serviceParams": [
-        "client",
-        "companyId",
-        "args"
-      ],
+      "serviceParams": [],
       "injectAuth": [
         "companyId"
       ]
@@ -551,11 +564,7 @@
       "classification": "READ",
       "description": "get purchasing posting group",
       "paramCount": 3,
-      "serviceParams": [
-        "client",
-        "companyId",
-        "args"
-      ],
+      "serviceParams": [],
       "injectAuth": [
         "companyId"
       ]
@@ -566,11 +575,7 @@
       "classification": "READ",
       "description": "get purchasing posting groups",
       "paramCount": 3,
-      "serviceParams": [
-        "client",
-        "companyId",
-        "args"
-      ],
+      "serviceParams": [],
       "injectAuth": [
         "companyId"
       ]
@@ -581,10 +586,7 @@
       "classification": "READ",
       "description": "get purchasing sales group",
       "paramCount": 3,
-      "serviceParams": [
-        "client",
-        "args"
-      ],
+      "serviceParams": [],
       "injectAuth": [
         "companyId"
       ]
@@ -595,11 +597,7 @@
       "classification": "READ",
       "description": "get sales posting groups",
       "paramCount": 3,
-      "serviceParams": [
-        "client",
-        "companyId",
-        "args"
-      ],
+      "serviceParams": [],
       "injectAuth": [
         "companyId"
       ]
@@ -671,10 +669,7 @@
       "classification": "WRITE",
       "description": "upsert account category",
       "paramCount": 0,
-      "serviceParams": [
-        "client",
-        "accountCategory"
-      ],
+      "serviceParams": [],
       "injectAuth": [
         "companyId",
         "createdBy",
@@ -687,10 +682,7 @@
       "classification": "WRITE",
       "description": "upsert account subcategory",
       "paramCount": 0,
-      "serviceParams": [
-        "client",
-        "accountSubcategory"
-      ],
+      "serviceParams": [],
       "injectAuth": [
         "companyId",
         "createdBy",
@@ -727,6 +719,474 @@
         "companyId",
         "createdBy",
         "updatedBy"
+      ]
+    },
+    {
+      "name": "accounting_deleteCostCenter",
+      "module": "accounting",
+      "classification": "DESTRUCTIVE",
+      "description": "delete cost center",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "costCenterId"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_getCostCenter",
+      "module": "accounting",
+      "classification": "READ",
+      "description": "get cost center",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "costCenterId"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_getCostCenters",
+      "module": "accounting",
+      "classification": "READ",
+      "description": "get cost centers",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyId",
+        "args"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_getCostCentersList",
+      "module": "accounting",
+      "classification": "READ",
+      "description": "get cost centers list",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_getCostCentersTree",
+      "module": "accounting",
+      "classification": "READ",
+      "description": "get cost centers tree",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_upsertCostCenter",
+      "module": "accounting",
+      "classification": "WRITE",
+      "description": "upsert cost center",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "costCenter"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
+      ]
+    },
+    {
+      "name": "accounting_getDimensions",
+      "module": "accounting",
+      "classification": "READ",
+      "description": "get dimensions",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyGroupId",
+        "args"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_getDimension",
+      "module": "accounting",
+      "classification": "READ",
+      "description": "get dimension",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "dimensionId"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_upsertDimension",
+      "module": "accounting",
+      "classification": "WRITE",
+      "description": "upsert dimension",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "dimension",
+        "dimensionValues"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
+      ]
+    },
+    {
+      "name": "accounting_deleteDimension",
+      "module": "accounting",
+      "classification": "DESTRUCTIVE",
+      "description": "delete dimension",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "dimensionId"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_getActiveDimensionsWithValues",
+      "module": "accounting",
+      "classification": "READ",
+      "description": "get active dimensions with values",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyGroupId",
+        "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_getJournalLineDimensions",
+      "module": "accounting",
+      "classification": "READ",
+      "description": "get journal line dimensions",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "journalLineIds"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_saveJournalLineDimensions",
+      "module": "accounting",
+      "classification": "WRITE",
+      "description": "save journal line dimensions",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "journalLineId",
+        "companyId",
+        "dimensions"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_translateCompanyBalances",
+      "module": "accounting",
+      "classification": "WRITE",
+      "description": "translate company balances",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyGroupId",
+        "companyId",
+        "targetCurrency",
+        "periodEnd",
+        "periodStart"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_getConsolidatedBalances",
+      "module": "accounting",
+      "classification": "READ",
+      "description": "get consolidated balances",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyGroupId",
+        "companyIds",
+        "targetCurrency",
+        "periodEnd",
+        "periodStart"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_getIntercompanyTransactions",
+      "module": "accounting",
+      "classification": "READ",
+      "description": "get intercompany transactions",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyGroupId",
+        "args"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_createIntercompanyTransaction",
+      "module": "accounting",
+      "classification": "WRITE",
+      "description": "create intercompany transaction",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "input"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
+      ]
+    },
+    {
+      "name": "accounting_runIntercompanyMatching",
+      "module": "accounting",
+      "classification": "WRITE",
+      "description": "run intercompany matching",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyGroupId"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_generateEliminations",
+      "module": "accounting",
+      "classification": "WRITE",
+      "description": "generate eliminations",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyGroupId",
+        "userId"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
+      ]
+    },
+    {
+      "name": "accounting_getIntercompanyBalance",
+      "module": "accounting",
+      "classification": "READ",
+      "description": "get intercompany balance",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyGroupId"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_getExchangeRateHistory",
+      "module": "accounting",
+      "classification": "READ",
+      "description": "get exchange rate history",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyGroupId",
+        "currencyCode"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_getJournalEntries",
+      "module": "accounting",
+      "classification": "READ",
+      "description": "get journal entries",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyId",
+        "args"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_getJournalEntry",
+      "module": "accounting",
+      "classification": "READ",
+      "description": "get journal entry",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "id"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_createJournalEntry",
+      "module": "accounting",
+      "classification": "WRITE",
+      "description": "create journal entry",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "data"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
+      ]
+    },
+    {
+      "name": "accounting_updateJournalEntry",
+      "module": "accounting",
+      "classification": "WRITE",
+      "description": "update journal entry",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "id",
+        "data"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
+      ]
+    },
+    {
+      "name": "accounting_deleteJournalEntry",
+      "module": "accounting",
+      "classification": "DESTRUCTIVE",
+      "description": "delete journal entry",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "id"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_upsertJournalEntryLine",
+      "module": "accounting",
+      "classification": "WRITE",
+      "description": "upsert journal entry line",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "data"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
+      ]
+    },
+    {
+      "name": "accounting_deleteJournalEntryLine",
+      "module": "accounting",
+      "classification": "DESTRUCTIVE",
+      "description": "delete journal entry line",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "id"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_saveJournalEntryWithLines",
+      "module": "accounting",
+      "classification": "WRITE",
+      "description": "save journal entry with lines",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "data"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_postJournalEntry",
+      "module": "accounting",
+      "classification": "WRITE",
+      "description": "post journal entry",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "id",
+        "userId"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "accounting_reverseJournalEntry",
+      "module": "accounting",
+      "classification": "WRITE",
+      "description": "reverse journal entry",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "id",
+        "data"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4637,6 +5097,20 @@
       ]
     },
     {
+      "name": "people_getDepartmentsTree",
+      "module": "people",
+      "classification": "READ",
+      "description": "get departments tree",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
       "name": "people_getEmployeeJob",
       "module": "people",
       "classification": "READ",
@@ -8034,6 +8508,35 @@
       "serviceParams": [
         "client",
         "supplierShipping"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
+      ]
+    },
+    {
+      "name": "purchasing_getSupplierTax",
+      "module": "purchasing",
+      "classification": "READ",
+      "description": "get supplier tax",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "supplierId"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "purchasing_updateSupplierTax",
+      "module": "purchasing",
+      "classification": "WRITE",
+      "description": "update supplier tax",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "supplierTax"
       ],
       "injectAuth": [
         "companyId",
@@ -12448,6 +12951,35 @@
       ]
     },
     {
+      "name": "sales_getCustomerTax",
+      "module": "sales",
+      "classification": "READ",
+      "description": "get customer tax",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "customerId"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "sales_updateCustomerTax",
+      "module": "sales",
+      "classification": "WRITE",
+      "description": "update customer tax",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "customerTax"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
+      ]
+    },
+    {
       "name": "sales_upsertCustomerStatus",
       "module": "sales",
       "classification": "WRITE",
@@ -13112,6 +13644,20 @@
       ]
     },
     {
+      "name": "settings_deactivateWebhooks",
+      "module": "settings",
+      "classification": "WRITE",
+      "description": "deactivate webhooks",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
       "name": "settings_deleteApiKey",
       "module": "settings",
       "classification": "DESTRUCTIVE",
@@ -13120,6 +13666,20 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "settings_deleteSubsidiary",
+      "module": "settings",
+      "classification": "DESTRUCTIVE",
+      "description": "delete subsidiary",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyId"
       ],
       "injectAuth": [
         "companyId"
@@ -13187,6 +13747,20 @@
       "module": "settings",
       "classification": "READ",
       "description": "get company",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "settings_getCompanyIntegrations",
+      "module": "settings",
+      "classification": "READ",
+      "description": "get company integrations",
       "paramCount": 0,
       "serviceParams": [
         "client",
@@ -13354,6 +13928,21 @@
       ]
     },
     {
+      "name": "settings_getNextSequence",
+      "module": "settings",
+      "classification": "READ",
+      "description": "get next sequence",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "table",
+        "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
       "name": "settings_getPlanById",
       "module": "settings",
       "classification": "READ",
@@ -13441,6 +14030,34 @@
       ]
     },
     {
+      "name": "settings_getSubsidiaries",
+      "module": "settings",
+      "classification": "READ",
+      "description": "get subsidiaries",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyGroupId"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
+      "name": "settings_getSubsidiary",
+      "module": "settings",
+      "classification": "READ",
+      "description": "get subsidiary",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
       "name": "settings_getTerms",
       "module": "settings",
       "classification": "READ",
@@ -13497,6 +14114,19 @@
       ]
     },
     {
+      "name": "settings_getWebhookTables",
+      "module": "settings",
+      "classification": "READ",
+      "description": "get webhook tables",
+      "paramCount": 0,
+      "serviceParams": [
+        "client"
+      ],
+      "injectAuth": [
+        "companyId"
+      ]
+    },
+    {
       "name": "settings_insertCompany",
       "module": "settings",
       "classification": "WRITE",
@@ -13505,11 +14135,59 @@
       "serviceParams": [
         "client",
         "company",
-        "ownerId"
+        "companyGroupId"
       ],
       "injectAuth": [
         "companyId",
         "createdBy",
+        "updatedBy"
+      ]
+    },
+    {
+      "name": "settings_insertSubsidiary",
+      "module": "settings",
+      "classification": "WRITE",
+      "description": "insert subsidiary",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "subsidiary"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
+      ]
+    },
+    {
+      "name": "settings_updateSubsidiary",
+      "module": "settings",
+      "classification": "WRITE",
+      "description": "update subsidiary",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "id",
+        "subsidiary"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
+      ]
+    },
+    {
+      "name": "settings_updateCompany",
+      "module": "settings",
+      "classification": "WRITE",
+      "description": "update company",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyId",
+        "company"
+      ],
+      "injectAuth": [
+        "companyId",
         "updatedBy"
       ]
     },
@@ -13529,7 +14207,23 @@
       ]
     },
     {
-      "name": "settings_updateCompany",
+      "name": "settings_updateDefaultCustomerCc",
+      "module": "settings",
+      "classification": "WRITE",
+      "description": "seed company",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyId",
+        "userId"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
+      ]
+    },
+    {
+      "name": "settings_updateDefaultSupplierCc",
       "module": "settings",
       "classification": "WRITE",
       "description": "update company",
@@ -13537,7 +14231,7 @@
       "serviceParams": [
         "client",
         "companyId",
-        "company"
+        "defaultSupplierCc"
       ],
       "injectAuth": [
         "companyId",
@@ -13611,7 +14305,7 @@
       ]
     },
     {
-      "name": "settings_updateLogoDark",
+      "name": "settings_updateIntegrationMetadata",
       "module": "settings",
       "classification": "WRITE",
       "description": "update logo dark",
@@ -13619,7 +14313,9 @@
       "serviceParams": [
         "client",
         "companyId",
-        "logoDark"
+        "integrationId",
+        "metadata",
+        "updatedBy"
       ],
       "injectAuth": [
         "companyId",
@@ -13696,11 +14392,7 @@
       "classification": "WRITE",
       "description": "update material units setting",
       "paramCount": 1,
-      "serviceParams": [
-        "client",
-        "companyId",
-        "useMetric"
-      ],
+      "serviceParams": [],
       "injectAuth": [
         "companyId",
         "updatedBy"
@@ -13787,7 +14479,7 @@
       ]
     },
     {
-      "name": "settings_updateConsoleSetting",
+      "name": "settings_updateKanbanOutputSetting",
       "module": "settings",
       "classification": "WRITE",
       "description": "update console setting",
@@ -13795,8 +14487,7 @@
       "serviceParams": [
         "client",
         "companyId",
-        "consoleEnabled",
-        "userId"
+        "kanbanOutput"
       ],
       "injectAuth": [
         "companyId",
@@ -13804,7 +14495,7 @@
       ]
     },
     {
-      "name": "settings_updateRfqReadySetting",
+      "name": "settings_updateLogoDark",
       "module": "settings",
       "classification": "WRITE",
       "description": "update rfq ready setting",
@@ -13812,7 +14503,7 @@
       "serviceParams": [
         "client",
         "companyId",
-        "rfqReadyNotificationGroup"
+        "logoDark"
       ],
       "injectAuth": [
         "companyId",
@@ -13820,7 +14511,7 @@
       ]
     },
     {
-      "name": "settings_updateSuggestionNotificationSetting",
+      "name": "settings_updateLogoDarkIcon",
       "module": "settings",
       "classification": "WRITE",
       "description": "update suggestion notification setting",
@@ -13828,7 +14519,39 @@
       "serviceParams": [
         "client",
         "companyId",
-        "suggestionNotificationGroup"
+        "logoDarkIcon"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
+      ]
+    },
+    {
+      "name": "settings_updateLogoLight",
+      "module": "settings",
+      "classification": "WRITE",
+      "description": "update logo light",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyId",
+        "logoLight"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
+      ]
+    },
+    {
+      "name": "settings_updateLogoLightIcon",
+      "module": "settings",
+      "classification": "WRITE",
+      "description": "update logo light icon",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyId",
+        "logoLightIcon"
       ],
       "injectAuth": [
         "companyId",
@@ -13852,7 +14575,7 @@
       ]
     },
     {
-      "name": "settings_updateSupplierQuoteNotificationSetting",
+      "name": "settings_updateMaterialGeneratedIdsSetting",
       "module": "settings",
       "classification": "WRITE",
       "description": "update supplier quote notification setting",
@@ -13860,7 +14583,39 @@
       "serviceParams": [
         "client",
         "companyId",
-        "supplierQuoteNotificationGroup"
+        "materialGeneratedIds"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
+      ]
+    },
+    {
+      "name": "settings_updateMetricSettings",
+      "module": "settings",
+      "classification": "WRITE",
+      "description": "update metric settings",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyId",
+        "useMetric"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
+      ]
+    },
+    {
+      "name": "settings_updateProductLabelSize",
+      "module": "settings",
+      "classification": "WRITE",
+      "description": "update product label size",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyId",
+        "productLabelSize"
       ],
       "injectAuth": [
         "companyId",
@@ -13988,7 +14743,7 @@
       "serviceParams": [
         "client",
         "companyId",
-        "defaultCustomerCc"
+        "userId"
       ],
       "injectAuth": [
         "companyId",
@@ -14005,6 +14760,54 @@
         "client",
         "companyId",
         "quoteLineCategoryMarkups"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
+      ]
+    },
+    {
+      "name": "settings_updatePurchasingPdfThumbnails",
+      "module": "settings",
+      "classification": "WRITE",
+      "description": "update purchasing pdf thumbnails",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyId",
+        "includeThumbnailsOnPurchasingPdfs"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
+      ]
+    },
+    {
+      "name": "settings_updateRfqReadySetting",
+      "module": "settings",
+      "classification": "WRITE",
+      "description": "update rfq ready setting",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyId",
+        "rfqReadyNotificationGroup"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
+      ]
+    },
+    {
+      "name": "settings_updateSalesPdfThumbnails",
+      "module": "settings",
+      "classification": "WRITE",
+      "description": "update sales pdf thumbnails",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyId",
+        "includeThumbnailsOnSalesPdfs"
       ],
       "injectAuth": [
         "companyId",
@@ -14029,7 +14832,7 @@
       ]
     },
     {
-      "name": "settings_updateIntegrationMetadata",
+      "name": "settings_updateSuggestionNotificationSetting",
       "module": "settings",
       "classification": "WRITE",
       "description": "update integration metadata",
@@ -14037,9 +14840,56 @@
       "serviceParams": [
         "client",
         "companyId",
-        "integrationId",
-        "metadata",
+        "suggestionNotificationGroup"
+      ],
+      "injectAuth": [
+        "companyId",
         "updatedBy"
+      ]
+    },
+    {
+      "name": "settings_updateSupplierQuoteNotificationSetting",
+      "module": "settings",
+      "classification": "WRITE",
+      "description": "update supplier quote notification setting",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyId",
+        "supplierQuoteNotificationGroup"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
+      ]
+    },
+    {
+      "name": "settings_upsertApiKey",
+      "module": "settings",
+      "classification": "WRITE",
+      "description": "upsert api key",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "apiKey"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
+      ]
+    },
+    {
+      "name": "settings_updateConsoleSetting",
+      "module": "settings",
+      "classification": "WRITE",
+      "description": "update console setting",
+      "paramCount": 0,
+      "serviceParams": [
+        "client",
+        "companyId",
+        "consoleEnabled",
+        "userId"
       ],
       "injectAuth": [
         "companyId",

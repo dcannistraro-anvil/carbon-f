@@ -29,6 +29,7 @@ import type {
   customerPaymentValidator,
   customerShippingValidator,
   customerStatusValidator,
+  customerTaxValidator,
   customerTypeValidator,
   customerValidator,
   getMethodValidator,
@@ -647,6 +648,17 @@ export async function getCustomerShipping(
 ) {
   return client
     .from("customerShipping")
+    .select("*")
+    .eq("customerId", customerId)
+    .single();
+}
+
+export async function getCustomerTax(
+  client: SupabaseClient<Database>,
+  customerId: string
+) {
+  return client
+    .from("customerTax")
     .select("*")
     .eq("customerId", customerId)
     .single();
@@ -2992,6 +3004,19 @@ export async function updateCustomerShipping(
     .eq("customerId", customerShipping.customerId);
 }
 
+export async function updateCustomerTax(
+  client: SupabaseClient<Database>,
+  customerTax: z.infer<typeof customerTaxValidator> & {
+    updatedBy: string;
+    taxExemptionCertificatePath?: string | null;
+  }
+) {
+  return client
+    .from("customerTax")
+    .update(sanitize(customerTax))
+    .eq("customerId", customerTax.customerId);
+}
+
 export async function updatePricingRule(
   client: SupabaseClient<Database>,
   id: string,
@@ -4858,14 +4883,15 @@ export async function upsertSalesOrderLine(
       .select("id")
       .single();
   }
+
   const salesOrder = await getSalesOrder(client, salesOrderLine.salesOrderId);
   if (salesOrder.error) return salesOrder;
 
-  salesOrderLine.exchangeRate = salesOrder.data?.exchangeRate ?? 1;
-
   return client
     .from("salesOrderLine")
-    .insert([salesOrderLine])
+    .insert([
+      { ...salesOrderLine, exchangeRate: salesOrder.data?.exchangeRate ?? 1 }
+    ])
     .select("id")
     .single();
 }

@@ -181,6 +181,32 @@ const JobHeader = () => {
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 disabled={
+                  !["Cancelled", "Completed"].includes(
+                    routeData?.job?.status ?? ""
+                  ) ||
+                  statusFetcher.state !== "idle" ||
+                  !permissions.can("update", "production")
+                }
+                onClick={() => {
+                  statusFetcher.submit(
+                    {
+                      status:
+                        routeData?.job?.status === "Cancelled"
+                          ? "Draft"
+                          : "In Progress"
+                    },
+                    {
+                      method: "post",
+                      action: path.to.jobStatus(jobId)
+                    }
+                  );
+                }}
+              >
+                <DropdownMenuIcon icon={<LuLoaderCircle />} />
+                Reopen
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                disabled={
                   !permissions.can("delete", "production") ||
                   !permissions.is("employee") ||
                   isJobLocked(routeData?.job?.status)
@@ -373,32 +399,6 @@ const JobHeader = () => {
           >
             Cancel
           </Button>
-          <statusFetcher.Form method="post" action={path.to.jobStatus(jobId)}>
-            <input
-              type="hidden"
-              name="status"
-              value={status === "Cancelled" ? "Draft" : "In Progress"}
-            />
-            <Button
-              isLoading={
-                statusFetcher.state !== "idle" &&
-                ["Draft", "Planned", "In Progress"].includes(
-                  (statusFetcher.formData?.get("status") as string) ?? ""
-                )
-              }
-              isDisabled={
-                !["Cancelled", "Completed"].includes(status ?? "") ||
-                statusFetcher.state !== "idle" ||
-                !permissions.can("update", "production")
-              }
-              leftIcon={<LuLoaderCircle />}
-              type="submit"
-              variant="secondary"
-            >
-              Reopen
-            </Button>
-          </statusFetcher.Form>
-
           <IconButton
             aria-label={t`Toggle Properties`}
             icon={<LuPanelRight />}

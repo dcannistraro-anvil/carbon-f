@@ -10,6 +10,7 @@ import SupplierProcessForm from "./SupplierProcessForm";
 import SupplierShippingForm from "./SupplierShippingForm";
 import SupplierSidebar from "./SupplierSidebar";
 import SuppliersTable from "./SuppliersTable";
+import SupplierTaxForm from "./SupplierTaxForm";
 export {
   SupplierContactForm,
   SupplierContacts,
@@ -22,5 +23,6 @@ export {
   SupplierProcesses,
   SupplierShippingForm,
   SupplierSidebar,
+  SupplierTaxForm,
   SuppliersTable
 };

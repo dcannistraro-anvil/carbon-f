@@ -10,7 +10,7 @@ import {
 } from "@carbon/react";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useFetcher, useParams } from "react-router";
-import { Hidden, Input, Submit, TextArea } from "~/components/Form";
+import { Hidden, Input, PhoneInput, Submit, TextArea } from "~/components/Form";
 import { path } from "~/utils/path";
 import { accountProfileValidator } from "../../account.models";
 import type { Account } from "../../types";
@@ -31,7 +31,7 @@ const ProfileForm = ({ user }: ProfileFormProps) => {
       method="post"
       action={isSelf ? path.to.profile : path.to.person(personId)}
       validator={accountProfileValidator}
-      defaultValues={user}
+      defaultValues={{ ...user, phone: user.phone ?? undefined }}
       fetcher={fetcher}
       className="w-full"
     >
@@ -55,6 +55,7 @@ const ProfileForm = ({ user }: ProfileFormProps) => {
                 <Input name="firstName" label={t`First Name`} />
                 <Input name="lastName" label={t`Last Name`} />
               </div>
+              <PhoneInput name="phone" label={t`Phone`} />
               <TextArea
                 name="about"
                 label={t`About`}

@@ -76,7 +76,8 @@ export async function action({ request }: ActionFunctionArgs) {
     if (willBeFinished) {
       const finishOperation = await finishJobOperation(serviceRole, {
         jobOperationId: jobOperation.data.id,
-        userId
+        userId,
+        companyId
       });
 
       if (finishOperation.error) {
@@ -131,7 +132,8 @@ export async function action({ request }: ActionFunctionArgs) {
     if (willBeFinished) {
       const finishOperation = await finishJobOperation(serviceRole, {
         jobOperationId: jobOperation.data.id,
-        userId
+        userId,
+        companyId
       });
 
       if (finishOperation.error) {
@@ -187,8 +189,8 @@ export async function action({ request }: ActionFunctionArgs) {
     });
 
     if (issue.error) {
-      throw data(
-        insertProduction.data,
+      return data(
+        {},
         await flash(request, {
           ...error(issue.error, "Failed to issue materials"),
           flash: "error"
@@ -199,7 +201,8 @@ export async function action({ request }: ActionFunctionArgs) {
     if (willBeFinished) {
       const finishOperation = await finishJobOperation(serviceRole, {
         jobOperationId: jobOperation.data.id,
-        userId
+        userId,
+        companyId
       });
 
       if (finishOperation.error) {

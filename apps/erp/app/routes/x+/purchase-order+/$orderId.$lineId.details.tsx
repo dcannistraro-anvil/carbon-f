@@ -152,7 +152,7 @@ export default function EditPurchaseOrderLineRoute() {
     purchaseOrderId: line?.purchaseOrderId ?? "",
     purchaseOrderLineType: (line?.purchaseOrderLineType ?? "Part") as "Part",
     itemId: line?.itemId ?? "",
-    accountNumber: line?.accountNumber ?? "",
+    accountId: line?.accountId ?? "",
     assetId: line?.assetId ?? "",
     conversionFactor: line?.conversionFactor ?? 1,
     description: line?.description ?? "",
@@ -163,11 +163,12 @@ export default function EditPurchaseOrderLineRoute() {
     locationId: line?.locationId ?? "",
     purchaseQuantity: line?.purchaseQuantity ?? 1,
     purchaseUnitOfMeasureCode: line?.purchaseUnitOfMeasureCode ?? "",
-    requestedDate: line?.requestedDate ?? undefined,
+    requiredDate: line?.requiredDate ?? undefined,
     storageUnitId: line?.storageUnitId ?? "",
     supplierShippingCost: line?.supplierShippingCost ?? 0,
     supplierTaxAmount: line?.supplierTaxAmount ?? 0,
     supplierUnitPrice: line?.supplierUnitPrice ?? 0,
+    costCenterId: line?.costCenterId ?? "",
     taxPercent: line?.taxPercent ?? 0,
     ...getCustomFields(line?.customFields)
   };

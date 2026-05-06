@@ -44,7 +44,7 @@ The Carbon system uses PostgreSQL (via Supabase) to store customer and supplier 
 ### `customerStatus` Table (Status Tracking)
 
 **Fields:**
-- `id` TEXT PRIMARY KEY (xid)
+- `id` TEXT PRIMARY KEY (id)
 - `name` TEXT NOT NULL (unique per company)
 - Standard audit fields (companyId, createdBy, updatedBy, etc.)
 - `customFields` JSONB
@@ -54,7 +54,7 @@ The Carbon system uses PostgreSQL (via Supabase) to store customer and supplier 
 ### `customerLocation` Table (Address Management)
 
 **Fields:**
-- `id` TEXT PRIMARY KEY (xid)
+- `id` TEXT PRIMARY KEY (id)
 - `customerId` TEXT NOT NULL (FK to customer.id)
 - `addressId` TEXT NOT NULL (FK to address.id)
 - `name` TEXT NOT NULL (location name, added in later migration)
@@ -63,7 +63,7 @@ The Carbon system uses PostgreSQL (via Supabase) to store customer and supplier 
 ### `customerContact` Table (Contact Management)
 
 **Fields:**
-- `id` TEXT PRIMARY KEY (xid)
+- `id` TEXT PRIMARY KEY (id)
 - `customerId` TEXT NOT NULL (FK to customer.id)
 - `contactId` TEXT NOT NULL (FK to contact.id)
 - `customerLocationId` TEXT (FK to customerLocation.id, optional)
@@ -142,7 +142,7 @@ The Carbon system uses PostgreSQL (via Supabase) to store customer and supplier 
 ### `supplierStatus` Table (Status Tracking)
 
 **Fields:**
-- `id` TEXT PRIMARY KEY (xid)
+- `id` TEXT PRIMARY KEY (id)
 - `name` TEXT NOT NULL (unique per company)
 - Standard audit fields (companyId, createdBy, updatedBy, etc.)
 - `customFields` JSONB
@@ -152,7 +152,7 @@ The Carbon system uses PostgreSQL (via Supabase) to store customer and supplier 
 ### `supplierLocation` Table (Address Management)
 
 **Fields:**
-- `id` TEXT PRIMARY KEY (xid)
+- `id` TEXT PRIMARY KEY (id)
 - `supplierId` TEXT NOT NULL (FK to supplier.id)
 - `addressId` TEXT NOT NULL (FK to address.id)
 - `name` TEXT NOT NULL (location name, added in later migration)
@@ -161,7 +161,7 @@ The Carbon system uses PostgreSQL (via Supabase) to store customer and supplier 
 ### `supplierContact` Table (Contact Management)
 
 **Fields:**
-- `id` TEXT PRIMARY KEY (xid)
+- `id` TEXT PRIMARY KEY (id)
 - `supplierId` TEXT NOT NULL (FK to supplier.id)
 - `contactId` TEXT NOT NULL (FK to contact.id)
 - `supplierLocationId` TEXT (FK to supplierLocation.id, optional)
@@ -207,7 +207,7 @@ The Carbon system uses PostgreSQL (via Supabase) to store customer and supplier 
 ### `contact` Table (Contact Information)
 
 **Fields:**
-- `id` TEXT PRIMARY KEY (xid)
+- `id` TEXT PRIMARY KEY (id)
 - `firstName` TEXT NOT NULL
 - `lastName` TEXT NOT NULL
 - `fullName` TEXT GENERATED (firstName + ' ' + lastName)
@@ -230,7 +230,7 @@ The Carbon system uses PostgreSQL (via Supabase) to store customer and supplier 
 ### `address` Table (Address Information)
 
 **Fields:**
-- `id` TEXT PRIMARY KEY (xid)
+- `id` TEXT PRIMARY KEY (id)
 - `addressLine1` TEXT
 - `addressLine2` TEXT
 - `city` TEXT

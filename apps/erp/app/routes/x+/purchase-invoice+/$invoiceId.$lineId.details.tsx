@@ -97,15 +97,15 @@ export async function action({ request, params }: ActionFunctionArgs) {
   //   d.assetId = undefined;
   //   d.itemId = undefined;
   // } else if (d.invoiceLineType === "Fixed Asset") {
-  //   d.accountNumber = undefined;
+  //   d.accountId = undefined;
   //   d.itemId = undefined;
   // } else
   // if (d.invoiceLineType === "Comment") {
-  //   d.accountNumber = undefined;
+  //   d.accountId = undefined;
   //   d.assetId = undefined;
   //   d.itemId = undefined;
   // } else {
-  //   d.accountNumber = undefined;
+  //   d.accountId = undefined;
   //   d.assetId = undefined;
   // }
 
@@ -147,7 +147,7 @@ export default function EditPurchaseInvoiceLineRoute() {
     invoiceLineType: (purchaseInvoiceLine?.invoiceLineType ?? "Part") as "Part",
     itemId: purchaseInvoiceLine?.itemId ?? "",
 
-    accountNumber: purchaseInvoiceLine?.accountNumber ?? "",
+    accountId: purchaseInvoiceLine?.accountId ?? "",
     assetId: purchaseInvoiceLine?.assetId ?? "",
     description: purchaseInvoiceLine?.description ?? "",
     quantity: purchaseInvoiceLine?.quantity ?? 1,
@@ -161,6 +161,7 @@ export default function EditPurchaseInvoiceLineRoute() {
       purchaseInvoiceLine?.inventoryUnitOfMeasureCode ?? "",
     conversionFactor: purchaseInvoiceLine?.conversionFactor ?? 1,
     storageUnitId: purchaseInvoiceLine?.storageUnitId ?? "",
+    costCenterId: purchaseInvoiceLine?.costCenterId ?? "",
     taxPercent: purchaseInvoiceLine?.taxPercent ?? 0,
     ...getCustomFields(purchaseInvoiceLine?.customFields)
   };

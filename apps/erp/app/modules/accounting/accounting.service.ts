@@ -1,63 +1,195 @@
 import type { Database, Json } from "@carbon/database";
-import { getDateNYearsAgo } from "@carbon/utils";
+import { getDateNYearsAgo, toStoredAmount } from "@carbon/utils";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { z } from "zod";
 import type { GenericQueryFilters } from "~/utils/query";
 import { setGenericQueryFilters } from "~/utils/query";
 import { sanitize } from "~/utils/supabase";
 import type {
-  accountCategoryValidator,
-  accountSubcategoryValidator,
   accountValidator,
+  costCenterValidator,
   currencyValidator,
   defaultBalanceSheetAccountValidator,
   defaultIncomeAcountValidator,
+  dimensionValidator,
   fiscalYearSettingsValidator,
+  intercompanyTransactionValidator,
+  journalEntryLineValidator,
+  journalEntryValidator,
   paymentTermValidator
 } from "./accounting.models";
-import type { Account, Transaction } from "./types";
+import type { Transaction, TranslatedBalance } from "./types";
 
-type AccountWithTotals = Account & { level: number; totaling: string };
+/**
+ * Sign multiplier for root account aggregation.
+ * Asset and Revenue have normal debit balances and add to parent.
+ * Liability, Equity, and Expense have normal credit balances and subtract.
+ */
+function rootSignMultiplier(accountClass: string | null): number {
+  switch (accountClass) {
+    case "Asset":
+    case "Revenue":
+      return 1;
+    case "Liability":
+    case "Equity":
+    case "Expense":
+      return -1;
+    default:
+      return 1;
+  }
+}
 
-function addLevelsAndTotalsToAccounts(
-  accounts: Account[]
-): AccountWithTotals[] {
-  let result: AccountWithTotals[] = [];
-  let beginTotalAccounts: string[] = [];
-  let endTotalAccounts: string[] = [];
-  let hasHeading = false;
+/**
+ * Recalculates balance/balanceAtDate/netChange for system (root) accounts
+ * using sign-aware aggregation based on direct children's account class.
+ *
+ * Standard accounting:
+ *   Balance Sheet  = Assets − Liabilities − Equity   (should ≈ 0)
+ *   Income Statement = Revenue − Expenses             (= Net Income)
+ */
+function applyRootSignCorrection<
+  T extends {
+    id: string;
+    parentId: string | null;
+    isSystem?: boolean;
+    class: string | null;
+    balance: number;
+    balanceAtDate: number;
+    netChange: number;
+    translatedBalance?: number;
+  }
+>(accounts: T[]): T[] {
+  const roots = accounts.filter((a) => a.isSystem ?? a.parentId === null);
+  if (roots.length === 0) return accounts;
 
-  accounts.forEach((account) => {
-    if (["End Total", "Total"].includes(account.type)) {
-      endTotalAccounts.push(account.number);
+  const rootIds = new Set(roots.map((r) => r.id));
+  const childrenByRoot = new Map<string, T[]>();
+
+  for (const account of accounts) {
+    if (account.parentId && rootIds.has(account.parentId)) {
+      const list = childrenByRoot.get(account.parentId) ?? [];
+      list.push(account);
+      childrenByRoot.set(account.parentId, list);
+    }
+  }
+
+  return accounts.map((account) => {
+    if (!rootIds.has(account.id)) return account;
+
+    const children = childrenByRoot.get(account.id) ?? [];
+    let balance = 0;
+    let balanceAtDate = 0;
+    let netChange = 0;
+    let translatedBalance = 0;
+
+    for (const child of children) {
+      const sign = rootSignMultiplier(child.class);
+      balance += sign * child.balance;
+      balanceAtDate += sign * child.balanceAtDate;
+      netChange += sign * child.netChange;
+      if (
+        "translatedBalance" in child &&
+        typeof child.translatedBalance === "number"
+      ) {
+        translatedBalance += sign * child.translatedBalance;
+      }
     }
 
-    let level =
-      beginTotalAccounts.length -
-      endTotalAccounts.length +
-      (hasHeading ? 1 : 0);
-
-    if (account.type === "Begin Total") {
-      beginTotalAccounts.push(account.number);
+    const result = { ...account, balance, balanceAtDate, netChange };
+    if ("translatedBalance" in account) {
+      (result as T & { translatedBalance: number }).translatedBalance =
+        translatedBalance;
     }
+    return result;
+  });
+}
 
-    let totaling = "";
+export async function getTrialBalance(
+  client: SupabaseClient<Database>,
+  companyGroupId: string,
+  companyId: string | null,
+  args: {
+    startDate: string | null;
+    endDate: string | null;
+  }
+) {
+  return client.rpc("trialBalance", {
+    p_company_group_id: companyGroupId,
+    p_company_id: companyId,
+    from_date:
+      args.startDate ?? getDateNYearsAgo(50).toISOString().split("T")[0],
+    to_date: args.endDate ?? new Date().toISOString().split("T")[0]
+  });
+}
 
-    if (["End Total", "Total"].includes(account.type)) {
-      let startAccount = beginTotalAccounts.pop();
-      let endAccount = endTotalAccounts.pop();
+export async function getFinancialStatementBalances(
+  client: SupabaseClient<Database>,
+  companyGroupId: string,
+  companyId: string | null,
+  args: {
+    startDate: string | null;
+    endDate: string | null;
+  }
+) {
+  let accountsQuery = client
+    .from("accounts")
+    .select("*")
+    .eq("companyGroupId", companyGroupId)
+    .eq("active", true)
+    .order("number", { ascending: true });
 
-      totaling = `${startAccount}..${endAccount}`;
-    }
-
-    result.push({
-      ...account,
-      level,
-      totaling
-    });
+  const balancesQuery = client.rpc("accountTreeBalancesByCompany", {
+    p_company_group_id: companyGroupId,
+    p_company_id: companyId,
+    from_date:
+      args.startDate ?? getDateNYearsAgo(50).toISOString().split("T")[0],
+    to_date: args.endDate ?? new Date().toISOString().split("T")[0]
   });
 
-  return result;
+  const [accountsResponse, balancesResponse] = await Promise.all([
+    accountsQuery,
+    balancesQuery
+  ]);
+
+  if (accountsResponse.error) return accountsResponse;
+  if (balancesResponse.error) return balancesResponse;
+
+  const balancesByAccountId = (
+    balancesResponse.data as unknown as (Transaction & { accountId: string })[]
+  ).reduce<Record<string, Transaction>>((acc, row) => {
+    acc[row.accountId] = {
+      number: row.number,
+      netChange: row.netChange,
+      balance: row.balance,
+      balanceAtDate: row.balanceAtDate
+    };
+    return acc;
+  }, {});
+
+  return {
+    data: applyRootSignCorrection(
+      (accountsResponse.data ?? []).map((account) => ({
+        ...account,
+        netChange: balancesByAccountId[account.id]?.netChange ?? 0,
+        balance: balancesByAccountId[account.id]?.balance ?? 0,
+        balanceAtDate: balancesByAccountId[account.id]?.balanceAtDate ?? 0
+      }))
+    ),
+    error: null
+  };
+}
+
+export async function getCompaniesInGroup(
+  client: SupabaseClient<Database>,
+  companyGroupId: string
+) {
+  return client
+    .from("company")
+    .select("id, name, baseCurrencyCode, parentCompanyId, isEliminationEntity")
+    .eq("companyGroupId", companyGroupId)
+    .eq("active", true)
+    .eq("isEliminationEntity", false)
+    .order("name", { ascending: true });
 }
 
 export async function deleteAccount(
@@ -65,23 +197,6 @@ export async function deleteAccount(
   accountId: string
 ) {
   return client.from("account").delete().eq("id", accountId);
-}
-
-export async function deleteAccountCategory(
-  client: SupabaseClient<Database>,
-  accountCategoryId: string
-) {
-  return client.from("accountCategory").delete().eq("id", accountCategoryId);
-}
-
-export async function deleteAccountSubcategory(
-  client: SupabaseClient<Database>,
-  accountSubcategoryId: string
-) {
-  return client
-    .from("accountSubcategory")
-    .update({ active: false })
-    .eq("id", accountSubcategoryId);
 }
 
 export async function deletePaymentTerm(
@@ -103,7 +218,7 @@ export async function getAccount(
 
 export async function getAccounts(
   client: SupabaseClient<Database>,
-  companyId: string,
+  companyGroupId: string,
   args: GenericQueryFilters & {
     search: string | null;
   }
@@ -113,7 +228,7 @@ export async function getAccounts(
     .select("*", {
       count: "exact"
     })
-    .eq("companyId", companyId)
+    .eq("companyGroupId", companyGroupId)
     .eq("active", true);
 
   if (args.search) {
@@ -128,21 +243,21 @@ export async function getAccounts(
 
 export async function getAccountsList(
   client: SupabaseClient<Database>,
-  companyId: string,
+  companyGroupId: string,
   args?: {
-    type?: Database["public"]["Enums"]["glAccountType"] | null;
+    isGroup?: boolean | null;
     incomeBalance?: Database["public"]["Enums"]["glIncomeBalance"] | null;
     classes?: Database["public"]["Enums"]["glAccountClass"][];
   }
 ) {
   let query = client
     .from("account")
-    .select("number, name, incomeBalance")
-    .eq("companyId", companyId)
+    .select("id, number, name, incomeBalance, class")
+    .eq("companyGroupId", companyGroupId)
     .eq("active", true);
 
-  if (args?.type) {
-    query = query.eq("type", args.type);
+  if (args?.isGroup !== undefined && args.isGroup !== null) {
+    query = query.eq("isGroup", args.isGroup);
   }
 
   if (args?.incomeBalance) {
@@ -157,145 +272,17 @@ export async function getAccountsList(
   return query;
 }
 
-export async function getAccountCategories(
+export async function getGroupAccounts(
   client: SupabaseClient<Database>,
-  companyId: string,
-  args: GenericQueryFilters & {
-    search: string | null;
-  }
-) {
-  let query = client
-    .from("accountCategories")
-    .select("*", {
-      count: "exact"
-    })
-    .eq("companyId", companyId);
-
-  if (args.search) {
-    query = query.ilike("category", `%${args.search}%`);
-  }
-
-  query = setGenericQueryFilters(query, args, [
-    { column: "incomeBalance", ascending: true },
-    { column: "class", ascending: true },
-    { column: "category", ascending: true }
-  ]);
-  return query;
-}
-
-export async function getAccountCategoriesList(
-  client: SupabaseClient<Database>,
-  companyId: string
+  companyGroupId: string
 ) {
   return client
-    .from("accountCategory")
-    .select("*")
-    .eq("companyId", companyId)
-    .order("category", { ascending: true });
-}
-
-export async function getAccountCategory(
-  client: SupabaseClient<Database>,
-  accountCategoryId: string,
-  companyId: string
-) {
-  return client
-    .from("accountCategory")
-    .select("*")
-    .eq("id", accountCategoryId)
-    .eq("companyId", companyId)
-    .single();
-}
-
-export async function getAccountSubcategories(
-  client: SupabaseClient<Database>,
-  companyId: string,
-  args: GenericQueryFilters & {
-    search: string | null;
-  }
-) {
-  let query = client
-    .from("accountSubcategory")
-    .select("*", {
-      count: "exact"
-    })
-    .eq("companyId", companyId)
-    .eq("active", true);
-
-  if (args.search) {
-    query = query.ilike("name", `%${args.search}%`);
-  }
-
-  query = setGenericQueryFilters(query, args, [
-    { column: "name", ascending: true }
-  ]);
-  return query;
-}
-
-export async function getAccountSubcategoriesByCategory(
-  client: SupabaseClient<Database>,
-  accountCategoryId: string,
-  companyId: string
-) {
-  return client
-    .from("accountSubcategory")
-    .select("*")
-    .eq("accountCategoryId", accountCategoryId)
-    .eq("companyId", companyId)
-    .eq("active", true);
-}
-
-export async function getAccountSubcategory(
-  client: SupabaseClient<Database>,
-  accountSubcategoryId: string
-) {
-  return client
-    .from("accountSubcategory")
-    .select("*")
-    .eq("id", accountSubcategoryId)
-    .single();
-}
-
-function getAccountTotal(
-  accounts: Account[],
-  account: AccountWithTotals,
-  type: "netChange" | "balance" | "balanceAtDate",
-  transactionsByAccount: Record<string, Transaction>
-) {
-  if (!account.totaling) {
-    return transactionsByAccount[account.number]?.[type] ?? 0;
-  }
-
-  let total = 0;
-  const [start, end] = account.totaling.split("..");
-  if (!start || !end) throw new Error("Invalid totaling");
-
-  // for End Total -- we just do a simple sum of all accounts between start and end
-  if (account.type === "End Total") {
-    accounts.forEach((account) => {
-      if (account.number >= start && account.number <= end) {
-        total += transactionsByAccount[account.number]?.[type] ?? 0;
-      }
-    });
-  }
-
-  // for Total -- we use accounting equation to calculate the total
-  if (account.type === "Total") {
-    accounts.forEach((account) => {
-      if (account.number >= start && account.number <= end) {
-        if (["Asset", "Revenue"].includes(account.class as string)) {
-          total += transactionsByAccount[account.number]?.[type] ?? 0;
-        }
-        if (
-          ["Liability", "Equity", "Expense"].includes(account.class as string)
-        ) {
-          total -= transactionsByAccount[account.number]?.[type] ?? 0;
-        }
-      }
-    });
-  }
-
-  return total;
+    .from("account")
+    .select("id, number, name, incomeBalance, class, accountType")
+    .eq("companyGroupId", companyGroupId)
+    .eq("isGroup", true)
+    .eq("active", true)
+    .order("name", { ascending: true });
 }
 
 export async function getBaseCurrency(
@@ -304,7 +291,7 @@ export async function getBaseCurrency(
 ) {
   const { data: company, error } = await client
     .from("company")
-    .select("baseCurrencyCode")
+    .select("baseCurrencyCode, companyGroupId")
     .eq("id", companyId)
     .single();
 
@@ -320,14 +307,14 @@ export async function getBaseCurrency(
     .from("currency")
     .select("*")
     .eq("code", company.baseCurrencyCode)
+    .eq("companyGroupId", company.companyGroupId!)
     .single();
 }
 
 export async function getChartOfAccounts(
   client: SupabaseClient<Database>,
-  companyId: string,
-  args: Omit<GenericQueryFilters, "limit" | "offset"> & {
-    name: string | null;
+  companyGroupId: string,
+  args: {
     incomeBalance: "Income Statement" | "Balance Sheet" | null;
     startDate: string | null;
     endDate: string | null;
@@ -336,65 +323,50 @@ export async function getChartOfAccounts(
   let accountsQuery = client
     .from("accounts")
     .select("*")
-    .eq("companyId", companyId)
-    .eq("active", true);
+    .eq("companyGroupId", companyGroupId)
+    .eq("active", true)
+    .order("number", { ascending: true });
 
   if (args.incomeBalance) {
     accountsQuery = accountsQuery.eq("incomeBalance", args.incomeBalance);
   }
 
-  accountsQuery = setGenericQueryFilters(accountsQuery, args, [
-    { column: "number", ascending: true }
-  ]);
-
-  let transactionsQuery = client.rpc("journalLinesByAccountNumber", {
+  const balancesQuery = client.rpc("accountTreeBalances", {
+    p_company_group_id: companyGroupId,
     from_date:
       args.startDate ?? getDateNYearsAgo(50).toISOString().split("T")[0],
     to_date: args.endDate ?? new Date().toISOString().split("T")[0]
   });
 
-  const [accountsResponse, transactionsResponse] = await Promise.all([
+  const [accountsResponse, balancesResponse] = await Promise.all([
     accountsQuery,
-    transactionsQuery
+    balancesQuery
   ]);
 
-  if (transactionsResponse.error) return transactionsResponse;
   if (accountsResponse.error) return accountsResponse;
+  if (balancesResponse.error) return balancesResponse;
 
-  const transactionsByAccount = (
-    transactionsResponse.data as unknown as Transaction[]
-  ).reduce<Record<string, Transaction>>((acc, transaction: Transaction) => {
-    acc[transaction.number] = transaction;
+  const balancesByAccountId = (
+    balancesResponse.data as unknown as (Transaction & { accountId: string })[]
+  ).reduce<Record<string, Transaction>>((acc, row) => {
+    acc[row.accountId] = {
+      number: row.number,
+      netChange: row.netChange,
+      balance: row.balance,
+      balanceAtDate: row.balanceAtDate
+    };
     return acc;
   }, {});
 
-  // @ts-ignore
-  const accounts: Account[] = accountsResponse.data as Account[];
-
   return {
-    data: addLevelsAndTotalsToAccounts(accounts).map((account) => ({
-      ...account,
-      netChange: getAccountTotal(
-        accounts,
-        account,
-        "netChange",
-        transactionsByAccount
-      ),
-
-      balance: getAccountTotal(
-        accounts,
-        account,
-        "balance",
-        transactionsByAccount
-      ),
-
-      balanceAtDate: getAccountTotal(
-        accounts,
-        account,
-        "balanceAtDate",
-        transactionsByAccount
-      )
-    })),
+    data: applyRootSignCorrection(
+      (accountsResponse.data ?? []).map((account) => ({
+        ...account,
+        netChange: balancesByAccountId[account.id]?.netChange ?? 0,
+        balance: balancesByAccountId[account.id]?.balance ?? 0,
+        balanceAtDate: balancesByAccountId[account.id]?.balanceAtDate ?? 0
+      }))
+    ),
     error: null
   };
 }
@@ -408,20 +380,20 @@ export async function getCurrency(
 
 export async function getCurrencyByCode(
   client: SupabaseClient<Database>,
-  companyId: string,
+  companyGroupId: string,
   currencyCode: string
 ) {
   return client
     .from("currencies")
     .select("*")
     .eq("code", currencyCode)
-    .eq("companyId", companyId)
+    .eq("companyGroupId", companyGroupId)
     .single();
 }
 
 export async function getCurrencies(
   client: SupabaseClient<Database>,
-  companyId: string,
+  companyGroupId: string,
   args: GenericQueryFilters & {
     search: string | null;
   }
@@ -431,7 +403,7 @@ export async function getCurrencies(
     .select("*", {
       count: "exact"
     })
-    .eq("companyId", companyId)
+    .eq("companyGroupId", companyGroupId)
     .eq("active", true);
 
   if (args.search) {
@@ -484,52 +456,6 @@ export async function getFiscalYearSettings(
     .single();
 }
 
-export async function getInventoryPostingGroup(
-  client: SupabaseClient<Database>,
-  companyId: string,
-  args: {
-    itemPostingGroupId: string | null;
-    locationId: string | null;
-  }
-) {
-  let query = client
-    .from("postingGroupInventory")
-    .select("*")
-    .eq("companyId", companyId);
-
-  if (args.itemPostingGroupId === null) {
-    query = query.is("itemPostingGroupId", null);
-  } else {
-    query = query.eq("itemPostingGroupId", args.itemPostingGroupId);
-  }
-
-  if (args.locationId === null) {
-    query = query.is("locationId", null);
-  } else {
-    query = query.eq("locationId", args.locationId);
-  }
-
-  return query.single();
-}
-
-export async function getInventoryPostingGroups(
-  client: SupabaseClient<Database>,
-  companyId: string,
-  args: GenericQueryFilters
-) {
-  let query = client
-    .from("postingGroupInventory")
-    .select("*", {
-      count: "exact"
-    })
-    .eq("companyId", companyId);
-
-  query = setGenericQueryFilters(query, args, [
-    { column: "itemPostingGroupId", ascending: false }
-  ]);
-  return query;
-}
-
 export async function getPaymentTerm(
   client: SupabaseClient<Database>,
   paymentTermId: string
@@ -578,94 +504,6 @@ export async function getPaymentTermsList(
     .order("name", { ascending: true });
 }
 
-export async function getPurchasingPostingGroup(
-  client: SupabaseClient<Database>,
-  companyId: string,
-  args: {
-    itemPostingGroupId: string | null;
-    supplierTypeId: string | null;
-  }
-) {
-  let query = client
-    .from("postingGroupInventory")
-    .select("*")
-    .eq("companyId", companyId);
-
-  if (args.itemPostingGroupId === null) {
-    query = query.is("itemPostingGroupId", null);
-  } else {
-    query = query.eq("itemPostingGroupId", args.itemPostingGroupId);
-  }
-
-  if (args.supplierTypeId === null) {
-    query = query.is("supplierTypeId", null);
-  } else {
-    query = query.eq("supplierTypeId", args.supplierTypeId);
-  }
-
-  return query.single();
-}
-
-export async function getPurchasingPostingGroups(
-  client: SupabaseClient<Database>,
-  companyId: string,
-  args: GenericQueryFilters
-) {
-  let query = client
-    .from("postingGroupPurchasing")
-    .select("*", {
-      count: "exact"
-    })
-    .eq("companyId", companyId);
-
-  query = setGenericQueryFilters(query, args, [
-    { column: "itemPostingGroupId", ascending: false }
-  ]);
-  return query;
-}
-
-export async function getPurchasingSalesGroup(
-  client: SupabaseClient<Database>,
-  args: {
-    itemPostingGroupId: string | null;
-    customerTypeId: string | null;
-  }
-) {
-  let query = client.from("postingGroupInventory").select("*");
-
-  if (args.itemPostingGroupId === null) {
-    query = query.is("itemPostingGroupId", null);
-  } else {
-    query = query.eq("itemPostingGroupId", args.itemPostingGroupId);
-  }
-
-  if (args.customerTypeId === null) {
-    query = query.is("customerTypeId", null);
-  } else {
-    query = query.eq("customerTypeId", args.customerTypeId);
-  }
-
-  return query.single();
-}
-
-export async function getSalesPostingGroups(
-  client: SupabaseClient<Database>,
-  companyId: string,
-  args: GenericQueryFilters
-) {
-  let query = client
-    .from("postingGroupSales")
-    .select("*", {
-      count: "exact"
-    })
-    .eq("companyId", companyId);
-
-  query = setGenericQueryFilters(query, args, [
-    { column: "itemPostingGroupId", ascending: false }
-  ]);
-  return query;
-}
-
 export async function updateDefaultBalanceSheetAccounts(
   client: SupabaseClient<Database>,
   defaultAccounts: z.infer<typeof defaultBalanceSheetAccountValidator> & {
@@ -709,7 +547,7 @@ export async function upsertAccount(
   client: SupabaseClient<Database>,
   account:
     | (Omit<z.infer<typeof accountValidator>, "id"> & {
-        companyId: string;
+        companyGroupId: string;
         createdBy: string;
         customFields?: Json;
       })
@@ -730,74 +568,17 @@ export async function upsertAccount(
     .single();
 }
 
-export async function upsertAccountCategory(
-  client: SupabaseClient<Database>,
-  accountCategory:
-    | (Omit<z.infer<typeof accountCategoryValidator>, "id"> & {
-        companyId: string;
-        createdBy: string;
-        customFields?: Json;
-      })
-    | (Omit<z.infer<typeof accountCategoryValidator>, "id"> & {
-        id: string;
-        updatedBy: string;
-        customFields?: Json;
-      })
-) {
-  if ("createdBy" in accountCategory) {
-    return client
-      .from("accountCategory")
-      .insert([accountCategory])
-      .select("id")
-      .single();
-  }
-  return client
-    .from("accountCategory")
-    .update(sanitize(accountCategory))
-    .eq("id", accountCategory.id)
-    .select("id")
-    .single();
-}
-
-export async function upsertAccountSubcategory(
-  client: SupabaseClient<Database>,
-  accountSubcategory:
-    | (Omit<z.infer<typeof accountSubcategoryValidator>, "id"> & {
-        createdBy: string;
-        customFields?: Json;
-      })
-    | (Omit<z.infer<typeof accountSubcategoryValidator>, "id"> & {
-        id: string;
-        updatedBy: string;
-        customFields?: Json;
-      })
-) {
-  if ("createdBy" in accountSubcategory) {
-    return client
-      .from("accountSubcategory")
-      .insert([accountSubcategory])
-      .select("id")
-      .single();
-  }
-  return client
-    .from("accountSubcategory")
-    .update(sanitize(accountSubcategory))
-    .eq("id", accountSubcategory.id)
-    .select("id")
-    .single();
-}
-
 export async function upsertCurrency(
   client: SupabaseClient<Database>,
   currency:
     | (Omit<z.infer<typeof currencyValidator>, "id"> & {
-        companyId: string;
+        companyGroupId: string;
         createdBy: string;
         customFields?: Json;
       })
     | (Omit<z.infer<typeof currencyValidator>, "id"> & {
         id: string;
-        companyId: string;
+        companyGroupId: string;
         updatedBy: string;
         customFields?: Json;
       })
@@ -840,4 +621,1217 @@ export async function upsertPaymentTerm(
     .eq("id", paymentTerm.id)
     .select("id")
     .single();
+}
+
+export async function deleteCostCenter(
+  client: SupabaseClient<Database>,
+  costCenterId: string
+) {
+  return client.from("costCenter").delete().eq("id", costCenterId);
+}
+
+export async function getCostCenter(
+  client: SupabaseClient<Database>,
+  costCenterId: string
+) {
+  return client.from("costCenter").select("*").eq("id", costCenterId).single();
+}
+
+export async function getCostCenters(
+  client: SupabaseClient<Database>,
+  companyId: string,
+  args?: GenericQueryFilters & { search: string | null }
+) {
+  let query = client
+    .from("costCenter")
+    .select("*", { count: "exact" })
+    .eq("companyId", companyId);
+
+  if (args?.search) {
+    query = query.ilike("name", `%${args.search}%`);
+  }
+
+  if (args) {
+    query = setGenericQueryFilters(query, args, [
+      { column: "name", ascending: true }
+    ]);
+  }
+
+  return query;
+}
+
+export async function getCostCentersList(
+  client: SupabaseClient<Database>,
+  companyId: string
+) {
+  return client
+    .from("costCenter")
+    .select("id, name")
+    .eq("companyId", companyId)
+    .order("name");
+}
+
+export async function getCostCentersTree(
+  client: SupabaseClient<Database>,
+  companyId: string
+) {
+  return client
+    .from("costCenter")
+    .select(
+      "id, name, parentCostCenterId, ownerId, owner:user!costCenter_ownerId_fkey(fullName)"
+    )
+    .eq("companyId", companyId)
+    .order("name");
+}
+
+export async function upsertCostCenter(
+  client: SupabaseClient<Database>,
+  costCenter:
+    | (Omit<z.infer<typeof costCenterValidator>, "id"> & {
+        companyId: string;
+        createdBy: string;
+        customFields?: Json;
+      })
+    | (Omit<z.infer<typeof costCenterValidator>, "id"> & {
+        id: string;
+        updatedBy: string;
+        customFields?: Json;
+      })
+) {
+  if ("createdBy" in costCenter) {
+    return client.from("costCenter").insert([costCenter]).select("id").single();
+  }
+  return client
+    .from("costCenter")
+    .update(sanitize(costCenter))
+    .eq("id", costCenter.id)
+    .select("id")
+    .single();
+}
+
+export async function getDimensions(
+  client: SupabaseClient<Database>,
+  companyGroupId: string,
+  args: GenericQueryFilters & {
+    search: string | null;
+  }
+) {
+  let query = client
+    .from("dimension")
+    .select("*, dimensionValue(id, name)", {
+      count: "exact"
+    })
+    .eq("companyGroupId", companyGroupId)
+    .eq("active", true);
+
+  if (args.search) {
+    query = query.ilike("name", `%${args.search}%`);
+  }
+
+  query = setGenericQueryFilters(query, args, [
+    { column: "name", ascending: true }
+  ]);
+  return query;
+}
+
+export async function getDimension(
+  client: SupabaseClient<Database>,
+  dimensionId: string
+) {
+  return client
+    .from("dimension")
+    .select("*, dimensionValue(id, name)")
+    .eq("id", dimensionId)
+    .single();
+}
+
+export async function upsertDimension(
+  client: SupabaseClient<Database>,
+  dimension:
+    | (Omit<z.infer<typeof dimensionValidator>, "id" | "dimensionValues"> & {
+        companyGroupId: string;
+        createdBy: string;
+      })
+    | (Omit<z.infer<typeof dimensionValidator>, "id" | "dimensionValues"> & {
+        id: string;
+        updatedBy: string;
+      }),
+  dimensionValues?: string[]
+) {
+  let dimensionResult;
+
+  if ("createdBy" in dimension) {
+    dimensionResult = await client
+      .from("dimension")
+      .insert([dimension])
+      .select("id, companyGroupId")
+      .single();
+  } else {
+    dimensionResult = await client
+      .from("dimension")
+      .update(sanitize(dimension))
+      .eq("id", dimension.id)
+      .select("id, companyGroupId")
+      .single();
+  }
+
+  if (dimensionResult.error) return dimensionResult;
+
+  if (dimension.entityType === "Custom" && dimensionValues !== undefined) {
+    const dimensionId = dimensionResult.data.id;
+    const companyGroupId = dimensionResult.data.companyGroupId;
+
+    const existing = await client
+      .from("dimensionValue")
+      .select("id, name")
+      .eq("dimensionId", dimensionId);
+
+    if (existing.error) return existing;
+
+    const existingNames = new Set((existing.data ?? []).map((v) => v.name));
+    const desiredNames = new Set(dimensionValues);
+
+    const toDelete = (existing.data ?? [])
+      .filter((v) => !desiredNames.has(v.name))
+      .map((v) => v.id);
+
+    if (toDelete.length > 0) {
+      const deleteResult = await client
+        .from("dimensionValue")
+        .delete()
+        .in("id", toDelete);
+      if (deleteResult.error) return deleteResult;
+    }
+
+    const toInsert = dimensionValues
+      .filter((name) => !existingNames.has(name))
+      .map((name) => ({
+        dimensionId,
+        name,
+        companyGroupId,
+        createdBy:
+          "createdBy" in dimension ? dimension.createdBy : dimension.updatedBy
+      }));
+
+    if (toInsert.length > 0) {
+      const insertResult = await client.from("dimensionValue").insert(toInsert);
+      if (insertResult.error) return insertResult;
+    }
+  }
+
+  return dimensionResult;
+}
+
+export async function deleteDimension(
+  client: SupabaseClient<Database>,
+  dimensionId: string
+) {
+  return client
+    .from("dimension")
+    .update({ active: false })
+    .eq("id", dimensionId);
+}
+
+export async function getActiveDimensionsWithValues(
+  client: SupabaseClient<Database>,
+  companyGroupId: string,
+  companyId: string
+) {
+  const dimensionsResult = await client
+    .from("dimension")
+    .select("id, name, entityType, required")
+    .eq("companyGroupId", companyGroupId)
+    .eq("active", true)
+    .order("name");
+
+  if (dimensionsResult.error) return dimensionsResult;
+
+  const dimensions = dimensionsResult.data ?? [];
+
+  const customDimensionIds = dimensions
+    .filter((d) => d.entityType === "Custom")
+    .map((d) => d.id);
+
+  const entityTypes = [
+    ...new Set(
+      dimensions
+        .filter((d) => d.entityType !== "Custom")
+        .map((d) => d.entityType)
+    )
+  ];
+
+  const [customValues, ...entityResults] = await Promise.all([
+    customDimensionIds.length > 0
+      ? client
+          .from("dimensionValue")
+          .select("id, name, dimensionId")
+          .in("dimensionId", customDimensionIds)
+      : Promise.resolve({
+          data: [] as { id: string; name: string; dimensionId: string }[],
+          error: null
+        }),
+    ...entityTypes.map((et) => getEntityDimensionValues(client, et, companyId))
+  ]);
+
+  if (customValues.error) return customValues;
+
+  const entityValuesByType = new Map<string, { id: string; name: string }[]>();
+  entityTypes.forEach((et, i) => {
+    const result = entityResults[i];
+    if (result && !result.error && result.data) {
+      entityValuesByType.set(et, result.data as { id: string; name: string }[]);
+    }
+  });
+
+  const customValuesByDimension = new Map<
+    string,
+    { id: string; name: string }[]
+  >();
+  for (const v of customValues.data ?? []) {
+    const existing = customValuesByDimension.get(v.dimensionId) ?? [];
+    existing.push({ id: v.id, name: v.name });
+    customValuesByDimension.set(v.dimensionId, existing);
+  }
+
+  return {
+    data: dimensions.map((d) => ({
+      dimensionId: d.id,
+      dimensionName: d.name,
+      entityType: d.entityType,
+      required: d.required,
+      values:
+        d.entityType === "Custom"
+          ? (customValuesByDimension.get(d.id) ?? [])
+          : (entityValuesByType.get(d.entityType) ?? [])
+    })),
+    error: null
+  };
+}
+
+function getEntityDimensionValues(
+  client: SupabaseClient<Database>,
+  entityType: string,
+  companyId: string
+) {
+  switch (entityType) {
+    case "Location":
+      return client
+        .from("location")
+        .select("id, name")
+        .eq("companyId", companyId)
+        .order("name");
+    case "Department":
+      return client
+        .from("department")
+        .select("id, name")
+        .eq("companyId", companyId)
+        .order("name");
+    case "Employee":
+      return client
+        .from("employeeSummary")
+        .select("id, name")
+        .eq("companyId", companyId)
+        .order("name");
+    case "CustomerType":
+      return client
+        .from("customerType")
+        .select("id, name")
+        .eq("companyId", companyId)
+        .order("name");
+    case "SupplierType":
+      return client
+        .from("supplierType")
+        .select("id, name")
+        .eq("companyId", companyId)
+        .order("name");
+    case "ItemPostingGroup":
+      return client
+        .from("itemPostingGroup")
+        .select("id, name")
+        .eq("companyId", companyId)
+        .order("name");
+    case "CostCenter":
+      return client
+        .from("costCenter")
+        .select("id, name")
+        .eq("companyId", companyId)
+        .order("name");
+    default:
+      return Promise.resolve({
+        data: [] as { id: string; name: string }[],
+        error: null
+      });
+  }
+}
+
+export async function getJournalLineDimensions(
+  client: SupabaseClient<Database>,
+  journalLineIds: string[]
+) {
+  if (journalLineIds.length === 0) {
+    return {
+      data: {} as Record<
+        string,
+        {
+          dimensionId: string;
+          dimensionName: string;
+          valueId: string;
+          valueName: string;
+        }[]
+      >,
+      error: null
+    };
+  }
+
+  const result = await client
+    .from("journalLineDimension")
+    .select(
+      "journalLineId, dimensionId, valueId, dimension:dimensionId(name, entityType)"
+    )
+    .in("journalLineId", journalLineIds);
+
+  if (result.error) return { data: null, error: result.error };
+
+  const rows = result.data as unknown as Array<{
+    journalLineId: string;
+    dimensionId: string;
+    valueId: string;
+    dimension: { name: string; entityType: string };
+  }>;
+
+  // Collect all valueIds grouped by entityType for batch resolution
+  const valueIdsByType = new Map<string, Set<string>>();
+  for (const row of rows) {
+    const et = row.dimension.entityType;
+    if (!valueIdsByType.has(et)) valueIdsByType.set(et, new Set());
+    valueIdsByType.get(et)!.add(row.valueId);
+  }
+
+  // Resolve value names in parallel
+  const valueNameMap = new Map<string, string>();
+
+  const resolutions = await Promise.all(
+    Array.from(valueIdsByType.entries()).map(async ([entityType, valueIds]) => {
+      const ids = [...valueIds];
+      if (entityType === "Custom") {
+        const res = await client
+          .from("dimensionValue")
+          .select("id, name")
+          .in("id", ids);
+        return res.data ?? [];
+      }
+      const res = await getEntityValuesByIds(client, entityType, ids);
+      return res.data ?? [];
+    })
+  );
+
+  for (const batch of resolutions) {
+    for (const item of batch as { id: string; name: string }[]) {
+      valueNameMap.set(item.id, item.name);
+    }
+  }
+
+  // Group by journalLineId
+  const grouped: Record<
+    string,
+    {
+      dimensionId: string;
+      dimensionName: string;
+      valueId: string;
+      valueName: string;
+    }[]
+  > = {};
+  for (const row of rows) {
+    if (!grouped[row.journalLineId]) grouped[row.journalLineId] = [];
+    grouped[row.journalLineId].push({
+      dimensionId: row.dimensionId,
+      dimensionName: row.dimension.name,
+      valueId: row.valueId,
+      valueName: valueNameMap.get(row.valueId) ?? row.valueId
+    });
+  }
+
+  return { data: grouped, error: null };
+}
+
+function getEntityValuesByIds(
+  client: SupabaseClient<Database>,
+  entityType: string,
+  ids: string[]
+) {
+  switch (entityType) {
+    case "Location":
+      return client.from("location").select("id, name").in("id", ids);
+    case "Department":
+      return client.from("department").select("id, name").in("id", ids);
+    case "Employee":
+      return client.from("employeeSummary").select("id, name").in("id", ids);
+    case "CustomerType":
+      return client.from("customerType").select("id, name").in("id", ids);
+    case "SupplierType":
+      return client.from("supplierType").select("id, name").in("id", ids);
+    case "ItemPostingGroup":
+      return client.from("itemPostingGroup").select("id, name").in("id", ids);
+    case "CostCenter":
+      return client.from("costCenter").select("id, name").in("id", ids);
+    default:
+      return Promise.resolve({
+        data: [] as { id: string; name: string }[],
+        error: null
+      });
+  }
+}
+
+export async function saveJournalLineDimensions(
+  client: SupabaseClient<Database>,
+  journalLineId: string,
+  companyId: string,
+  dimensions: Array<{ dimensionId: string; valueId: string }>
+) {
+  const deleteResult = await client
+    .from("journalLineDimension")
+    .delete()
+    .eq("journalLineId", journalLineId);
+
+  if (deleteResult.error) return deleteResult;
+
+  if (dimensions.length === 0) return { data: null, error: null };
+
+  return client.from("journalLineDimension").insert(
+    dimensions.map((d) => ({
+      journalLineId,
+      dimensionId: d.dimensionId,
+      valueId: d.valueId,
+      companyId
+    }))
+  );
+}
+
+export async function translateCompanyBalances(
+  client: SupabaseClient<Database>,
+  companyGroupId: string,
+  companyId: string,
+  targetCurrency: string,
+  periodEnd: string,
+  periodStart?: string
+): Promise<{
+  data: TranslatedBalance[] | null;
+  cta: number;
+  error: string | null;
+}> {
+  const { data, error } = await client.rpc("translateTrialBalance", {
+    p_company_group_id: companyGroupId,
+    p_company_id: companyId,
+    p_target_currency: targetCurrency,
+    p_period_end: periodEnd,
+    p_period_start: periodStart ?? null
+  });
+
+  if (error) {
+    return { data: null, cta: 0, error: error.message };
+  }
+
+  const rows = (data ?? []) as unknown as TranslatedBalance[];
+
+  // Look up each account's class to compute CTA
+  const accountIds = rows.map((r) => r.accountId);
+  const { data: accounts } = await client
+    .from("account")
+    .select("id, class")
+    .in("id", accountIds);
+
+  const classById = new Map((accounts ?? []).map((a) => [a.id, a.class]));
+
+  let totalTranslatedAssets = 0;
+  let totalTranslatedLiabilitiesAndEquity = 0;
+
+  for (const row of rows) {
+    const cls = classById.get(row.accountId);
+    if (cls === "Asset") {
+      totalTranslatedAssets += Number(row.translatedBalance);
+    } else {
+      // Liability, Equity, Revenue, Expense (but income statement
+      // accounts net to retained earnings on balance sheet)
+      totalTranslatedLiabilitiesAndEquity += Number(row.translatedBalance);
+    }
+  }
+
+  // CTA = translated assets - translated (liabilities + equity)
+  // A balanced sheet means assets = liabilities + equity + CTA
+  const cta = totalTranslatedAssets - totalTranslatedLiabilitiesAndEquity;
+
+  return { data: rows, cta, error: null };
+}
+
+export async function getConsolidatedBalances(
+  client: SupabaseClient<Database>,
+  companyGroupId: string,
+  companyIds: string[],
+  targetCurrency: string,
+  periodEnd: string,
+  periodStart?: string
+) {
+  // Find elimination entities that should be included automatically.
+  // An elimination entity is included when its parentCompanyId is an ancestor
+  // of any selected company (i.e. it sits at or above the selected companies
+  // in the hierarchy and captures their intercompany eliminations).
+  const { data: allGroupCompanies } = await client
+    .from("company")
+    .select("id, parentCompanyId, isEliminationEntity")
+    .eq("companyGroupId", companyGroupId)
+    .eq("active", true);
+
+  const groupCompanies = allGroupCompanies ?? [];
+  const selectedSet = new Set(companyIds);
+
+  // Collect all ancestors of selected companies
+  const ancestors = new Set<string>();
+  const companyById = new Map(groupCompanies.map((c) => [c.id, c]));
+  for (const id of companyIds) {
+    let current = companyById.get(id);
+    while (current?.parentCompanyId) {
+      ancestors.add(current.parentCompanyId);
+      current = companyById.get(current.parentCompanyId);
+    }
+  }
+
+  // Include elimination entities whose parent is an ancestor of (or is) a
+  // selected company — these hold the reversing entries for IC transactions
+  const eliminationIds = groupCompanies
+    .filter(
+      (c) =>
+        c.isEliminationEntity &&
+        c.parentCompanyId &&
+        (ancestors.has(c.parentCompanyId) || selectedSet.has(c.parentCompanyId))
+    )
+    .map((c) => c.id);
+
+  // All companies whose balances we need (operating + elimination entities)
+  const allIds = [...companyIds, ...eliminationIds];
+
+  // Get balances for all companies and translate to target currency
+  const [allBalances, translations] = await Promise.all([
+    Promise.all(
+      allIds.map((id) =>
+        getFinancialStatementBalances(client, companyGroupId, id, {
+          startDate: periodStart ?? null,
+          endDate: periodEnd
+        })
+      )
+    ),
+    Promise.all(
+      allIds.map((id) =>
+        translateCompanyBalances(
+          client,
+          companyGroupId,
+          id,
+          targetCurrency,
+          periodEnd,
+          periodStart
+        )
+      )
+    )
+  ]);
+
+  // Build a map of translated balances per account, summed across companies
+  const translationByAccount = new Map<
+    string,
+    { translatedBalance: number; exchangeRate: number }
+  >();
+
+  for (const translation of translations) {
+    if (!translation.data) continue;
+    for (const row of translation.data) {
+      const existing = translationByAccount.get(row.accountId);
+      if (existing) {
+        existing.translatedBalance += Number(row.translatedBalance);
+      } else {
+        translationByAccount.set(row.accountId, {
+          translatedBalance: Number(row.translatedBalance),
+          exchangeRate: Number(row.exchangeRate)
+        });
+      }
+    }
+  }
+
+  // Sum CTA across all companies
+  const totalCta = translations.reduce((sum, t) => sum + t.cta, 0);
+
+  // Merge all company balances into one set of accounts, summing balances
+  const accountMap = new Map<
+    string,
+    {
+      balance: number;
+      balanceAtDate: number;
+      netChange: number;
+      translatedBalance: number;
+      exchangeRate: number;
+    }
+  >();
+
+  for (const result of allBalances) {
+    if (result.error || !result.data) continue;
+    for (const account of result.data) {
+      const existing = accountMap.get(account.id);
+      if (existing) {
+        existing.balance += account.balance ?? 0;
+        existing.balanceAtDate += account.balanceAtDate ?? 0;
+        existing.netChange += account.netChange ?? 0;
+      } else {
+        accountMap.set(account.id, {
+          balance: account.balance ?? 0,
+          balanceAtDate: account.balanceAtDate ?? 0,
+          netChange: account.netChange ?? 0,
+          translatedBalance: 0,
+          exchangeRate: 0
+        });
+      }
+    }
+  }
+
+  // Overlay translated values
+  for (const [accountId, translation] of translationByAccount) {
+    const account = accountMap.get(accountId);
+    if (account) {
+      account.translatedBalance = translation.translatedBalance;
+      account.exchangeRate = translation.exchangeRate;
+    }
+  }
+
+  // Use the first company's account structure as the base (shared chart of accounts)
+  const baseAccounts = allBalances.find((r) => r.data)?.data ?? [];
+
+  const consolidated = baseAccounts.map((account) => {
+    const summed = accountMap.get(account.id);
+    return {
+      ...account,
+      balance: summed?.balance ?? 0,
+      balanceAtDate: summed?.balanceAtDate ?? 0,
+      netChange: summed?.netChange ?? 0,
+      translatedBalance: summed?.translatedBalance ?? 0,
+      exchangeRate: summed?.exchangeRate ?? 0
+    };
+  });
+
+  return { data: applyRootSignCorrection(consolidated), cta: totalCta };
+}
+
+// -- Intercompany --
+
+export async function getIntercompanyTransactions(
+  client: SupabaseClient<Database>,
+  companyGroupId: string,
+  args: GenericQueryFilters & { status: string | null }
+) {
+  let query = client
+    .from("intercompanyTransaction")
+    .select(
+      "*, sourceCompany:company!intercompanyTransaction_sourceCompanyId_fkey(name), targetCompany:company!intercompanyTransaction_targetCompanyId_fkey(name)",
+      { count: "exact" }
+    )
+    .eq("companyGroupId", companyGroupId);
+
+  if (args.status) {
+    query = query.eq("status", args.status);
+  }
+
+  query = setGenericQueryFilters(query, args, [
+    { column: "createdAt", ascending: false }
+  ]);
+  return query;
+}
+
+export async function createIntercompanyTransaction(
+  client: SupabaseClient<Database>,
+  input: z.infer<typeof intercompanyTransactionValidator> & {
+    companyGroupId: string;
+    userId: string;
+  }
+) {
+  const today = new Date().toISOString().split("T")[0];
+  const postingDate = input.postingDate || today;
+
+  // Create the journal entry on the source company
+  const journal = await client
+    .from("journal")
+    .insert({
+      description: `IC: ${input.description}`,
+      companyId: input.sourceCompanyId,
+      postingDate
+    })
+    .select("id")
+    .single();
+
+  if (journal.error) return journal;
+
+  const journalId = journal.data.id;
+  const journalLineRef = crypto.randomUUID();
+
+  // Insert debit and credit journal lines
+  const journalLines = await client
+    .from("journalLine")
+    .insert([
+      {
+        journalId,
+        accountId: input.debitAccountId,
+        description: input.description,
+        amount: input.amount,
+        journalLineReference: journalLineRef,
+        intercompanyPartnerId: input.targetCompanyId,
+        companyId: input.sourceCompanyId,
+        companyGroupId: input.companyGroupId
+      },
+      {
+        journalId,
+        accountId: input.creditAccountId,
+        description: input.description,
+        amount: -input.amount,
+        journalLineReference: journalLineRef,
+        intercompanyPartnerId: input.targetCompanyId,
+        companyId: input.sourceCompanyId,
+        companyGroupId: input.companyGroupId
+      }
+    ])
+    .select("id");
+
+  if (journalLines.error) return journalLines;
+
+  // Create intercompany transaction record
+  return client
+    .from("intercompanyTransaction")
+    .insert({
+      companyGroupId: input.companyGroupId,
+      sourceCompanyId: input.sourceCompanyId,
+      targetCompanyId: input.targetCompanyId,
+      sourceJournalLineId: journalLines.data[0].id,
+      amount: input.amount,
+      currencyCode: input.currencyCode,
+      description: input.description,
+      status: "Unmatched"
+    })
+    .select("id")
+    .single();
+}
+
+export async function runIntercompanyMatching(
+  client: SupabaseClient<Database>,
+  companyGroupId: string
+) {
+  return client.rpc("matchIntercompanyTransactions", {
+    p_company_group_id: companyGroupId
+  });
+}
+
+export async function generateEliminations(
+  client: SupabaseClient<Database>,
+  companyGroupId: string,
+  userId: string
+) {
+  return client.rpc("generateEliminationEntries", {
+    p_company_group_id: companyGroupId,
+    p_user_id: userId
+  });
+}
+
+export async function getIntercompanyBalance(
+  client: SupabaseClient<Database>,
+  companyGroupId: string
+) {
+  return client.rpc("getIntercompanyBalance", {
+    p_company_group_id: companyGroupId
+  });
+}
+
+export async function getExchangeRateHistory(
+  client: SupabaseClient<Database>,
+  companyGroupId: string,
+  currencyCode: string
+) {
+  const sixMonthsAgo = new Date();
+  sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+
+  return client
+    .from("exchangeRateHistory")
+    .select("effectiveDate, rate")
+    .eq("companyGroupId", companyGroupId)
+    .eq("currencyCode", currencyCode)
+    .gte("effectiveDate", sixMonthsAgo.toISOString().split("T")[0])
+    .order("effectiveDate", { ascending: true });
+}
+
+// -- Journal Entries --
+// Uses existing journal/journalLine tables with added status/entryType columns.
+// Manual JEs start as Draft and are posted by flipping status to Posted.
+// amount > 0 = debit, amount < 0 = credit.
+
+export async function getJournalEntries(
+  client: SupabaseClient<Database>,
+  companyId: string,
+  args: GenericQueryFilters & { search: string | null; status: string | null }
+) {
+  let query = client
+    .from("journalEntries")
+    .select("*", { count: "exact" })
+    .eq("companyId", companyId);
+
+  if (args.search) {
+    query = query.or(
+      `journalEntryId.ilike.%${args.search}%,description.ilike.%${args.search}%`
+    );
+  }
+
+  if (args.status) {
+    query = query.eq("status", args.status);
+  }
+
+  query = setGenericQueryFilters(query, args, [
+    { column: "createdAt", ascending: false }
+  ]);
+
+  return query;
+}
+
+export async function getJournalEntry(
+  client: SupabaseClient<Database>,
+  id: string
+) {
+  return client
+    .from("journal")
+    .select("*, journalLine(*, account!journalLine_accountId_fkey(class))")
+    .eq("id", id)
+    .single();
+}
+
+export async function createJournalEntry(
+  client: SupabaseClient<Database>,
+  data: z.infer<typeof journalEntryValidator> & {
+    journalEntryId: string;
+    sourceType: Database["public"]["Enums"]["journalEntrySourceType"];
+    companyId: string;
+    createdBy: string;
+  }
+) {
+  const { id: _id, ...rest } = data;
+  return client
+    .from("journal")
+    .insert({
+      ...rest,
+      status: "Draft" as const
+    })
+    .select("id")
+    .single();
+}
+
+export async function updateJournalEntry(
+  client: SupabaseClient<Database>,
+  id: string,
+  data: z.infer<typeof journalEntryValidator> & {
+    updatedBy: string;
+  }
+) {
+  const { id: _id, ...rest } = data;
+  return client
+    .from("journal")
+    .update(sanitize(rest))
+    .eq("id", id)
+    .eq("status", "Draft");
+}
+
+export async function deleteJournalEntry(
+  client: SupabaseClient<Database>,
+  id: string
+) {
+  return client.from("journal").delete().eq("id", id).eq("status", "Draft");
+}
+
+export async function upsertJournalEntryLine(
+  client: SupabaseClient<Database>,
+  data:
+    | (z.infer<typeof journalEntryLineValidator> & {
+        journalId: string;
+        companyId: string;
+        companyGroupId: string;
+      })
+    | (z.infer<typeof journalEntryLineValidator> & {
+        id: string;
+        updatedBy: string;
+        companyGroupId: string;
+      })
+) {
+  const account = await client
+    .from("account")
+    .select("class")
+    .eq("id", data.accountId)
+    .single();
+
+  if (account.error || !account.data?.class) {
+    return { data: null, error: { message: "Account not found" } };
+  }
+
+  const amount = toStoredAmount(
+    data.debit ?? 0,
+    data.credit ?? 0,
+    account.data.class
+  );
+
+  if ("companyId" in data) {
+    return client
+      .from("journalLine")
+      .insert({
+        journalId: data.journalId,
+        accountId: data.accountId,
+        description: data.description,
+        amount,
+        journalLineReference: crypto.randomUUID(),
+        companyId: data.companyId
+      })
+      .select("id")
+      .single();
+  } else {
+    return client
+      .from("journalLine")
+      .update(
+        sanitize({
+          accountId: data.accountId,
+          description: data.description,
+          amount,
+          updatedBy: data.updatedBy
+        })
+      )
+      .eq("id", data.id)
+      .select("id")
+      .single();
+  }
+}
+
+export async function deleteJournalEntryLine(
+  client: SupabaseClient<Database>,
+  id: string
+) {
+  return client.from("journalLine").delete().eq("id", id);
+}
+
+export async function saveJournalEntryWithLines(
+  client: SupabaseClient<Database>,
+  data: {
+    journalEntryId: string;
+    postingDate: string;
+    description?: string;
+    updatedBy: string;
+    lines: Array<{
+      accountId: string;
+      description?: string;
+      debit: number;
+      credit: number;
+      dimensions?: Array<{ dimensionId: string; valueId: string }>;
+    }>;
+    companyId: string;
+    companyGroupId: string;
+  }
+) {
+  // 1. Update journal header
+  const headerUpdate = await client
+    .from("journal")
+    .update(
+      sanitize({
+        postingDate: data.postingDate,
+        description: data.description,
+        updatedBy: data.updatedBy
+      })
+    )
+    .eq("id", data.journalEntryId)
+    .eq("status", "Draft");
+
+  if (headerUpdate.error) return headerUpdate;
+
+  // 2. Delete existing lines (cascades journalLineDimension via FK)
+  const deleteResult = await client
+    .from("journalLine")
+    .delete()
+    .eq("journalId", data.journalEntryId);
+
+  if (deleteResult.error) return deleteResult;
+
+  if (data.lines.length === 0) return { data: null, error: null };
+
+  // 3. Look up account classes for all distinct account IDs
+  const accountIds = [...new Set(data.lines.map((l) => l.accountId))];
+  const accounts = await client
+    .from("account")
+    .select("id, class")
+    .in("id", accountIds);
+
+  if (accounts.error) return accounts;
+
+  const accountMap = new Map(accounts.data.map((a) => [a.id, a.class]));
+
+  // 4. Build insert payloads
+  const inserts = data.lines.map((line) => {
+    const accountClass = accountMap.get(line.accountId);
+    if (!accountClass) {
+      throw new Error(`Account not found: ${line.accountId}`);
+    }
+    return {
+      journalId: data.journalEntryId,
+      accountId: line.accountId,
+      description: line.description,
+      amount: toStoredAmount(line.debit, line.credit, accountClass),
+      journalLineReference: crypto.randomUUID(),
+      companyId: data.companyId
+    };
+  });
+
+  // 5. Insert all lines and get new IDs
+  const insertResult = await client
+    .from("journalLine")
+    .insert(inserts)
+    .select("id");
+
+  if (insertResult.error) return insertResult;
+
+  // 6. Insert dimensions from client state
+  const newLineIds = (insertResult.data ?? []).map((l) => l.id);
+  const dimensionInserts: Array<{
+    journalLineId: string;
+    dimensionId: string;
+    valueId: string;
+    companyId: string;
+  }> = [];
+
+  for (let i = 0; i < newLineIds.length; i++) {
+    const lineDims = data.lines[i]?.dimensions;
+    if (lineDims) {
+      for (const d of lineDims) {
+        dimensionInserts.push({
+          journalLineId: newLineIds[i],
+          dimensionId: d.dimensionId,
+          valueId: d.valueId,
+          companyId: data.companyId
+        });
+      }
+    }
+  }
+
+  if (dimensionInserts.length > 0) {
+    const dimInsertResult = await client
+      .from("journalLineDimension")
+      .insert(dimensionInserts);
+    if (dimInsertResult.error) return dimInsertResult;
+  }
+
+  return insertResult;
+}
+
+export async function postJournalEntry(
+  client: SupabaseClient<Database>,
+  id: string,
+  userId: string
+) {
+  // 1. Fetch entry + lines
+  const entry = await getJournalEntry(client, id);
+  if (entry.error) return entry;
+  if (entry.data.status !== "Draft") {
+    return {
+      data: null,
+      error: { message: "Journal entry is not in Draft status" }
+    };
+  }
+
+  const lines = entry.data.journalLine ?? [];
+  if (lines.length === 0) {
+    return { data: null, error: { message: "Journal entry has no lines" } };
+  }
+
+  // 2. Validate balance (sum of amounts should be 0)
+  const total = lines.reduce((sum, l) => sum + Number(l.amount), 0);
+
+  if (Math.abs(total) > 0.001) {
+    return {
+      data: null,
+      error: { message: "Total debits must equal total credits" }
+    };
+  }
+
+  // 3. Flip status — lines are already in journalLine, no copying needed
+  return client
+    .from("journal")
+    .update({
+      status: "Posted" as const,
+      postedAt: new Date().toISOString(),
+      postedBy: userId,
+      updatedBy: userId
+    })
+    .eq("id", id)
+    .select("id")
+    .single();
+}
+
+export async function reverseJournalEntry(
+  client: SupabaseClient<Database>,
+  id: string,
+  data: {
+    journalEntryId: string;
+    companyId: string;
+    userId: string;
+  }
+) {
+  // 1. Fetch original
+  const original = await getJournalEntry(client, id);
+  if (original.error) return original;
+  if (original.data.status !== "Posted") {
+    return {
+      data: null,
+      error: { message: "Can only reverse posted journal entries" }
+    };
+  }
+
+  // 2. Create reversing entry as Posted
+  const reversed = await client
+    .from("journal")
+    .insert({
+      journalEntryId: data.journalEntryId,
+      companyId: data.companyId,
+      description: `Reversal of ${original.data.journalEntryId}`,
+      postingDate: new Date().toISOString().split("T")[0],
+      entryType: original.data.entryType,
+      sourceType: "Manual" as const,
+      reversalOfId: id,
+      status: "Posted" as const,
+      postedAt: new Date().toISOString(),
+      postedBy: data.userId,
+      createdBy: data.userId
+    })
+    .select("id")
+    .single();
+
+  if (reversed.error) return reversed;
+
+  // 3. Copy lines with negated amounts
+  const lines = (original.data.journalLine ?? []).map((line) => ({
+    journalId: reversed.data.id,
+    accountId: line.accountId,
+    companyId: line.companyId,
+    description: line.description,
+    amount: -Number(line.amount),
+    journalLineReference: crypto.randomUUID()
+  }));
+
+  if (lines.length > 0) {
+    const linesResult = await client.from("journalLine").insert(lines);
+    if (linesResult.error) return linesResult;
+  }
+
+  // 4. Mark original as Reversed and store back-reference
+  const updateResult = await client
+    .from("journal")
+    .update({
+      status: "Reversed" as const,
+      reversedById: reversed.data.id,
+      updatedBy: data.userId
+    })
+    .eq("id", id);
+
+  if (updateResult.error) return updateResult;
+
+  return reversed;
 }

@@ -88,5 +88,7 @@ export const journalReference = {
     receipt: (id: string) => `receipt:${id}`,
     salesInvoice: (id: string) => `sales-invoice:${id}`,
     shipment: (id: string) => `shipment:${id}`,
+    job: (id: string) => `job:${id}`,
+    materialIssue: (id: string) => `material-issue:${id}`,
   },
 };

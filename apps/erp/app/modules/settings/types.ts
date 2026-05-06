@@ -5,6 +5,7 @@ import type {
   getCustomFieldsTables,
   getIntegrations,
   getSequences,
+  getSubsidiaries,
   getWebhooks
 } from "./settings.service";
 
@@ -26,6 +27,10 @@ export type CustomFieldsTableType = NonNullable<
 
 export type Integration = NonNullable<
   Awaited<ReturnType<typeof getIntegrations>>["data"]
+>[number];
+
+export type Subsidiary = NonNullable<
+  Awaited<ReturnType<typeof getSubsidiaries>>["data"]
 >[number];
 
 export type Sequence = NonNullable<

@@ -3,11 +3,11 @@ import { DB, getConnectionPool, getDatabaseClient } from "../lib/database.ts";
 
 import { corsHeaders } from "../lib/headers.ts";
 import {
-  accountCategories,
   accountDefaults,
   accounts,
   currencies,
   customerStatuses,
+  dimensions,
   failureModes,
   fiscalYearSettings,
   gaugeTypes,
@@ -16,9 +16,6 @@ import {
   nonConformanceRequiredActions,
   nonConformanceTypes,
   paymentTerms,
-  postingGroupInventory,
-  postingGroupPurchasing,
-  postingGroupSales,
   scrapReasons,
   sequences,
   unitOfMeasures,
@@ -33,12 +30,13 @@ serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
-  const { companyId: id, userId } = await req.json();
+  const { companyId: id, userId, parentCompanyId } = await req.json();
 
   console.log({
     function: "seed-company",
     id,
     userId,
+    parentCompanyId,
   });
 
   try {
@@ -60,7 +58,56 @@ serve(async (req: Request) => {
     if (company.error) throw new Error(company.error.message);
     if (!company.data) throw new Error("Company not found");
 
+    // Determine if this is a new root company or joining an existing group
+    let companyGroupId = company.data.companyGroupId;
+    const isNewGroup = !companyGroupId && !parentCompanyId;
+
+    // If this is a subsidiary, get the parent's companyGroupId
+    if (parentCompanyId && !companyGroupId) {
+      const parent = await client
+        .from("company")
+        .select("companyGroupId")
+        .eq("id", parentCompanyId)
+        .single();
+      if (parent.error) throw new Error(parent.error.message);
+      if (!parent.data?.companyGroupId)
+        throw new Error("Parent company has no group");
+      companyGroupId = parent.data.companyGroupId;
+    }
+
     await db.transaction().execute(async (trx) => {
+      // If no companyGroupId, create a new company group and assign it
+      if (isNewGroup) {
+        const companyGroupResult = await trx
+          .insertInto("companyGroup")
+          .values({
+            name: company.data.name,
+            createdBy: userId,
+            ownerId: userId,
+          })
+          .returning(["id"])
+          .execute();
+
+        companyGroupId = companyGroupResult[0].id;
+        if (!companyGroupId)
+          throw new Error("Failed to create company group");
+
+        await trx
+          .updateTable("company")
+          .set({ companyGroupId })
+          .where("id", "=", companyId)
+          .execute();
+      }
+
+      // For subsidiaries: set companyGroupId and parentCompanyId
+      if (parentCompanyId) {
+        await trx
+          .updateTable("company")
+          .set({ companyGroupId, parentCompanyId })
+          .where("id", "=", companyId)
+          .execute();
+      }
+
       await trx
         .withSchema("storage")
         .insertInto("buckets")
@@ -215,65 +262,71 @@ serve(async (req: Request) => {
         .values(sequences.map((s) => ({ ...s, companyId })))
         .execute();
 
-      await trx
-        .insertInto("currency")
-        .values(currencies.map((c) => ({ ...c, companyId })))
-        .execute();
+      // Shared tables: only seed for new groups (existing groups already have these)
+      let accountIdByKey: Record<string, string> = {};
+      if (isNewGroup) {
+        await trx
+          .insertInto("currency")
+          .values(currencies.map((c) => ({ ...c, companyGroupId })))
+          .execute();
 
-      const accountCategoriesWithIds = await trx
-        .insertInto("accountCategory")
-        .values(accountCategories.map((ac) => ({ ...ac, companyId })))
-        .returning(["id", "category"])
-        .execute();
-
-      const accountCategoriesByName = accountCategoriesWithIds.reduce<
-        Record<string, string>
-      >((acc, { id, category }) => {
-        if (id && category) {
-          acc[category] = id;
+        // Insert accounts in order, resolving parentKey to parentId
+        for (const { key, parentKey, ...acc } of accounts) {
+          const result = await trx
+            .insertInto("account")
+            .values({
+              ...acc,
+              companyGroupId,
+              parentId: parentKey ? accountIdByKey[parentKey] ?? null : null,
+            })
+            .returning(["id"])
+            .execute();
+          if (result[0]?.id) {
+            accountIdByKey[key] = result[0].id;
+          }
         }
-        return acc;
-      }, {});
 
-      const getCategoryId = (category: string | null) => {
-        if (!category) return null;
-        return accountCategoriesByName[category];
-      };
+        await trx
+          .insertInto("dimension")
+          .values(
+            dimensions.map((d) => ({
+              name: d.name,
+              entityType: d.entityType,
+              companyGroupId,
+              createdBy: userId,
+            }))
+          )
+          .execute();
+      } else {
+        // For subsidiaries joining an existing group, look up account IDs by number
+        const existingAccounts = await trx
+          .selectFrom("account")
+          .select(["id", "number"])
+          .where("companyGroupId", "=", companyGroupId!)
+          .where("number", "is not", null)
+          .execute();
+        for (const acc of existingAccounts) {
+          if (acc.number) {
+            accountIdByKey[acc.number] = acc.id;
+          }
+        }
+      }
 
-      await trx
-        .insertInto("account")
-        .values(
-          accounts.map(({ accountCategory, ...a }) => ({
-            ...a,
-            companyId,
-            accountCategoryId: getCategoryId(accountCategory),
-          }))
-        )
-        .execute();
+      // Resolve account numbers to IDs for account defaults
+      const resolvedDefaults: Record<string, string | null> = {};
+      for (const [key, number] of Object.entries(accountDefaults)) {
+        resolvedDefaults[key] = accountIdByKey[number] ?? null;
+      }
 
+      // Company-specific accounting defaults and posting groups
       await trx
         .insertInto("accountDefault")
         .values([
           {
-            ...accountDefaults,
+            ...resolvedDefaults,
             companyId,
           },
         ])
-        .execute();
-
-      await trx
-        .insertInto("postingGroupInventory")
-        .values([{ ...postingGroupInventory, companyId }])
-        .execute();
-
-      await trx
-        .insertInto("postingGroupPurchasing")
-        .values([{ ...postingGroupPurchasing, companyId }])
-        .execute();
-
-      await trx
-        .insertInto("postingGroupSales")
-        .values([{ ...postingGroupSales, companyId }])
         .execute();
 
       await trx
@@ -325,6 +378,47 @@ serve(async (req: Request) => {
         .update({ permissions: newPermissions })
         .eq("id", userId);
       if (error) throw new Error(error.message);
+
+      // Auto-create elimination entity if this is a subsidiary
+      if (parentCompanyId && companyGroupId) {
+        const siblings = await trx
+          .selectFrom("company")
+          .select(["id", "isEliminationEntity"])
+          .where("companyGroupId", "=", companyGroupId)
+          .where("parentCompanyId", "=", parentCompanyId)
+          .execute();
+
+        const hasElimination = siblings.some(
+          (s) => s.isEliminationEntity
+        );
+
+        if (!hasElimination) {
+          const parent = await trx
+            .selectFrom("company")
+            .select(["name", "baseCurrencyCode", "countryCode"])
+            .where("id", "=", parentCompanyId)
+            .executeTakeFirst();
+
+          await trx
+            .insertInto("company")
+            .values({
+              name: `Elimination - ${parent?.name ?? "Unknown"}`,
+              addressLine1: "",
+              city: "",
+              stateProvince: "",
+              postalCode: "",
+              baseCurrencyCode:
+                parent?.baseCurrencyCode ??
+                company.data.baseCurrencyCode,
+              countryCode:
+                parent?.countryCode ?? company.data.countryCode ?? "",
+              parentCompanyId,
+              isEliminationEntity: true,
+              companyGroupId,
+            })
+            .execute();
+        }
+      }
     });
 
     return new Response(

@@ -15,13 +15,14 @@ import {
   Hidden,
   ItemPostingGroup,
   Number,
+  Select,
   Submit
 } from "~/components/Form";
 import { Confirm } from "~/components/Modals";
 import { usePermissions, useUser } from "~/hooks";
 import { useItems } from "~/stores/items";
 import { path } from "~/utils/path";
-import { itemCostValidator } from "../../items.models";
+import { itemCostingMethods, itemCostValidator } from "../../items.models";
 
 type ItemCostingFormProps = {
   initialValues: z.infer<typeof itemCostValidator>;
@@ -61,24 +62,14 @@ const ItemCostingForm = ({ initialValues }: ItemCostingFormProps) => {
               helperText={t`Used to categorize items for reporting and analysis`}
               isClearable
             />
-            {/* <Select
+            <Select
               name="costingMethod"
-              label={t`Part Costing Method`}
-              options={partCostingMethodOptions}
-              onChange={(newValue) => {
-                if (newValue) setItemCostingMethod(newValue.value);
-              }}
+              label={t`Costing Method`}
+              options={itemCostingMethods.map((method) => ({
+                label: method,
+                value: method
+              }))}
             />
-            <Number
-              name="standardCost"
-              label={t`Standard Cost`}
-              formatOptions={{
-                style: "currency",
-                currency: baseCurrency,
-                
-              }}
-              isReadOnly={partCostingMethod !== "Standard"}
-            /> */}
 
             <Number
               name="unitCost"

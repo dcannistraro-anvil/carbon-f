@@ -2,6 +2,20 @@
 
 Patterns learned from corrections. Review at the start of each session.
 
+## RLS Policies
+
+- **NEVER** use the old `has_role('employee', "companyId") AND has_company_permission(...)` RLS pattern. It is deprecated.
+- **ALWAYS** use the new pattern with `get_companies_with_employee_permission()` helper function and standardized policy names ("SELECT", "INSERT", "UPDATE", "DELETE").
+- Reference migration: `20250201181148_rls-refactor.sql`
+- Correct pattern:
+  ```sql
+  CREATE POLICY "SELECT" ON "public"."tableName"
+  FOR SELECT USING (
+    "companyId" = ANY (
+      (SELECT get_companies_with_employee_permission('module_view'))::text[]
+    )
+  );
+  ```
 ## Event-system interceptors (Carbon-specific)
 
 - Carbon uses `attach_event_trigger(table_name, BEFORE[], AFTER[])` defined in `20260116215036_event_system_impl.sql` / `20260410030406_event-system-after-interceptors.sql`, not plain Postgres triggers. Each call **DROPs and re-CREATEs** the event trigger — so when adding interceptors to a table that already has some registered, the new call must include every existing interceptor plus the new ones, otherwise the old ones silently detach. Grep `attach_event_trigger('<table>'` across migrations to find the latest registration and merge arrays.
@@ -35,6 +49,14 @@ Patterns learned from corrections. Review at the start of each session.
 ## ERP app has no vitest infrastructure
 
 - `apps/erp` has no vitest config and no tests. Adding unit tests for validators there requires setting up vitest + mocking the supabase client — not a 5-minute job. If a task says "add validator tests", the estimate should include test-infrastructure setup unless `packages/*` (which does have vitest) is the right home for the pure function.
+
+## Use `accountId` not `accountNumber`
+
+- The codebase has migrated from `accountNumber` to `accountId` for GL account references. The old `accountNumber`-based foreign keys in the DB schema (e.g., on `purchaseOrderLine`, `purchaseInvoiceLine`) are from older migrations — current code uses `accountId`. Always use `accountId` when referencing GL accounts.
+
+## Do not commit without being asked
+
+- Never create git commits unless the user explicitly asks to commit. Stage and commit only on request. The user wants to review changes before committing.
 
 ## Bash fallbacks when tools are missing
 

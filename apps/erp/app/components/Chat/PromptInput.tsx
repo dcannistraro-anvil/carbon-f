@@ -632,6 +632,7 @@ export const PromptInputSubmit = ({
       aria-label={t`Submit`}
       icon={Icon}
       isRound
+      className="before:rounded-full after:rounded-full"
       type="submit"
       variant={variant}
       {...props}

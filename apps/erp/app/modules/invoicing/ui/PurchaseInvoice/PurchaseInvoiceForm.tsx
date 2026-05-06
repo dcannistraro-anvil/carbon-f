@@ -271,7 +271,7 @@ const PurchaseInvoiceForm = ({ initialValues }: PurchaseInvoiceFormProps) => {
                   }
                 }}
               />
-              <Location name="locationId" label={t`Location`} />
+              <Location name="locationId" label={t`Delivery Location`} />
               <CustomFormFields table="purchaseInvoice" />
             </div>
           </VStack>

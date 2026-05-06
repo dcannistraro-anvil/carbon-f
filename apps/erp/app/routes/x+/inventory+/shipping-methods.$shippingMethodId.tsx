@@ -37,7 +37,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
 export async function action({ request }: ActionFunctionArgs) {
   assertIsPost(request);
-  const { client, userId } = await requirePermissions(request, {
+  const { client, companyGroupId, userId } = await requirePermissions(request, {
     update: "inventory"
   });
 
@@ -56,6 +56,7 @@ export async function action({ request }: ActionFunctionArgs) {
   const updateShippingMethod = await upsertShippingMethod(client, {
     id,
     ...d,
+    companyGroupId,
     updatedBy: userId,
     customFields: setCustomFields(formData)
   });

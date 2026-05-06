@@ -5,7 +5,13 @@ import { DB, getConnectionPool, getDatabaseClient } from "../lib/database.ts";
 import { corsHeaders } from "../lib/headers.ts";
 import { getSupabaseServiceRole } from "../lib/supabase.ts";
 import type { Database, Json } from "../lib/types.ts";
-import { TrackedEntityAttributes } from "../lib/utils.ts";
+import { TrackedEntityAttributes, credit, debit, journalReference } from "../lib/utils.ts";
+import { isInternalUser } from "../lib/flags.ts";
+import { getCurrentAccountingPeriod } from "../shared/get-accounting-period.ts";
+import { getNextSequence } from "../shared/get-next-sequence.ts";
+import { getDefaultPostingGroup } from "../shared/get-posting-group.ts";
+import { calculateCOGS } from "../shared/calculate-cogs.ts";
+import { nanoid } from "https://deno.land/x/nanoid@v3.0.0/mod.ts";
 
 const pool = getConnectionPool(1);
 const db = getDatabaseClient<DB>(pool);
@@ -139,8 +145,59 @@ serve(async (req: Request) => {
               .single();
             if (customer.error) throw new Error("Failed to fetch customer");
 
+            const [companyRecord, isInternal] = await Promise.all([
+              client
+                .from("company")
+                .select("companyGroupId")
+                .eq("id", companyId)
+                .single(),
+              isInternalUser(client, userId),
+            ]);
+            if (companyRecord.error) throw new Error("Failed to fetch company");
+            const companyGroupId = companyRecord.data.companyGroupId;
+
+            const accountDefaults = isInternal
+              ? await getDefaultPostingGroup(client, companyId)
+              : null;
+            if (isInternal && (accountDefaults?.error || !accountDefaults?.data)) {
+              throw new Error("Error getting account defaults");
+            }
+
+            const dimensions = isInternal
+              ? await client
+                  .from("dimension")
+                  .select("id, entityType")
+                  .eq("companyGroupId", companyGroupId)
+                  .eq("active", true)
+                  .in("entityType", [
+                    "CustomerType",
+                    "ItemPostingGroup",
+                    "Location",
+                    "CostCenter",
+                  ])
+              : null;
+
+            const dimensionMap = new Map<string, string>();
+            if (dimensions?.data) {
+              for (const dim of dimensions.data) {
+                if (dim.entityType) dimensionMap.set(dim.entityType, dim.id);
+              }
+            }
+
             const itemLedgerInserts: Database["public"]["Tables"]["itemLedger"]["Insert"][] =
               [];
+
+            const journalLineInserts: Omit<
+              Database["public"]["Tables"]["journalLine"]["Insert"],
+              "journalId"
+            >[] = [];
+
+            const journalLineDimensionsMeta: {
+              customerTypeId: string | null;
+              itemPostingGroupId: string | null;
+              locationId: string | null;
+              costCenterId: string | null;
+            }[] = [];
 
             const jobUpdates: Record<
               string,
@@ -340,6 +397,61 @@ serve(async (req: Request) => {
                     serialNumbersConsumed.push(tracking.id);
                   }
                 });
+              }
+
+              // COGS journal entries for this shipment line
+              if (
+                isInternal &&
+                accountDefaults?.data &&
+                shipmentLine.itemId &&
+                shippedQuantity > 0 &&
+                itemTrackingType !== "Non-Inventory"
+              ) {
+                const itemPostingGroupId =
+                  itemCosts.data.find(
+                    (cost) => cost.itemId === shipmentLine.itemId
+                  )?.itemPostingGroupId ?? null;
+
+                const salesOrderLine = salesOrderLines.data.find(
+                  (sol) => sol.id === shipmentLine.lineId
+                );
+
+                const journalLineReference = nanoid();
+
+                journalLineInserts.push({
+                  accountId: accountDefaults.data.costOfGoodsSoldAccount,
+                  description: "Cost of Goods Sold",
+                  amount: 0,
+                  quantity: shippedQuantity,
+                  documentType: "Sales Shipment",
+                  documentId: shipment.data?.id,
+                  externalDocumentId: salesOrder.data?.customerReference ?? undefined,
+                  documentLineReference: journalReference.to.shipment(shipmentLine.id),
+                  journalLineReference,
+                  companyId,
+                });
+
+                journalLineInserts.push({
+                  accountId: accountDefaults.data.inventoryAccount,
+                  description: "Inventory Account",
+                  amount: 0,
+                  quantity: shippedQuantity,
+                  documentType: "Sales Shipment",
+                  documentId: shipment.data?.id,
+                  externalDocumentId: salesOrder.data?.customerReference ?? undefined,
+                  documentLineReference: journalReference.to.shipment(shipmentLine.id),
+                  journalLineReference,
+                  companyId,
+                });
+
+                for (let i = 0; i < 2; i++) {
+                  journalLineDimensionsMeta.push({
+                    customerTypeId: customer.data.customerTypeId ?? null,
+                    itemPostingGroupId,
+                    locationId: shipmentLine.locationId ?? locationId ?? null,
+                    costCenterId: salesOrderLine?.costCenterId ?? null,
+                  });
+                }
               }
             }
 
@@ -808,6 +920,166 @@ serve(async (req: Request) => {
                     .set(update)
                     .where("id", "=", jobId)
                     .execute();
+                }
+              }
+
+              // Calculate COGS and create journal entries
+              if (isInternal && journalLineInserts.length > 0) {
+                const itemShipmentQuantities = new Map<
+                  string,
+                  { totalQuantity: number; lineIndices: number[] }
+                >();
+
+                for (let i = 0; i < journalLineInserts.length; i += 2) {
+                  const jl = journalLineInserts[i];
+                  const ref = jl.documentLineReference;
+                  const shipmentLine = shipmentLines.data.find(
+                    (sl) => ref === journalReference.to.shipment(sl.id)
+                  );
+                  if (!shipmentLine?.itemId) continue;
+
+                  const existing = itemShipmentQuantities.get(shipmentLine.itemId);
+                  if (existing) {
+                    existing.totalQuantity += jl.quantity ?? 0;
+                    existing.lineIndices.push(i);
+                  } else {
+                    itemShipmentQuantities.set(shipmentLine.itemId, {
+                      totalQuantity: jl.quantity ?? 0,
+                      lineIndices: [i],
+                    });
+                  }
+                }
+
+                for (const [itemId, info] of itemShipmentQuantities) {
+                  const cogsResult = await calculateCOGS(trx, {
+                    itemId,
+                    quantity: info.totalQuantity,
+                    companyId,
+                  });
+
+                  let costAssigned = 0;
+                  for (let idx = 0; idx < info.lineIndices.length; idx++) {
+                    const jlIdx = info.lineIndices[idx];
+                    const lineQty = journalLineInserts[jlIdx].quantity ?? 0;
+                    const lineCost =
+                      idx === info.lineIndices.length - 1
+                        ? cogsResult.totalCost - costAssigned
+                        : (lineQty / info.totalQuantity) * cogsResult.totalCost;
+
+                    costAssigned += lineCost;
+                    journalLineInserts[jlIdx].amount = debit("expense", lineCost);
+                    journalLineInserts[jlIdx + 1].amount = credit("asset", lineCost);
+                  }
+
+                  await trx
+                    .insertInto("costLedger")
+                    .values({
+                      itemLedgerType: "Sale",
+                      costLedgerType: "Direct Cost",
+                      adjustment: false,
+                      documentType: "Sales Shipment",
+                      documentId: shipment.data?.id ?? "",
+                      itemId,
+                      quantity: -info.totalQuantity,
+                      cost: -cogsResult.totalCost,
+                      remainingQuantity: 0,
+                      companyId,
+                    })
+                    .execute();
+                }
+
+                const accountingPeriodId = await getCurrentAccountingPeriod(
+                  client,
+                  companyId,
+                  db
+                );
+
+                const journalEntryId = await getNextSequence(
+                  trx,
+                  "journalEntry",
+                  companyId
+                );
+
+                const journalResult = await trx
+                  .insertInto("journal")
+                  .values({
+                    journalEntryId,
+                    accountingPeriodId,
+                    description: `Sales Shipment ${shipment.data.shipmentId}`,
+                    postingDate: today,
+                    companyId,
+                    sourceType: "Sales Shipment",
+                    status: "Posted",
+                    postedAt: new Date().toISOString(),
+                    postedBy: userId,
+                    createdBy: userId,
+                  })
+                  .returning(["id"])
+                  .executeTakeFirstOrThrow();
+
+                const journalLineResults = await trx
+                  .insertInto("journalLine")
+                  .values(
+                    journalLineInserts.map((line) => ({
+                      ...line,
+                      journalId: journalResult.id,
+                    }))
+                  )
+                  .returning(["id"])
+                  .execute();
+
+                if (dimensionMap.size > 0) {
+                  const journalLineDimensionInserts: {
+                    journalLineId: string;
+                    dimensionId: string;
+                    valueId: string;
+                    companyId: string;
+                  }[] = [];
+
+                  journalLineResults.forEach((jl, index) => {
+                    const meta = journalLineDimensionsMeta[index];
+                    if (!meta) return;
+
+                    if (meta.customerTypeId && dimensionMap.has("CustomerType")) {
+                      journalLineDimensionInserts.push({
+                        journalLineId: jl.id,
+                        dimensionId: dimensionMap.get("CustomerType")!,
+                        valueId: meta.customerTypeId,
+                        companyId,
+                      });
+                    }
+                    if (meta.itemPostingGroupId && dimensionMap.has("ItemPostingGroup")) {
+                      journalLineDimensionInserts.push({
+                        journalLineId: jl.id,
+                        dimensionId: dimensionMap.get("ItemPostingGroup")!,
+                        valueId: meta.itemPostingGroupId,
+                        companyId,
+                      });
+                    }
+                    if (meta.locationId && dimensionMap.has("Location")) {
+                      journalLineDimensionInserts.push({
+                        journalLineId: jl.id,
+                        dimensionId: dimensionMap.get("Location")!,
+                        valueId: meta.locationId,
+                        companyId,
+                      });
+                    }
+                    if (meta.costCenterId && dimensionMap.has("CostCenter")) {
+                      journalLineDimensionInserts.push({
+                        journalLineId: jl.id,
+                        dimensionId: dimensionMap.get("CostCenter")!,
+                        valueId: meta.costCenterId,
+                        companyId,
+                      });
+                    }
+                  });
+
+                  if (journalLineDimensionInserts.length > 0) {
+                    await trx
+                      .insertInto("journalLineDimension")
+                      .values(journalLineDimensionInserts)
+                      .execute();
+                  }
                 }
               }
             });

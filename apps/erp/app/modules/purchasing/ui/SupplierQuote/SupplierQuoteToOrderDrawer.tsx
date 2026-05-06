@@ -28,6 +28,7 @@ import { useEffect, useMemo, useState } from "react";
 import { LuImage } from "react-icons/lu";
 import { Form, useNavigation, useParams } from "react-router";
 import type { z } from "zod";
+import { useAccounts } from "~/components/Form/Account";
 import { useUser } from "~/hooks";
 import { useCurrencyFormatter } from "~/hooks/useCurrencyFormatter";
 import { getPrivateUrl, path } from "~/utils/path";
@@ -158,6 +159,7 @@ const LinePricingForm = ({
   presentationCurrencyFormatter,
   setSelectedLines
 }: LinePricingFormProps) => {
+  const accounts = useAccounts();
   const pricingByLine = useMemo(
     () =>
       lines.reduce<Record<string, SupplierQuoteLinePrice[]>>((acc, line) => {
@@ -177,40 +179,50 @@ const LinePricingForm = ({
 
   return (
     <VStack spacing={8}>
-      {lines.map((line) => (
-        <VStack key={line.id}>
-          <HStack spacing={2} className="items-start">
-            {line.thumbnailPath ? (
-              <img
-                alt={line.itemReadableId!}
-                className="w-24 h-24 bg-gradient-to-bl from-muted to-muted/40 rounded-lg"
-                src={getPrivateUrl(line.thumbnailPath)}
-              />
-            ) : (
-              <div className="w-24 h-24 bg-gradient-to-bl from-muted to-muted/40 rounded-lg p-4">
-                <LuImage className="w-16 h-16 text-muted-foreground" />
-              </div>
-            )}
+      {lines.map((line) => {
+        const isGlAccount = line.supplierQuoteLineType === "G/L Account";
+        const lineHeading = isGlAccount
+          ? line.description || "Indirect Expense"
+          : line.itemReadableId;
 
-            <VStack spacing={0}>
-              <Heading>{line.itemReadableId}</Heading>
-              <span className="text-muted-foreground text-base truncate">
-                {line.description}
-              </span>
-            </VStack>
-          </HStack>
-          <LinePricingOptions
-            line={line}
-            options={pricingByLine[line.id!]}
-            quoteCurrency={quoteCurrency}
-            shouldConvertCurrency={shouldConvertCurrency}
-            quoteExchangeRate={quoteExchangeRate}
-            formatter={formatter}
-            presentationCurrencyFormatter={presentationCurrencyFormatter}
-            setSelectedLines={setSelectedLines}
-          />
-        </VStack>
-      ))}
+        return (
+          <VStack key={line.id}>
+            <HStack spacing={2} className="items-start">
+              {line.thumbnailPath ? (
+                <img
+                  alt={lineHeading!}
+                  className="w-24 h-24 bg-gradient-to-bl from-muted to-muted/40 rounded-lg"
+                  src={getPrivateUrl(line.thumbnailPath)}
+                />
+              ) : (
+                <div className="w-24 h-24 bg-gradient-to-bl from-muted to-muted/40 rounded-lg p-4">
+                  <LuImage className="w-16 h-16 text-muted-foreground" />
+                </div>
+              )}
+
+              <VStack spacing={0}>
+                <Heading>{lineHeading}</Heading>
+                <span className="text-muted-foreground text-base truncate">
+                  {isGlAccount
+                    ? (accounts.find((a) => a.id === line.accountId)?.name ??
+                      "G/L Account")
+                    : line.description}
+                </span>
+              </VStack>
+            </HStack>
+            <LinePricingOptions
+              line={line}
+              options={pricingByLine[line.id!]}
+              quoteCurrency={quoteCurrency}
+              shouldConvertCurrency={shouldConvertCurrency}
+              quoteExchangeRate={quoteExchangeRate}
+              formatter={formatter}
+              presentationCurrencyFormatter={presentationCurrencyFormatter}
+              setSelectedLines={setSelectedLines}
+            />
+          </VStack>
+        );
+      })}
     </VStack>
   );
 };

@@ -267,7 +267,7 @@ const SalesInvoiceForm = ({ initialValues }: SalesInvoiceFormProps) => {
                   }
                 }}
               />
-              <Location name="locationId" label={t`Location`} />
+              <Location name="locationId" label={t`Shipping Location`} />
               <CustomFormFields table="salesInvoice" />
             </div>
           </VStack>

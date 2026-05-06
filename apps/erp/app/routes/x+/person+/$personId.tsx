@@ -69,13 +69,14 @@ export async function action({ request, params }: ActionFunctionArgs) {
     return validationError(validation.error);
   }
 
-  const { firstName, lastName, about } = validation.data;
+  const { firstName, lastName, about, phone } = validation.data;
 
   const updateAccount = await updatePublicAccount(client, {
     id: personId,
     firstName,
     lastName,
-    about
+    about,
+    phone
   });
   if (updateAccount.error)
     return data(

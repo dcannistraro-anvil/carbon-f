@@ -120,14 +120,14 @@ export async function action({ request, params }: ActionFunctionArgs) {
   const { id, ...d } = validation.data;
 
   if (d.salesOrderLineType === "Comment") {
-    d.accountNumber = undefined;
+    d.accountId = undefined;
     d.assetId = undefined;
     d.itemId = undefined;
   } else if (d.salesOrderLineType === "Fixed Asset") {
-    d.accountNumber = undefined;
+    d.accountId = undefined;
     d.itemId = undefined;
   } else {
-    d.accountNumber = undefined;
+    d.accountId = undefined;
     d.assetId = undefined;
   }
 
@@ -176,7 +176,7 @@ export default function EditSalesOrderLineRoute() {
     salesOrderLineType:
       line?.salesOrderLineType ?? ("Part" as SalesOrderLineType),
     itemId: line?.itemId ?? "",
-    accountNumber: line?.accountNumber ?? "",
+    accountId: line?.accountId ?? "",
     addOnCost: line?.addOnCost ?? 0,
     assetId: line?.assetId ?? "",
     description: line?.description ?? "",

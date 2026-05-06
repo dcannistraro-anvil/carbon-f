@@ -14,6 +14,9 @@ import { path, requestReferrer } from "~/utils/path";
 
 export async function action({ request, params }: ActionFunctionArgs) {
   assertIsPost(request);
+  const { client, companyGroupId } = await requirePermissions(request, {
+    update: "invoicing"
+  });
 
   const { invoiceId } = params;
   if (!invoiceId) throw new Error("Could not find invoiceId");
@@ -38,15 +41,15 @@ export async function action({ request, params }: ActionFunctionArgs) {
     message: "Cannot modify a locked sales invoice. Reopen it first."
   });
 
-  const { client, companyId } = await requirePermissions(request, {
-    update: "invoicing"
-  });
-
   const formData = await request.formData();
   const currencyCode = formData.get("currencyCode") as string;
   if (!currencyCode) throw new Error("Could not find currencyCode");
 
-  const currency = await getCurrencyByCode(client, companyId, currencyCode);
+  const currency = await getCurrencyByCode(
+    client,
+    companyGroupId,
+    currencyCode
+  );
   if (currency.error || !currency.data.exchangeRate)
     throw new Error("Could not find currency");
 

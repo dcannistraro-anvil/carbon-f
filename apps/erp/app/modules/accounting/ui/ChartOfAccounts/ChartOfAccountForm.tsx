@@ -1,182 +1,178 @@
 import { ValidatedForm } from "@carbon/form";
 import {
   Button,
-  Drawer,
-  DrawerBody,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  HStack
+  HStack,
+  ModalDrawer,
+  ModalDrawerBody,
+  ModalDrawerContent,
+  ModalDrawerFooter,
+  ModalDrawerHeader,
+  ModalDrawerProvider,
+  ModalDrawerTitle,
+  toast,
+  VStack
 } from "@carbon/react";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+import { useFetcher } from "react-router";
 import type { z } from "zod";
-import {
-  AccountCategory,
-  AccountSubcategory,
-  Boolean,
-  Combobox,
-  CustomFormFields,
-  Hidden,
-  Input,
-  Select,
-  Submit
-} from "~/components/Form";
+import { Combobox, Hidden, Input, Submit } from "~/components/Form";
 import { usePermissions } from "~/hooks";
 import { path } from "~/utils/path";
-import {
-  accountClassTypes,
-  accountTypes,
-  accountValidator,
-  consolidatedRateTypes,
-  incomeBalanceTypes
-} from "../../accounting.models";
-import type {
-  AccountCategory as AccountCategoryType,
-  AccountClass,
-  AccountIncomeBalance
-} from "../../types";
+import { accountValidator } from "../../accounting.models";
+import type { AccountClass, AccountIncomeBalance } from "../../types";
+
+type GroupAccount = {
+  id: string;
+  number: string | null;
+  name: string;
+  incomeBalance: string;
+  class: string | null;
+  accountType: string | null;
+};
 
 type ChartOfAccountFormProps = {
   initialValues: z.infer<typeof accountValidator>;
+  groupAccounts?: GroupAccount[];
+  open?: boolean;
+  onClose: () => void;
 };
 
-const ChartOfAccountForm = ({ initialValues }: ChartOfAccountFormProps) => {
+const ChartOfAccountForm = ({
+  initialValues,
+  groupAccounts = [],
+  open = true,
+  onClose
+}: ChartOfAccountFormProps) => {
   const { t } = useLingui();
   const permissions = usePermissions();
-  const navigate = useNavigate();
-  const onClose = () => navigate(-1);
+  const fetcher = useFetcher();
 
-  const [accountCategoryId, setAccountCategoryId] = useState<string>(
-    initialValues.accountCategoryId ?? ""
+  const initialParent = groupAccounts.find(
+    (a) => a.id === initialValues.parentId
   );
-  const [incomeBalance, setIncomeBalance] = useState<AccountIncomeBalance>(
-    initialValues.incomeBalance
+
+  const [selectedGroup, setSelectedGroup] = useState<GroupAccount | undefined>(
+    initialParent
   );
-  const [accountClass, setAccountClass] = useState<AccountClass>(
-    initialValues.class
-  );
+
+  const incomeBalance =
+    (selectedGroup?.incomeBalance as AccountIncomeBalance) ??
+    initialValues.incomeBalance;
+  const accountClass =
+    (selectedGroup?.class as AccountClass) ?? initialValues.class;
+  const accountType = selectedGroup?.accountType ?? initialValues.accountType;
+
+  useEffect(() => {
+    if (fetcher.state === "loading" && fetcher.data?.data) {
+      onClose?.();
+      toast.success(initialValues.id ? t`Updated account` : t`Created account`);
+    } else if (fetcher.state === "idle" && fetcher.data?.error) {
+      toast.error(`Failed to save account: ${fetcher.data.error.message}`);
+    }
+  }, [fetcher.data, fetcher.state, onClose, initialValues.id]);
 
   const isEditing = initialValues.id !== undefined;
   const isDisabled = isEditing
     ? !permissions.can("update", "accounting")
     : !permissions.can("create", "accounting");
 
-  const onAccountCategoryChange = (category: AccountCategoryType | null) => {
-    if (category) {
-      setAccountCategoryId(category.id ?? "");
-      setIncomeBalance(category.incomeBalance ?? "Income Statement");
-      setAccountClass(category.class ?? "Asset");
+  const onParentChange = (newValue: { value: string } | null) => {
+    if (newValue) {
+      const group = groupAccounts.find((a) => a.id === newValue.value);
+      setSelectedGroup(group);
+    } else {
+      setSelectedGroup(undefined);
     }
   };
 
   return (
-    <Drawer
-      open
-      onOpenChange={(open) => {
-        if (!open) onClose();
-      }}
-    >
-      <DrawerContent size="full">
-        <ValidatedForm
-          validator={accountValidator}
-          method="post"
-          action={
-            isEditing
-              ? path.to.chartOfAccount(initialValues.id!)
-              : path.to.newChartOfAccount
-          }
-          defaultValues={initialValues}
-          className="flex flex-col h-full"
-        >
-          <DrawerHeader>
-            <DrawerTitle>
-              {isEditing ? (
-                `${initialValues.number}`
-              ) : (
-                <Trans>New Account</Trans>
-              )}
-            </DrawerTitle>
-            {isEditing && (
-              <DrawerDescription>{initialValues.name}</DrawerDescription>
-            )}
-          </DrawerHeader>
-          <DrawerBody>
-            <Hidden name="id" />
+    <ModalDrawerProvider type="modal">
+      <ModalDrawer
+        open={open}
+        onOpenChange={(open) => {
+          if (!open) onClose?.();
+        }}
+      >
+        <ModalDrawerContent>
+          <ValidatedForm
+            validator={accountValidator}
+            method="post"
+            action={
+              isEditing
+                ? path.to.chartOfAccount(initialValues.id!)
+                : path.to.newChartOfAccount
+            }
+            defaultValues={initialValues}
+            fetcher={fetcher}
+            className="flex flex-col h-full"
+          >
+            <ModalDrawerHeader>
+              <ModalDrawerTitle>
+                {isEditing ? t`Edit Account` : t`New Account`}
+              </ModalDrawerTitle>
+            </ModalDrawerHeader>
+            <ModalDrawerBody>
+              <Hidden name="id" />
+              <Hidden name="incomeBalance" value={incomeBalance} />
+              <Hidden name="class" value={accountClass} />
+              <Hidden name="accountType" value={accountType} />
+              <Hidden name="consolidatedRate" value="Average" />
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-4 w-full">
-              <Input name="number" label={t`Account Number`} />
-              <Input name="name" label={t`Name`} />
-              <Select
-                name="type"
-                label={t`Type`}
-                options={accountTypes.map((accountType) => ({
-                  label: accountType,
-                  value: accountType
-                }))}
-              />
-
-              <AccountCategory
-                name="accountCategoryId"
-                onChange={onAccountCategoryChange}
-              />
-              <AccountSubcategory
-                name="accountSubcategoryId"
-                accountCategoryId={accountCategoryId}
-              />
-              <Combobox
-                name="incomeBalance"
-                label={t`Income/Balance`}
-                options={incomeBalanceTypes.map((incomeBalance) => ({
-                  label: incomeBalance,
-                  value: incomeBalance
-                }))}
-                value={incomeBalance}
-                onChange={(newValue) => {
-                  if (newValue)
-                    setIncomeBalance(newValue.value as AccountIncomeBalance);
-                }}
-              />
-              <Combobox
-                name="class"
-                label={t`Class`}
-                options={accountClassTypes.map((accountClass) => ({
-                  label: accountClass,
-                  value: accountClass
-                }))}
-                value={accountClass}
-                onChange={(newValue) => {
-                  if (newValue) setAccountClass(newValue.value as AccountClass);
-                }}
-              />
-              <Select
-                name="consolidatedRate"
-                label={t`Consolidated Rate`}
-                options={consolidatedRateTypes.map((consolidatedRateType) => ({
-                  label: consolidatedRateType,
-                  value: consolidatedRateType
-                }))}
-              />
-              <Boolean name="directPosting" label={t`Direct Posting`} />
-              <CustomFormFields table="account" />
-            </div>
-          </DrawerBody>
-          <DrawerFooter>
-            <HStack>
-              <Submit isDisabled={isDisabled}>
-                <Trans>Save</Trans>
-              </Submit>
-              <Button size="md" variant="solid" onClick={onClose}>
-                <Trans>Cancel</Trans>
-              </Button>
-            </HStack>
-          </DrawerFooter>
-        </ValidatedForm>
-      </DrawerContent>
-    </Drawer>
+              <VStack spacing={4}>
+                <Combobox
+                  name="parentId"
+                  label={t`Group`}
+                  options={groupAccounts
+                    .filter((a) => a.class !== null)
+                    .map((a) => ({
+                      label: a.name,
+                      value: a.id
+                    }))}
+                  onChange={onParentChange}
+                />
+                <Input name="number" label={t`Account Number`} />
+                <Input name="name" label={t`Name`} />
+                {selectedGroup && (
+                  <>
+                    {accountType && (
+                      <div className="space-y-1">
+                        <label className="text-sm font-medium text-muted-foreground">
+                          <Trans>Account Type</Trans>
+                        </label>
+                        <p className="text-sm">{accountType}</p>
+                      </div>
+                    )}
+                    <div className="space-y-1">
+                      <label className="text-sm font-medium text-muted-foreground">
+                        <Trans>Income/Balance</Trans>
+                      </label>
+                      <p className="text-sm">{incomeBalance}</p>
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-sm font-medium text-muted-foreground">
+                        <Trans>Class</Trans>
+                      </label>
+                      <p className="text-sm">{accountClass}</p>
+                    </div>
+                  </>
+                )}
+              </VStack>
+            </ModalDrawerBody>
+            <ModalDrawerFooter>
+              <HStack>
+                <Submit isDisabled={isDisabled}>
+                  <Trans>Save</Trans>
+                </Submit>
+                <Button size="md" variant="solid" onClick={() => onClose?.()}>
+                  <Trans>Cancel</Trans>
+                </Button>
+              </HStack>
+            </ModalDrawerFooter>
+          </ValidatedForm>
+        </ModalDrawerContent>
+      </ModalDrawer>
+    </ModalDrawerProvider>
   );
 };
 

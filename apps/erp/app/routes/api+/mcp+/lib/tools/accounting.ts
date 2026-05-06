@@ -10,19 +10,15 @@ import {
   withErrorHandling,
 } from "../types";
 import {
+  getTrialBalance,
+  getFinancialStatementBalances,
+  getCompaniesInGroup,
   deleteAccount,
-  deleteAccountCategory,
-  deleteAccountSubcategory,
   deletePaymentTerm,
   getAccount,
   getAccounts,
   getAccountsList,
-  getAccountCategories,
-  getAccountCategoriesList,
-  getAccountCategory,
-  getAccountSubcategories,
-  getAccountSubcategoriesByCategory,
-  getAccountSubcategory,
+  getGroupAccounts,
   getBaseCurrency,
   getChartOfAccounts,
   getCurrency,
@@ -32,36 +28,115 @@ import {
   getCurrentAccountingPeriod,
   getDefaultAccounts,
   getFiscalYearSettings,
-  getInventoryPostingGroup,
-  getInventoryPostingGroups,
   getPaymentTerm,
   getPaymentTerms,
   getPaymentTermsList,
-  getPurchasingPostingGroup,
-  getPurchasingPostingGroups,
-  getPurchasingSalesGroup,
-  getSalesPostingGroups,
   updateDefaultBalanceSheetAccounts,
   updateDefaultIncomeAccounts,
   updateFiscalYearSettings,
   upsertAccount,
-  upsertAccountCategory,
-  upsertAccountSubcategory,
   upsertCurrency,
   upsertPaymentTerm,
+  deleteCostCenter,
+  getCostCenter,
+  getCostCenters,
+  getCostCentersList,
+  getCostCentersTree,
+  upsertCostCenter,
+  getDimensions,
+  getDimension,
+  upsertDimension,
+  deleteDimension,
+  getActiveDimensionsWithValues,
+  getJournalLineDimensions,
+  saveJournalLineDimensions,
+  translateCompanyBalances,
+  getConsolidatedBalances,
+  getIntercompanyTransactions,
+  createIntercompanyTransaction,
+  runIntercompanyMatching,
+  generateEliminations,
+  getIntercompanyBalance,
+  getExchangeRateHistory,
+  getJournalEntries,
+  getJournalEntry,
+  createJournalEntry,
+  updateJournalEntry,
+  deleteJournalEntry,
+  upsertJournalEntryLine,
+  deleteJournalEntryLine,
+  saveJournalEntryWithLines,
+  postJournalEntry,
+  reverseJournalEntry,
 } from "~/modules/accounting/accounting.service";
 import {
   defaultBalanceSheetAccountValidator,
   defaultIncomeAcountValidator,
   fiscalYearSettingsValidator,
   accountValidator,
-  accountCategoryValidator,
-  accountSubcategoryValidator,
   currencyValidator,
   paymentTermValidator,
+  costCenterValidator,
+  dimensionValidator,
+  intercompanyTransactionValidator,
+  journalEntryValidator,
+  journalEntryLineValidator,
 } from "~/modules/accounting/accounting.models";
 
 export const registerAccountingTools: RegisterTools = (server, ctx) => {
+  server.registerTool(
+    "accounting_getTrialBalance",
+    {
+      description: "get trial balance",
+      inputSchema: {
+      companyGroupId: z.string(),
+      args: z.object({
+    startDate: z.string().nullable(),
+    endDate: z.string().nullable()
+  }),
+    },
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getTrialBalance(ctx.client, params.companyGroupId, ctx.companyId, params.args);
+      return toMcpResult(result);
+    }, "Failed: accounting_getTrialBalance"),
+  );
+
+  server.registerTool(
+    "accounting_getFinancialStatementBalances",
+    {
+      description: "get financial statement balances",
+      inputSchema: {
+      companyGroupId: z.string(),
+      args: z.object({
+    startDate: z.string().nullable(),
+    endDate: z.string().nullable()
+  }),
+    },
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getFinancialStatementBalances(ctx.client, params.companyGroupId, ctx.companyId, params.args);
+      return toMcpResult(result);
+    }, "Failed: accounting_getFinancialStatementBalances"),
+  );
+
+  server.registerTool(
+    "accounting_getCompaniesInGroup",
+    {
+      description: "get companies in group",
+      inputSchema: {
+      companyGroupId: z.string(),
+    },
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getCompaniesInGroup(ctx.client, params.companyGroupId);
+      return toMcpResult(result);
+    }, "Failed: accounting_getCompaniesInGroup"),
+  );
+
   server.registerTool(
     "accounting_deleteAccount",
     {
@@ -151,7 +226,7 @@ export const registerAccountingTools: RegisterTools = (server, ctx) => {
       annotations: READ_ONLY_ANNOTATIONS,
     },
     withErrorHandling(async (params) => {
-      const result = await getAccounts(ctx.client, ctx.companyId, params.args);
+      const result = await getAccounts(ctx.client, params.companyGroupId, params.args);
       return toMcpResult(result);
     }, "Failed: accounting_getAccounts"),
   );
@@ -162,7 +237,7 @@ export const registerAccountingTools: RegisterTools = (server, ctx) => {
       description: "get accounts list",
       inputSchema: z.object({
       args: z.object({
-    type: z.any().optional(),
+    isGroup: z.boolean().nullable().optional(),
     incomeBalance: z.any().optional(),
     classes: z.array(z.any()).optional()
   }).optional(),
@@ -170,13 +245,13 @@ export const registerAccountingTools: RegisterTools = (server, ctx) => {
       annotations: READ_ONLY_ANNOTATIONS,
     },
     withErrorHandling(async (params) => {
-      const result = await getAccountsList(ctx.client, ctx.companyId, params.args);
+      const result = await getAccountsList(ctx.client, params.companyGroupId, params.args);
       return toMcpResult(result);
     }, "Failed: accounting_getAccountsList"),
   );
 
   server.registerTool(
-    "accounting_getAccountCategories",
+    "accounting_getGroupAccounts",
     {
       description: "get account categories",
       inputSchema: z.object({
@@ -189,7 +264,7 @@ export const registerAccountingTools: RegisterTools = (server, ctx) => {
       annotations: READ_ONLY_ANNOTATIONS,
     },
     withErrorHandling(async (params) => {
-      const result = await getAccountCategories(ctx.client, ctx.companyId, params.args);
+      const result = await getGroupAccounts(ctx.client, params.companyGroupId);
       return toMcpResult(result);
     }, "Failed: accounting_getAccountCategories"),
   );
@@ -290,9 +365,6 @@ export const registerAccountingTools: RegisterTools = (server, ctx) => {
       description: "get chart of accounts",
       inputSchema: z.object({
       args: z.object({
-    limit: z.number().int().default(100),
-    offset: z.number().int().default(0),
-    name: z.string().nullable(),
     incomeBalance: z.enum(["Income Statement", "Balance Sheet", "null"]),
     startDate: z.string().nullable(),
     endDate: z.string().nullable()
@@ -301,7 +373,7 @@ export const registerAccountingTools: RegisterTools = (server, ctx) => {
       annotations: READ_ONLY_ANNOTATIONS,
     },
     withErrorHandling(async (params) => {
-      const result = await getChartOfAccounts(ctx.client, ctx.companyId, params.args);
+      const result = await getChartOfAccounts(ctx.client, params.companyGroupId, params.args);
       return toMcpResult(result);
     }, "Failed: accounting_getChartOfAccounts"),
   );
@@ -331,7 +403,7 @@ export const registerAccountingTools: RegisterTools = (server, ctx) => {
       annotations: READ_ONLY_ANNOTATIONS,
     },
     withErrorHandling(async (params) => {
-      const result = await getCurrencyByCode(ctx.client, ctx.companyId, params.currencyCode);
+      const result = await getCurrencyByCode(ctx.client, params.companyGroupId, params.currencyCode);
       return toMcpResult(result);
     }, "Failed: accounting_getCurrencyByCode"),
   );
@@ -350,7 +422,7 @@ export const registerAccountingTools: RegisterTools = (server, ctx) => {
       annotations: READ_ONLY_ANNOTATIONS,
     },
     withErrorHandling(async (params) => {
-      const result = await getCurrencies(ctx.client, ctx.companyId, params.args);
+      const result = await getCurrencies(ctx.client, params.companyGroupId, params.args);
       return toMcpResult(result);
     }, "Failed: accounting_getCurrencies"),
   );
@@ -619,7 +691,7 @@ export const registerAccountingTools: RegisterTools = (server, ctx) => {
       annotations: WRITE_ANNOTATIONS,
     },
     withErrorHandling(async (params) => {
-      const result = await upsertAccount(ctx.client, { ...params.account, companyId: ctx.companyId, createdBy: ctx.userId, updatedBy: ctx.userId });
+      const result = await upsertAccount(ctx.client, { ...params.account, createdBy: ctx.userId, updatedBy: ctx.userId });
       return toMcpResult(result);
     }, "Failed: accounting_upsertAccount"),
   );
@@ -664,7 +736,7 @@ export const registerAccountingTools: RegisterTools = (server, ctx) => {
       annotations: WRITE_ANNOTATIONS,
     },
     withErrorHandling(async (params) => {
-      const result = await upsertCurrency(ctx.client, { ...params.currency, companyId: ctx.companyId, createdBy: ctx.userId, updatedBy: ctx.userId });
+      const result = await upsertCurrency(ctx.client, { ...params.currency, createdBy: ctx.userId, updatedBy: ctx.userId });
       return toMcpResult(result);
     }, "Failed: accounting_upsertCurrency"),
   );
@@ -682,5 +754,511 @@ export const registerAccountingTools: RegisterTools = (server, ctx) => {
       const result = await upsertPaymentTerm(ctx.client, { ...params.paymentTerm, companyId: ctx.companyId, createdBy: ctx.userId, updatedBy: ctx.userId });
       return toMcpResult(result);
     }, "Failed: accounting_upsertPaymentTerm"),
+  );
+
+  server.registerTool(
+    "accounting_deleteCostCenter",
+    {
+      description: "delete cost center",
+      inputSchema: {
+      costCenterId: z.string(),
+    },
+      annotations: DESTRUCTIVE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await deleteCostCenter(ctx.client, params.costCenterId);
+      return toMcpResult(result);
+    }, "Failed: accounting_deleteCostCenter"),
+  );
+
+  server.registerTool(
+    "accounting_getCostCenter",
+    {
+      description: "get cost center",
+      inputSchema: {
+      costCenterId: z.string(),
+    },
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getCostCenter(ctx.client, params.costCenterId);
+      return toMcpResult(result);
+    }, "Failed: accounting_getCostCenter"),
+  );
+
+  server.registerTool(
+    "accounting_getCostCenters",
+    {
+      description: "get cost centers",
+      inputSchema: {
+      args: z.object({
+    limit: z.number().int().default(100),
+    offset: z.number().int().default(0),
+    search: z.string().nullable()
+  }).optional(),
+    },
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getCostCenters(ctx.client, ctx.companyId, params.args);
+      return toMcpResult(result);
+    }, "Failed: accounting_getCostCenters"),
+  );
+
+  server.registerTool(
+    "accounting_getCostCentersList",
+    {
+      description: "get cost centers list",
+      inputSchema: {},
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getCostCentersList(ctx.client, ctx.companyId);
+      return toMcpResult(result);
+    }, "Failed: accounting_getCostCentersList"),
+  );
+
+  server.registerTool(
+    "accounting_getCostCentersTree",
+    {
+      description: "get cost centers tree",
+      inputSchema: {},
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getCostCentersTree(ctx.client, ctx.companyId);
+      return toMcpResult(result);
+    }, "Failed: accounting_getCostCentersTree"),
+  );
+
+  server.registerTool(
+    "accounting_upsertCostCenter",
+    {
+      description: "upsert cost center",
+      inputSchema: {
+      costCenter: costCenterValidator,
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await upsertCostCenter(ctx.client, { ...params.costCenter, companyId: ctx.companyId, createdBy: ctx.userId, updatedBy: ctx.userId });
+      return toMcpResult(result);
+    }, "Failed: accounting_upsertCostCenter"),
+  );
+
+  server.registerTool(
+    "accounting_getDimensions",
+    {
+      description: "get dimensions",
+      inputSchema: {
+      companyGroupId: z.string(),
+      args: z.object({
+    limit: z.number().int().default(100),
+    offset: z.number().int().default(0),
+    search: z.string().nullable()
+  }),
+    },
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getDimensions(ctx.client, params.companyGroupId, params.args);
+      return toMcpResult(result);
+    }, "Failed: accounting_getDimensions"),
+  );
+
+  server.registerTool(
+    "accounting_getDimension",
+    {
+      description: "get dimension",
+      inputSchema: {
+      dimensionId: z.string(),
+    },
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getDimension(ctx.client, params.dimensionId);
+      return toMcpResult(result);
+    }, "Failed: accounting_getDimension"),
+  );
+
+  server.registerTool(
+    "accounting_upsertDimension",
+    {
+      description: "upsert dimension",
+      inputSchema: {
+      dimension: dimensionValidator,
+      dimensionValues: z.array(z.string()).optional(),
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await upsertDimension(ctx.client, { ...params.dimension, createdBy: ctx.userId, updatedBy: ctx.userId }, params.dimensionValues);
+      return toMcpResult(result);
+    }, "Failed: accounting_upsertDimension"),
+  );
+
+  server.registerTool(
+    "accounting_deleteDimension",
+    {
+      description: "delete dimension",
+      inputSchema: {
+      dimensionId: z.string(),
+    },
+      annotations: DESTRUCTIVE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await deleteDimension(ctx.client, params.dimensionId);
+      return toMcpResult(result);
+    }, "Failed: accounting_deleteDimension"),
+  );
+
+  server.registerTool(
+    "accounting_getActiveDimensionsWithValues",
+    {
+      description: "get active dimensions with values",
+      inputSchema: {
+      companyGroupId: z.string(),
+    },
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getActiveDimensionsWithValues(ctx.client, params.companyGroupId, ctx.companyId);
+      return toMcpResult(result);
+    }, "Failed: accounting_getActiveDimensionsWithValues"),
+  );
+
+  server.registerTool(
+    "accounting_getJournalLineDimensions",
+    {
+      description: "get journal line dimensions",
+      inputSchema: {
+      journalLineIds: z.array(z.string()),
+    },
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getJournalLineDimensions(ctx.client, params.journalLineIds);
+      return toMcpResult(result);
+    }, "Failed: accounting_getJournalLineDimensions"),
+  );
+
+  server.registerTool(
+    "accounting_saveJournalLineDimensions",
+    {
+      description: "save journal line dimensions",
+      inputSchema: {
+      journalLineId: z.string(),
+      dimensions: z.any(),
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await saveJournalLineDimensions(ctx.client, params.journalLineId, ctx.companyId, params.dimensions);
+      return toMcpResult(result);
+    }, "Failed: accounting_saveJournalLineDimensions"),
+  );
+
+  server.registerTool(
+    "accounting_translateCompanyBalances",
+    {
+      description: "translate company balances",
+      inputSchema: {
+      companyGroupId: z.string(),
+      targetCurrency: z.string(),
+      periodEnd: z.string(),
+      periodStart: z.string().optional(),
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await translateCompanyBalances(ctx.client, params.companyGroupId, ctx.companyId, params.targetCurrency, params.periodEnd, params.periodStart);
+      return toMcpResult(result);
+    }, "Failed: accounting_translateCompanyBalances"),
+  );
+
+  server.registerTool(
+    "accounting_getConsolidatedBalances",
+    {
+      description: "get consolidated balances",
+      inputSchema: {
+      companyGroupId: z.string(),
+      companyIds: z.array(z.string()),
+      targetCurrency: z.string(),
+      periodEnd: z.string(),
+      periodStart: z.string().optional(),
+    },
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getConsolidatedBalances(ctx.client, params.companyGroupId, params.companyIds, params.targetCurrency, params.periodEnd, params.periodStart);
+      return toMcpResult(result);
+    }, "Failed: accounting_getConsolidatedBalances"),
+  );
+
+  server.registerTool(
+    "accounting_getIntercompanyTransactions",
+    {
+      description: "get intercompany transactions",
+      inputSchema: {
+      companyGroupId: z.string(),
+      args: z.object({
+    limit: z.number().int().default(100),
+    offset: z.number().int().default(0),
+    status: z.string().nullable()
+  }),
+    },
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getIntercompanyTransactions(ctx.client, params.companyGroupId, params.args);
+      return toMcpResult(result);
+    }, "Failed: accounting_getIntercompanyTransactions"),
+  );
+
+  server.registerTool(
+    "accounting_createIntercompanyTransaction",
+    {
+      description: "create intercompany transaction",
+      inputSchema: {
+      input: intercompanyTransactionValidator,
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await createIntercompanyTransaction(ctx.client, { ...params.input, userId: ctx.userId });
+      return toMcpResult(result);
+    }, "Failed: accounting_createIntercompanyTransaction"),
+  );
+
+  server.registerTool(
+    "accounting_runIntercompanyMatching",
+    {
+      description: "run intercompany matching",
+      inputSchema: {
+      companyGroupId: z.string(),
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await runIntercompanyMatching(ctx.client, params.companyGroupId);
+      return toMcpResult(result);
+    }, "Failed: accounting_runIntercompanyMatching"),
+  );
+
+  server.registerTool(
+    "accounting_generateEliminations",
+    {
+      description: "generate eliminations",
+      inputSchema: {
+      companyGroupId: z.string(),
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await generateEliminations(ctx.client, params.companyGroupId, ctx.userId);
+      return toMcpResult(result);
+    }, "Failed: accounting_generateEliminations"),
+  );
+
+  server.registerTool(
+    "accounting_getIntercompanyBalance",
+    {
+      description: "get intercompany balance",
+      inputSchema: {
+      companyGroupId: z.string(),
+    },
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getIntercompanyBalance(ctx.client, params.companyGroupId);
+      return toMcpResult(result);
+    }, "Failed: accounting_getIntercompanyBalance"),
+  );
+
+  server.registerTool(
+    "accounting_getExchangeRateHistory",
+    {
+      description: "get exchange rate history",
+      inputSchema: {
+      companyGroupId: z.string(),
+      currencyCode: z.string(),
+    },
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getExchangeRateHistory(ctx.client, params.companyGroupId, params.currencyCode);
+      return toMcpResult(result);
+    }, "Failed: accounting_getExchangeRateHistory"),
+  );
+
+  server.registerTool(
+    "accounting_getJournalEntries",
+    {
+      description: "get journal entries",
+      inputSchema: {
+      args: z.object({
+    limit: z.number().int().default(100),
+    offset: z.number().int().default(0),
+    search: z.string().nullable(),
+    status: z.string().nullable()
+  }),
+    },
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getJournalEntries(ctx.client, ctx.companyId, params.args);
+      return toMcpResult(result);
+    }, "Failed: accounting_getJournalEntries"),
+  );
+
+  server.registerTool(
+    "accounting_getJournalEntry",
+    {
+      description: "get journal entry",
+      inputSchema: {
+      id: z.string(),
+    },
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getJournalEntry(ctx.client, params.id);
+      return toMcpResult(result);
+    }, "Failed: accounting_getJournalEntry"),
+  );
+
+  server.registerTool(
+    "accounting_createJournalEntry",
+    {
+      description: "create journal entry",
+      inputSchema: {
+      data: journalEntryValidator,
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await createJournalEntry(ctx.client, { ...params.data, companyId: ctx.companyId, createdBy: ctx.userId });
+      return toMcpResult(result);
+    }, "Failed: accounting_createJournalEntry"),
+  );
+
+  server.registerTool(
+    "accounting_updateJournalEntry",
+    {
+      description: "update journal entry",
+      inputSchema: {
+      id: z.string(),
+      data: journalEntryValidator,
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await updateJournalEntry(ctx.client, params.id, { ...params.data, updatedBy: ctx.userId });
+      return toMcpResult(result);
+    }, "Failed: accounting_updateJournalEntry"),
+  );
+
+  server.registerTool(
+    "accounting_deleteJournalEntry",
+    {
+      description: "delete journal entry",
+      inputSchema: {
+      id: z.string(),
+    },
+      annotations: DESTRUCTIVE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await deleteJournalEntry(ctx.client, params.id);
+      return toMcpResult(result);
+    }, "Failed: accounting_deleteJournalEntry"),
+  );
+
+  server.registerTool(
+    "accounting_upsertJournalEntryLine",
+    {
+      description: "upsert journal entry line",
+      inputSchema: {
+      data: journalEntryLineValidator,
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await upsertJournalEntryLine(ctx.client, { ...params.data, companyId: ctx.companyId, updatedBy: ctx.userId });
+      return toMcpResult(result);
+    }, "Failed: accounting_upsertJournalEntryLine"),
+  );
+
+  server.registerTool(
+    "accounting_deleteJournalEntryLine",
+    {
+      description: "delete journal entry line",
+      inputSchema: {
+      id: z.string(),
+    },
+      annotations: DESTRUCTIVE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await deleteJournalEntryLine(ctx.client, params.id);
+      return toMcpResult(result);
+    }, "Failed: accounting_deleteJournalEntryLine"),
+  );
+
+  server.registerTool(
+    "accounting_saveJournalEntryWithLines",
+    {
+      description: "save journal entry with lines",
+      inputSchema: {
+      data: z.object({
+    journalEntryId: z.string(),
+    postingDate: z.string(),
+    description: z.string().optional(),
+    lines: z.any(),
+    accountId: z.string(),
+    description: z.string().optional(),
+    debit: z.number(),
+    credit: z.number(),
+    dimensions: z.any().optional(),
+    valueId: z.any(),
+    companyGroupId: z.string()
+  }),
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await saveJournalEntryWithLines(ctx.client, { ...params.data, companyId: ctx.companyId, updatedBy: ctx.userId });
+      return toMcpResult(result);
+    }, "Failed: accounting_saveJournalEntryWithLines"),
+  );
+
+  server.registerTool(
+    "accounting_postJournalEntry",
+    {
+      description: "post journal entry",
+      inputSchema: {
+      id: z.string(),
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await postJournalEntry(ctx.client, params.id, ctx.userId);
+      return toMcpResult(result);
+    }, "Failed: accounting_postJournalEntry"),
+  );
+
+  server.registerTool(
+    "accounting_reverseJournalEntry",
+    {
+      description: "reverse journal entry",
+      inputSchema: {
+      id: z.string(),
+      data: z.object({
+    journalEntryId: z.string()
+  }),
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await reverseJournalEntry(ctx.client, params.id, { ...params.data, companyId: ctx.companyId, userId: ctx.userId });
+      return toMcpResult(result);
+    }, "Failed: accounting_reverseJournalEntry"),
   );
 };

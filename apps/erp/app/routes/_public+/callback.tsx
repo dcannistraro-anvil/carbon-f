@@ -57,12 +57,19 @@ export async function action({ request }: ActionFunctionArgs) {
 
   const companies = await serviceRole
     .from("userToCompany")
-    .select("companyId")
+    .select("companyId, ...company(companyGroupId)")
     .eq("userId", userId);
+
+  const firstCompany = companies.data?.[0] as
+    | { companyId: string; companyGroupId: string | null }
+    | undefined;
+  const companyId = firstCompany?.companyId;
+  const companyGroupId = firstCompany?.companyGroupId ?? "";
 
   const authSession = await refreshAccessToken(
     refreshToken,
-    companies.data?.[0]?.companyId
+    companyId,
+    companyGroupId
   );
 
   if (!authSession) {

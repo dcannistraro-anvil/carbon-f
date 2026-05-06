@@ -491,11 +491,11 @@ export const methodOperationValidator = z
 export const itemCostValidator = z.object({
   itemId: z.string().min(1, { message: "Item ID is required" }),
   itemPostingGroupId: zfd.text(z.string().optional()),
-  // costingMethod: z.enum(itemCostingMethods, {
-  //   errorMap: (issue, ctx) => ({
-  //     message: "Costing method is required",
-  //   }),
-  // }),
+  costingMethod: z.enum(itemCostingMethods, {
+    errorMap: () => ({
+      message: "Costing method is required"
+    })
+  }),
   // standardCost: zfd.numeric(z.number().min(0)),
   unitCost: zfd.numeric(z.number().min(0))
   // costIsAdjusted: zfd.checkbox(),

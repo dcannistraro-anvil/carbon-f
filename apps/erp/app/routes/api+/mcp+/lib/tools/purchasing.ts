@@ -79,6 +79,8 @@ import {
   updateSupplierQuoteFavorite,
   updateSupplierQuoteStatus,
   updateSupplierShipping,
+  getSupplierTax,
+  updateSupplierTax,
   upsertPurchaseOrder,
   upsertPurchaseOrderDelivery,
   upsertPurchaseOrderLine,
@@ -114,6 +116,7 @@ import {
   supplierAccountingValidator,
   supplierPaymentValidator,
   supplierShippingValidator,
+  supplierTaxValidator,
   purchaseOrderValidator,
   purchaseOrderDeliveryValidator,
   purchaseOrderLineValidator,
@@ -1220,6 +1223,36 @@ export const registerPurchasingTools: RegisterTools = (server, ctx) => {
       const result = await updateSupplierShipping(ctx.client, { ...params.supplierShipping, updatedBy: ctx.userId });
       return toMcpResult(result);
     }, "Failed: purchasing_updateSupplierShipping"),
+  );
+
+  server.registerTool(
+    "purchasing_getSupplierTax",
+    {
+      description: "get supplier tax",
+      inputSchema: {
+      supplierId: z.string(),
+    },
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getSupplierTax(ctx.client, params.supplierId);
+      return toMcpResult(result);
+    }, "Failed: purchasing_getSupplierTax"),
+  );
+
+  server.registerTool(
+    "purchasing_updateSupplierTax",
+    {
+      description: "update supplier tax",
+      inputSchema: {
+      supplierTax: supplierTaxValidator,
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await updateSupplierTax(ctx.client, { ...params.supplierTax, companyId: ctx.companyId, updatedBy: ctx.userId });
+      return toMcpResult(result);
+    }, "Failed: purchasing_updateSupplierTax"),
   );
 
   server.registerTool(

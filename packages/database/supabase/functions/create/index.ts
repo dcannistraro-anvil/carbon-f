@@ -107,6 +107,11 @@ const payloadValidator = z.discriminatedUnion("type", [
     companyId: z.string(),
     userId: z.string(),
   }),
+  z.object({
+    type: z.literal("journalEntry"),
+    companyId: z.string(),
+    userId: z.string(),
+  }),
 ]);
 serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
@@ -491,13 +496,20 @@ serve(async (req: Request) => {
               .filter(Boolean) as string[]
           );
 
+          const companyRecord = await client
+            .from("company")
+            .select("companyGroupId")
+            .eq("id", companyId)
+            .single();
+          if (companyRecord.error) throw new Error(companyRecord.error.message);
+
           const exchangeRates = await Promise.all(
             Array.from(currencyCodes).map(async (currencyCode) => {
               const exchangeRate = await client
                 .from("currency")
                 .select("*")
                 .eq("code", currencyCode)
-                .eq("companyId", companyId)
+                .eq("companyGroupId", companyRecord.data.companyGroupId)
                 .single();
               return {
                 currencyCode,
@@ -867,7 +879,8 @@ serve(async (req: Request) => {
           if (
             !d.itemId ||
             !d.purchaseQuantity ||
-            d.purchaseOrderLineType === "Service"
+            d.purchaseOrderLineType === "Service" ||
+            d.purchaseOrderLineType === "G/L Account"
           ) {
             return acc;
           }
@@ -1873,7 +1886,8 @@ serve(async (req: Request) => {
             if (
               !purchaseOrderLine.itemId ||
               !purchaseOrderLine.purchaseQuantity ||
-              purchaseOrderLine.purchaseOrderLineType === "Service"
+              purchaseOrderLine.purchaseOrderLineType === "Service" ||
+              purchaseOrderLine.purchaseOrderLineType === "G/L Account"
             ) {
               continue;
             }
@@ -2603,6 +2617,51 @@ serve(async (req: Request) => {
         return new Response(
           JSON.stringify({
             id: shipmentLineId,
+          }),
+          {
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+            status: 201,
+          }
+        );
+      } catch (err) {
+        console.error(err);
+        return new Response(JSON.stringify(err), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 500,
+        });
+      }
+    }
+    case "journalEntry": {
+      let createdDocumentId;
+      try {
+        await db.transaction().execute(async (trx) => {
+          const journalEntryId = await getNextSequence(
+            trx,
+            "journalEntry",
+            companyId
+          );
+
+          const newJournalEntry = await trx
+            .insertInto("journal")
+            .values({
+              journalEntryId,
+              postingDate: new Date().toISOString().split("T")[0],
+              companyId,
+              sourceType: "Manual",
+              status: "Draft",
+              createdBy: userId,
+            })
+            .returning(["id"])
+            .execute();
+
+          createdDocumentId = newJournalEntry?.[0]?.id;
+          if (!createdDocumentId)
+            throw new Error("Failed to create journal entry");
+        });
+
+        return new Response(
+          JSON.stringify({
+            id: createdDocumentId,
           }),
           {
             headers: { ...corsHeaders, "Content-Type": "application/json" },

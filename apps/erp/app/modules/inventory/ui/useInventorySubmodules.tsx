@@ -5,6 +5,7 @@ import {
   LuListChecks,
   LuNetwork,
   LuQrCode,
+  LuScanQrCode,
   LuTag,
   LuTally5,
   LuTruck,
@@ -57,7 +58,7 @@ export default function useInventorySubmodules() {
           name: t`Kanbans`,
           to: path.to.kanbans,
           role: "employee",
-          icon: <LuQrCode />
+          icon: <LuScanQrCode />
         },
         {
           name: t`Quantities`,

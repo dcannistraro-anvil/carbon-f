@@ -158,7 +158,7 @@ export default function ReceiptDetailsRoute() {
   };
 
   return (
-    <div className="flex flex-col gap-2 pb-16 w-full">
+    <>
       <ReceiptForm
         key={initialValues.sourceDocumentId}
         // @ts-ignore
@@ -176,6 +176,6 @@ export default function ReceiptDetailsRoute() {
         table="receipt"
         internalNotes={routeData.receipt.internalNotes as JSONContent}
       />
-    </div>
+    </>
   );
 }

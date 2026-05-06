@@ -139,7 +139,8 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
         if (willBeFinished) {
           const finishOperation = await finishJobOperation(serviceRole, {
             jobOperationId: jobOperation.data.id,
-            userId
+            userId,
+            companyId
           });
 
           if (finishOperation.error) {
@@ -231,7 +232,8 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   if (willBeFinished) {
     const finishOperation = await finishJobOperation(serviceRole, {
       jobOperationId: jobOperation.data.id,
-      userId
+      userId,
+      companyId
     });
 
     if (finishOperation.error) {

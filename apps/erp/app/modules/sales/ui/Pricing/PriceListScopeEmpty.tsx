@@ -1,5 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
-import { LuUserCheck } from "react-icons/lu";
+import { LuList } from "react-icons/lu";
 import { SearchLandingPage } from "~/components";
 import { type ScopeOption, ScopePicker } from "./ScopePicker";
 
@@ -18,7 +18,7 @@ export function PriceListScopeEmpty({
 
   return (
     <SearchLandingPage
-      icon={LuUserCheck}
+      icon={LuList}
       heading={t`Price Lists`}
       description={t`Pick a customer or customer type to view their pricing.`}
     >

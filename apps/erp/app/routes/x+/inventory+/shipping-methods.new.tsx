@@ -28,9 +28,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export async function action({ request }: ActionFunctionArgs) {
   assertIsPost(request);
-  const { client, companyId, userId } = await requirePermissions(request, {
-    create: "inventory"
-  });
+  const { client, companyId, companyGroupId, userId } =
+    await requirePermissions(request, {
+      create: "inventory"
+    });
 
   const formData = await request.formData();
   const modal = formData.get("type") === "modal";
@@ -49,6 +50,7 @@ export async function action({ request }: ActionFunctionArgs) {
   const insertShippingMethod = await upsertShippingMethod(client, {
     ...rest,
     companyId,
+    companyGroupId,
     createdBy: userId,
     customFields: setCustomFields(formData)
   });

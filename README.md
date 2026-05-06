@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-    The operating system for manufacturing
+    The open core for manufacturing
     <br />
     <br />
     <a href="https://discord.gg/yGUJWhNqzy">Discord</a>

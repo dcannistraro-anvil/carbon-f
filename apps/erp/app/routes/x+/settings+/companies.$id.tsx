@@ -1,0 +1,98 @@
+import { assertIsPost, error, notFound, success } from "@carbon/auth";
+import { requirePermissions } from "@carbon/auth/auth.server";
+import { flash } from "@carbon/auth/session.server";
+import { validationError, validator } from "@carbon/form";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
+import { redirect, useLoaderData, useNavigate } from "react-router";
+import {
+  CompanyForm,
+  getSubsidiary,
+  subsidiaryValidator,
+  updateSubsidiary
+} from "~/modules/settings";
+import { path } from "~/utils/path";
+
+export async function loader({ request, params }: LoaderFunctionArgs) {
+  const { client } = await requirePermissions(request, {
+    view: "settings"
+  });
+
+  const { id } = params;
+  if (!id) throw notFound("Subsidiary not found");
+
+  const subsidiary = await getSubsidiary(client, id);
+  if (subsidiary.error) {
+    throw redirect(
+      path.to.subsidiaries,
+      await flash(request, error(subsidiary.error, "Failed to load subsidiary"))
+    );
+  }
+
+  return { subsidiary: subsidiary.data };
+}
+
+export async function action({ request, params }: ActionFunctionArgs) {
+  assertIsPost(request);
+  const { client, userId } = await requirePermissions(request, {
+    update: "settings"
+  });
+
+  const { id } = params;
+  if (!id) throw notFound("Subsidiary not found");
+
+  const formData = await request.formData();
+  const validation = await validator(subsidiaryValidator).validate(formData);
+
+  if (validation.error) {
+    return validationError(validation.error);
+  }
+
+  const result = await updateSubsidiary(client, id, {
+    ...validation.data,
+    updatedBy: userId
+  });
+
+  if (result.error) {
+    throw redirect(
+      path.to.subsidiaries,
+      await flash(request, error(result.error, "Failed to update subsidiary"))
+    );
+  }
+
+  throw redirect(
+    path.to.subsidiaries,
+    await flash(request, success("Updated subsidiary"))
+  );
+}
+
+export default function EditSubsidiaryRoute() {
+  const { subsidiary } = useLoaderData<typeof loader>();
+  const navigate = useNavigate();
+
+  const initialValues = {
+    name: subsidiary.name ?? "",
+    taxId: subsidiary.taxId ?? "",
+    addressLine1: subsidiary.addressLine1 ?? "",
+    addressLine2: subsidiary.addressLine2 ?? "",
+    city: subsidiary.city ?? "",
+    stateProvince: subsidiary.stateProvince ?? "",
+    postalCode: subsidiary.postalCode ?? "",
+    countryCode: subsidiary.countryCode ?? "",
+    baseCurrencyCode: subsidiary.baseCurrencyCode ?? "",
+    phone: subsidiary.phone ?? "",
+    fax: subsidiary.fax ?? "",
+    email: subsidiary.email ?? "",
+    website: subsidiary.website ?? ""
+  };
+
+  return (
+    <CompanyForm
+      company={initialValues}
+      subsidiaryMode={{
+        id: subsidiary.id,
+        parentCompanyId: subsidiary.parentCompanyId ?? undefined,
+        onClose: () => navigate(path.to.subsidiaries)
+      }}
+    />
+  );
+}

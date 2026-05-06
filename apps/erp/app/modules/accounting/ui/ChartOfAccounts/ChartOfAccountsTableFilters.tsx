@@ -5,12 +5,14 @@ import {
   Popover,
   PopoverContent,
   PopoverHeader,
-  PopoverTrigger
+  PopoverTrigger,
+  ToggleGroup,
+  ToggleGroupItem
 } from "@carbon/react";
 import { parseDate } from "@internationalized/date";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { LuCalendarDays, LuX } from "react-icons/lu";
-import { New, Select } from "~/components";
+import { New } from "~/components";
 import { usePermissions, useUrlParams } from "~/hooks";
 import { incomeBalanceTypes } from "../../accounting.models";
 
@@ -22,22 +24,26 @@ const ChartOfAccountsTableFilters = () => {
   const startDate = params.get("startDate");
   const endDate = params.get("endDate");
 
-  const incomeBalanceOptions = incomeBalanceTypes.map((type) => ({
-    label: type,
-    value: type
-  }));
-
   return (
     <div className="flex px-4 py-3 items-center space-x-4 justify-between bg-card border-b border-border w-full">
       <HStack>
-        <Select
-          value={params.get("incomeBalance") ?? ""}
-          placeholder={t`Income/Balance Sheet`}
-          options={incomeBalanceOptions}
+        <ToggleGroup
+          type="single"
           size="sm"
-          isClearable
-          onChange={(newValue) => setParams({ incomeBalance: newValue })}
-        />
+          variant="outline"
+          value={params.get("incomeBalance") ?? ""}
+          onValueChange={(value) =>
+            setParams({ incomeBalance: value || undefined })
+          }
+        >
+          {incomeBalanceTypes.map((type) => (
+            <ToggleGroupItem key={type} value={type}>
+              {type === "Balance Sheet"
+                ? t`Balance Sheet`
+                : t`Income Statement`}
+            </ToggleGroupItem>
+          ))}
+        </ToggleGroup>
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="secondary" leftIcon={<LuCalendarDays />}>
@@ -78,7 +84,7 @@ const ChartOfAccountsTableFilters = () => {
         </Popover>
         {[...params.entries()].length > 0 && (
           <Button
-            variant="solid"
+            variant="secondary"
             rightIcon={<LuX />}
             onClick={() =>
               setParams({
@@ -94,7 +100,10 @@ const ChartOfAccountsTableFilters = () => {
       </HStack>
       <HStack>
         {permissions.can("create", "accounting") && (
-          <New label={t`Account`} to={`new?${params.toString()}`} />
+          <>
+            <New label={t`Group`} to={`new-group?${params.toString()}`} />
+            <New label={t`Account`} to={`new?${params.toString()}`} />
+          </>
         )}
       </HStack>
     </div>

@@ -68,7 +68,10 @@ export const getPurchaseOrderStatus = (
   );
 
   const allLinesReceived = lines.every(
-    (line) => line.purchaseOrderLineType === "Comment" || line.receivedComplete
+    (line) =>
+      line.purchaseOrderLineType === "Comment" ||
+      line.purchaseOrderLineType === "G/L Account" ||
+      line.receivedComplete
   );
 
   let status: Database["public"]["Tables"]["purchaseOrder"]["Row"]["status"] =

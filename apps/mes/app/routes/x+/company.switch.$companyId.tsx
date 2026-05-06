@@ -23,7 +23,10 @@ export async function action({ request, params }: ActionFunctionArgs) {
   }
 
   const companyId = params.companyId;
-  if (!companies.data?.find((company) => company.id === companyId)) {
+  const matchedCompany = companies.data?.find(
+    (company) => company.id === companyId
+  );
+  if (!matchedCompany) {
     throw redirect(
       requestReferrer(request) ?? path.to.authenticatedRoot,
       await flash(request, error(null, "Company not found"))
@@ -34,7 +37,11 @@ export async function action({ request, params }: ActionFunctionArgs) {
     await destroyAuthSession(request);
   }
 
-  const sessionCookie = await updateCompanySession(request, companyId!);
+  const sessionCookie = await updateCompanySession(
+    request,
+    companyId!,
+    matchedCompany.companyGroupId ?? ""
+  );
   const companyIdCookie = setCompanyId(companyId!);
   const storedLocations = await getLocation(request, client, {
     userId,

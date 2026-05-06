@@ -18,10 +18,13 @@ export const handle: Handle = {
 };
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const { client, companyId } = await requirePermissions(request, {
-    view: "parts",
-    role: "employee"
-  });
+  const { client, companyId, companyGroupId } = await requirePermissions(
+    request,
+    {
+      view: "parts",
+      role: "employee"
+    }
+  );
 
   const url = new URL(request.url);
   const searchParams = new URLSearchParams(url.search);
@@ -37,7 +40,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
       search,
       filters
     }),
-    getAccountsList(client, companyId)
+    getAccountsList(client, companyGroupId)
   ]);
 
   if (itemPostingGroups.error) {

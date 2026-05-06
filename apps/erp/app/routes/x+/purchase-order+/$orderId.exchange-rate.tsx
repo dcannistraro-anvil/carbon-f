@@ -14,6 +14,9 @@ import { path } from "~/utils/path";
 
 export async function action({ request, params }: ActionFunctionArgs) {
   assertIsPost(request);
+  const { client, companyGroupId } = await requirePermissions(request, {
+    create: "purchasing"
+  });
 
   const { orderId } = params;
   if (!orderId) throw new Error("Could not find orderId");
@@ -41,15 +44,15 @@ export async function action({ request, params }: ActionFunctionArgs) {
     message: "Cannot modify a confirmed purchase order."
   });
 
-  const { client, companyId } = await requirePermissions(request, {
-    create: "purchasing"
-  });
-
   const formData = await request.formData();
   const currencyCode = formData.get("currencyCode") as string;
   if (!currencyCode) throw new Error("Could not find currencyCode");
 
-  const currency = await getCurrencyByCode(client, companyId, currencyCode);
+  const currency = await getCurrencyByCode(
+    client,
+    companyGroupId,
+    currencyCode
+  );
   if (currency.error || !currency.data.exchangeRate)
     throw new Error("Could not find currency");
 

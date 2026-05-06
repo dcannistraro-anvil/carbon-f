@@ -22,6 +22,7 @@ import { useState } from "react";
 import { LuChevronRight, LuImage } from "react-icons/lu";
 import { Link, useParams } from "react-router";
 import { MethodIcon, SupplierAvatar } from "~/components";
+import { useAccounts } from "~/components/Form/Account";
 import { useUnitOfMeasure } from "~/components/Form/UnitOfMeasure";
 import {
   useCurrencyFormatter,
@@ -55,6 +56,7 @@ const LineItems = ({
   shouldConvertCurrency: boolean;
 }) => {
   const [items] = useItems();
+  const accounts = useAccounts();
   const { invoiceId } = useParams();
   if (!invoiceId) throw new Error("Could not find invoiceId");
 
@@ -73,7 +75,10 @@ const LineItems = ({
       {purchaseInvoiceLines.map((line) => {
         if (!line.id) return null;
 
-        const itemReadableId = getItemReadableId(items, line.itemId);
+        const isGlAccount = line.invoiceLineType === "G/L Account";
+        const itemReadableId = isGlAccount
+          ? line.description || "Indirect Expense"
+          : getItemReadableId(items, line.itemId);
         const lineTotal = (line.unitPrice ?? 0) * (line.quantity ?? 0);
         const supplierLineTotal =
           (line.supplierUnitPrice ?? 0) * (line.quantity ?? 0);
@@ -137,7 +142,10 @@ const LineItems = ({
                         </Button>
                       </HStack>
                       <span className="text-muted-foreground text-base truncate">
-                        {line.description}
+                        {isGlAccount
+                          ? (accounts.find((a) => a.id === line.accountId)
+                              ?.name ?? "Indirect Expense")
+                          : line.description}
                       </span>
                     </VStack>
                     <VStack
@@ -167,16 +175,18 @@ const LineItems = ({
                         </motion.div>
                       </HStack>
                       <div className="flex items-center gap-2">
-                        <Badge
-                          variant="outline"
-                          className="flex items-center gap-2"
-                        >
-                          {line.quantity}
-                          <MethodIcon
-                            // @ts-ignore
-                            type={line.methodType ?? "Pull from Inventory"}
-                          />
-                        </Badge>
+                        {!isGlAccount && (
+                          <Badge
+                            variant="outline"
+                            className="flex items-center gap-2"
+                          >
+                            {line.quantity}
+                            <MethodIcon
+                              // @ts-ignore
+                              type={line.methodType ?? "Pull from Inventory"}
+                            />
+                          </Badge>
+                        )}
                         <Badge variant="green">
                           {formatter.format(line.unitPrice ?? 0)}{" "}
                           {

@@ -36,6 +36,7 @@ type PartyDetailsProps = {
   counterPartyLabel: string;
   createdByFullName?: string | null;
   createdByEmail?: string | null;
+  createdByPhone?: string | null;
   accountsPayableEmail?: string | null;
   accountsReceivableEmail?: string | null;
 };
@@ -67,6 +68,7 @@ const PartyDetails = ({
   counterPartyLabel,
   createdByFullName,
   createdByEmail,
+  createdByPhone,
   accountsPayableEmail,
   accountsReceivableEmail
 }: PartyDetailsProps) => {
@@ -109,12 +111,9 @@ const PartyDetails = ({
             )}
             {company.taxId && <Text>Tax ID: {company.taxId}</Text>}
             {company.vatNumber && <Text>VAT Number: {company.vatNumber}</Text>}
-            {(createdByFullName || createdByEmail) && (
-              <Text>
-                Contact: {createdByFullName}
-                {createdByEmail ? ` (${createdByEmail})` : ""}
-              </Text>
-            )}
+            {createdByFullName && <Text>Contact: {createdByFullName}</Text>}
+            {createdByEmail && <Text>Email: {createdByEmail}</Text>}
+            {createdByPhone && <Text>Phone: {createdByPhone}</Text>}
             {accountsPayableEmail && (
               <Text>Accounts Payable: {accountsPayableEmail}</Text>
             )}
@@ -156,20 +155,16 @@ const PartyDetails = ({
                   .join(" ")}
               </Text>
             )}
-            {counterParty.taxId && (
-              <Text>Company No: {counterParty.taxId}</Text>
-            )}
+            {counterParty.taxId && <Text>Tax ID: {counterParty.taxId}</Text>}
             {counterParty.vatNumber && (
               <Text>VAT No: {counterParty.vatNumber}</Text>
             )}
             {counterParty.eori && <Text>EORI: {counterParty.eori}</Text>}
-            {(counterParty.contactName || counterParty.contactEmail) && (
-              <Text>
-                Contact: {counterParty.contactName}
-                {counterParty.contactEmail
-                  ? ` (${counterParty.contactEmail})`
-                  : ""}
-              </Text>
+            {counterParty.contactName && (
+              <Text>Contact: {counterParty.contactName}</Text>
+            )}
+            {counterParty.contactEmail && (
+              <Text>Email: {counterParty.contactEmail}</Text>
             )}
           </View>
         </View>

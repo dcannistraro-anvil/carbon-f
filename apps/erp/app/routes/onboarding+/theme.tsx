@@ -85,6 +85,10 @@ export default function OnboardingTheme() {
     Object.entries(variables).forEach(([key, value]) => {
       document.body.style.setProperty(`--${key}`, value);
     });
+
+    window.dispatchEvent(
+      new CustomEvent("onboarding-theme-change", { detail: t.name })
+    );
   };
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: suppressed due to migration

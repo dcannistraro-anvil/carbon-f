@@ -14,9 +14,6 @@ export const path = {
     api: {
       abilities: `${api}/resources/abilities`,
       accounts: `${api}/accounting/accounts`,
-      accountingCategories: `${api}/accounting/categories`,
-      accountingSubcategories: (id: string) =>
-        generatePath(`${api}/accounting/subcategories?accountCategoryId=${id}`),
       assign: `${api}/assign`,
       batchNumbers: (itemId: string) =>
         generatePath(`${api}/inventory/batch-numbers?itemId=${itemId}`),
@@ -40,6 +37,7 @@ export const path = {
       customerTypes: `${api}/sales/customer-types`,
       customFieldOptions: (table: string, fieldId: string) =>
         generatePath(`${api}/settings/custom-fields/${table}/${fieldId}`),
+      costCenters: `${api}/accounting/cost-centers`,
       departments: `${api}/people/departments`,
       timecard: `${api}/people/timecard`,
       outstandingTrainings: `${api}/resources/trainings`,
@@ -397,21 +395,26 @@ export const path = {
     accountPersonal: `${x}/account/personal`,
     accountPassword: `${x}/account/password`,
     accounting: `${x}/accounting`,
-    accountingCategoryList: (id: string) =>
-      generatePath(`${x}/accounting/categories/list/${id}`),
-    accountingCategory: (id: string) =>
-      generatePath(`${x}/accounting/categories/${id}`),
-    accountingCategories: `${x}/accounting/categories`,
     accountingDefaults: `${x}/accounting/defaults`,
     accountingJournals: `${x}/accounting/journals`,
+    journalEntry: (id: string) => generatePath(`${x}/journal-entry/${id}`),
+    journalEntryDetails: (id: string) =>
+      generatePath(`${x}/journal-entry/${id}/details`),
+    newJournalEntry: `${x}/accounting/journals/new`,
+    postJournalEntry: (id: string) =>
+      generatePath(`${x}/journal-entry/${id}/post`),
+    reverseJournalEntry: (id: string) =>
+      generatePath(`${x}/journal-entry/${id}/reverse`),
+    journalLineDimensions: (lineId: string) =>
+      `/api/accounting/journal-line-dimensions/${lineId}`,
     accountingGroupsBankAccounts: `${x}/accounting/groups/bank-accounts`,
     accountingGroupsFixedAssets: `${x}/accounting/groups/fixed-assets`,
     accountingGroupsInventory: `${x}/accounting/groups/inventory`,
     accountingGroupsPurchasing: `${x}/accounting/groups/purchasing`,
     accountingGroupsSales: `${x}/accounting/groups/sales`,
     accountingRoot: `${x}/accounting`,
-    accountingSubcategory: (id: string) =>
-      generatePath(`${x}/accounting/subcategory/${id}`),
+    intercompany: `${x}/accounting/intercompany`,
+    newIntercompanyTransaction: `${x}/accounting/intercompany/new`,
     activeMethodVersion: (id: string) =>
       generatePath(`${x}/items/methods/versions/activate/${id}`),
     activateGauge: (id: string) =>
@@ -464,9 +467,18 @@ export const path = {
     chartOfAccount: (id: string) =>
       generatePath(`${x}/accounting/charts/${id}`),
     chartOfAccounts: `${x}/accounting/charts`,
+    moveChartOfAccount: (id: string) =>
+      generatePath(`${x}/accounting/charts/move/${id}`),
+    costCenter: (id: string) =>
+      generatePath(`${x}/accounting/cost-centers/${id}`),
+    costCenters: `${x}/accounting/cost-centers`,
+    trialBalance: `${x}/accounting/trial-balance`,
+    balanceSheet: `${x}/accounting/balance-sheet`,
+    incomeStatement: `${x}/accounting/income-statement`,
     company: `${x}/settings/company`,
     companySwitch: (companyId: string) =>
       generatePath(`${x}/settings/company/switch/${companyId}`),
+    companies: `${x}/settings/companies`,
     completeTrainingAssignment: (id: string) =>
       generatePath(`${share}/training/${id}`),
     configurationParameter: (itemId: string) =>
@@ -509,8 +521,11 @@ export const path = {
       generatePath(`${x}/quote/${id}/convert`),
     convertSupplierQuoteToOrder: (id: string) =>
       generatePath(`${x}/supplier-quote/${id}/convert`),
-    currency: (id: string) => generatePath(`${x}/accounting/currencies/${id}`),
-    currencies: `${x}/accounting/currencies`,
+    exchangeRate: (id: string) =>
+      generatePath(`${x}/accounting/exchange-rates/${id}`),
+    exchangeRates: `${x}/accounting/exchange-rates`,
+    dimension: (id: string) => generatePath(`${x}/accounting/dimensions/${id}`),
+    dimensions: `${x}/accounting/dimensions`,
     customer: (id: string) => generatePath(`${x}/customer/${id}`),
     customerDetails: (id: string) =>
       generatePath(`${x}/customer/${id}/details`),
@@ -538,6 +553,7 @@ export const path = {
       generatePath(`${x}/sales/customer-portals/${id}`),
     customerShipping: (id: string) =>
       generatePath(`${x}/customer/${id}/shipping`),
+    customerTax: (id: string) => generatePath(`${x}/customer/${id}/tax`),
     customerRisks: (id: string) => generatePath(`${x}/customer/${id}/risks`),
     customerStatus: (id: string) =>
       generatePath(`${x}/sales/customer-statuses/${id}`),
@@ -558,12 +574,10 @@ export const path = {
       generatePath(`${x}/items/revisions/default/${id}`),
     deleteAbility: (id: string) =>
       generatePath(`${x}/resources/abilities/delete/${id}`),
-    deleteAccountingCategory: (id: string) =>
-      generatePath(`${x}/accounting/categories/delete/${id}`),
-    deleteAccountingSubcategory: (id: string) =>
-      generatePath(`${x}/accounting/subcategory/delete/${id}`),
     deleteAccountingCharts: (id: string) =>
       generatePath(`${x}/accounting/charts/delete/${id}`),
+    deleteCostCenter: (id: string) =>
+      generatePath(`${x}/accounting/cost-centers/delete/${id}`),
     deleteApiKey: (id: string) =>
       generatePath(`${x}/settings/api-keys/delete/${id}`),
     deleteAttribute: (id: string) =>
@@ -574,6 +588,8 @@ export const path = {
       generatePath(
         `${x}/inventory/batch-property/${itemId}/property/delete/${id}`
       ),
+    deleteCompany: (id: string) =>
+      generatePath(`${x}/settings/companies/delete/${id}`),
     deleteConfigurationParameter: (itemId: string, id: string) =>
       generatePath(`${x}/part/${itemId}/parameter/delete/${id}`),
     deleteConfigurationParameterGroup: (itemId: string, id: string) =>
@@ -582,8 +598,10 @@ export const path = {
       generatePath(`${x}/part/${itemId}/rule/delete/${field}`),
     deleteContractor: (id: string) =>
       generatePath(`${x}/resources/contractors/delete/${id}`),
-    deleteCurrency: (id: string) =>
-      generatePath(`${x}/accounting/currencies/delete/${id}`),
+    deleteExchangeRate: (id: string) =>
+      generatePath(`${x}/accounting/exchange-rates/delete/${id}`),
+    deleteDimension: (id: string) =>
+      generatePath(`${x}/accounting/dimensions/delete/${id}`),
     deleteCustomer: (id: string) => generatePath(`${x}/customer/${id}/delete`),
     deleteCustomerContact: (customerId: string, id: string) =>
       generatePath(`${x}/customer/${customerId}/contacts/delete/${id}`),
@@ -626,6 +644,8 @@ export const path = {
     deleteItem: (id: string) => generatePath(`${x}/items/delete/${id}`),
     deleteItemPostingGroup: (id: string) =>
       generatePath(`${x}/items/groups/delete/${id}`),
+    deleteJournalEntry: (id: string) =>
+      generatePath(`${x}/journal-entry/${id}/delete`),
     deleteJob: (id: string) => generatePath(`${x}/job/${id}/delete`),
     deleteJobMaterial: (jobId: string, id: string) =>
       generatePath(`${x}/job/methods/${jobId}/material/delete/${id}`),
@@ -1025,9 +1045,6 @@ export const path = {
     methodOperationTool: (id: string) =>
       generatePath(`${x}/items/methods/operation/tool/${id}`),
     newAbility: `${x}/resources/abilities/new`,
-    newAccountingCategory: `${x}/accounting/categories/new`,
-    newAccountingSubcategory: (id: string) =>
-      generatePath(`${x}/accounting/categories/list/${id}/new`),
     newApiKey: `${x}/settings/api-keys/new`,
     newAttribute: `${x}/people/attribute/new`,
     newAttributeCategory: `${x}/people/attributes/new`,
@@ -1036,12 +1053,16 @@ export const path = {
     newBatch: `${x}/inventory/batches/new`,
     newBulkJob: `${x}/job/bulk/new`,
     newChartOfAccount: `${x}/accounting/charts/new`,
+    newChartOfAccountGroup: `${x}/accounting/charts/new-group`,
+    newCostCenter: `${x}/accounting/cost-centers/new`,
     newCompany: `${x}/settings/company/new`,
+    newCompanyInGroup: `${x}/settings/companies/new`,
     newConsumable: `${x}/consumable/new`,
     newConsumableSupplier: (id: string) =>
       generatePath(`${x}/consumable/${id}/purchasing/new`),
     newContractor: `${x}/resources/contractors/new`,
-    newCurrency: `${x}/accounting/currencies/new`,
+    newExchangeRate: `${x}/accounting/exchange-rates/new`,
+    newDimension: `${x}/accounting/dimensions/new`,
     newCustomer: `${x}/customer/new`,
     newCustomerAccount: `${x}/users/customers/new`,
     newCustomerContact: (id: string) =>
@@ -1592,6 +1613,7 @@ export const path = {
     supplierRisks: (id: string) => generatePath(`${x}/supplier/${id}/risks`),
     supplierShipping: (id: string) =>
       generatePath(`${x}/supplier/${id}/shipping`),
+    supplierTax: (id: string) => generatePath(`${x}/supplier/${id}/tax`),
     supplierQuote: (id: string) => generatePath(`${x}/supplier-quote/${id}`),
     supplierQuotes: `${x}/purchasing/quotes`,
     supplierQuoteFavorite: `${x}/purchasing/quotes/favorite`,

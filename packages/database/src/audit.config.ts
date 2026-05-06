@@ -113,6 +113,7 @@ export const auditConfig = {
         customer: { role: "root" },
         customerPayment: { role: "extension" }, // PK = customerId
         customerShipping: { role: "extension" }, // PK = customerId
+        customerTax: { role: "extension" }, // PK = customerId
         contact: {
           resolve: {
             junction: "customerContact",
@@ -136,6 +137,7 @@ export const auditConfig = {
         supplier: { role: "root" },
         supplierPayment: { role: "extension" }, // PK = supplierId
         supplierShipping: { role: "extension" }, // PK = supplierId
+        supplierTax: { role: "extension" }, // PK = supplierId
         contact: {
           resolve: {
             junction: "supplierContact",
@@ -353,11 +355,13 @@ export const auditConfig = {
     customer: "Customer",
     customerPayment: "Payment",
     customerShipping: "Shipping",
+    customerTax: "Tax",
     contact: "Contact",
     address: "Address",
     supplier: "Supplier",
     supplierPayment: "Payment",
     supplierShipping: "Shipping",
+    supplierTax: "Tax",
     supplierPart: "Supplier Part",
     item: "Item",
     itemCost: "Cost",

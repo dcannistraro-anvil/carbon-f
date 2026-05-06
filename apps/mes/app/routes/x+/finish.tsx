@@ -11,7 +11,7 @@ import { path } from "~/utils/path";
 
 export async function action({ request }: ActionFunctionArgs) {
   assertIsPost(request);
-  const { userId } = await requirePermissions(request, {});
+  const { userId, companyId } = await requirePermissions(request, {});
 
   const formData = await request.formData();
   const validation = await validator(finishValidator).validate(formData);
@@ -23,7 +23,8 @@ export async function action({ request }: ActionFunctionArgs) {
 
   const finishOperation = await finishJobOperation(serviceRole, {
     ...validation.data,
-    userId
+    userId,
+    companyId
   });
 
   if (finishOperation.error) {

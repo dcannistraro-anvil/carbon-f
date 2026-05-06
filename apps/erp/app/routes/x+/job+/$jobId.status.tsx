@@ -132,6 +132,13 @@ export async function action({ request, params }: ActionFunctionArgs) {
     );
   }
 
+  if (status === "Closed") {
+    const serviceRole = await getCarbonServiceRole();
+    await serviceRole.functions.invoke("close-job", {
+      body: { jobId: id, userId, companyId }
+    });
+  }
+
   if (status === "Planned") {
     throw redirect(
       path.to.jobMaterials(id),

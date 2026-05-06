@@ -84,3 +84,14 @@
 - ALWAYS update the cache after a commit.
 - NEVER update the cache about staged/uncommitted code.
 - NEVER rebuild the database to test changes. Wait for the user to do that.
+
+## Browser Automation
+
+Use `agent-browser` for web automation. Run `agent-browser --help` for all commands.
+
+Core workflow:
+
+1. `agent-browser open <url>` - Navigate to page
+2. `agent-browser snapshot -i` - Get interactive elements with refs (@e1, @e2)
+3. `agent-browser click @e1` / `fill @e2 "text"` - Interact using refs
+4. Re-snapshot after page changes

@@ -7,9 +7,16 @@ type TemplateProps = PropsWithChildren<{
   title: string;
   meta: Meta;
   footerLabel?: string;
+  footerDocumentId?: string | null;
 }>;
 
-const Template = ({ title, meta, footerLabel, children }: TemplateProps) => {
+const Template = ({
+  title,
+  meta,
+  footerLabel,
+  footerDocumentId,
+  children
+}: TemplateProps) => {
   Font.register({
     family: "Inter",
     fonts: [
@@ -53,7 +60,7 @@ const Template = ({ title, meta, footerLabel, children }: TemplateProps) => {
     >
       <Page size="A4" style={styles.body}>
         {children}
-        <Footer label={footerLabel} />
+        <Footer label={footerLabel} documentId={footerDocumentId} />
       </Page>
     </Document>
   );

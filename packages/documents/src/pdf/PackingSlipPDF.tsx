@@ -7,6 +7,7 @@ import { Image, Text, View } from "@react-pdf/renderer";
 import { createTw } from "react-pdf-tailwind";
 import { generateQRCode } from "../qr/qr-code";
 import type { PDF } from "../types";
+import { getRegistrationFooter } from "../utils/shared";
 import { Header, Note, Template } from "./components";
 
 interface PackingSlipProps extends PDF {
@@ -84,6 +85,12 @@ const PackingSlipPDF = ({
         keywords: meta?.keywords ?? "packing slip",
         subject: meta?.subject ?? "Packing Slip"
       }}
+      footerLabel={getRegistrationFooter(
+        company.name,
+        company.countryCode,
+        company.taxId
+      )}
+      footerDocumentId={shipment?.shipmentId}
     >
       <Header
         company={company}

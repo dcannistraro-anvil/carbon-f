@@ -9,7 +9,8 @@ import {
   getSupplier,
   getSupplierApprovalContext,
   getSupplierContacts,
-  getSupplierLocations
+  getSupplierLocations,
+  getSupplierTax
 } from "~/modules/purchasing";
 import SupplierHeader from "~/modules/purchasing/ui/Supplier/SupplierHeader";
 import SupplierSidebar from "~/modules/purchasing/ui/Supplier/SupplierSidebar";
@@ -35,21 +36,23 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   // off the supplier fetch rather than waiting for the whole Promise.all to
   // settle.
   const supplierPromise = getSupplier(client, supplierId);
-  const [supplier, contacts, locations, tags, approval] = await Promise.all([
-    supplierPromise,
-    getSupplierContacts(client, supplierId),
-    getSupplierLocations(client, supplierId),
-    getTagsList(client, companyId, "supplier"),
-    supplierPromise.then((s) =>
-      getSupplierApprovalContext(
-        serviceRole,
-        supplierId,
-        s.data?.status ?? null,
-        companyId,
-        userId
+  const [supplier, contacts, locations, tags, supplierTax, approval] =
+    await Promise.all([
+      supplierPromise,
+      getSupplierContacts(client, supplierId),
+      getSupplierLocations(client, supplierId),
+      getTagsList(client, companyId, "supplier"),
+      getSupplierTax(client, supplierId),
+      supplierPromise.then((s) =>
+        getSupplierApprovalContext(
+          serviceRole,
+          supplierId,
+          s.data?.status ?? null,
+          companyId,
+          userId
+        )
       )
-    )
-  ]);
+    ]);
 
   if (supplier.error) {
     throw redirect(
@@ -66,6 +69,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     contacts: contacts.data ?? [],
     locations: locations.data ?? [],
     tags: tags.data ?? [],
+    supplierTax: supplierTax.data,
     ...approval
   };
 }

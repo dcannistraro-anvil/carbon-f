@@ -3,7 +3,7 @@ import { requirePermissions } from "@carbon/auth/auth.server";
 import { flash } from "@carbon/auth/session.server";
 import { validationError, validator } from "@carbon/form";
 import type { ActionFunctionArgs } from "react-router";
-import { data, redirect, useNavigate } from "react-router";
+import { data, redirect, useNavigate, useSearchParams } from "react-router";
 import { departmentValidator, upsertDepartment } from "~/modules/people";
 import { DepartmentForm } from "~/modules/people/ui/Departments";
 import { setCustomFields } from "~/utils/form";
@@ -62,8 +62,13 @@ export async function action({ request }: ActionFunctionArgs) {
 
 export default function NewDepartmentRoute() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const parentDepartmentId =
+    searchParams.get("parentDepartmentId") ?? undefined;
+
   const initialValues = {
-    name: ""
+    name: "",
+    parentDepartmentId
   };
 
   return (

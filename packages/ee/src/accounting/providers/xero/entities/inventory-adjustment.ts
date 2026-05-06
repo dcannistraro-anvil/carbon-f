@@ -66,18 +66,10 @@ export class InventoryAdjustmentSyncer extends BaseEntitySyncer<
       .selectFrom("itemLedger")
       .innerJoin("item", "item.id", "itemLedger.itemId")
       .leftJoin("itemCost", "itemCost.itemId", "itemLedger.itemId")
-      .leftJoin("postingGroupInventory", (join) =>
-        join
-          .onRef(
-            "postingGroupInventory.itemPostingGroupId",
-            "=",
-            "itemCost.itemPostingGroupId" as any
-          )
-          .onRef(
-            "postingGroupInventory.locationId",
-            "=",
-            "itemLedger.locationId" as any
-          )
+      .leftJoin(
+        "accountDefault",
+        "accountDefault.companyId",
+        "itemLedger.companyId"
       )
       .select([
         "itemLedger.id",
@@ -90,8 +82,8 @@ export class InventoryAdjustmentSyncer extends BaseEntitySyncer<
         "itemLedger.companyId",
         "itemLedger.createdAt",
         "itemCost.unitCost",
-        "postingGroupInventory.inventoryAccount",
-        "postingGroupInventory.inventoryAdjustmentVarianceAccount as adjustmentVarianceAccount",
+        "accountDefault.inventoryAccount",
+        "accountDefault.inventoryAdjustmentVarianceAccount as adjustmentVarianceAccount",
         "item.readableId as itemReadableId"
       ])
       .where("itemLedger.id", "in", ids)

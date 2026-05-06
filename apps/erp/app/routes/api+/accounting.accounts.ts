@@ -3,21 +3,27 @@ import type { LoaderFunctionArgs } from "react-router";
 import { getAccountsList } from "~/modules/accounting";
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const { client, companyId } = await requirePermissions(request, {});
+  const { client, companyGroupId } = await requirePermissions(request, {});
 
   const url = new URL(request.url);
   const searchParams = new URLSearchParams(url.search);
-  const type = searchParams.get("type");
+  const isGroupParam = searchParams.get("isGroup");
   const classes = searchParams.getAll("class");
-
   const incomeBalance = searchParams.get("incomeBalance");
-  const result = await getAccountsList(client, companyId, {
-    // @ts-expect-error TS2322 - TODO: fix type
-    type,
-    // @ts-expect-error TS2322 - TODO: fix type
-    incomeBalance,
-    // @ts-expect-error TS2322 - TODO: fix type
-    classes
+
+  const isGroup =
+    isGroupParam === "true" ? true : isGroupParam === "false" ? false : null;
+
+  const result = await getAccountsList(client, companyGroupId, {
+    isGroup,
+    incomeBalance: incomeBalance as "Balance Sheet" | "Income Statement" | null,
+    classes: classes as (
+      | "Asset"
+      | "Equity"
+      | "Expense"
+      | "Liability"
+      | "Revenue"
+    )[]
   });
 
   return result;

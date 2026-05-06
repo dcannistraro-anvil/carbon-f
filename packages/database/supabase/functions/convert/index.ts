@@ -354,7 +354,8 @@ serve(async (req: Request) => {
               itemId: line.itemId,
               locationId: line.locationId,
               storageUnitId: line.storageUnitId,
-              accountNumber: line.accountNumber,
+              accountId: line.accountId,
+              costCenterId: line.costCenterId,
               assetId: line.assetId,
               description: line.description,
               quantity: line.quantityToInvoice,
@@ -763,7 +764,7 @@ serve(async (req: Request) => {
                 itemId: line.itemId,
                 locationId: line.locationId,
                 storageUnitId: line.storageUnitId,
-                accountNumber: line.accountNumber,
+                accountId: line.accountId,
                 assetId: line.assetId,
                 description: line.description,
                 quantity: line.quantityToInvoice,
@@ -1335,7 +1336,7 @@ serve(async (req: Request) => {
                 itemId: line.itemId,
                 locationId: line.locationId,
                 storageUnitId: line.storageUnitId,
-                accountNumber: line.accountNumber,
+                accountId: line.accountId,
                 assetId: line.assetId,
                 description: line.description,
                 quantity: line.quantityToInvoice,
@@ -1502,12 +1503,17 @@ serve(async (req: Request) => {
                   selectedLines[line.id].quantity > 0
               )
               .map((line) => {
+                const isIndirect = line.supplierQuoteLineType === "G/L Account";
                 return {
                   purchaseOrderId: insertedPurchaseOrderId,
-                  purchaseOrderLineType: line.item?.type as "Part",
+                  purchaseOrderLineType: isIndirect
+                    ? ("G/L Account" as const)
+                    : (line.item?.type as "Part"),
                   description: line.description,
-                  itemId: line.itemId,
-                  locationId: employeeJob.data?.locationId,
+                  itemId: isIndirect ? null : line.itemId,
+                  accountId: isIndirect ? line.accountId : null,
+                  costCenterId: isIndirect ? line.costCenterId : null,
+                  locationId: isIndirect ? null : employeeJob.data?.locationId,
                   storageUnitId:
                     pickMethods.data?.find(
                       (method) => method.itemId === line.itemId
@@ -1534,15 +1540,16 @@ serve(async (req: Request) => {
               .values(purchaseOrderLineInserts)
               .execute();
 
-            await trx
-              .updateTable("item")
-              .set({ active: true })
-              .where(
-                "id",
-                "in",
-                purchaseOrderLineInserts.map((insert) => insert.itemId)
-              )
-              .execute();
+            const itemIdsToActivate = purchaseOrderLineInserts
+              .map((insert) => insert.itemId)
+              .filter((id): id is string => !!id);
+            if (itemIdsToActivate.length > 0) {
+              await trx
+                .updateTable("item")
+                .set({ active: true })
+                .where("id", "in", itemIdsToActivate)
+                .execute();
+            }
           }
 
           // Create a map to deduplicate supplier parts by itemId and supplierId

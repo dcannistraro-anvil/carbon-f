@@ -186,6 +186,17 @@ export async function getDepartmentsList(
     .order("name");
 }
 
+export async function getDepartmentsTree(
+  client: SupabaseClient<Database>,
+  companyId: string
+) {
+  return client
+    .from("department")
+    .select("id, name, parentDepartmentId")
+    .eq("companyId", companyId)
+    .order("name");
+}
+
 export async function getEmployeeJob(
   client: SupabaseClient<Database>,
   employeeId: string,

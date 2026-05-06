@@ -3,13 +3,13 @@ import { DB } from "../database.ts";
 
 export async function getCurrencyByCode(
   db: Kysely<DB> | Transaction<DB>,
-  companyId: string,
+  companyGroupId: string,
   currencyCode: string
 ) {
   return await db
     .selectFrom("currencies")
     .selectAll()
     .where("code", "=", currencyCode)
-    .where("companyId", "=", companyId)
+    .where("companyGroupId", "=", companyGroupId)
     .executeTakeFirst();
 }

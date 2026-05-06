@@ -33,7 +33,7 @@ export function SearchLandingPage({
   return (
     <div
       className={cn(
-        "relative flex w-full h-full flex-1 items-center justify-center bg-card overflow-hidden isolate",
+        "relative flex w-full h-full flex-1 items-center justify-center bg-card overflow-hidden isolate pb-[10%]",
         className
       )}
     >

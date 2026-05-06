@@ -449,7 +449,7 @@ const SalesInvoiceLineForm = ({
                       />
                       <Location
                         name="locationId"
-                        label={t`Location`}
+                        label={t`Shipping Location`}
                         value={locationId}
                         onChange={onLocationChange}
                       />

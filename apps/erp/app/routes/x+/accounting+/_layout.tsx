@@ -7,31 +7,39 @@ import type { LoaderFunctionArgs, MetaFunction } from "react-router";
 import { Outlet, redirect } from "react-router";
 import { GroupedContentSidebar } from "~/components/Layout";
 import { CollapsibleSidebarProvider } from "~/components/Layout/Navigation";
-import { getAccountsList, getBaseCurrency } from "~/modules/accounting";
+import {
+  getAccountsList,
+  getBaseCurrency,
+  getCompaniesInGroup
+} from "~/modules/accounting";
 import useAccountingSubmodules from "~/modules/accounting/ui/useAccountingSubmodules";
 import type { Handle } from "~/utils/handle";
 import { path } from "~/utils/path";
 
 export const meta: MetaFunction = () => {
-  return [{ title: "Carbon | Finance" }];
+  return [{ title: "Carbon | Accounting" }];
 };
 
 export const handle: Handle = {
-  breadcrumb: msg`Finance`,
-  to: path.to.currencies,
+  breadcrumb: msg`Accounting`,
+  to: path.to.chartOfAccounts,
   module: "accounting"
 };
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const { client, companyId } = await requirePermissions(request, {
-    view: "accounting"
-  });
+  const { client, companyId, companyGroupId } = await requirePermissions(
+    request,
+    {
+      view: "accounting"
+    }
+  );
 
-  const [accounts, baseCurrency] = await Promise.all([
-    getAccountsList(client, companyId, {
-      type: "Posting"
+  const [accounts, baseCurrency, companies] = await Promise.all([
+    getAccountsList(client, companyGroupId, {
+      isGroup: false
     }),
-    getBaseCurrency(client, companyId)
+    getBaseCurrency(client, companyId),
+    getCompaniesInGroup(client, companyGroupId)
   ]);
 
   if (accounts.error) {
@@ -46,7 +54,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
     balanceSheetAccounts:
       accounts.data.filter((a) => a.incomeBalance === "Balance Sheet") ?? [],
     incomeStatementAccounts:
-      accounts.data.filter((a) => a.incomeBalance === "Income Statement") ?? []
+      accounts.data.filter((a) => a.incomeBalance === "Income Statement") ?? [],
+    hasMultipleCompanies: (companies.data?.length ?? 0) > 1
   };
 }
 

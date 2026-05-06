@@ -11,7 +11,7 @@ import {
   getLineTotal,
   getTotal
 } from "../utils/sales-invoice";
-import { getCurrencyFormatter } from "../utils/shared";
+import { getCurrencyFormatter, getRegistrationFooter } from "../utils/shared";
 import {
   Header,
   Note,
@@ -20,10 +20,16 @@ import {
   Template
 } from "./components";
 
+type SalesInvoiceLocations =
+  Database["public"]["Views"]["salesInvoiceLocations"]["Row"] & {
+    customerTaxId?: string | null;
+    customerVatNumber?: string | null;
+  };
+
 interface SalesInvoicePDFProps extends PDF {
   salesInvoice: Database["public"]["Views"]["salesInvoices"]["Row"];
   salesInvoiceLines: Database["public"]["Views"]["salesInvoiceLines"]["Row"][];
-  salesInvoiceLocations: Database["public"]["Views"]["salesInvoiceLocations"]["Row"];
+  salesInvoiceLocations: SalesInvoiceLocations;
   salesInvoiceShipment: Database["public"]["Tables"]["salesInvoiceShipment"]["Row"];
   accountsReceivableBillingAddress?: AccountsReceivableBillingAddress | null;
   companySettings?:
@@ -78,6 +84,8 @@ const SalesInvoicePDF = ({
     customerStateProvince,
     customerPostalCode,
     customerCountryName,
+    customerTaxId,
+    customerVatNumber,
     customerEori,
     invoiceCustomerName,
     invoiceAddressLine1,
@@ -116,6 +124,12 @@ const SalesInvoicePDF = ({
         keywords: meta?.keywords ?? "sales invoice",
         subject: meta?.subject ?? "Invoice"
       }}
+      footerLabel={getRegistrationFooter(
+        company.name,
+        company.countryCode,
+        company.taxId
+      )}
+      footerDocumentId={salesInvoice?.invoiceId}
     >
       <Header
         company={company}
@@ -150,6 +164,8 @@ const SalesInvoicePDF = ({
           stateProvince: customerStateProvince,
           postalCode: customerPostalCode,
           countryCode: customerCountryName,
+          taxId: customerTaxId,
+          vatNumber: customerVatNumber,
           eori: customerEori
         }}
         counterPartyLabel="Buyer"

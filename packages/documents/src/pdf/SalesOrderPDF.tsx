@@ -11,7 +11,7 @@ import {
   getLineTotal,
   getTotal
 } from "../utils/sales-order";
-import { getCurrencyFormatter } from "../utils/shared";
+import { getCurrencyFormatter, getRegistrationFooter } from "../utils/shared";
 import {
   Header,
   Note,
@@ -20,10 +20,16 @@ import {
   Template
 } from "./components";
 
+type SalesOrderLocations =
+  Database["public"]["Views"]["salesOrderLocations"]["Row"] & {
+    customerTaxId?: string | null;
+    customerVatNumber?: string | null;
+  };
+
 interface SalesOrderPDFProps extends PDF {
   salesOrder: Database["public"]["Views"]["salesOrders"]["Row"];
   salesOrderLines: Database["public"]["Views"]["salesOrderLines"]["Row"][];
-  salesOrderLocations: Database["public"]["Views"]["salesOrderLocations"]["Row"];
+  salesOrderLocations: SalesOrderLocations;
   companySettings?:
     | Database["public"]["Tables"]["companySettings"]["Row"]
     | null;
@@ -76,6 +82,8 @@ const SalesOrderPDF = ({
     customerStateProvince,
     customerPostalCode,
     customerCountryName,
+    customerTaxId,
+    customerVatNumber,
     customerEori,
     paymentCustomerName,
     paymentAddressLine1,
@@ -107,6 +115,12 @@ const SalesOrderPDF = ({
         keywords: meta?.keywords ?? "sales order",
         subject: meta?.subject ?? "Sales Order"
       }}
+      footerLabel={getRegistrationFooter(
+        company.name,
+        company.countryCode,
+        company.taxId
+      )}
+      footerDocumentId={salesOrder?.salesOrderId}
     >
       <Header
         company={company}
@@ -141,6 +155,8 @@ const SalesOrderPDF = ({
           stateProvince: customerStateProvince,
           postalCode: customerPostalCode,
           countryCode: customerCountryName,
+          taxId: customerTaxId,
+          vatNumber: customerVatNumber,
           eori: customerEori
         }}
         counterPartyLabel="Buyer"

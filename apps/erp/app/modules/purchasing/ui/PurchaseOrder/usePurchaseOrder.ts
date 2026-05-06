@@ -1,7 +1,7 @@
 import { useCarbon } from "@carbon/auth";
 import { toast } from "@carbon/react";
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useSubmit } from "react-router";
 import type { Receipt, Shipment } from "~/modules/inventory";
 import type { PurchaseInvoice } from "~/modules/invoicing";
 import type { PurchaseOrder } from "~/modules/purchasing";
@@ -9,6 +9,7 @@ import { path } from "~/utils/path";
 
 export const usePurchaseOrder = () => {
   const navigate = useNavigate();
+  const submit = useSubmit();
 
   const edit = useCallback(
     (purchaseOrder: PurchaseOrder) =>
@@ -25,19 +26,23 @@ export const usePurchaseOrder = () => {
   );
 
   const receive = useCallback(
-    (purchaseOrder: PurchaseOrder) =>
-      navigate(
-        `${path.to.newReceipt}?sourceDocument=Purchase Order&sourceDocumentId=${purchaseOrder.id}`
-      ),
-    [navigate]
+    (purchaseOrder: PurchaseOrder) => {
+      const formData = new FormData();
+      formData.set("sourceDocument", "Purchase Order");
+      formData.set("sourceDocumentId", purchaseOrder.id!);
+      submit(formData, { method: "post", action: path.to.newReceipt });
+    },
+    [submit]
   );
 
   const ship = useCallback(
-    (purchaseOrder: PurchaseOrder) =>
-      navigate(
-        `${path.to.newShipment}?sourceDocument=Purchase Order&sourceDocumentId=${purchaseOrder.id}`
-      ),
-    [navigate]
+    (purchaseOrder: PurchaseOrder) => {
+      const formData = new FormData();
+      formData.set("sourceDocument", "Purchase Order");
+      formData.set("sourceDocumentId", purchaseOrder.id!);
+      submit(formData, { method: "post", action: path.to.newShipment });
+    },
+    [submit]
   );
 
   return {

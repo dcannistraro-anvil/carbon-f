@@ -1,5 +1,6 @@
 import { assertIsPost, error, notFound, success } from "@carbon/auth";
 import { requirePermissions } from "@carbon/auth/auth.server";
+import { getCarbonServiceRole } from "@carbon/auth/client.server";
 import { flash } from "@carbon/auth/session.server";
 import { validationError, validator } from "@carbon/form";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
@@ -80,6 +81,17 @@ export async function action({ request, params }: ActionFunctionArgs) {
         error(update.error, "Failed to update production event")
       )
     );
+  }
+
+  if (d.endTime) {
+    const serviceRole = await getCarbonServiceRole();
+    await serviceRole.functions.invoke("post-production-event", {
+      body: {
+        productionEventId: id,
+        userId,
+        companyId
+      }
+    });
   }
 
   throw redirect(

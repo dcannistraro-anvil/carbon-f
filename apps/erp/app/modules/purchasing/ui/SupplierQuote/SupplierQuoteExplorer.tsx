@@ -27,6 +27,7 @@ import { Empty, ItemThumbnail, MethodItemTypeIcon } from "~/components";
 import { useOptimisticLocation, usePermissions, useRouteData } from "~/hooks";
 import { getLinkToItemDetails } from "~/modules/items/ui/Item/ItemForm";
 import type { MethodItemType } from "~/modules/shared";
+import { methodItemType } from "~/modules/shared";
 import { useItems } from "~/stores";
 import { path } from "~/utils/path";
 import { isSupplierQuoteLocked } from "../../purchasing.models";
@@ -47,6 +48,7 @@ export default function SupplierQuoteExplorer() {
 
   const supplierQuoteLineInitialValues = {
     supplierQuoteId: id,
+    supplierQuoteLineType: "Part" as const,
     status: "Draft" as const,
     itemType: "Part" as const,
     description: "",
@@ -205,10 +207,14 @@ function SupplierQuoteLineItem({
 
             <VStack spacing={0} className="min-w-0">
               <span className="font-semibold line-clamp-1">
-                {getItemReadableId(items, line.itemId)}
+                {line.supplierQuoteLineType === "G/L Account"
+                  ? line.description || "Indirect Expense"
+                  : getItemReadableId(items, line.itemId)}
               </span>
               <span className="text-muted-foreground text-xs truncate line-clamp-1">
-                {line.description}
+                {line.supplierQuoteLineType === "G/L Account"
+                  ? "G/L Account"
+                  : line.description}
               </span>
             </VStack>
           </HStack>
@@ -236,19 +242,25 @@ function SupplierQuoteLineItem({
                   <Trans>Delete Line</Trans>
                 </DropdownMenuItem>
 
-                <DropdownMenuItem asChild onClick={(e) => e.stopPropagation()}>
-                  <Link
-                    to={getLinkToItemDetails(
-                      line.itemType as MethodItemType,
-                      line.itemId!
-                    )}
+                {/* @ts-expect-error */}
+                {methodItemType.includes(line.supplierQuoteLineType ?? "") && (
+                  <DropdownMenuItem
+                    asChild
+                    onClick={(e) => e.stopPropagation()}
                   >
-                    <DropdownMenuIcon
-                      icon={<MethodItemTypeIcon type="Part" />}
-                    />
-                    <Trans>View Item Master</Trans>
-                  </Link>
-                </DropdownMenuItem>
+                    <Link
+                      to={getLinkToItemDetails(
+                        line.supplierQuoteLineType as MethodItemType,
+                        line.itemId!
+                      )}
+                    >
+                      <DropdownMenuIcon
+                        icon={<MethodItemTypeIcon type="Part" />}
+                      />
+                      <Trans>View Item Master</Trans>
+                    </Link>
+                  </DropdownMenuItem>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

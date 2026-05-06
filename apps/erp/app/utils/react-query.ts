@@ -1,3 +1,4 @@
+import type { QueryClient } from "@tanstack/react-query";
 import * as cookie from "cookie";
 
 enum RefreshRate {
@@ -8,14 +9,31 @@ enum RefreshRate {
 }
 
 export const getCompanyId = () => {
+  if (typeof document === "undefined") {
+    return null;
+  }
+
   const cookieHeader = document.cookie;
   // biome-ignore lint/complexity/useLiteralKeys: suppressed due to migration
   const parsed = cookieHeader ? cookie.parse(cookieHeader)["companyId"] : null;
   return parsed ?? null;
 };
 
+export const getClientCache = (): QueryClient | undefined => {
+  if (typeof window === "undefined") {
+    return undefined;
+  }
+
+  return window.clientCache;
+};
+
 export const abilitiesQuery = (companyId: string | null) => ({
   queryKey: ["abilities", companyId ?? "null"],
+  staleTime: RefreshRate.Low
+});
+
+export const accountsQuery = (companyId: string | null) => ({
+  queryKey: ["accounts", companyId ?? "null"],
   staleTime: RefreshRate.Low
 });
 

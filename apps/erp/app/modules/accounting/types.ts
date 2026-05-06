@@ -1,23 +1,20 @@
 import type { Database } from "@carbon/database";
 import type {
   getAccount,
-  getAccountCategories,
-  getAccountSubcategories,
   getAccountsList,
+  getCostCenters,
+  getCostCentersTree,
   getCurrencies,
-  getInventoryPostingGroups,
-  getPaymentTerms,
-  getPurchasingPostingGroups,
-  getSalesPostingGroups
+  getDimension,
+  getDimensions,
+  getJournalEntries,
+  getJournalEntry,
+  getPaymentTerms
 } from "./accounting.service";
 
 export type Account = NonNullable<
   Awaited<ReturnType<typeof getAccount>>["data"]
 >;
-
-export type AccountCategory = NonNullable<
-  Awaited<ReturnType<typeof getAccountCategories>>["data"]
->[number];
 
 export type AccountConsolidatedRate =
   Database["public"]["Enums"]["glConsolidatedRate"];
@@ -26,26 +23,34 @@ export type AccountListItem = NonNullable<
   NonNullable<Awaited<ReturnType<typeof getAccountsList>>>["data"]
 >[number];
 
-export type AccountSubcategory = NonNullable<
-  Awaited<ReturnType<typeof getAccountSubcategories>>["data"]
->[number];
-
 export type AccountIncomeBalance =
   Database["public"]["Enums"]["glIncomeBalance"];
 
 export type AccountClass = Database["public"]["Enums"]["glAccountClass"];
 
-export type AccountType = Database["public"]["Enums"]["glAccountType"];
+export type AccountType = Database["public"]["Enums"]["accountType"];
 
-export type Chart = Account &
-  Transaction & {
-    level: number;
-    totaling: string;
-  };
+export type Chart = Account & Transaction;
+
+export type CostCenter = NonNullable<
+  Awaited<ReturnType<typeof getCostCenters>>["data"]
+>[number];
+
+export type CostCenterTreeNode = NonNullable<
+  Awaited<ReturnType<typeof getCostCentersTree>>["data"]
+>[number];
 
 export type Currency = NonNullable<
   Awaited<ReturnType<typeof getCurrencies>>["data"]
 >[number];
+
+export type Dimension = NonNullable<
+  Awaited<ReturnType<typeof getDimensions>>["data"]
+>[number];
+
+export type DimensionDetail = NonNullable<
+  Awaited<ReturnType<typeof getDimension>>["data"]
+>;
 
 export const currencyCodes = [
   "AFN",
@@ -358,19 +363,11 @@ export const currencyCodes = [
 
 export type CurrencyCode = (typeof currencyCodes)[number];
 
-export type InventoryPostingGroup = NonNullable<
-  Awaited<ReturnType<typeof getInventoryPostingGroups>>["data"]
->[number];
-
 export type PaymentTermCalculationMethod =
   Database["public"]["Enums"]["paymentTermCalculationMethod"];
 
 export type PaymentTerm = NonNullable<
   Awaited<ReturnType<typeof getPaymentTerms>>["data"]
->[number];
-
-export type PurchasingPostingGroup = NonNullable<
-  Awaited<ReturnType<typeof getPurchasingPostingGroups>>["data"]
 >[number];
 
 export type Transaction = {
@@ -380,6 +377,24 @@ export type Transaction = {
   balance: number;
 };
 
-export type SalesPostingGroup = NonNullable<
-  Awaited<ReturnType<typeof getSalesPostingGroups>>["data"]
+export type TranslatedBalance = {
+  accountId: string;
+  localBalance: number;
+  exchangeRate: number;
+  translatedBalance: number;
+};
+
+export type TranslatedTransaction = Transaction & {
+  translatedBalance?: number;
+  exchangeRate?: number;
+};
+
+export type JournalEntry = NonNullable<
+  Awaited<ReturnType<typeof getJournalEntry>>["data"]
+>;
+
+export type JournalEntryListItem = NonNullable<
+  NonNullable<Awaited<ReturnType<typeof getJournalEntries>>>["data"]
 >[number];
+
+export type JournalEntryLine = JournalEntry["journalLine"][number];

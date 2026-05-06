@@ -157,6 +157,31 @@ const ConsumablesTable = memo(
           }
         },
         {
+          accessorKey: "defaultMethodType",
+          header: t`Default Method`,
+          cell: (item) => (
+            <Badge variant="secondary">
+              <MethodIcon type={item.getValue<string>()} className="mr-2" />
+              <span>{translateMethodType(item.getValue<string>())}</span>
+            </Badge>
+          ),
+          meta: {
+            filter: {
+              type: "static",
+              options: methodType.map((value) => ({
+                value,
+                label: (
+                  <Badge variant="secondary">
+                    <MethodIcon type={value} className="mr-2" />
+                    <span>{translateMethodType(value)}</span>
+                  </Badge>
+                )
+              }))
+            },
+            icon: <RxCodesandboxLogo />
+          }
+        },
+        {
           accessorKey: "itemTrackingType",
           header: t`Tracking`,
           cell: (item) => (
@@ -182,31 +207,6 @@ const ConsumablesTable = memo(
               }))
             },
             icon: <TbTargetArrow />
-          }
-        },
-        {
-          accessorKey: "defaultMethodType",
-          header: t`Default Method`,
-          cell: (item) => (
-            <Badge variant="secondary">
-              <MethodIcon type={item.getValue<string>()} className="mr-2" />
-              <span>{translateMethodType(item.getValue<string>())}</span>
-            </Badge>
-          ),
-          meta: {
-            filter: {
-              type: "static",
-              options: methodType.map((value) => ({
-                value,
-                label: (
-                  <Badge variant="secondary">
-                    <MethodIcon type={value} className="mr-2" />
-                    <span>{translateMethodType(value)}</span>
-                  </Badge>
-                )
-              }))
-            },
-            icon: <RxCodesandboxLogo />
           }
         },
         {

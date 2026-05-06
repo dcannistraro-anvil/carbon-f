@@ -8,6 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
   Heading,
   HStack,
@@ -28,12 +29,14 @@ import {
   LuPanelLeft,
   LuPanelRight,
   LuTicketX,
+  LuTrash,
   LuTruck
 } from "react-icons/lu";
 import { RiProgress8Line } from "react-icons/ri";
 import { Link, useFetcher, useParams } from "react-router";
 import { useAuditLog } from "~/components/AuditLog";
 import { usePanels } from "~/components/Layout/Panels";
+import ConfirmDelete from "~/components/Modals/ConfirmDelete";
 import { usePermissions, useRouteData, useUser } from "~/hooks";
 import { ShipmentStatus } from "~/modules/inventory/ui/Shipments";
 import type { SalesInvoice, SalesInvoiceLine } from "~/modules/invoicing";
@@ -53,6 +56,7 @@ const SalesInvoiceHeader = () => {
   const { company } = useUser();
   const postingModal = useDisclosure();
   const voidModal = useDisclosure();
+  const deleteModal = useDisclosure();
   const { trigger: auditLogTrigger, drawer: auditLogDrawer } = useAuditLog({
     entityType: "salesInvoice",
     // @ts-expect-error TS2322 - TODO: fix type
@@ -197,7 +201,37 @@ const SalesInvoiceHeader = () => {
                   size="sm"
                 />
               </DropdownMenuTrigger>
-              <DropdownMenuContent>{auditLogTrigger}</DropdownMenuContent>
+              <DropdownMenuContent>
+                {auditLogTrigger}
+                {isPosted && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      disabled={
+                        isVoided || !permissions.can("update", "invoicing")
+                      }
+                      destructive
+                      onClick={voidModal.onOpen}
+                    >
+                      <DropdownMenuIcon icon={<LuTicketX />} />
+                      <Trans>Void</Trans>
+                    </DropdownMenuItem>
+                  </>
+                )}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  disabled={
+                    salesInvoice.status !== "Draft" ||
+                    !permissions.can("delete", "invoicing") ||
+                    !permissions.is("employee")
+                  }
+                  destructive
+                  onClick={deleteModal.onOpen}
+                >
+                  <DropdownMenuIcon icon={<LuTrash />} />
+                  <Trans>Delete Sales Invoice</Trans>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
             </DropdownMenu>
             <SalesInvoiceStatus status={salesInvoice.status} />
           </HStack>
@@ -312,16 +346,6 @@ const SalesInvoiceHeader = () => {
             >
               <Trans>Post</Trans>
             </Button>
-            {isPosted && (
-              <Button
-                leftIcon={<LuTicketX />}
-                variant="destructive"
-                onClick={voidModal.onOpen}
-                isDisabled={isVoided || !permissions.can("update", "invoicing")}
-              >
-                <Trans>Void</Trans>
-              </Button>
-            )}
             <DropdownMenu>
               <DropdownMenuTrigger
                 asChild
@@ -378,6 +402,20 @@ const SalesInvoiceHeader = () => {
       )}
       {voidModal.isOpen && (
         <SalesInvoiceVoidModal onClose={voidModal.onClose} />
+      )}
+      {deleteModal.isOpen && (
+        <ConfirmDelete
+          action={path.to.deleteSalesInvoice(invoiceId)}
+          isOpen={deleteModal.isOpen}
+          name={salesInvoice.invoiceId ?? "sales invoice"}
+          text={t`Are you sure you want to delete ${salesInvoice.invoiceId}? This cannot be undone.`}
+          onCancel={() => {
+            deleteModal.onClose();
+          }}
+          onSubmit={() => {
+            deleteModal.onClose();
+          }}
+        />
       )}
       {auditLogDrawer}
     </>

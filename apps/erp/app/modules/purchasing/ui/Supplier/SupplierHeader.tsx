@@ -25,6 +25,7 @@ import {
   ModalHeader,
   ModalOverlay,
   ModalTitle,
+  Status,
   useDisclosure,
   VStack
 } from "@carbon/react";
@@ -84,6 +85,7 @@ const SupplierHeader = () => {
       decisionBy: string;
       decisionAt: string;
     } | null;
+    supplierTax: { taxExempt: boolean } | null;
   }>(path.to.supplier(supplierId));
 
   const { trigger: auditLogTrigger, drawer: auditLogDrawer } = useAuditLog({
@@ -267,6 +269,16 @@ const SupplierHeader = () => {
                     />
                   ) : (
                     "-"
+                  )}
+                </CardAttributeValue>
+              </CardAttribute>
+              <CardAttribute>
+                <CardAttributeLabel>Tax Status</CardAttributeLabel>
+                <CardAttributeValue>
+                  {routeData?.supplierTax?.taxExempt ? (
+                    <Status color="red">Exempt</Status>
+                  ) : (
+                    <Status color="green">Taxable</Status>
                   )}
                 </CardAttributeValue>
               </CardAttribute>

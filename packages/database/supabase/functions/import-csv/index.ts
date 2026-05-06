@@ -101,6 +101,41 @@ async function upsertCsvMappings(
     .execute();
 }
 
+async function upsertTaxIdentifiers(
+  trx: typeof db,
+  table: "customerTax" | "supplierTax",
+  fkColumn: "customerId" | "supplierId",
+  records: Array<{ entityId: string; taxId: string | null | undefined }>,
+  cId: string,
+  userId: string
+): Promise<void> {
+  if (records.length === 0) return;
+
+  const now = new Date().toISOString();
+  // deno-lint-ignore no-explicit-any -- generated DB types lag this branch-local migration.
+  await (trx as any)
+    .insertInto(table)
+    .values(
+      records.map((record) => ({
+        [fkColumn]: record.entityId,
+        taxId: record.taxId ?? null,
+        companyId: cId,
+        updatedAt: now,
+        updatedBy: userId,
+      }))
+    )
+    .onConflict(
+      // deno-lint-ignore no-explicit-any -- Kysely conflict builder type is unavailable after the cast above.
+      (oc: any) =>
+      oc.column(fkColumn).doUpdateSet({
+        taxId: sql`excluded."taxId"`,
+        updatedAt: now,
+        updatedBy: userId,
+      })
+    )
+    .execute();
+}
+
 serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -192,11 +227,18 @@ serve(async (req: Request) => {
         await db.transaction().execute(async (trx) => {
           const customerInserts: Database["public"]["Tables"]["customer"]["Insert"][] =
             [];
+          const customerTaxForInserts: Array<{
+            taxId: string | null | undefined;
+          }> = [];
           const csvIdsForInserts: string[] = [];
           const customerUpdates: {
             id: string;
             data: Database["public"]["Tables"]["customer"]["Update"];
           }[] = [];
+          const customerTaxUpdates: Array<{
+            entityId: string;
+            taxId: string | null | undefined;
+          }> = [];
 
           const isCustomerValid = (
             record: Record<string, string>
@@ -205,7 +247,7 @@ serve(async (req: Request) => {
           };
 
           for (const record of mappedRecords) {
-            const { id, ...rest } = record;
+            const { id, taxId, ...rest } = record;
             if (externalIdMap.has(id)) {
               const existingEntityId = externalIdMap.get(id)!;
               if (isCustomerValid(rest) && !customerIds.has(id)) {
@@ -218,6 +260,7 @@ serve(async (req: Request) => {
                     updatedBy: userId,
                   },
                 });
+                customerTaxUpdates.push({ entityId: existingEntityId, taxId });
               }
             } else if (isCustomerValid(rest) && !customerIds.has(id)) {
               customerIds.add(id);
@@ -227,6 +270,7 @@ serve(async (req: Request) => {
                 createdAt: new Date().toISOString(),
                 createdBy: userId,
               });
+              customerTaxForInserts.push({ taxId });
               csvIdsForInserts.push(id);
             }
           }
@@ -246,9 +290,20 @@ serve(async (req: Request) => {
             await upsertCsvMappings(
               trx,
               "customer",
-              inserted.map((row, i) => ({
+              inserted.map((row: { id?: string }, i: number) => ({
                 entityId: row.id!,
                 externalId: csvIdsForInserts[i],
+              })),
+              companyId,
+              userId
+            );
+            await upsertTaxIdentifiers(
+              trx,
+              "customerTax",
+              "customerId",
+              inserted.map((row: { id?: string }, i: number) => ({
+                entityId: row.id!,
+                taxId: customerTaxForInserts[i]?.taxId,
               })),
               companyId,
               userId
@@ -262,6 +317,14 @@ serve(async (req: Request) => {
                 .where("id", "=", update.id)
                 .execute();
             }
+            await upsertTaxIdentifiers(
+              trx,
+              "customerTax",
+              "customerId",
+              customerTaxUpdates,
+              companyId,
+              userId
+            );
           }
         });
         break;
@@ -273,11 +336,18 @@ serve(async (req: Request) => {
         await db.transaction().execute(async (trx) => {
           const supplierInserts: Database["public"]["Tables"]["supplier"]["Insert"][] =
             [];
+          const supplierTaxForInserts: Array<{
+            taxId: string | null | undefined;
+          }> = [];
           const csvIdsForInserts: string[] = [];
           const supplierUpdates: {
             id: string;
             data: Database["public"]["Tables"]["supplier"]["Update"];
           }[] = [];
+          const supplierTaxUpdates: Array<{
+            entityId: string;
+            taxId: string | null | undefined;
+          }> = [];
 
           const isSupplierValid = (
             record: Record<string, string>
@@ -286,7 +356,7 @@ serve(async (req: Request) => {
           };
 
           for (const record of mappedRecords) {
-            const { id, ...rest } = record;
+            const { id, taxId, ...rest } = record;
             if (externalIdMap.has(id) && !supplierIds.has(id)) {
               supplierIds.add(id);
               const existingEntityId = externalIdMap.get(id)!;
@@ -299,6 +369,7 @@ serve(async (req: Request) => {
                     updatedBy: userId,
                   },
                 });
+                supplierTaxUpdates.push({ entityId: existingEntityId, taxId });
               }
             } else if (isSupplierValid(rest) && !supplierIds.has(id)) {
               supplierIds.add(id);
@@ -308,6 +379,7 @@ serve(async (req: Request) => {
                 createdAt: new Date().toISOString(),
                 createdBy: userId,
               });
+              supplierTaxForInserts.push({ taxId });
               csvIdsForInserts.push(id);
             }
           }
@@ -327,9 +399,20 @@ serve(async (req: Request) => {
             await upsertCsvMappings(
               trx,
               "supplier",
-              inserted.map((row, i) => ({
+              inserted.map((row: { id?: string }, i: number) => ({
                 entityId: row.id!,
                 externalId: csvIdsForInserts[i],
+              })),
+              companyId,
+              userId
+            );
+            await upsertTaxIdentifiers(
+              trx,
+              "supplierTax",
+              "supplierId",
+              inserted.map((row: { id?: string }, i: number) => ({
+                entityId: row.id!,
+                taxId: supplierTaxForInserts[i]?.taxId,
               })),
               companyId,
               userId
@@ -343,6 +426,14 @@ serve(async (req: Request) => {
                 .where("id", "=", update.id)
                 .execute();
             }
+            await upsertTaxIdentifiers(
+              trx,
+              "supplierTax",
+              "supplierId",
+              supplierTaxUpdates,
+              companyId,
+              userId
+            );
           }
         });
         break;

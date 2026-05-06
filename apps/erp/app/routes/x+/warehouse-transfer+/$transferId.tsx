@@ -1,16 +1,13 @@
 import { error } from "@carbon/auth";
 import { requirePermissions } from "@carbon/auth/auth.server";
 import { flash } from "@carbon/auth/session.server";
-import { VStack } from "@carbon/react";
 import { msg } from "@lingui/core/macro";
 import type { LoaderFunctionArgs } from "react-router";
-import { Outlet, redirect, useLoaderData, useParams } from "react-router";
-import { PanelProvider } from "~/components/Layout/Panels";
+import { Outlet, redirect, useParams } from "react-router";
 import {
   getWarehouseTransfer,
   getWarehouseTransferLines
 } from "~/modules/inventory";
-import WarehouseTransferHeader from "~/modules/inventory/ui/WarehouseTransfers/WarehouseTransferHeader";
 import type { Handle } from "~/utils/handle";
 import { path } from "~/utils/path";
 
@@ -62,24 +59,17 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 }
 
 export default function WarehouseTransferRoute() {
-  const { warehouseTransfer } = useLoaderData<typeof loader>();
   const params = useParams();
   const { transferId } = params;
   if (!transferId) throw new Error("Could not find transferId");
 
   return (
-    <PanelProvider>
-      <div className="flex flex-col h-[calc(100dvh-49px)] overflow-hidden w-full">
-        <WarehouseTransferHeader warehouseTransfer={warehouseTransfer} />
-        <div className="flex h-[calc(100dvh-99px)] overflow-y-auto scrollbar-hide w-full">
-          <VStack
-            spacing={4}
-            className="h-full p-2 w-full max-w-5xl mx-auto pb-32"
-          >
-            <Outlet />
-          </VStack>
+    <div className="flex h-[calc(100dvh-49px)] overflow-y-auto scrollbar-hide w-full">
+      <div className="h-full p-4 w-full max-w-5xl mx-auto">
+        <div className="flex flex-col gap-2 pb-16 w-full">
+          <Outlet />
         </div>
       </div>
-    </PanelProvider>
+    </div>
   );
 }

@@ -215,11 +215,7 @@ const Filter = forwardRef<HTMLButtonElement, FilterProps>(
                             option.value,
                             activeFilter.filter.isArray
                           );
-                          if (trigger === "icon") {
-                            setOpen(false);
-                          } else {
-                            setInput("");
-                          }
+                          setInput("");
                         }}
                       >
                         <HStack spacing={2}>

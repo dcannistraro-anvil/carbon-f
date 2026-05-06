@@ -72,9 +72,17 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
   if (authSession) {
     await redis.del(getPermissionCacheKey(authSession.userId));
+
+    const { data: companyRecord } = await serviceRole
+      .from("company")
+      .select("companyGroupId")
+      .eq("id", accept.data.companyId)
+      .single();
+
     const sessionCookie = await updateCompanySession(
       request,
-      accept.data.companyId
+      accept.data.companyId,
+      companyRecord?.companyGroupId ?? ""
     );
     const companyIdCookie = setCompanyId(accept.data.companyId);
     throw redirect(path.to.authenticatedRoot, {

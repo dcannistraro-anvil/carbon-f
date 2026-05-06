@@ -2,6 +2,7 @@ import { getLocalTimeZone, today } from "@internationalized/date";
 import { z } from "zod";
 import { zfd } from "zod-form-data";
 import { address, contact } from "~/types/validators";
+import { taxExemptionReasons } from "../sales/sales.models";
 import { incoterms, methodItemType } from "../shared";
 
 export const KPIs = [
@@ -37,7 +38,7 @@ export const purchaseOrderLineType = [
   "Material",
   "Tool",
   "Consumable",
-  // "G/L Account",
+  "G/L Account",
   // "Fixed Asset",
   "Comment"
 ] as const;
@@ -189,13 +190,14 @@ export const purchaseOrderLineValidator = z
   .object({
     id: zfd.text(z.string().optional()),
     purchaseOrderId: z.string().min(1, { message: "Order is required" }),
-    purchaseOrderLineType: z.enum(methodItemType, {
+    purchaseOrderLineType: z.enum([...methodItemType, "G/L Account"], {
       errorMap: (issue, ctx) => ({
         message: "Type is required"
       })
     }),
     itemId: zfd.text(z.string().optional()),
-    accountNumber: zfd.text(z.string().optional()),
+    accountId: zfd.text(z.string().optional()),
+    costCenterId: zfd.text(z.string().optional()),
     assetId: zfd.text(z.string().optional()),
     conversionFactor: zfd.numeric(z.number().optional()),
     description: zfd.text(z.string().optional()),
@@ -207,7 +209,7 @@ export const purchaseOrderLineValidator = z
     promisedDate: zfd.text(z.string().optional()),
     purchaseQuantity: zfd.numeric(z.number().optional()),
     purchaseUnitOfMeasureCode: zfd.text(z.string().optional()),
-    requestedDate: zfd.text(z.string().optional()),
+    requiredDate: zfd.text(z.string().optional()),
     storageUnitId: zfd.text(z.string().optional()),
     supplierShippingCost: zfd.numeric(z.number().optional()),
     supplierTaxAmount: zfd.numeric(z.number().optional()),
@@ -222,33 +224,25 @@ export const purchaseOrderLineValidator = z
         : true,
     {
       message: "Part is required",
-      path: ["itemId"] // path of error
+      path: ["itemId"]
+    }
+  )
+  .refine(
+    (data) =>
+      data.purchaseOrderLineType === "G/L Account" ? data.accountId : true,
+    {
+      message: "Account is required",
+      path: ["accountId"]
+    }
+  )
+  .refine(
+    (data) =>
+      data.purchaseOrderLineType === "G/L Account" ? data.description : true,
+    {
+      message: "Description is required",
+      path: ["description"]
     }
   );
-// .refine(
-//   (data) =>
-//     data.purchaseOrderLineType === "G/L Account" ? data.accountNumber : true,
-//   {
-//     message: "Account is required",
-//     path: ["accountNumber"], // path of error
-//   }
-// )
-// .refine(
-//   (data) =>
-//     data.purchaseOrderLineType === "Fixed Asset" ? data.assetId : true,
-//   {
-//     message: "Asset is required",
-//     path: ["assetId"], // path of error
-//   }
-// )
-// .refine(
-//   (data) =>
-//     data.purchaseOrderLineType === "Comment" ? data.description : true,
-//   {
-//     message: "Comment is required",
-//     path: ["description"], // path of error
-//   }
-// );
 
 export const purchaseOrderPaymentValidator = z.object({
   id: z.string(),
@@ -314,9 +308,6 @@ export const supplierValidator = z.object({
   accountManagerId: zfd.text(z.string().optional()),
   currencyCode: zfd.text(z.string().optional()),
   purchasingContactId: zfd.text(z.string().optional()),
-  taxId: zfd.text(z.string().optional()),
-  vatNumber: zfd.text(z.string().optional()),
-  eori: zfd.text(z.string().optional()),
   website: zfd.text(z.string().optional())
   // defaultCc: z.array(z.string().email()).default([])
 });
@@ -333,12 +324,30 @@ export const supplierApprovalValidator = z.object({
   accountManagerId: zfd.text(z.string().optional()),
   currencyCode: zfd.text(z.string().optional()),
   purchasingContactId: zfd.text(z.string().optional()),
-  taxId: zfd.text(z.string().optional()),
-  vatNumber: zfd.text(z.string().optional()),
-  eori: zfd.text(z.string().optional()),
   website: zfd.text(z.string().optional())
   // defaultCc: z.array(z.string().email()).default([])
 });
+
+export const supplierTaxValidator = z
+  .object({
+    supplierId: z.string().min(1),
+    taxId: zfd.text(z.string().optional()),
+    vatNumber: zfd.text(z.string().optional()),
+    eori: zfd.text(z.string().optional()),
+    taxExempt: z.coerce.boolean().default(false),
+    taxExemptionReason: z.preprocess(
+      (val) => (val === "" ? undefined : val),
+      z.enum(taxExemptionReasons).optional().nullable()
+    ),
+    taxExemptionCertificateNumber: zfd.text(z.string().optional())
+  })
+  .refine(
+    (data) => !data.taxExempt || (data.taxExempt && data.taxExemptionReason),
+    {
+      message: "Exemption reason is required when tax exempt",
+      path: ["taxExemptionReason"]
+    }
+  );
 
 export const supplierApprovalDecisionValidator = z.object({
   approvalRequestId: z
@@ -389,10 +398,7 @@ export const supplierShippingValidator = z.object({
 
 export const supplierAccountingValidator = z.object({
   id: zfd.text(z.string()),
-  supplierTypeId: zfd.text(z.string().optional()),
-  taxId: zfd.text(z.string().optional()),
-  vatNumber: zfd.text(z.string().optional()),
-  eori: zfd.text(z.string().optional())
+  supplierTypeId: zfd.text(z.string().optional())
 });
 
 export const supplierTypeValidator = z.object({
@@ -434,23 +440,64 @@ export const supplierQuoteValidator = z
     }
   );
 
-export const supplierQuoteLineValidator = z.object({
-  id: zfd.text(z.string().optional()),
-  supplierQuoteId: z.string(),
-  itemId: z.string().min(1, { message: "Part is required" }),
-  description: z.string().min(1, { message: "Description is required" }),
-  supplierPartId: zfd.text(z.string().optional()),
-  inventoryUnitOfMeasureCode: zfd.text(
-    z.string().min(1, { message: "Unit of measure is required" })
-  ),
-  purchaseUnitOfMeasureCode: zfd.text(
-    z.string().min(1, { message: "Unit of measure is required" })
-  ),
-  conversionFactor: zfd.numeric(z.number().optional()),
-  quantity: z.array(
-    zfd.numeric(z.number().min(0.00001, { message: "Quantity is required" }))
+export const supplierQuoteLineValidator = z
+  .object({
+    id: zfd.text(z.string().optional()),
+    supplierQuoteId: z.string(),
+    supplierQuoteLineType: z.enum([...methodItemType, "G/L Account"], {
+      errorMap: () => ({ message: "Type is required" })
+    }),
+    itemId: zfd.text(z.string().optional()),
+    accountId: zfd.text(z.string().optional()),
+    costCenterId: zfd.text(z.string().optional()),
+    description: zfd.text(z.string().optional()),
+    supplierPartId: zfd.text(z.string().optional()),
+    inventoryUnitOfMeasureCode: zfd.text(z.string().optional()),
+    purchaseUnitOfMeasureCode: zfd.text(z.string().optional()),
+    conversionFactor: zfd.numeric(z.number().optional()),
+    requiredDate: zfd.text(z.string().optional()),
+    quantity: z.array(
+      zfd.numeric(z.number().min(0.00001, { message: "Quantity is required" }))
+    )
+  })
+  .refine(
+    (data) =>
+      ["Part", "Service", "Material", "Tool", "Fixture", "Consumable"].includes(
+        data.supplierQuoteLineType
+      )
+        ? data.itemId
+        : true,
+    {
+      message: "Part is required",
+      path: ["itemId"]
+    }
   )
-});
+  .refine(
+    (data) =>
+      data.supplierQuoteLineType === "G/L Account" ? data.accountId : true,
+    {
+      message: "Account is required",
+      path: ["accountId"]
+    }
+  )
+  .refine(
+    (data) =>
+      [
+        "Part",
+        "Service",
+        "Material",
+        "Tool",
+        "Fixture",
+        "Consumable",
+        "G/L Account"
+      ].includes(data.supplierQuoteLineType)
+        ? data.description
+        : true,
+    {
+      message: "Description is required",
+      path: ["description"]
+    }
+  );
 
 export const purchasingRfqStatusType = [
   "Draft",

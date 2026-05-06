@@ -7,6 +7,7 @@ import {
 
 import { useCurrencyFormatter } from "./useCurrencyFormatter";
 import { useDateFormatter } from "./useDateFormatter";
+import { useFlags } from "./useFlags";
 import { useGooglePlaces } from "./useGooglePlaces";
 import { useModules } from "./useModules";
 import { useMovingCellRef } from "./useMovingCellRef";
@@ -25,6 +26,7 @@ import { useUser } from "./useUser";
 export {
   useCurrencyFormatter,
   useDateFormatter,
+  useFlags,
   useGooglePlaces,
   useModules,
   useMovingCellRef,

@@ -4,6 +4,7 @@ import type {
   getAttributeCategory,
   getContacts,
   getDepartments,
+  getDepartmentsTree,
   getEmployeeJob,
   getEmployeeSummary,
   getHolidays,
@@ -38,6 +39,10 @@ export type AttributeDataType = {
 
 export type Department = NonNullable<
   Awaited<ReturnType<typeof getDepartments>>["data"]
+>[number];
+
+export type DepartmentTreeNode = NonNullable<
+  Awaited<ReturnType<typeof getDepartmentsTree>>["data"]
 >[number];
 
 export type EmployeeJob = NonNullable<

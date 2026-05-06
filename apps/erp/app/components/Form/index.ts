@@ -27,12 +27,11 @@ import {
 
 import Abilities from "./Abilities";
 import Ability from "./Ability";
-import Account from "./Account";
-import AccountCategory from "./AccountCategory";
-import AccountSubcategory from "./AccountSubcategory";
+import Account, { AccountControlled } from "./Account";
 import AddressAutocomplete from "./AddressAutocomplete";
 import Color from "./Color";
 import ConversionFactor from "./ConversionFactor";
+import CostCenter from "./CostCenter";
 import Currency from "./Currency";
 import Customer from "./Customer";
 import CustomerContact from "./CustomerContact";
@@ -90,14 +89,14 @@ export {
   Abilities,
   Ability,
   Account,
-  AccountCategory,
-  AccountSubcategory,
+  AccountControlled,
   AddressAutocomplete,
   Array,
   ArrayNumeric,
   Boolean,
   Color,
   Combobox,
+  CostCenter,
   ConversionFactor,
   CreatableCombobox,
   CreatableMultiSelect,

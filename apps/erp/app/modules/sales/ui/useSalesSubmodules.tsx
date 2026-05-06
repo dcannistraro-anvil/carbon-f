@@ -67,19 +67,14 @@ export default function useSalesSubmodules() {
       ]
     },
     {
-      name: t`Reports`,
+      name: t`Configure`,
       routes: [
         {
           name: t`Price Lists`,
           to: path.to.salesPriceList,
           role: "employee",
           icon: <LuList />
-        }
-      ]
-    },
-    {
-      name: t`Configure`,
-      routes: [
+        },
         {
           name: t`Pricing Rules`,
           to: path.to.salesPricingRules,
@@ -87,7 +82,7 @@ export default function useSalesSubmodules() {
           icon: <LuPercent />
         },
         {
-          name: t`No Quotes`,
+          name: t`No Quote Reasons`,
           to: path.to.noQuoteReasons,
           role: "employee",
           icon: <LuBan />

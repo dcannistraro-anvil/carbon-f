@@ -226,6 +226,7 @@ export abstract class BaseEntitySyncer<
   protected config: EntityConfig;
   protected entityType: AccountingEntityType;
   protected mappingService: ExternalIntegrationMappingService;
+  private _companyGroupId: string | null | undefined = undefined;
 
   constructor(protected context: SyncContext) {
     this.database = context.database;
@@ -289,6 +290,36 @@ export abstract class BaseEntitySyncer<
       remoteId,
       { remoteUpdatedAt }
     );
+  }
+
+  protected async getCompanyGroupId(dbOrTx?: KyselyTx): Promise<string | null> {
+    if (this._companyGroupId !== undefined) return this._companyGroupId;
+    const db = dbOrTx ?? this.database;
+    const result = await db
+      .selectFrom("company")
+      .select("companyGroupId")
+      .where("id", "=", this.companyId)
+      .executeTakeFirst();
+    this._companyGroupId = result?.companyGroupId ?? null;
+    return this._companyGroupId;
+  }
+
+  protected async resolveAccountIdByNumber(
+    tx: KyselyTx,
+    accountNumber: string
+  ): Promise<string | null> {
+    const companyGroupId = await this.getCompanyGroupId(tx);
+    if (!companyGroupId) return null;
+
+    const match = await tx
+      .selectFrom("account")
+      .select("id")
+      .where("companyGroupId", "=", companyGroupId)
+      .where("number", "=", accountNumber)
+      .where("active", "=", true)
+      .executeTakeFirst();
+
+    return match?.id ?? null;
   }
 
   protected abstract fetchLocal(id: string): Promise<TLocal | null>;

@@ -147,6 +147,7 @@ export class PurchaseOrderSyncer extends BaseEntitySyncer<
     const lineRows = await this.database
       .selectFrom("purchaseOrderLine")
       .leftJoin("item", "item.id", "purchaseOrderLine.itemId")
+      .leftJoin("account", "account.id", "purchaseOrderLine.accountId")
       .select([
         "purchaseOrderLine.id",
         "purchaseOrderLine.purchaseOrderId",
@@ -154,13 +155,13 @@ export class PurchaseOrderSyncer extends BaseEntitySyncer<
         "purchaseOrderLine.purchaseQuantity",
         "purchaseOrderLine.unitPrice",
         "purchaseOrderLine.itemId",
-        "purchaseOrderLine.accountNumber",
         "purchaseOrderLine.taxPercent",
         "purchaseOrderLine.taxAmount",
         "purchaseOrderLine.extendedPrice",
         "purchaseOrderLine.quantityReceived",
         "purchaseOrderLine.quantityInvoiced",
-        "item.readableId as itemCode"
+        "item.readableId as itemCode",
+        "account.number as accountNumber"
       ])
       .where("purchaseOrderLine.purchaseOrderId", "in", orderIds)
       .execute();
@@ -507,6 +508,29 @@ export class PurchaseOrderSyncer extends BaseEntitySyncer<
       }
     }
 
+    // Resolve account IDs from Xero AccountCodes
+    const accountNumbers = [
+      ...new Set(
+        lines.map((l) => l.accountNumber).filter((n): n is string => n !== null)
+      )
+    ];
+    const accountIdMap = new Map<string, string>();
+    if (accountNumbers.length > 0) {
+      const companyGroupId = await this.getCompanyGroupId(tx);
+      if (companyGroupId) {
+        const accounts = await tx
+          .selectFrom("account")
+          .select(["id", "number"])
+          .where("companyGroupId", "=", companyGroupId)
+          .where("number", "in", accountNumbers)
+          .where("active", "=", true)
+          .execute();
+        for (const a of accounts) {
+          accountIdMap.set(a.number, a.id);
+        }
+      }
+    }
+
     // Get the PO to get companyId and createdBy
     const po = await tx
       .selectFrom("purchaseOrder")
@@ -531,7 +555,9 @@ export class PurchaseOrderSyncer extends BaseEntitySyncer<
           unitPrice: line.unitPrice,
           supplierUnitPrice: line.unitPrice,
           itemId,
-          accountNumber: line.accountNumber,
+          accountId: line.accountNumber
+            ? (accountIdMap.get(line.accountNumber) ?? null)
+            : null,
           taxPercent: line.taxPercent,
           taxAmount: line.taxAmount,
           supplierTaxAmount: line.taxAmount ?? 0,

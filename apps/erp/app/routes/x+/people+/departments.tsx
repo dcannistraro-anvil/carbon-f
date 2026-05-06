@@ -1,15 +1,26 @@
 import { error } from "@carbon/auth";
 import { requirePermissions } from "@carbon/auth/auth.server";
 import { flash } from "@carbon/auth/session.server";
-import { VStack } from "@carbon/react";
+import {
+  Heading,
+  HStack,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger
+} from "@carbon/react";
 import { msg } from "@lingui/core/macro";
+import { useCallback } from "react";
 import type { LoaderFunctionArgs } from "react-router";
-import { Outlet, redirect, useLoaderData } from "react-router";
-import { getDepartments } from "~/modules/people";
-import { DepartmentsTable } from "~/modules/people/ui/Departments";
+import { Outlet, redirect, useLoaderData, useNavigate } from "react-router";
+import { New } from "~/components";
+import { getDepartmentsTree } from "~/modules/people";
+import {
+  DepartmentsListView,
+  DepartmentsTreeView
+} from "~/modules/people/ui/Departments";
 import type { Handle } from "~/utils/handle";
 import { path } from "~/utils/path";
-import { getGenericQueryFilters } from "~/utils/query";
 
 export const handle: Handle = {
   breadcrumb: msg`Departments`,
@@ -23,19 +34,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     bypassRls: true
   });
 
-  const url = new URL(request.url);
-  const searchParams = new URLSearchParams(url.search);
-  const search = searchParams.get("search");
-  const { limit, offset, sorts, filters } =
-    getGenericQueryFilters(searchParams);
-
-  const departments = await getDepartments(client, companyId, {
-    search,
-    limit,
-    offset,
-    sorts,
-    filters
-  });
+  const departments = await getDepartmentsTree(client, companyId);
 
   if (departments.error) {
     throw redirect(
@@ -48,18 +47,71 @@ export async function loader({ request }: LoaderFunctionArgs) {
   }
 
   return {
-    departments: departments.data ?? [],
-    count: departments.count ?? 0
+    departments: departments.data ?? []
   };
 }
 
 export default function Route() {
-  const { departments, count } = useLoaderData<typeof loader>();
+  const { departments } = useLoaderData<typeof loader>();
+  const navigate = useNavigate();
+
+  const handleEdit = useCallback(
+    (id: string) => {
+      navigate(path.to.department(id));
+    },
+    [navigate]
+  );
+
+  const handleDelete = useCallback(
+    (id: string) => {
+      navigate(path.to.deleteDepartment(id));
+    },
+    [navigate]
+  );
+
+  const handleAddChild = useCallback(
+    (parentId: string) => {
+      navigate(`${path.to.newDepartment}?parentDepartmentId=${parentId}`);
+    },
+    [navigate]
+  );
 
   return (
-    <VStack spacing={0} className="h-full">
-      <DepartmentsTable data={departments} count={count} />
+    <Tabs defaultValue="tree" className="w-full">
+      <div className="flex px-4 py-3 items-center space-x-4 justify-between bg-card border-b border-border w-full">
+        <Heading size="h3">Departments</Heading>
+        <HStack>
+          <TabsList>
+            <TabsTrigger value="tree">Tree View</TabsTrigger>
+            <TabsTrigger value="list">List View</TabsTrigger>
+          </TabsList>
+          <New
+            label="Department"
+            to={path.to.newDepartment}
+            variant="primary"
+          />
+        </HStack>
+      </div>
+
+      <TabsContent value="tree">
+        <DepartmentsTreeView
+          departments={departments}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          onAddChild={handleAddChild}
+        />
+      </TabsContent>
+
+      <TabsContent value="list">
+        <DepartmentsListView
+          departments={departments}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          onAddChild={handleAddChild}
+        />
+      </TabsContent>
+
       <Outlet />
-    </VStack>
+    </Tabs>
   );
 }

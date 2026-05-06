@@ -305,6 +305,26 @@ const SalesOrderHeader = () => {
                     <Trans>Export Lines to CSV</Trans>
                   </CSVLink>
                 </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  disabled={
+                    ["Draft"].includes(routeData?.salesOrder?.status ?? "") ||
+                    statusFetcher.state !== "idle" ||
+                    !permissions.can("update", "sales")
+                  }
+                  onClick={() => {
+                    statusFetcher.submit(
+                      { status: "Draft" },
+                      {
+                        method: "post",
+                        action: path.to.salesOrderStatus(orderId)
+                      }
+                    );
+                  }}
+                >
+                  <DropdownMenuIcon icon={<LuLoaderCircle />} />
+                  <Trans>Reopen</Trans>
+                </DropdownMenuItem>
                 <DropdownMenuItem
                   destructive
                   disabled={
@@ -580,29 +600,6 @@ const SalesOrderHeader = () => {
                 }}
               </Await>
             </Suspense>
-
-            <statusFetcher.Form
-              method="post"
-              action={path.to.salesOrderStatus(orderId)}
-            >
-              <input type="hidden" name="status" value="Draft" />
-              <Button
-                type="submit"
-                variant="secondary"
-                leftIcon={<LuLoaderCircle />}
-                isDisabled={
-                  ["Draft"].includes(routeData?.salesOrder?.status ?? "") ||
-                  statusFetcher.state !== "idle" ||
-                  !permissions.can("update", "sales")
-                }
-                isLoading={
-                  statusFetcher.state !== "idle" &&
-                  statusFetcher.formData?.get("status") === "Draft"
-                }
-              >
-                <Trans>Reopen</Trans>
-              </Button>
-            </statusFetcher.Form>
 
             <IconButton
               aria-label={t`Toggle Properties`}

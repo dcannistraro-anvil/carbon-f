@@ -1,0 +1,21 @@
+-- Seed account types for group accounts that are missing them
+UPDATE "account" SET "accountType" = 'Bank' WHERE "isGroup" = true AND "name" = 'Cash & Bank';
+UPDATE "account" SET "accountType" = 'Accounts Receivable' WHERE "isGroup" = true AND "name" = 'Receivables';
+UPDATE "account" SET "accountType" = 'Inventory' WHERE "isGroup" = true AND "name" = 'Inventory & Stock';
+UPDATE "account" SET "accountType" = 'Fixed Asset' WHERE "isGroup" = true AND "name" = 'Property, Plant & Equipment';
+UPDATE "account" SET "accountType" = 'Other Asset' WHERE "isGroup" = true AND "name" = 'Other Assets';
+UPDATE "account" SET "accountType" = 'Other Current Asset' WHERE "isGroup" = true AND "name" = 'Assets';
+UPDATE "account" SET "accountType" = 'Accounts Payable' WHERE "isGroup" = true AND "name" = 'Payables';
+UPDATE "account" SET "accountType" = 'Other Current Liability' WHERE "isGroup" = true AND "name" = 'Current Liabilities';
+UPDATE "account" SET "accountType" = 'Tax' WHERE "isGroup" = true AND "name" = 'Tax Liabilities';
+UPDATE "account" SET "accountType" = 'Long Term Liability' WHERE "isGroup" = true AND "name" = 'Long-Term Liabilities';
+UPDATE "account" SET "accountType" = 'Other Current Liability' WHERE "isGroup" = true AND "name" = 'Liabilities';
+UPDATE "account" SET "accountType" = 'Equity - No Close' WHERE "isGroup" = true AND "name" = 'Equity';
+UPDATE "account" SET "accountType" = 'Income' WHERE "isGroup" = true AND "name" = 'Revenue';
+UPDATE "account" SET "accountType" = 'Other Income' WHERE "isGroup" = true AND "name" = 'Other Income';
+UPDATE "account" SET "accountType" = 'Cost of Goods Sold' WHERE "isGroup" = true AND "name" = 'Cost of Goods Sold';
+UPDATE "account" SET "accountType" = 'Expense' WHERE "isGroup" = true AND "name" = 'Variances';
+UPDATE "account" SET "accountType" = 'Cost of Goods Sold' WHERE "isGroup" = true AND "name" = 'Inventory Adjustments';
+UPDATE "account" SET "accountType" = 'Expense' WHERE "isGroup" = true AND "name" = 'Operating Expenses';
+UPDATE "account" SET "accountType" = 'Other Expense' WHERE "isGroup" = true AND "name" = 'Depreciation & Amortization';
+UPDATE "account" SET "accountType" = 'Other Expense' WHERE "isGroup" = true AND "name" = 'Other Expenses';

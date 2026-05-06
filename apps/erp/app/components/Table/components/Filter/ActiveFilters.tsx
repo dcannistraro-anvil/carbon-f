@@ -160,6 +160,7 @@ const ActiveFilter = ({ filter, operator, value }: ActiveFilterProps) => {
           </Button>
         </PopoverTrigger>
         <PopoverContent
+          align="start"
           className="min-w-[200px] w-[--radix-popover-trigger-width] p-0"
           sticky="always"
         >
@@ -190,7 +191,7 @@ const ActiveFilter = ({ filter, operator, value }: ActiveFilterProps) => {
                         option.value,
                         filter.filter.isArray
                       );
-                      setOpen(false);
+                      setInput("");
                     }}
                   >
                     <HStack spacing={2}>

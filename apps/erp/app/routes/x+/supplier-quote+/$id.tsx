@@ -33,7 +33,7 @@ export const handle: Handle = {
 };
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
-  const { companyId } = await requirePermissions(request, {
+  const { companyId, companyGroupId } = await requirePermissions(request, {
     view: "purchasing"
   });
 
@@ -58,7 +58,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   const [supplierInteraction, presentationCurrency, supplier, companySettings] =
     await Promise.all([
       getSupplierInteraction(serviceRole, quote.data.supplierInteractionId!),
-      getCurrencyByCode(serviceRole, companyId, quote.data.currencyCode!),
+      getCurrencyByCode(serviceRole, companyGroupId, quote.data.currencyCode!),
       getSupplier(serviceRole, quote.data.supplierId!),
       getCompanySettings(serviceRole, companyId)
     ]);

@@ -202,10 +202,14 @@ function PurchaseInvoiceLineItem({
             <ItemThumbnail thumbnailPath={line.thumbnailPath} type="Part" />
             <VStack spacing={0} className="min-w-0">
               <span className="font-semibold line-clamp-1">
-                {getItemReadableId(items, line.itemId) ?? ""}
+                {line.invoiceLineType === "G/L Account"
+                  ? line.description || "Indirect Expense"
+                  : getItemReadableId(items, line.itemId)}
               </span>
               <span className="text-muted-foreground text-xs truncate line-clamp-1">
-                {line.description}
+                {line.invoiceLineType === "G/L Account"
+                  ? "G/L Account"
+                  : line.description}
               </span>
             </VStack>
           </HStack>

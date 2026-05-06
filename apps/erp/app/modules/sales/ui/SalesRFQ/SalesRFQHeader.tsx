@@ -21,9 +21,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalTitle,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
   useDisclosure,
   useMount,
   VStack
@@ -103,6 +100,26 @@ const SalesRFQHeader = () => {
               />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
+              <DropdownMenuItem
+                disabled={
+                  routeData?.rfq?.status === "Draft" ||
+                  (routeData?.opportunity?.quotes.length ?? 0) > 0 ||
+                  statusFetcher.state !== "idle" ||
+                  !permissions.can("update", "sales")
+                }
+                onClick={() => {
+                  statusFetcher.submit(
+                    { status: "Draft" },
+                    {
+                      method: "post",
+                      action: path.to.salesRfqStatus(rfqId)
+                    }
+                  );
+                }}
+              >
+                <DropdownMenuIcon icon={<LuLoaderCircle />} />
+                <Trans>Reopen</Trans>
+              </DropdownMenuItem>
               <DropdownMenuItem
                 disabled={
                   isLocked ||
@@ -221,48 +238,6 @@ const SalesRFQHeader = () => {
           >
             <Trans>No Quote</Trans>
           </Button>
-
-          <statusFetcher.Form
-            method="post"
-            action={path.to.salesRfqStatus(rfqId)}
-          >
-            <input type="hidden" name="status" value="Draft" />
-            {routeData?.opportunity?.quotes.length === 0 ? (
-              <Button
-                isDisabled={
-                  !["Ready for Quote", "Closed", "Quoted"].includes(status) ||
-                  statusFetcher.state !== "idle" ||
-                  !permissions.can("update", "sales")
-                }
-                isLoading={
-                  statusFetcher.state !== "idle" &&
-                  statusFetcher.formData?.get("status") === "Draft"
-                }
-                leftIcon={<LuLoaderCircle />}
-                type="submit"
-                variant="secondary"
-              >
-                <Trans>Reopen</Trans>
-              </Button>
-            ) : (
-              <Tooltip>
-                <TooltipTrigger>
-                  <Button
-                    leftIcon={<LuLoaderCircle />}
-                    isDisabled
-                    variant="secondary"
-                  >
-                    <Trans>Reopen</Trans>
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <Trans>
-                    RFQ is linked to a Quote. Delete the quote to reopen.
-                  </Trans>
-                </TooltipContent>
-              </Tooltip>
-            )}
-          </statusFetcher.Form>
 
           <IconButton
             aria-label={t`Toggle Properties`}

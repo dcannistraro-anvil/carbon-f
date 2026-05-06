@@ -39,6 +39,15 @@ export async function action({ request, params }: ActionFunctionArgs) {
     );
   }
 
+  // Root accounts (Balance Sheet, Income Statement) cannot be deleted
+  const existing = await getAccount(client, accountId);
+  if (existing.data?.isSystem) {
+    throw redirect(
+      path.to.chartOfAccounts,
+      await flash(request, error(null, "Root accounts cannot be deleted"))
+    );
+  }
+
   const { error: deleteTypeError } = await deleteAccount(client, accountId);
   if (deleteTypeError) {
     throw redirect(
@@ -67,7 +76,7 @@ export default function DeleteAccountRoute() {
     <ConfirmDelete
       action={path.to.deleteAccountingCharts(accountId)}
       name={account.name}
-      text={t`Are you sure you want to delete the account: ${account.name} (${account.number})? This cannot be undone.`}
+      text={t`Are you sure you want to delete the account: ${account.name}${account.number ? ` (${account.number})` : ""}? This cannot be undone.`}
       onCancel={onCancel}
     />
   );

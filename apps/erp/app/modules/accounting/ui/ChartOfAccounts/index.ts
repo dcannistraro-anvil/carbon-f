@@ -1,4 +1,11 @@
 import ChartOfAccountForm from "./ChartOfAccountForm";
-import ChartOfAccountsTable from "./ChartOfAccountsTable";
+import ChartOfAccountsTree from "./ChartOfAccountsTree";
+import GroupAccountForm from "./GroupAccountForm";
+import MoveAccountForm from "./MoveAccountForm";
 
-export { ChartOfAccountForm, ChartOfAccountsTable };
+export {
+  ChartOfAccountForm,
+  ChartOfAccountsTree,
+  GroupAccountForm,
+  MoveAccountForm
+};

@@ -142,6 +142,7 @@ export class SalesOrderSyncer extends BaseEntitySyncer<
     const lineRows = await this.database
       .selectFrom("salesOrderLine")
       .leftJoin("item", "item.id", "salesOrderLine.itemId")
+      .leftJoin("account", "account.id", "salesOrderLine.accountId")
       .select([
         "salesOrderLine.id",
         "salesOrderLine.salesOrderId",
@@ -151,8 +152,8 @@ export class SalesOrderSyncer extends BaseEntitySyncer<
         "salesOrderLine.saleQuantity",
         "salesOrderLine.unitPrice",
         "salesOrderLine.setupPrice",
-        "salesOrderLine.accountNumber",
-        "item.readableIdWithRevision as itemReadableIdWithRevision"
+        "item.readableIdWithRevision as itemReadableIdWithRevision",
+        "account.number as accountNumber"
       ])
       .where(
         "salesOrderLine.salesOrderId",

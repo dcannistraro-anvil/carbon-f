@@ -12,7 +12,6 @@ import {
   ModalCardTitle,
   toast
 } from "@carbon/react";
-import { isEoriCountry } from "@carbon/utils";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { PostgrestResponse } from "@supabase/supabase-js";
 import { useEffect } from "react";
@@ -30,7 +29,7 @@ import {
   Number,
   Submit
 } from "~/components/Form";
-import { usePermissions, useUser } from "~/hooks";
+import { usePermissions } from "~/hooks";
 import { path } from "~/utils/path";
 import { customerValidator } from "../../sales.models";
 import type { Customer } from "../../types";
@@ -48,7 +47,6 @@ const CustomerForm = ({
 }: CustomerFormProps) => {
   const { t } = useLingui();
   const permissions = usePermissions();
-  const { company } = useUser();
   const fetcher = useFetcher<PostgrestResponse<Customer>>();
 
   useEffect(() => {
@@ -154,11 +152,6 @@ const CustomerForm = ({
                     }}
                   />
 
-                  <Input name="taxId" label={t`Tax ID`} />
-                  <Input name="vatNumber" label={t`VAT Number`} />
-                  {isEoriCountry(company.countryCode) && (
-                    <Input name="eori" label={t`EORI`} />
-                  )}
                   <Input name="website" label={t`Website`} />
 
                   {/* <EmailRecipients name="defaultCc" label="Default CC" /> */}

@@ -222,7 +222,7 @@ const SalesOrderForm = ({ initialValues }: SalesOrderFormProps) => {
                 isDisabled={isCustomer}
               />
 
-              <Location name="locationId" label={t`Sales Location`} />
+              <Location name="locationId" label={t`Shipping Location`} />
 
               <Employee name="salesPersonId" label={t`Sales Person`} />
 

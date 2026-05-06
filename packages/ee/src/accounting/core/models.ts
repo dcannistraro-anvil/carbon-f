@@ -528,8 +528,8 @@ export const InventoryAdjustmentSchema = z.object({
   quantity: z.number(), // positive for positive adj, negative for negative adj
   companyId: z.string(),
   unitCost: z.number(), // from itemCost table
-  inventoryAccount: z.string(), // GL account code from postingGroupInventory
-  adjustmentVarianceAccount: z.string(), // GL account code from postingGroupInventory
+  inventoryAccount: z.string(), // GL account code from accountDefault
+  adjustmentVarianceAccount: z.string(), // GL account code from accountDefault
   updatedAt: z.string().datetime(),
   raw: z.record(z.any()).optional()
 });

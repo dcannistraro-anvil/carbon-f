@@ -67,16 +67,10 @@ export function useModules() {
     },
     {
       permission: "accounting",
-      name: t`Finance`,
-      to: path.to.currencies,
+      name: t`Accounting`,
+      to: path.to.chartOfAccounts,
       icon: LuLandmark
     },
-    // {
-    //   permission: "invoicing",
-    //   name: "Invoicing",
-    //   to: path.to.purchaseInvoices,
-    //   icon: LuCreditCard,
-    // },
     {
       permission: "people",
       name: t`People`,

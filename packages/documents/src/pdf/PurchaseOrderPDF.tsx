@@ -10,7 +10,11 @@ import {
   getLineTotal,
   getTotal
 } from "../utils/purchase-order";
-import { getCurrencyFormatter } from "../utils/shared";
+import {
+  formatTaxPercent,
+  getCurrencyFormatter,
+  getRegistrationFooter
+} from "../utils/shared";
 import {
   Header,
   Note,
@@ -90,10 +94,14 @@ const PurchaseOrderPDF = ({
     customerCountryCode
   } = purchaseOrderLocations;
 
-  const formatter = getCurrencyFormatter(
-    purchaseOrder.currencyCode ?? company.baseCurrencyCode ?? "USD",
-    locale
-  );
+  const currencyCode =
+    purchaseOrder.currencyCode ?? company.baseCurrencyCode ?? "USD";
+  const formatter = getCurrencyFormatter(currencyCode, locale);
+  const numberFormatter = new Intl.NumberFormat(locale, {
+    style: "decimal",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
   const taxAmount = purchaseOrderLines.reduce(
     (acc, line) => acc + (line.supplierTaxAmount ?? 0),
     0
@@ -114,6 +122,12 @@ const PurchaseOrderPDF = ({
         keywords: meta?.keywords ?? "purchase order",
         subject: meta?.subject ?? "Purchase Order"
       }}
+      footerLabel={getRegistrationFooter(
+        company.name,
+        company.countryCode,
+        company.taxId
+      )}
+      footerDocumentId={purchaseOrder?.purchaseOrderId}
     >
       <Header
         company={company}
@@ -144,6 +158,7 @@ const PurchaseOrderPDF = ({
         counterPartyLabel="Supplier"
         createdByFullName={purchaseOrder.createdByFullName}
         createdByEmail={purchaseOrder.createdByEmail}
+        createdByPhone={purchaseOrder.createdByPhone ?? null}
         accountsPayableEmail={companySettings?.accountsPayableEmail}
       />
 
@@ -263,16 +278,31 @@ const PurchaseOrderPDF = ({
         {/* Header */}
         <View
           style={tw(
-            "flex flex-row bg-gray-800 py-2 px-3 text-white text-[9px] font-bold"
+            "flex flex-row bg-gray-800 py-3 px-3 text-white text-[10px] font-bold"
           )}
         >
           <Text style={tw("w-[5%] text-center")}>#</Text>
           <Text style={tw("w-[33%]")}>Description</Text>
-          <Text style={tw("w-[12%] text-right")}>Qty</Text>
+          <Text style={tw("w-[12%] text-center")}>Qty</Text>
           <Text style={tw("w-[10%] text-center")}>UOM</Text>
-          <Text style={tw("w-[15%] text-right")}>Unit Price</Text>
-          <Text style={tw("w-[12%] text-right")}>Tax</Text>
-          <Text style={tw("w-[13%] text-right")}>Total</Text>
+          <View style={tw("w-[15%] items-center")}>
+            <Text>Unit Price</Text>
+            <Text style={[tw("text-[8px] font-normal"), { opacity: 0.7 }]}>
+              {currencyCode}
+            </Text>
+          </View>
+          <View style={tw("w-[12%] items-center")}>
+            <Text>Tax</Text>
+            <Text style={[tw("text-[8px] font-normal"), { opacity: 0.7 }]}>
+              {currencyCode}
+            </Text>
+          </View>
+          <View style={tw("w-[13%] items-center")}>
+            <Text>Total</Text>
+            <Text style={[tw("text-[8px] font-normal"), { opacity: 0.7 }]}>
+              {currencyCode}
+            </Text>
+          </View>
         </View>
 
         {/* Rows */}
@@ -294,22 +324,22 @@ const PurchaseOrderPDF = ({
                     {line.purchaseOrderLineType === "Comment" ? "" : rowIndex}
                   </Text>
                   <View style={tw("w-[33%] pr-2")}>
-                    <Text style={tw("text-gray-800")}>
+                    <Text style={tw("text-gray-900")}>
                       {getLineDescription(line)}
                     </Text>
-                    <Text style={tw("text-[8px] text-gray-400 mt-0.5")}>
+                    <Text style={tw("text-[8px] text-gray-600 mt-0.5")}>
                       {getLineDescriptionDetails(line)}
                     </Text>
-                    {line.requestedDate &&
+                    {line.requiredDate &&
                       line.purchaseOrderLineType !== "Comment" && (
-                        <Text style={tw("text-[8px] text-gray-400 mt-0.5")}>
+                        <Text style={tw("text-[8px] text-gray-600 mt-0.5")}>
                           Required:{" "}
-                          {formatDate(line.requestedDate, undefined, locale)}
+                          {formatDate(line.requiredDate, undefined, locale)}
                         </Text>
                       )}
                     {purchaseOrder.purchaseOrderType === "Outside Processing" &&
                       line.jobOperationDescription && (
-                        <Text style={tw("text-[8px] text-gray-400 mt-0.5")}>
+                        <Text style={tw("text-[8px] text-gray-600 mt-0.5")}>
                           {line.jobOperationDescription}
                         </Text>
                       )}
@@ -325,7 +355,7 @@ const PurchaseOrderPDF = ({
                         </View>
                       )}
                   </View>
-                  <Text style={tw("w-[12%] text-right text-gray-600")}>
+                  <Text style={tw("w-[12%] text-center text-gray-600")}>
                     {line.purchaseOrderLineType === "Comment"
                       ? ""
                       : line.purchaseQuantity}
@@ -335,31 +365,31 @@ const PurchaseOrderPDF = ({
                       ? ""
                       : line.purchaseUnitOfMeasureCode}
                   </Text>
-                  <Text style={tw("w-[15%] text-right text-gray-600")}>
+                  <Text style={tw("w-[15%] text-center text-gray-600")}>
                     {line.purchaseOrderLineType === "Comment"
                       ? ""
-                      : formatter.format(line.supplierUnitPrice ?? 0)}
+                      : numberFormatter.format(line.supplierUnitPrice ?? 0)}
                   </Text>
                   <View style={tw("w-[12%]")}>
                     {line.purchaseOrderLineType !== "Comment" && (
-                      <View style={tw("flex flex-col items-end")}>
+                      <View style={tw("flex flex-col items-center")}>
                         <Text style={tw("text-gray-600")}>
-                          {formatter.format(line.supplierTaxAmount ?? 0)}
+                          {numberFormatter.format(line.supplierTaxAmount ?? 0)}
                         </Text>
-                        {(line.taxPercent ?? 0) > 0 && (
+                        {formatTaxPercent(line.taxPercent) && (
                           <Text style={tw("text-[7px] text-gray-400")}>
-                            {((line.taxPercent ?? 0) * 100).toFixed(0)}%
+                            {formatTaxPercent(line.taxPercent)}
                           </Text>
                         )}
                       </View>
                     )}
                   </View>
                   <Text
-                    style={tw("w-[13%] text-right text-gray-800 font-medium")}
+                    style={tw("w-[13%] text-center text-gray-800 font-medium")}
                   >
                     {line.purchaseOrderLineType === "Comment"
                       ? ""
-                      : formatter.format(getLineTotal(line))}
+                      : numberFormatter.format(getLineTotal(line))}
                   </Text>
                 </View>
               </View>
@@ -379,8 +409,9 @@ const PurchaseOrderPDF = ({
         <View>
           {/* Subtotal - before tax and shipping */}
           <View style={tw("flex flex-row py-1.5 px-3 bg-gray-50 text-[10px]")}>
-            <View style={tw("w-[75%]")} />
-            <Text style={tw("w-[12%] text-right text-gray-600")}>Subtotal</Text>
+            <Text style={tw("w-[87%] text-right pr-3 text-gray-600")}>
+              Subtotal
+            </Text>
             <Text style={tw("w-[13%] text-right text-gray-800")}>
               {formatter.format(
                 purchaseOrderLines.reduce((sum, line) => {
@@ -398,8 +429,7 @@ const PurchaseOrderPDF = ({
             <View
               style={tw("flex flex-row py-1.5 px-3 bg-gray-50 text-[10px]")}
             >
-              <View style={tw("w-[75%]")} />
-              <Text style={tw("w-[12%] text-right text-gray-600")}>
+              <Text style={tw("w-[87%] text-right pr-3 text-gray-600")}>
                 Shipping
               </Text>
               <Text style={tw("w-[13%] text-right text-gray-800")}>
@@ -413,30 +443,32 @@ const PurchaseOrderPDF = ({
             <View
               style={tw("flex flex-row py-1.5 px-3 bg-gray-50 text-[10px]")}
             >
-              <View style={tw("w-[75%]")} />
-              <Text style={tw("w-[12%] text-right text-gray-600")}>Tax</Text>
+              <Text style={tw("w-[87%] text-right pr-3 text-gray-600")}>
+                Tax
+              </Text>
               <View style={tw("w-[13%] flex flex-col items-end")}>
                 <Text style={tw("text-gray-800")}>
                   {formatter.format(taxAmount)}
                 </Text>
-                {(() => {
-                  const taxPercent = purchaseOrderLines.find(
-                    (line) => (line.taxPercent ?? 0) > 0
-                  )?.taxPercent;
-                  return taxPercent ? (
-                    <Text style={tw("text-[7px] text-gray-400")}>
-                      {(taxPercent * 100).toFixed(0)}%
-                    </Text>
-                  ) : null;
-                })()}
+                {formatTaxPercent(
+                  purchaseOrderLines.find((line) => (line.taxPercent ?? 0) > 0)
+                    ?.taxPercent
+                ) && (
+                  <Text style={tw("text-[7px] text-gray-400")}>
+                    {formatTaxPercent(
+                      purchaseOrderLines.find(
+                        (line) => (line.taxPercent ?? 0) > 0
+                      )?.taxPercent
+                    )}
+                  </Text>
+                )}
               </View>
             </View>
           )}
 
           <View style={tw("h-[1px] bg-gray-200")} />
-          <View style={tw("flex flex-row py-2 px-3 text-[11px]")}>
-            <View style={tw("w-[75%]")} />
-            <Text style={tw("w-[12%] text-right text-gray-800 font-bold")}>
+          <View style={tw("flex flex-row py-2 px-3 text-[10px]")}>
+            <Text style={tw("w-[87%] text-right pr-3 text-gray-800 font-bold")}>
               Total
             </Text>
             <Text style={tw("w-[13%] text-right text-gray-800 font-bold")}>

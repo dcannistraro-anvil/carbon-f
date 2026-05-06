@@ -169,6 +169,7 @@ export class BillSyncer extends BaseEntitySyncer<
     const lineRows = await this.database
       .selectFrom("purchaseInvoiceLine")
       .leftJoin("item", "item.id", "purchaseInvoiceLine.itemId")
+      .leftJoin("account", "account.id", "purchaseInvoiceLine.accountId")
       .select([
         "purchaseInvoiceLine.id",
         "purchaseInvoiceLine.invoiceId",
@@ -176,12 +177,12 @@ export class BillSyncer extends BaseEntitySyncer<
         "purchaseInvoiceLine.quantity",
         "purchaseInvoiceLine.unitPrice",
         "purchaseInvoiceLine.itemId",
-        "purchaseInvoiceLine.accountNumber",
         "purchaseInvoiceLine.taxPercent",
         "purchaseInvoiceLine.taxAmount",
         "purchaseInvoiceLine.totalAmount",
         "purchaseInvoiceLine.purchaseOrderLineId",
-        "item.readableId as itemCode"
+        "item.readableId as itemCode",
+        "account.number as accountNumber"
       ])
       .where("purchaseInvoiceLine.invoiceId", "in", billIds)
       .execute();
@@ -610,15 +611,16 @@ export class BillSyncer extends BaseEntitySyncer<
    * Tries company owner first, then falls back to first active employee.
    */
   private async getDefaultUser(tx: KyselyTx): Promise<string | null> {
-    // Try company owner first
-    const company = await tx
+    // Try company group owner first
+    const group = await tx
       .selectFrom("company")
-      .select("ownerId")
-      .where("id", "=", this.companyId)
+      .innerJoin("companyGroup", "companyGroup.id", "company.companyGroupId")
+      .select("companyGroup.ownerId")
+      .where("company.id", "=", this.companyId)
       .executeTakeFirst();
 
-    if (company?.ownerId) {
-      return company.ownerId;
+    if (group?.ownerId) {
+      return group.ownerId;
     }
 
     // Fall back to first active employee for this company (by user creation date)
@@ -667,6 +669,29 @@ export class BillSyncer extends BaseEntitySyncer<
       }
     }
 
+    // Resolve account IDs from Xero AccountCodes
+    const accountNumbers = [
+      ...new Set(
+        lines.map((l) => l.accountNumber).filter((n): n is string => n !== null)
+      )
+    ];
+    const accountIdMap = new Map<string, string>();
+    if (accountNumbers.length > 0) {
+      const companyGroupId = await this.getCompanyGroupId(tx);
+      if (companyGroupId) {
+        const accounts = await tx
+          .selectFrom("account")
+          .select(["id", "number"])
+          .where("companyGroupId", "=", companyGroupId)
+          .where("number", "in", accountNumbers)
+          .where("active", "=", true)
+          .execute();
+        for (const a of accounts) {
+          accountIdMap.set(a.number, a.id);
+        }
+      }
+    }
+
     // Get the invoice to get companyId and createdBy
     const invoice = await tx
       .selectFrom("purchaseInvoice")
@@ -691,7 +716,9 @@ export class BillSyncer extends BaseEntitySyncer<
           unitPrice: line.unitPrice,
           supplierUnitPrice: line.unitPrice,
           itemId,
-          accountNumber: line.accountNumber,
+          accountId: line.accountNumber
+            ? (accountIdMap.get(line.accountNumber) ?? null)
+            : null,
           taxPercent: line.taxPercent,
           taxAmount: line.taxAmount,
           supplierTaxAmount: line.taxAmount ?? 0,

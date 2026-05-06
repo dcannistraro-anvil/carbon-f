@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { useFetcher } from "react-router";
 import type { z } from "zod";
 import {
+  Account,
   CustomFormFields,
   Hidden,
   Input,
@@ -106,7 +107,7 @@ const ShippingMethodForm = ({
                   label={t`Carrier`}
                   options={shippingCarrierOptions}
                 />
-                {/* <Account
+                <Account
                   classes={["Expense"]}
                   name="carrierAccountId"
                   label={t`Carrier Account`}
@@ -115,7 +116,7 @@ const ShippingMethodForm = ({
                   name="trackingUrl"
                   label={t`Tracking URL`}
                   prefix="https://"
-                /> */}
+                />
                 <CustomFormFields table="shippingMethod" />
               </VStack>
             </ModalDrawerBody>

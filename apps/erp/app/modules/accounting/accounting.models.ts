@@ -7,11 +7,27 @@ import {
 } from "../inventory/inventory.models";
 
 export const accountTypes = [
-  "Posting",
-  // "Heading",
-  "Total",
-  "Begin Total",
-  "End Total"
+  "Bank",
+  "Cash",
+  "Accounts Receivable",
+  "Accounts Payable",
+  "Inventory",
+  "Fixed Asset",
+  "Accumulated Depreciation",
+  "Other Current Asset",
+  "Other Asset",
+  "Other Current Liability",
+  "Long Term Liability",
+  "Equity - No Close",
+  "Equity - Close",
+  "Retained Earnings",
+  "Income",
+  "Cost of Goods Sold",
+  "Expense",
+  "Other Income",
+  "Other Expense",
+  "Tax",
+  "Investments"
 ] as const;
 
 export const consolidatedRateTypes = [
@@ -49,30 +65,84 @@ export const accountClassTypes = [
   "Expense"
 ] as const;
 
+export const groupAccountValidator = z
+  .object({
+    id: zfd.text(z.string().optional()),
+    name: z.string().min(1, { message: "Name is required" }),
+    parentId: zfd.text(z.string().optional()),
+    accountType: z
+      .enum(accountTypes, {
+        errorMap: () => ({
+          message: "Account type is required"
+        })
+      })
+      .optional(),
+    incomeBalance: z.enum(incomeBalanceTypes, {
+      errorMap: () => ({
+        message: "Income balance is required"
+      })
+    }),
+    class: z.enum(accountClassTypes, {
+      errorMap: () => ({
+        message: "Class is required"
+      })
+    })
+  })
+  .refine(
+    (data) => {
+      if (["Asset", "Liability", "Equity"].includes(data.class)) {
+        return data.incomeBalance === "Balance Sheet";
+      }
+      return true;
+    },
+    {
+      message: "Asset, Liability and Equity are Balance Sheet accounts",
+      path: ["class"]
+    }
+  )
+  .refine(
+    (data) => {
+      if (["Revenue", "Expense"].includes(data.class)) {
+        return data.incomeBalance === "Income Statement";
+      }
+      return true;
+    },
+    {
+      message: "Revenue and Expense are Income Statement accounts",
+      path: ["class"]
+    }
+  );
+
+export const moveAccountValidator = z.object({
+  id: z.string().min(1),
+  parentId: zfd.text(z.string().optional())
+});
+
 export const accountValidator = z
   .object({
     id: zfd.text(z.string().optional()),
     number: z.string().min(1, { message: "Number is required" }),
     name: z.string().min(1, { message: "Name is required" }),
-    type: z.enum(accountTypes, {
-      errorMap: (issue, ctx) => ({
-        message: "Type is required"
+    parentId: zfd.text(z.string().optional()),
+    isGroup: zfd.checkbox(),
+    accountType: z
+      .enum(accountTypes, {
+        errorMap: () => ({
+          message: "Account type is required"
+        })
       })
-    }),
-    accountCategoryId: zfd.text(z.string().optional()),
-    accountSubcategoryId: zfd.text(z.string().optional()),
+      .optional(),
     incomeBalance: z.enum(incomeBalanceTypes, {
-      errorMap: (issue, ctx) => ({
+      errorMap: () => ({
         message: "Income balance is required"
       })
     }),
     class: z.enum(accountClassTypes, {
-      errorMap: (issue, ctx) => ({
+      errorMap: () => ({
         message: "Class is required"
       })
     }),
-    consolidatedRate: z.enum(consolidatedRateTypes),
-    directPosting: zfd.checkbox()
+    consolidatedRate: z.enum(consolidatedRateTypes)
   })
   .refine(
     (data) => {
@@ -100,54 +170,16 @@ export const accountValidator = z
   )
   .refine(
     (data) => {
-      if (!["Total", "Begin Total", "End Total"].includes(data.type)) {
-        return !!data.accountCategoryId;
+      if (!data.isGroup) {
+        return !!data.accountType;
       }
-      return true;
-    },
-    { message: "Account category is required", path: ["accountCategoryId"] }
-  )
-  .refine(
-    (data) => {
-      if (data.number.startsWith(".") || data.number.endsWith(".")) {
-        return false;
-      }
-
       return true;
     },
     {
-      message: "Account number cannot start or end with a dot",
-      path: ["number"]
-    }
-  )
-  .refine(
-    (data) => {
-      if (data.number.includes("..")) {
-        return false;
-      }
-
-      return true;
-    },
-    {
-      message: "Account number cannot include two consecutive dots",
-      path: ["number"]
+      message: "Account type is required for ledger accounts",
+      path: ["accountType"]
     }
   );
-
-export const accountCategoryValidator = z.object({
-  id: zfd.text(z.string().optional()),
-  category: z.string().min(1, { message: "Category is required" }),
-  incomeBalance: z.enum(incomeBalanceTypes, {
-    errorMap: (issue, ctx) => ({
-      message: "Income balance is required"
-    })
-  }),
-  class: z.enum(accountClassTypes, {
-    errorMap: (issue, ctx) => ({
-      message: "Class is required"
-    })
-  })
-});
 
 export const fiscalYearSettingsValidator = z.object({
   startMonth: z.enum(months, {
@@ -164,7 +196,7 @@ export const fiscalYearSettingsValidator = z.object({
 
 export const journalLineValidator = z.object({
   postingDate: zfd.text(z.string().optional()),
-  accountNumber: z.string().min(1, { message: "Account is required" }),
+  accountId: z.string().min(1, { message: "Account is required" }),
   description: z.string().optional(),
   amount: z.number(),
   documentType: z.union([z.enum(journalLineDocumentType), z.undefined()]),
@@ -172,31 +204,22 @@ export const journalLineValidator = z.object({
   externalDocumentId: z.string().optional()
 });
 
-export const accountSubcategoryValidator = z.object({
-  id: zfd.text(z.string().optional()),
-  name: z.string().min(1, { message: "Name is required" }),
-  accountCategoryId: z.string().min(1, { message: "Category is required" })
-});
-
 export const currencyValidator = z.object({
   id: zfd.text(z.string().optional()),
   code: z.string().min(1, { message: "Code is required" }),
   decimalPlaces: zfd.numeric(z.number().min(0).max(4)),
-  exchangeRate: zfd.numeric(z.number().min(0, { message: "Rate is required" }))
+  exchangeRate: zfd.numeric(z.number().min(0, { message: "Rate is required" })),
+  historicalExchangeRate: zfd.numeric(
+    z.number().min(0, { message: "Rate must be positive" }).optional()
+  )
 });
 
 export const defaultBalanceSheetAccountValidator = z.object({
   inventoryAccount: z.string().min(1, {
     message: "Inventory account is required"
   }),
-  inventoryInterimAccrualAccount: z.string().min(1, {
-    message: "Inventory interim accrual account is required"
-  }),
-  inventoryReceivedNotInvoicedAccount: z.string().min(1, {
-    message: "Inventory received not invoiced account is required"
-  }),
-  inventoryInvoicedNotReceivedAccount: z.string().min(1, {
-    message: "Inventory invoiced not received account is required"
+  goodsReceivedNotInvoicedAccount: z.string().min(1, {
+    message: "GR/IR clearing account is required"
   }),
   inventoryShippedNotInvoicedAccount: z.string().min(1, {
     message: "Inventory shipped not invoiced account is required"
@@ -245,6 +268,9 @@ export const defaultBalanceSheetAccountValidator = z.object({
   }),
   retainedEarningsAccount: z.string().min(1, {
     message: "Retained earnings account is required"
+  }),
+  currencyTranslationAccount: z.string().min(1, {
+    message: "Currency translation account is required"
   })
 });
 
@@ -256,29 +282,32 @@ export const defaultIncomeAcountValidator = z.object({
   costOfGoodsSoldAccount: z.string().min(1, {
     message: "Cost of goods sold account is required"
   }),
-  purchaseAccount: z.string().min(1, {
-    message: "Purchase account is required"
-  }),
-  directCostAppliedAccount: z.string().min(1, {
-    message: "Direct cost applied account is required"
-  }),
-  overheadCostAppliedAccount: z.string().min(1, {
-    message: "Overhead cost applied account is required"
-  }),
   purchaseVarianceAccount: z.string().min(1, {
-    message: "Purchase variance account is required"
+    message: "Purchase price variance account is required"
   }),
   inventoryAdjustmentVarianceAccount: z.string().min(1, {
     message: "Inventory adjustment variance account is required"
   }),
   materialVarianceAccount: z.string().min(1, {
-    message: "Material variance account is required"
+    message: "Material usage variance account is required"
   }),
-  capacityVarianceAccount: z.string().min(1, {
-    message: "Capacity variance account is required"
+  laborAndMachineVarianceAccount: z.string().min(1, {
+    message: "Labor & machine variance account is required"
   }),
-  overheadAccount: z.string().min(1, {
-    message: "Overhead account is required"
+  overheadVarianceAccount: z.string().min(1, {
+    message: "Overhead variance account is required"
+  }),
+  lotSizeVarianceAccount: z.string().min(1, {
+    message: "Lot size variance account is required"
+  }),
+  subcontractingVarianceAccount: z.string().min(1, {
+    message: "Subcontracting variance account is required"
+  }),
+  laborAbsorptionAccount: z.string().min(1, {
+    message: "Labor absorption account is required"
+  }),
+  indirectCostAccount: z.string().min(1, {
+    message: "Indirect cost account is required"
   }),
   maintenanceAccount: z.string().min(1, {
     message: "Maintenance account is required"
@@ -356,4 +385,118 @@ export const costLedgerValidator = z.object({
   quantity: z.number(),
   cost: z.number(),
   costPostedToGL: z.number()
+});
+
+export const costCenterValidator = z.object({
+  id: zfd.text(z.string().optional()),
+  name: z.string().min(1, { message: "Name is required" }),
+  parentCostCenterId: zfd.text(z.string().optional()),
+  ownerId: z.string().min(1, { message: "Owner is required" })
+});
+
+export const intercompanyTransactionStatuses = [
+  "Unmatched",
+  "Matched",
+  "Eliminated"
+] as const;
+
+export const intercompanyTransactionValidator = z
+  .object({
+    sourceCompanyId: z
+      .string()
+      .min(1, { message: "Source company is required" }),
+    targetCompanyId: z
+      .string()
+      .min(1, { message: "Target company is required" }),
+    amount: zfd.numeric(
+      z.number().positive({ message: "Amount must be positive" })
+    ),
+    currencyCode: z.string().min(1, { message: "Currency is required" }),
+    description: z.string().min(1, { message: "Description is required" }),
+    debitAccountId: z.string().min(1, { message: "Debit account is required" }),
+    creditAccountId: z
+      .string()
+      .min(1, { message: "Credit account is required" }),
+    postingDate: zfd.text(z.string().optional())
+  })
+  .refine(
+    (data) => {
+      return data.debitAccountId !== data.creditAccountId;
+    },
+    {
+      message: "Debit and credit account must be different"
+    }
+  )
+  .refine(
+    (data) => {
+      return data.sourceCompanyId !== data.targetCompanyId;
+    },
+    {
+      message: "Source and target company must be different"
+    }
+  );
+
+export const journalEntrySourceTypes = [
+  "Manual",
+  "Purchase Receipt",
+  "Purchase Invoice",
+  "Purchase Return",
+  "Sales Invoice",
+  "Sales Shipment",
+  "Sales Return",
+  "Transfer Receipt",
+  "Inventory Adjustment",
+  "Production Order",
+  "Job Consumption",
+  "Job Receipt",
+  "Production Event",
+  "Job Close"
+] as const;
+
+export const journalEntryStatuses = ["Draft", "Posted", "Reversed"] as const;
+
+export const journalEntryValidator = z.object({
+  id: zfd.text(z.string().optional()),
+  description: z.string().optional(),
+  postingDate: z.string().min(1, { message: "Posting date is required" })
+});
+
+export const journalEntryLineValidator = z
+  .object({
+    id: zfd.text(z.string().optional()),
+    journalEntryId: zfd.text(z.string().optional()),
+    accountId: z.string().min(1, { message: "Account is required" }),
+    description: z.string().optional(),
+    debit: zfd.numeric(z.number().min(0)),
+    credit: zfd.numeric(z.number().min(0))
+  })
+  .refine((data) => !(data.debit > 0 && data.credit > 0), {
+    message: "A line cannot have both debit and credit",
+    path: ["credit"]
+  })
+  .refine((data) => data.debit > 0 || data.credit > 0, {
+    message: "Either debit or credit is required",
+    path: ["debit"]
+  });
+
+export const dimensionEntityTypes = [
+  "CostCenter",
+  "Custom",
+  "CustomerType",
+  "Department",
+  "Employee",
+  "ItemPostingGroup",
+  "Location",
+  "SupplierType"
+] as const;
+
+export const dimensionValidator = z.object({
+  id: zfd.text(z.string().optional()),
+  name: z.string().min(1, { message: "Name is required" }),
+  entityType: z.enum(dimensionEntityTypes, {
+    errorMap: () => ({ message: "Entity type is required" })
+  }),
+  active: zfd.checkbox(),
+  required: zfd.checkbox(),
+  dimensionValues: z.string().min(1).array().optional()
 });

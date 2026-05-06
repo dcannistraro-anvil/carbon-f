@@ -5,6 +5,7 @@ export interface AuthSession {
   refreshToken: string;
   userId: string;
   companyId: string;
+  companyGroupId: string;
   email: string;
   expiresIn: number;
   expiresAt: number;

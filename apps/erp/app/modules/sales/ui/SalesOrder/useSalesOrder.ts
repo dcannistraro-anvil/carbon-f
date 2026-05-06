@@ -1,10 +1,11 @@
 import { useCallback } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useSubmit } from "react-router";
 import { path } from "~/utils/path";
 import type { SalesOrder } from "../../types";
 
 export const useSalesOrder = () => {
   const navigate = useNavigate();
+  const submit = useSubmit();
 
   const edit = useCallback(
     (salesOrder: SalesOrder) => navigate(path.to.salesOrder(salesOrder.id!)),
@@ -20,11 +21,13 @@ export const useSalesOrder = () => {
   );
 
   const ship = useCallback(
-    (salesOrder: SalesOrder) =>
-      navigate(
-        `${path.to.newShipment}?sourceDocument=Sales Order&sourceDocumentId=${salesOrder.id}`
-      ),
-    [navigate]
+    (salesOrder: SalesOrder) => {
+      const formData = new FormData();
+      formData.set("sourceDocument", "Sales Order");
+      formData.set("sourceDocumentId", salesOrder.id!);
+      submit(formData, { method: "post", action: path.to.newShipment });
+    },
+    [submit]
   );
 
   return {

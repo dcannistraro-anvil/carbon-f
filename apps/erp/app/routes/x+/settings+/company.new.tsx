@@ -31,7 +31,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
   const client = getCarbonServiceRole();
 
-  const companyInsert = await insertCompany(client, validation.data, userId);
+  const companyInsert = await insertCompany(client, validation.data);
   if (companyInsert.error) {
     console.error(companyInsert.error);
     throw new Error("Fatal: failed to insert company");
@@ -83,7 +83,17 @@ export async function action({ request }: ActionFunctionArgs) {
     throw new Error("Fatal: failed to insert job");
   }
 
-  const sessionCookie = await updateCompanySession(request, companyId);
+  const { data: companyRecord } = await client
+    .from("company")
+    .select("companyGroupId")
+    .eq("id", companyId)
+    .single();
+
+  const sessionCookie = await updateCompanySession(
+    request,
+    companyId,
+    companyRecord?.companyGroupId ?? ""
+  );
   const companyIdCookie = setCompanyId(companyId);
 
   throw redirect(path.to.authenticatedRoot, {

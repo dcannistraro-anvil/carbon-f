@@ -1,14 +1,9 @@
 -- Drop existing constraints
-ALTER TABLE "purchaseInvoiceLine" DROP CONSTRAINT "purchaseInvoiceLines_accountNumber_fkey";
-
 ALTER TABLE "purchaseInvoiceLine" DROP CONSTRAINT "purchaseInvoiceLines_inventoryUnitOfMeasureCode_fkey";
 ALTER TABLE "purchaseInvoiceLine" DROP CONSTRAINT "purchaseInvoiceLines_purchaseUnitOfMeasureCode_fkey";
 ALTER TABLE "purchaseInvoiceLine" DROP CONSTRAINT "purchaseInvoiceLines_companyId_fkey";
 
 -- Add constraints with ON DELETE CASCADE
-ALTER TABLE "purchaseInvoiceLine" ADD CONSTRAINT "purchaseInvoiceLines_accountNumber_fkey" 
-  FOREIGN KEY ("accountNumber", "companyId") REFERENCES "account" ("number", "companyId") ON UPDATE CASCADE ON DELETE CASCADE;
-
 ALTER TABLE "purchaseInvoiceLine" ADD CONSTRAINT "purchaseInvoiceLines_inventoryUnitOfMeasureCode_fkey" 
   FOREIGN KEY ("inventoryUnitOfMeasureCode", "companyId") REFERENCES "unitOfMeasure" ("code", "companyId") ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE "purchaseInvoiceLine" ADD CONSTRAINT "purchaseInvoiceLines_purchaseUnitOfMeasureCode_fkey" 

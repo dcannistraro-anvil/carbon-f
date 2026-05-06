@@ -66,6 +66,25 @@ const MaintenanceDispatchHeader = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem
+                  disabled={
+                    !["In Progress", "Completed"].includes(status ?? "") ||
+                    statusFetcher.state !== "idle" ||
+                    !permissions.can("update", "resources")
+                  }
+                  onClick={() => {
+                    statusFetcher.submit(
+                      { status: "Open" },
+                      {
+                        method: "post",
+                        action: path.to.maintenanceDispatchStatus(dispatchId)
+                      }
+                    );
+                  }}
+                >
+                  <DropdownMenuIcon icon={<LuLoaderCircle />} />
+                  <Trans>Reopen</Trans>
+                </DropdownMenuItem>
+                <DropdownMenuItem
                   destructive
                   disabled={
                     isLocked ||
@@ -130,25 +149,6 @@ const MaintenanceDispatchHeader = () => {
               }
             >
               <Trans>Complete</Trans>
-            </Button>
-          </statusFetcher.Form>
-
-          <statusFetcher.Form
-            method="post"
-            action={path.to.maintenanceDispatchStatus(dispatchId)}
-          >
-            <input type="hidden" name="status" value="Open" />
-            <Button
-              type="submit"
-              leftIcon={<LuLoaderCircle />}
-              variant={status === "Completed" ? "primary" : "secondary"}
-              isDisabled={
-                !["In Progress", "Completed"].includes(status ?? "") ||
-                statusFetcher.state !== "idle" ||
-                !permissions.can("update", "resources")
-              }
-            >
-              <Trans>Reopen</Trans>
             </Button>
           </statusFetcher.Form>
         </HStack>

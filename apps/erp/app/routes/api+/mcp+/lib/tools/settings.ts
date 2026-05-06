@@ -14,15 +14,16 @@ import {
   getAccountsReceivableBillingAddress,
   updateAccountsPayableBillingAddress,
   updateAccountsReceivableBillingAddress,
-  deleteApiKey,
-  deleteWebhook,
   deactivateWebhooks,
+  deleteApiKey,
+  deleteSubsidiary,
+  deleteWebhook,
   getApiKeys,
   getCompanies,
   getCompany,
+  getCompanyIntegrations,
   getCompanyPlan,
   getCompanySettings,
-  getCompanyIntegrations,
   getConfig,
   getCurrentSequence,
   getCustomField,
@@ -31,40 +32,39 @@ import {
   getIntegration,
   getIntegrations,
   getKanbanOutputSetting,
+  getNextSequence,
   getPlanById,
   getPlans,
-  getNextSequence,
   getSequence,
   getSequences,
   getSequencesList,
+  getSubsidiaries,
+  getSubsidiary,
   getTerms,
   getWebhook,
-  getWebhookTables,
   getWebhooks,
+  getWebhookTables,
   insertCompany,
-  updateCompanyPlan,
+  insertSubsidiary,
+  updateSubsidiary,
   seedCompany,
   updateCompany,
-  updateKanbanOutputSetting,
-  updateMetricSettings,
-  upsertApiKey,
+  updateCompanyPlan,
+  updateDefaultCustomerCc,
+  updateDefaultSupplierCc,
   updateDigitalQuoteSetting,
-  updateLogoDark,
-  updateLogoLight,
-  updateLogoDarkIcon,
-  updateLogoLightIcon,
-  updateMaterialGeneratedIdsSetting,
-  updateMaterialUnitsSetting,
-  updateProductLabelSize,
-  updatePurchasingPdfThumbnails,
-  updateSalesPdfThumbnails,
+  updateIntegrationMetadata,
   updateJobTravelerWorkInstructions,
   updateTimeCardSetting,
-  updateConsoleSetting,
-  updateRfqReadySetting,
-  updateSuggestionNotificationSetting,
+  updateKanbanOutputSetting,
+  updateLogoDark,
+  updateLogoDarkIcon,
+  updateLogoLight,
+  updateLogoLightIcon,
   updateMaintenanceDispatchNotificationSettings,
-  updateSupplierQuoteNotificationSetting,
+  updateMaterialGeneratedIdsSetting,
+  updateMetricSettings,
+  updateProductLabelSize,
   updatePurchasePriceUpdateTimingSetting,
   updateLeadTimesOnReceiptSetting,
   updateSupplierApprovalSetting,
@@ -72,19 +72,24 @@ import {
   updateAccountsReceivableAddressSetting,
   updateAccountsPayableEmail,
   updateAccountsReceivableEmail,
-  updateDefaultSupplierCc,
-  updateDefaultCustomerCc,
   updateQuoteLineCategoryMarkups,
+  updatePurchasingPdfThumbnails,
+  updateRfqReadySetting,
+  updateSalesPdfThumbnails,
   updateSequence,
-  updateIntegrationMetadata,
+  updateSuggestionNotificationSetting,
+  updateSupplierQuoteNotificationSetting,
+  upsertApiKey,
+  updateConsoleSetting,
   upsertWebhook,
 } from "~/modules/settings/settings.service";
 import {
   accountsPayableBillingAddressValidator,
   accountsReceivableBillingAddressValidator,
   companyValidator,
-  apiKeyValidator,
+  subsidiaryValidator,
   sequenceValidator,
+  apiKeyValidator,
   webhookValidator,
 } from "~/modules/settings/settings.models";
 
@@ -146,6 +151,19 @@ export const registerSettingsTools: RegisterTools = (server, ctx) => {
   );
 
   server.registerTool(
+    "settings_deactivateWebhooks",
+    {
+      description: "deactivate webhooks",
+      inputSchema: {},
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await deactivateWebhooks(ctx.client, ctx.companyId);
+      return toMcpResult(result);
+    }, "Failed: settings_deactivateWebhooks"),
+  );
+
+  server.registerTool(
     "settings_deleteApiKey",
     {
       description: "delete api key",
@@ -158,6 +176,19 @@ export const registerSettingsTools: RegisterTools = (server, ctx) => {
       const result = await deleteApiKey(ctx.client, params.id);
       return toMcpResult(result);
     }, "Failed: settings_deleteApiKey"),
+  );
+
+  server.registerTool(
+    "settings_deleteSubsidiary",
+    {
+      description: "delete subsidiary",
+      inputSchema: {},
+      annotations: DESTRUCTIVE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await deleteSubsidiary(ctx.client, ctx.companyId);
+      return toMcpResult(result);
+    }, "Failed: settings_deleteSubsidiary"),
   );
 
   server.registerTool(
@@ -231,6 +262,19 @@ export const registerSettingsTools: RegisterTools = (server, ctx) => {
       const result = await getCompany(ctx.client, ctx.companyId);
       return toMcpResult(result);
     }, "Failed: settings_getCompany"),
+  );
+
+  server.registerTool(
+    "settings_getCompanyIntegrations",
+    {
+      description: "get company integrations",
+      inputSchema: {},
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getCompanyIntegrations(ctx.client, ctx.companyId);
+      return toMcpResult(result);
+    }, "Failed: settings_getCompanyIntegrations"),
   );
 
   server.registerTool(
@@ -391,6 +435,21 @@ export const registerSettingsTools: RegisterTools = (server, ctx) => {
   );
 
   server.registerTool(
+    "settings_getNextSequence",
+    {
+      description: "get next sequence",
+      inputSchema: {
+      table: z.string(),
+    },
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getNextSequence(ctx.client, params.table, ctx.companyId);
+      return toMcpResult(result);
+    }, "Failed: settings_getNextSequence"),
+  );
+
+  server.registerTool(
     "settings_getPlanById",
     {
       description: "get plan by id",
@@ -483,6 +542,34 @@ export const registerSettingsTools: RegisterTools = (server, ctx) => {
   );
 
   server.registerTool(
+    "settings_getSubsidiaries",
+    {
+      description: "get subsidiaries",
+      inputSchema: {
+      companyGroupId: z.string(),
+    },
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getSubsidiaries(ctx.client, params.companyGroupId);
+      return toMcpResult(result);
+    }, "Failed: settings_getSubsidiaries"),
+  );
+
+  server.registerTool(
+    "settings_getSubsidiary",
+    {
+      description: "get subsidiary",
+      inputSchema: {},
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getSubsidiary(ctx.client, ctx.companyId);
+      return toMcpResult(result);
+    }, "Failed: settings_getSubsidiary"),
+  );
+
+  server.registerTool(
     "settings_getTerms",
     {
       description: "get terms",
@@ -543,6 +630,19 @@ export const registerSettingsTools: RegisterTools = (server, ctx) => {
   );
 
   server.registerTool(
+    "settings_getWebhookTables",
+    {
+      description: "get webhook tables",
+      inputSchema: {},
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getWebhookTables(ctx.client);
+      return toMcpResult(result);
+    }, "Failed: settings_getWebhookTables"),
+  );
+
+  server.registerTool(
     "settings_insertCompany",
     {
       description: "insert company",
@@ -553,9 +653,70 @@ export const registerSettingsTools: RegisterTools = (server, ctx) => {
       annotations: WRITE_ANNOTATIONS,
     },
     withErrorHandling(async (params) => {
-      const result = await insertCompany(ctx.client, params.company, params.ownerId);
+      const result = await insertCompany(ctx.client, params.company, params.companyGroupId);
       return toMcpResult(result);
     }, "Failed: settings_insertCompany"),
+  );
+
+  server.registerTool(
+    "settings_insertSubsidiary",
+    {
+      description: "insert subsidiary",
+      inputSchema: {
+      subsidiary: subsidiaryValidator,
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await insertSubsidiary(ctx.client, { ...params.subsidiary, createdBy: ctx.userId });
+      return toMcpResult(result);
+    }, "Failed: settings_insertSubsidiary"),
+  );
+
+  server.registerTool(
+    "settings_updateSubsidiary",
+    {
+      description: "update subsidiary",
+      inputSchema: {
+      id: z.string(),
+      subsidiary: subsidiaryValidator,
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await updateSubsidiary(ctx.client, params.id, { ...params.subsidiary, updatedBy: ctx.userId });
+      return toMcpResult(result);
+    }, "Failed: settings_updateSubsidiary"),
+  );
+
+  server.registerTool(
+    "settings_seedCompany",
+    {
+      description: "seed company",
+      inputSchema: {
+      parentCompanyId: z.string().optional(),
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await seedCompany(ctx.client, ctx.companyId, ctx.userId, params.parentCompanyId);
+      return toMcpResult(result);
+    }, "Failed: settings_seedCompany"),
+  );
+
+  server.registerTool(
+    "settings_updateCompany",
+    {
+      description: "update company",
+      inputSchema: {
+      company: companyValidator,
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await updateCompany(ctx.client, ctx.companyId, { ...params.company, updatedBy: ctx.userId, companyId: ctx.companyId });
+      return toMcpResult(result);
+    }, "Failed: settings_updateCompany"),
   );
 
   server.registerTool(
@@ -579,20 +740,20 @@ export const registerSettingsTools: RegisterTools = (server, ctx) => {
   );
 
   server.registerTool(
-    "settings_seedCompany",
+    "settings_updateDefaultCustomerCc",
     {
       description: "seed company",
       inputSchema: z.object({}),
       annotations: WRITE_ANNOTATIONS,
     },
     withErrorHandling(async (params) => {
-      const result = await seedCompany(ctx.client, ctx.companyId, ctx.userId);
+      const result = await updateDefaultCustomerCc(ctx.client, ctx.companyId, params.defaultCustomerCc);
       return toMcpResult(result);
-    }, "Failed: settings_seedCompany"),
+    }, "Failed: settings_updateDefaultCustomerCc"),
   );
 
   server.registerTool(
-    "settings_updateCompany",
+    "settings_updateDefaultSupplierCc",
     {
       description: "update company",
       inputSchema: z.object({
@@ -601,7 +762,7 @@ export const registerSettingsTools: RegisterTools = (server, ctx) => {
       annotations: WRITE_ANNOTATIONS,
     },
     withErrorHandling(async (params) => {
-      const result = await updateCompany(ctx.client, ctx.companyId, { ...params.company, updatedBy: ctx.userId, companyId: ctx.companyId });
+      const result = await updateDefaultSupplierCc(ctx.client, ctx.companyId, params.defaultSupplierCc);
       return toMcpResult(result);
     }, "Failed: settings_updateCompany"),
   );
@@ -669,7 +830,7 @@ export const registerSettingsTools: RegisterTools = (server, ctx) => {
   );
 
   server.registerTool(
-    "settings_updateLogoDark",
+    "settings_updateIntegrationMetadata",
     {
       description: "update logo dark",
       inputSchema: z.object({
@@ -678,7 +839,7 @@ export const registerSettingsTools: RegisterTools = (server, ctx) => {
       annotations: WRITE_ANNOTATIONS,
     },
     withErrorHandling(async (params) => {
-      const result = await updateLogoDark(ctx.client, ctx.companyId, params.logoDark);
+      const result = await updateIntegrationMetadata(ctx.client, ctx.companyId, params.integrationId, params.metadata, ctx.userId);
       return toMcpResult(result);
     }, "Failed: settings_updateLogoDark"),
   );
@@ -834,7 +995,7 @@ export const registerSettingsTools: RegisterTools = (server, ctx) => {
   );
 
   server.registerTool(
-    "settings_updateConsoleSetting",
+    "settings_updateKanbanOutputSetting",
     {
       description: "update console setting",
       inputSchema: z.object({
@@ -843,13 +1004,13 @@ export const registerSettingsTools: RegisterTools = (server, ctx) => {
       annotations: WRITE_ANNOTATIONS,
     },
     withErrorHandling(async (params) => {
-      const result = await updateConsoleSetting(ctx.client, ctx.companyId, params.consoleEnabled, ctx.userId);
+      const result = await updateKanbanOutputSetting(ctx.client, ctx.companyId, params.kanbanOutput);
       return toMcpResult(result);
-    }, "Failed: settings_updateConsoleSetting"),
+    }, "Failed: settings_updateKanbanOutputSetting"),
   );
 
   server.registerTool(
-    "settings_updateRfqReadySetting",
+    "settings_updateLogoDark",
     {
       description: "update rfq ready setting",
       inputSchema: z.object({
@@ -858,13 +1019,13 @@ export const registerSettingsTools: RegisterTools = (server, ctx) => {
       annotations: WRITE_ANNOTATIONS,
     },
     withErrorHandling(async (params) => {
-      const result = await updateRfqReadySetting(ctx.client, ctx.companyId, params.rfqReadyNotificationGroup);
+      const result = await updateLogoDark(ctx.client, ctx.companyId, params.logoDark);
       return toMcpResult(result);
-    }, "Failed: settings_updateRfqReadySetting"),
+    }, "Failed: settings_updateLogoDark"),
   );
 
   server.registerTool(
-    "settings_updateSuggestionNotificationSetting",
+    "settings_updateLogoDarkIcon",
     {
       description: "update suggestion notification setting",
       inputSchema: z.object({
@@ -873,9 +1034,39 @@ export const registerSettingsTools: RegisterTools = (server, ctx) => {
       annotations: WRITE_ANNOTATIONS,
     },
     withErrorHandling(async (params) => {
-      const result = await updateSuggestionNotificationSetting(ctx.client, ctx.companyId, params.suggestionNotificationGroup);
+      const result = await updateLogoDarkIcon(ctx.client, ctx.companyId, params.logoDarkIcon);
       return toMcpResult(result);
-    }, "Failed: settings_updateSuggestionNotificationSetting"),
+    }, "Failed: settings_updateLogoDarkIcon"),
+  );
+
+  server.registerTool(
+    "settings_updateLogoLight",
+    {
+      description: "update logo light",
+      inputSchema: {
+      logoLight: z.string().nullable(),
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await updateLogoLight(ctx.client, ctx.companyId, params.logoLight);
+      return toMcpResult(result);
+    }, "Failed: settings_updateLogoLight"),
+  );
+
+  server.registerTool(
+    "settings_updateLogoLightIcon",
+    {
+      description: "update logo light icon",
+      inputSchema: {
+      logoLightIcon: z.string().nullable(),
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await updateLogoLightIcon(ctx.client, ctx.companyId, params.logoLightIcon);
+      return toMcpResult(result);
+    }, "Failed: settings_updateLogoLightIcon"),
   );
 
   server.registerTool(
@@ -899,7 +1090,7 @@ export const registerSettingsTools: RegisterTools = (server, ctx) => {
   );
 
   server.registerTool(
-    "settings_updateSupplierQuoteNotificationSetting",
+    "settings_updateMaterialGeneratedIdsSetting",
     {
       description: "update supplier quote notification setting",
       inputSchema: z.object({
@@ -908,9 +1099,39 @@ export const registerSettingsTools: RegisterTools = (server, ctx) => {
       annotations: WRITE_ANNOTATIONS,
     },
     withErrorHandling(async (params) => {
-      const result = await updateSupplierQuoteNotificationSetting(ctx.client, ctx.companyId, params.supplierQuoteNotificationGroup);
+      const result = await updateMaterialGeneratedIdsSetting(ctx.client, ctx.companyId, params.materialGeneratedIds);
       return toMcpResult(result);
-    }, "Failed: settings_updateSupplierQuoteNotificationSetting"),
+    }, "Failed: settings_updateMaterialGeneratedIdsSetting"),
+  );
+
+  server.registerTool(
+    "settings_updateMetricSettings",
+    {
+      description: "update metric settings",
+      inputSchema: {
+      useMetric: z.boolean(),
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await updateMetricSettings(ctx.client, ctx.companyId, params.useMetric);
+      return toMcpResult(result);
+    }, "Failed: settings_updateMetricSettings"),
+  );
+
+  server.registerTool(
+    "settings_updateProductLabelSize",
+    {
+      description: "update product label size",
+      inputSchema: {
+      productLabelSize: z.string(),
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await updateProductLabelSize(ctx.client, ctx.companyId, params.productLabelSize);
+      return toMcpResult(result);
+    }, "Failed: settings_updateProductLabelSize"),
   );
 
   server.registerTool(
@@ -1049,6 +1270,51 @@ export const registerSettingsTools: RegisterTools = (server, ctx) => {
   );
 
   server.registerTool(
+    "settings_updatePurchasingPdfThumbnails",
+    {
+      description: "update purchasing pdf thumbnails",
+      inputSchema: {
+      includeThumbnailsOnPurchasingPdfs: z.boolean(),
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await updatePurchasingPdfThumbnails(ctx.client, ctx.companyId, params.includeThumbnailsOnPurchasingPdfs);
+      return toMcpResult(result);
+    }, "Failed: settings_updatePurchasingPdfThumbnails"),
+  );
+
+  server.registerTool(
+    "settings_updateRfqReadySetting",
+    {
+      description: "update rfq ready setting",
+      inputSchema: {
+      rfqReadyNotificationGroup: z.array(z.string()),
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await updateRfqReadySetting(ctx.client, ctx.companyId, params.rfqReadyNotificationGroup);
+      return toMcpResult(result);
+    }, "Failed: settings_updateRfqReadySetting"),
+  );
+
+  server.registerTool(
+    "settings_updateSalesPdfThumbnails",
+    {
+      description: "update sales pdf thumbnails",
+      inputSchema: {
+      includeThumbnailsOnSalesPdfs: z.boolean(),
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await updateSalesPdfThumbnails(ctx.client, ctx.companyId, params.includeThumbnailsOnSalesPdfs);
+      return toMcpResult(result);
+    }, "Failed: settings_updateSalesPdfThumbnails"),
+  );
+
+  server.registerTool(
     "settings_updateSequence",
     {
       description: "update sequence",
@@ -1065,7 +1331,7 @@ export const registerSettingsTools: RegisterTools = (server, ctx) => {
   );
 
   server.registerTool(
-    "settings_updateIntegrationMetadata",
+    "settings_updateSuggestionNotificationSetting",
     {
       description: "update integration metadata",
       inputSchema: z.object({
@@ -1075,9 +1341,54 @@ export const registerSettingsTools: RegisterTools = (server, ctx) => {
       annotations: WRITE_ANNOTATIONS,
     },
     withErrorHandling(async (params) => {
-      const result = await updateIntegrationMetadata(ctx.client, ctx.companyId, params.integrationId, params.metadata, ctx.userId);
+      const result = await updateSuggestionNotificationSetting(ctx.client, ctx.companyId, params.suggestionNotificationGroup);
       return toMcpResult(result);
-    }, "Failed: settings_updateIntegrationMetadata"),
+    }, "Failed: settings_updateSuggestionNotificationSetting"),
+  );
+
+  server.registerTool(
+    "settings_updateSupplierQuoteNotificationSetting",
+    {
+      description: "update supplier quote notification setting",
+      inputSchema: {
+      supplierQuoteNotificationGroup: z.array(z.string()),
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await updateSupplierQuoteNotificationSetting(ctx.client, ctx.companyId, params.supplierQuoteNotificationGroup);
+      return toMcpResult(result);
+    }, "Failed: settings_updateSupplierQuoteNotificationSetting"),
+  );
+
+  server.registerTool(
+    "settings_upsertApiKey",
+    {
+      description: "upsert api key",
+      inputSchema: {
+      apiKey: apiKeyValidator,
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await upsertApiKey(ctx.client, { ...params.apiKey, companyId: ctx.companyId, createdBy: ctx.userId });
+      return toMcpResult(result);
+    }, "Failed: settings_upsertApiKey"),
+  );
+
+  server.registerTool(
+    "settings_updateConsoleSetting",
+    {
+      description: "update console setting",
+      inputSchema: {
+      consoleEnabled: z.boolean(),
+    },
+      annotations: WRITE_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await updateConsoleSetting(ctx.client, ctx.companyId, params.consoleEnabled, ctx.userId);
+      return toMcpResult(result);
+    }, "Failed: settings_updateConsoleSetting"),
   );
 
   server.registerTool(

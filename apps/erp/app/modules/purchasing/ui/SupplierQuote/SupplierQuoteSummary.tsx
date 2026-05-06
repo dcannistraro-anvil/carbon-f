@@ -23,6 +23,7 @@ import { useMemo, useState } from "react";
 import { LuChevronRight, LuImage } from "react-icons/lu";
 import { Link, useParams } from "react-router";
 import { SupplierAvatar } from "~/components";
+import { useAccounts } from "~/components/Form/Account";
 import { useUnitOfMeasure } from "~/components/Form/UnitOfMeasure";
 import {
   useCurrencyFormatter,
@@ -49,6 +50,7 @@ const LineItems = ({
   locale: string;
 }) => {
   const { company } = useUser();
+  const accounts = useAccounts();
   const { id } = useParams();
   if (!id) throw new Error("Could not find quote id");
 
@@ -95,7 +97,10 @@ const LineItems = ({
       {routeData?.lines?.map((line) => {
         const prices = pricingByLine[line.id!];
 
-        const itemReadableId = getItemReadableId(items, line.itemId);
+        const isGlAccount = line.supplierQuoteLineType === "G/L Account";
+        const itemReadableId = isGlAccount
+          ? line.description || "Indirect Expense"
+          : getItemReadableId(items, line.itemId);
         if (!line || !prices || !line.id) {
           return null;
         }
@@ -152,7 +157,10 @@ const LineItems = ({
                     </HStack>
                   </div>
                   <span className="text-muted-foreground text-base truncate">
-                    {line.description}
+                    {isGlAccount
+                      ? (accounts.find((a) => a.id === line.accountId)?.name ??
+                        "G/L Account")
+                      : line.description}
                   </span>
                 </div>
               </VStack>

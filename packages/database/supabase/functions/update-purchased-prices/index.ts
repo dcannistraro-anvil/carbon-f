@@ -142,6 +142,7 @@ serve(async (req: Request) => {
               itemId: line.itemId!,
               quantity: line.quantity,
               cost: line.quantity * line.unitPrice,
+              remainingQuantity: line.quantity,
               supplierId,
               companyId,
             }));

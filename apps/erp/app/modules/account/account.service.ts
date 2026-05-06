@@ -134,6 +134,7 @@ export async function updatePublicAccount(
     firstName: string;
     lastName: string;
     about?: string;
+    phone?: string;
   }
 ) {
   return client.from("user").update(sanitize(account)).eq("id", account.id);

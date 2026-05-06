@@ -369,6 +369,11 @@ const LineItems = ({
       {quoteLines?.map((line) => {
         if (!line.id) return null;
 
+        const isGlAccount = line.supplierQuoteLineType === "G/L Account";
+        const lineHeading = isGlAccount
+          ? line.description || "Indirect Expense"
+          : line.itemReadableId;
+
         return (
           <motion.div
             key={line.id}
@@ -380,7 +385,7 @@ const LineItems = ({
             <HStack spacing={4} className="items-start">
               {thumbnails[line.id] ? (
                 <img
-                  alt={line.itemReadableId!}
+                  alt={lineHeading!}
                   className="w-24 h-24 bg-gradient-to-bl from-muted to-muted/40 rounded-lg"
                   src={thumbnails[line.id] ?? undefined}
                 />
@@ -396,7 +401,7 @@ const LineItems = ({
                   onClick={() => toggleOpen(line.id!)}
                 >
                   <div className="flex items-center gap-x-4 justify-between flex-grow">
-                    <Heading>{line.itemReadableId}</Heading>
+                    <Heading>{lineHeading}</Heading>
                     <HStack spacing={4}>
                       <motion.div
                         animate={{
@@ -409,7 +414,7 @@ const LineItems = ({
                     </HStack>
                   </div>
                   <span className="text-muted-foreground text-base truncate">
-                    {line.description}
+                    {isGlAccount ? "Indirect Expense" : line.description}
                   </span>
                 </div>
               </VStack>

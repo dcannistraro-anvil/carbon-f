@@ -5,8 +5,9 @@ import { VStack } from "@carbon/react";
 import { msg } from "@lingui/core/macro";
 import type { LoaderFunctionArgs } from "react-router";
 import { Outlet, redirect, useLoaderData } from "react-router";
+import type { Chart } from "~/modules/accounting";
 import { getChartOfAccounts } from "~/modules/accounting";
-import { ChartOfAccountsTable } from "~/modules/accounting/ui/ChartOfAccounts";
+import { ChartOfAccountsTree } from "~/modules/accounting/ui/ChartOfAccounts";
 import ChartOfAccountsTableFilters from "~/modules/accounting/ui/ChartOfAccounts/ChartOfAccountsTableFilters";
 import type { Handle } from "~/utils/handle";
 import { path } from "~/utils/path";
@@ -17,7 +18,7 @@ export const handle: Handle = {
 };
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const { client, companyId } = await requirePermissions(request, {
+  const { client, companyGroupId } = await requirePermissions(request, {
     view: "accounting",
     role: "employee",
     bypassRls: true
@@ -25,15 +26,18 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
   const url = new URL(request.url);
   const searchParams = new URLSearchParams(url.search);
-  const name = searchParams.get("name");
-  const incomeBalance = searchParams.get("incomeBalance");
-  const startDate = searchParams.get("startDate");
-  const endDate = searchParams.get("endDate");
+  const incomeBalanceParam = searchParams.get("incomeBalance");
+  const incomeBalance =
+    incomeBalanceParam === "Income Statement" ||
+    incomeBalanceParam === "Balance Sheet"
+      ? incomeBalanceParam
+      : null;
 
-  const chartOfAccounts = await getChartOfAccounts(client, companyId, {
-    name,
-    // @ts-expect-error TS2322 - TODO: fix type
-    incomeBalance,
+  const startDate = searchParams.get("startDate") || null;
+  const endDate = searchParams.get("endDate") || null;
+
+  const chartOfAccounts = await getChartOfAccounts(client, companyGroupId, {
+    incomeBalance: incomeBalance as "Income Statement" | "Balance Sheet" | null,
     startDate,
     endDate
   });
@@ -49,7 +53,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   }
 
   return {
-    chartOfAccounts: chartOfAccounts.data ?? []
+    chartOfAccounts: (chartOfAccounts.data ?? []) as Chart[]
   };
 }
 
@@ -59,7 +63,7 @@ export default function ChartOfAccountsRoute() {
   return (
     <VStack spacing={0} className="h-full">
       <ChartOfAccountsTableFilters />
-      <ChartOfAccountsTable data={chartOfAccounts} />
+      <ChartOfAccountsTree data={chartOfAccounts} />
       <Outlet />
     </VStack>
   );

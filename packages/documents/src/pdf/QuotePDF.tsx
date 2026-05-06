@@ -6,14 +6,20 @@ import { Image, Text, View } from "@react-pdf/renderer";
 import { createTw } from "react-pdf-tailwind";
 import type { AccountsReceivableBillingAddress, PDF } from "../types";
 import { getLineDescription, getLineDescriptionDetails } from "../utils/quote";
-import { getCurrencyFormatter } from "../utils/shared";
+import { getCurrencyFormatter, getRegistrationFooter } from "../utils/shared";
 import { Header, Note, PartyDetails, Template } from "./components";
+
+type QuoteCustomerDetails =
+  Database["public"]["Views"]["quoteCustomerDetails"]["Row"] & {
+    customerTaxId?: string | null;
+    customerVatNumber?: string | null;
+  };
 
 interface QuotePDFProps extends PDF {
   exchangeRate: number;
   quote: Database["public"]["Views"]["quotes"]["Row"];
   quoteLines: Database["public"]["Views"]["quoteLines"]["Row"][];
-  quoteCustomerDetails: Database["public"]["Views"]["quoteCustomerDetails"]["Row"];
+  quoteCustomerDetails: QuoteCustomerDetails;
   quoteLinePrices: Database["public"]["Tables"]["quoteLinePrice"]["Row"][];
   payment?: Database["public"]["Tables"]["quotePayment"]["Row"] | null;
   shipment?: Database["public"]["Tables"]["quoteShipment"]["Row"] | null;
@@ -72,6 +78,8 @@ const QuotePDF = ({
     customerStateProvince,
     customerPostalCode,
     customerCountryCode,
+    customerTaxId,
+    customerVatNumber,
     customerEori,
     contactName,
     contactEmail
@@ -219,6 +227,12 @@ const QuotePDF = ({
         keywords: meta?.keywords ?? "quote",
         subject: meta?.subject ?? "Quote"
       }}
+      footerLabel={getRegistrationFooter(
+        company.name,
+        company.countryCode,
+        company.taxId
+      )}
+      footerDocumentId={quote?.quoteId}
     >
       <Header
         company={company}
@@ -252,6 +266,8 @@ const QuotePDF = ({
           stateProvince: customerStateProvince,
           postalCode: customerPostalCode,
           countryCode: customerCountryCode,
+          taxId: customerTaxId,
+          vatNumber: customerVatNumber,
           eori: customerEori,
           contactName: contactName,
           contactEmail: contactEmail

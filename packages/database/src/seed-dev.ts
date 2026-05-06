@@ -8,16 +8,17 @@
  *   npm run db:seed:dev -- --email your@email.com
  */
 
+import process from "node:process";
 import { parseArgs } from "node:util";
 import { createClient } from "@supabase/supabase-js";
 import * as dotenv from "dotenv";
 import {
-  accountCategories,
   accountDefaults,
   accounts,
   currencies,
   customerStatuses,
   defaultLocation,
+  dimensions,
   failureModes,
   fiscalYearSettings,
   gaugeTypes,
@@ -26,9 +27,6 @@ import {
   nonConformanceRequiredActions,
   nonConformanceTypes,
   paymentTerms,
-  postingGroupInventory,
-  postingGroupPurchasing,
-  postingGroupSales,
   scrapReasons,
   sequences,
   unitOfMeasures
@@ -116,7 +114,9 @@ async function seedDev() {
     // Step 1: Check if user already exists (via Supabase Auth API - cannot be in transaction)
     console.log("1. Checking for existing user...");
     const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers();
-    const existingUser = existingUsers?.users?.find((u) => u.email === email);
+    const existingUser = existingUsers?.users?.find(
+      (u: any) => u.email === (email ?? "")
+    );
 
     let userId: string;
 
@@ -164,7 +164,7 @@ async function seedDev() {
     }
 
     // Step 2: Update user's first name (inferred from email)
-    const firstName = inferFirstNameFromEmail(email);
+    const firstName = inferFirstNameFromEmail(email ?? "");
     console.log(`2. Updating user first name to "${firstName}"...`);
     await client.query(`UPDATE "user" SET "firstName" = $1 WHERE id = $2`, [
       firstName,
@@ -182,16 +182,25 @@ async function seedDev() {
       const companyId = xidResult.rows[0].id as string;
       console.log(`   Company ID: ${companyId}`);
 
+      // Create company group
+      console.log("5. Creating company group...");
+      const companyGroupResult = await client.query(
+        `INSERT INTO "companyGroup" (name, "createdBy") VALUES ($1, $2) RETURNING id`,
+        [DEV_COMPANY_NAME, userId]
+      );
+      const companyGroupId = companyGroupResult.rows[0].id as string;
+      console.log(`   Company Group ID: ${companyGroupId}`);
+
       // Create the company
-      console.log("5. Creating company...");
+      console.log("6. Creating company...");
       await client.query(
-        `INSERT INTO company (id, name, "baseCurrencyCode") VALUES ($1, $2, 'USD')`,
-        [companyId, DEV_COMPANY_NAME]
+        `INSERT INTO company (id, name, "baseCurrencyCode", "companyGroupId") VALUES ($1, $2, 'USD', $3)`,
+        [companyId, DEV_COMPANY_NAME, companyGroupId]
       );
       console.log(`   Company "${DEV_COMPANY_NAME}" created.`);
 
       // Seed the company with all default data
-      console.log("6. Seeding company with default data...");
+      console.log("7. Seeding company with default data...");
 
       // Create storage bucket
       await client.query(
@@ -348,171 +357,114 @@ async function seedDev() {
       // Seed currencies
       for (const c of currencies) {
         await client.query(
-          `INSERT INTO currency (code, "exchangeRate", "decimalPlaces", "companyId", "createdBy")
+          `INSERT INTO currency (code, "exchangeRate", "decimalPlaces", "companyGroupId", "createdBy")
            VALUES ($1, $2, $3, $4, 'system')`,
-          [c.code, c.exchangeRate, c.decimalPlaces, companyId]
+          [c.code, c.exchangeRate, c.decimalPlaces, companyGroupId]
         );
       }
 
-      // Seed account categories
-      const categoryIdMap: Record<string, string> = {};
-      for (const ac of accountCategories) {
+      // Seed accounts (chart of accounts) - insert in order, resolving parentKey to parentId
+      const accountIdByKey: Record<string, string> = {};
+      for (const { key, parentKey, ...acc } of accounts) {
         const result = await client.query(
-          `INSERT INTO "accountCategory" (category, class, "incomeBalance", "companyId", "createdBy")
-           VALUES ($1, $2, $3, $4, 'system') RETURNING id`,
-          [ac.category, ac.class, ac.incomeBalance, companyId]
-        );
-        categoryIdMap[ac.category] = result.rows[0].id;
-      }
-
-      // Seed accounts (chart of accounts)
-      for (const acc of accounts) {
-        await client.query(
-          `INSERT INTO account (number, name, type, "accountCategoryId", "incomeBalance", class, "directPosting", "companyId", "createdBy")
-           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 'system')`,
+          `INSERT INTO account (number, name, "isGroup", "accountType", "incomeBalance", class, "parentId", "isSystem", "companyGroupId", "createdBy")
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, 'system') RETURNING id`,
           [
             acc.number,
             acc.name,
-            acc.type,
-            acc.accountCategory ? categoryIdMap[acc.accountCategory] : null,
+            acc.isGroup,
+            acc.accountType,
             acc.incomeBalance,
             acc.class,
-            acc.directPosting,
-            companyId
+            parentKey ? (accountIdByKey[parentKey] ?? null) : null,
+            acc.isSystem ?? false,
+            companyGroupId
           ]
         );
+        if (result.rows[0]?.id) {
+          accountIdByKey[key] = result.rows[0].id;
+        }
       }
+
+      // Seed dimensions for all entity types
+      for (const d of dimensions) {
+        await client.query(
+          `INSERT INTO dimension (name, "entityType", "companyGroupId", "createdBy")
+           VALUES ($1, $2, $3, 'system')`,
+          [d.name, d.entityType, companyGroupId]
+        );
+      }
+
+      // Resolve account numbers to IDs for account defaults
+      const resolveAccountId = (number: string) =>
+        accountIdByKey[number] ?? null;
 
       // Seed account defaults
       await client.query(
         `INSERT INTO "accountDefault" (
-          "salesAccount", "salesDiscountAccount", "costOfGoodsSoldAccount", "purchaseAccount",
-          "directCostAppliedAccount", "overheadCostAppliedAccount", "purchaseVarianceAccount",
-          "inventoryAdjustmentVarianceAccount", "materialVarianceAccount", "capacityVarianceAccount",
-          "overheadAccount", "maintenanceAccount", "assetDepreciationExpenseAccount",
+          "salesAccount", "salesDiscountAccount", "costOfGoodsSoldAccount",
+          "purchaseVarianceAccount", "inventoryAdjustmentVarianceAccount",
+          "materialVarianceAccount", "laborAndMachineVarianceAccount",
+          "overheadVarianceAccount", "lotSizeVarianceAccount", "subcontractingVarianceAccount",
+          "laborAbsorptionAccount", "indirectCostAccount", "maintenanceAccount", "assetDepreciationExpenseAccount",
           "assetGainsAndLossesAccount", "serviceChargeAccount", "interestAccount",
           "supplierPaymentDiscountAccount", "customerPaymentDiscountAccount", "roundingAccount",
           "assetAquisitionCostAccount", "assetAquisitionCostOnDisposalAccount",
           "accumulatedDepreciationAccount", "accumulatedDepreciationOnDisposalAccount",
-          "inventoryAccount", "inventoryInterimAccrualAccount", "workInProgressAccount",
-          "receivablesAccount", "inventoryInvoicedNotReceivedAccount", "bankCashAccount",
+          "inventoryAccount", "workInProgressAccount",
+          "receivablesAccount", "bankCashAccount",
           "bankLocalCurrencyAccount", "bankForeignCurrencyAccount", "prepaymentAccount",
-          "payablesAccount", "inventoryReceivedNotInvoicedAccount", "inventoryShippedNotInvoicedAccount",
+          "payablesAccount", "goodsReceivedNotInvoicedAccount", "inventoryShippedNotInvoicedAccount",
           "salesTaxPayableAccount", "purchaseTaxPayableAccount", "reverseChargeSalesTaxPayableAccount",
-          "retainedEarningsAccount", "companyId"
+          "retainedEarningsAccount", "currencyTranslationAccount", "companyId"
         ) VALUES (
           $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,
           $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40
         )`,
         [
-          accountDefaults.salesAccount,
-          accountDefaults.salesDiscountAccount,
-          accountDefaults.costOfGoodsSoldAccount,
-          accountDefaults.purchaseAccount,
-          accountDefaults.directCostAppliedAccount,
-          accountDefaults.overheadCostAppliedAccount,
-          accountDefaults.purchaseVarianceAccount,
-          accountDefaults.inventoryAdjustmentVarianceAccount,
-          accountDefaults.materialVarianceAccount,
-          accountDefaults.capacityVarianceAccount,
-          accountDefaults.overheadAccount,
-          accountDefaults.maintenanceAccount,
-          accountDefaults.assetDepreciationExpenseAccount,
-          accountDefaults.assetGainsAndLossesAccount,
-          accountDefaults.serviceChargeAccount,
-          accountDefaults.interestAccount,
-          accountDefaults.supplierPaymentDiscountAccount,
-          accountDefaults.customerPaymentDiscountAccount,
-          accountDefaults.roundingAccount,
-          accountDefaults.assetAquisitionCostAccount,
-          accountDefaults.assetAquisitionCostOnDisposalAccount,
-          accountDefaults.accumulatedDepreciationAccount,
-          accountDefaults.accumulatedDepreciationOnDisposalAccount,
-          accountDefaults.inventoryAccount,
-          accountDefaults.inventoryInterimAccrualAccount,
-          accountDefaults.workInProgressAccount,
-          accountDefaults.receivablesAccount,
-          accountDefaults.inventoryInvoicedNotReceivedAccount,
-          accountDefaults.bankCashAccount,
-          accountDefaults.bankLocalCurrencyAccount,
-          accountDefaults.bankForeignCurrencyAccount,
-          accountDefaults.prepaymentAccount,
-          accountDefaults.payablesAccount,
-          accountDefaults.inventoryReceivedNotInvoicedAccount,
-          accountDefaults.inventoryShippedNotInvoicedAccount,
-          accountDefaults.salesTaxPayableAccount,
-          accountDefaults.purchaseTaxPayableAccount,
-          accountDefaults.reverseChargeSalesTaxPayableAccount,
-          accountDefaults.retainedEarningsAccount,
-          companyId
-        ]
-      );
-
-      // Seed posting groups
-      await client.query(
-        `INSERT INTO "postingGroupInventory" (
-          "itemPostingGroupId", "locationId", "costOfGoodsSoldAccount", "inventoryAccount",
-          "inventoryInterimAccrualAccount", "inventoryReceivedNotInvoicedAccount",
-          "inventoryInvoicedNotReceivedAccount", "inventoryShippedNotInvoicedAccount",
-          "workInProgressAccount", "directCostAppliedAccount", "overheadCostAppliedAccount",
-          "purchaseVarianceAccount", "inventoryAdjustmentVarianceAccount", "materialVarianceAccount",
-          "capacityVarianceAccount", "overheadAccount", "companyId", "updatedBy"
-        ) VALUES (
-          NULL, NULL, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, 'system'
-        )`,
-        [
-          postingGroupInventory.costOfGoodsSoldAccount,
-          postingGroupInventory.inventoryAccount,
-          postingGroupInventory.inventoryInterimAccrualAccount,
-          postingGroupInventory.inventoryReceivedNotInvoicedAccount,
-          postingGroupInventory.inventoryInvoicedNotReceivedAccount,
-          postingGroupInventory.inventoryShippedNotInvoicedAccount,
-          postingGroupInventory.workInProgressAccount,
-          postingGroupInventory.directCostAppliedAccount,
-          postingGroupInventory.overheadCostAppliedAccount,
-          postingGroupInventory.purchaseVarianceAccount,
-          postingGroupInventory.inventoryAdjustmentVarianceAccount,
-          postingGroupInventory.materialVarianceAccount,
-          postingGroupInventory.capacityVarianceAccount,
-          postingGroupInventory.overheadAccount,
-          companyId
-        ]
-      );
-
-      await client.query(
-        `INSERT INTO "postingGroupPurchasing" (
-          "itemPostingGroupId", "supplierTypeId", "payablesAccount", "purchaseAccount",
-          "purchaseDiscountAccount", "purchaseCreditAccount", "purchasePrepaymentAccount",
-          "purchaseTaxPayableAccount", "companyId", "updatedBy"
-        ) VALUES (
-          NULL, NULL, $1, $2, $3, $4, $5, $6, $7, 'system'
-        )`,
-        [
-          postingGroupPurchasing.payablesAccount,
-          postingGroupPurchasing.purchaseAccount,
-          postingGroupPurchasing.purchaseDiscountAccount,
-          postingGroupPurchasing.purchaseCreditAccount,
-          postingGroupPurchasing.purchasePrepaymentAccount,
-          postingGroupPurchasing.purchaseTaxPayableAccount,
-          companyId
-        ]
-      );
-
-      await client.query(
-        `INSERT INTO "postingGroupSales" (
-          "itemPostingGroupId", "customerTypeId", "receivablesAccount", "salesAccount",
-          "salesDiscountAccount", "salesCreditAccount", "salesPrepaymentAccount",
-          "salesTaxPayableAccount", "companyId", "updatedBy"
-        ) VALUES (
-          NULL, NULL, $1, $2, $3, $4, $5, $6, $7, 'system'
-        )`,
-        [
-          postingGroupSales.receivablesAccount,
-          postingGroupSales.salesAccount,
-          postingGroupSales.salesDiscountAccount,
-          postingGroupSales.salesCreditAccount,
-          postingGroupSales.salesPrepaymentAccount,
-          postingGroupSales.salesTaxPayableAccount,
+          resolveAccountId(accountDefaults.salesAccount),
+          resolveAccountId(accountDefaults.salesDiscountAccount),
+          resolveAccountId(accountDefaults.costOfGoodsSoldAccount),
+          resolveAccountId(accountDefaults.purchaseVarianceAccount),
+          resolveAccountId(accountDefaults.inventoryAdjustmentVarianceAccount),
+          resolveAccountId(accountDefaults.materialVarianceAccount),
+          resolveAccountId(accountDefaults.laborAndMachineVarianceAccount),
+          resolveAccountId(accountDefaults.overheadVarianceAccount),
+          resolveAccountId(accountDefaults.lotSizeVarianceAccount),
+          resolveAccountId(accountDefaults.subcontractingVarianceAccount),
+          resolveAccountId(accountDefaults.laborAbsorptionAccount),
+          resolveAccountId(accountDefaults.indirectCostAccount),
+          resolveAccountId(accountDefaults.maintenanceAccount),
+          resolveAccountId(accountDefaults.assetDepreciationExpenseAccount),
+          resolveAccountId(accountDefaults.assetGainsAndLossesAccount),
+          resolveAccountId(accountDefaults.serviceChargeAccount),
+          resolveAccountId(accountDefaults.interestAccount),
+          resolveAccountId(accountDefaults.supplierPaymentDiscountAccount),
+          resolveAccountId(accountDefaults.customerPaymentDiscountAccount),
+          resolveAccountId(accountDefaults.roundingAccount),
+          resolveAccountId(accountDefaults.assetAquisitionCostAccount),
+          resolveAccountId(
+            accountDefaults.assetAquisitionCostOnDisposalAccount
+          ),
+          resolveAccountId(accountDefaults.accumulatedDepreciationAccount),
+          resolveAccountId(
+            accountDefaults.accumulatedDepreciationOnDisposalAccount
+          ),
+          resolveAccountId(accountDefaults.inventoryAccount),
+          resolveAccountId(accountDefaults.workInProgressAccount),
+          resolveAccountId(accountDefaults.receivablesAccount),
+          resolveAccountId(accountDefaults.bankCashAccount),
+          resolveAccountId(accountDefaults.bankLocalCurrencyAccount),
+          resolveAccountId(accountDefaults.bankForeignCurrencyAccount),
+          resolveAccountId(accountDefaults.prepaymentAccount),
+          resolveAccountId(accountDefaults.payablesAccount),
+          resolveAccountId(accountDefaults.goodsReceivedNotInvoicedAccount),
+          resolveAccountId(accountDefaults.inventoryShippedNotInvoicedAccount),
+          resolveAccountId(accountDefaults.salesTaxPayableAccount),
+          resolveAccountId(accountDefaults.purchaseTaxPayableAccount),
+          resolveAccountId(accountDefaults.reverseChargeSalesTaxPayableAccount),
+          resolveAccountId(accountDefaults.retainedEarningsAccount),
+          resolveAccountId(accountDefaults.currencyTranslationAccount),
           companyId
         ]
       );

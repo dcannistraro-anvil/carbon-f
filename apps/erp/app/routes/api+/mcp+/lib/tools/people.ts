@@ -22,6 +22,7 @@ import {
   getDepartment,
   getDepartments,
   getDepartmentsList,
+  getDepartmentsTree,
   getEmployeeJob,
   getEmployeeSummary,
   getHoliday,
@@ -244,6 +245,19 @@ export const registerPeopleTools: RegisterTools = (server, ctx) => {
       const result = await getDepartmentsList(ctx.client, ctx.companyId);
       return toMcpResult(result);
     }, "Failed: people_getDepartmentsList"),
+  );
+
+  server.registerTool(
+    "people_getDepartmentsTree",
+    {
+      description: "get departments tree",
+      inputSchema: {},
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    withErrorHandling(async (params) => {
+      const result = await getDepartmentsTree(ctx.client, ctx.companyId);
+      return toMcpResult(result);
+    }, "Failed: people_getDepartmentsTree"),
   );
 
   server.registerTool(

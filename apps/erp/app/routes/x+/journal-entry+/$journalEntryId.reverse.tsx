@@ -1,0 +1,51 @@
+import { assertIsPost, error, success } from "@carbon/auth";
+import { requirePermissions } from "@carbon/auth/auth.server";
+import { flash } from "@carbon/auth/session.server";
+import type { ActionFunctionArgs } from "react-router";
+import { redirect } from "react-router";
+import { reverseJournalEntry } from "~/modules/accounting";
+import { getNextSequence } from "~/modules/settings";
+import { path } from "~/utils/path";
+
+export async function action({ request, params }: ActionFunctionArgs) {
+  assertIsPost(request);
+  const { client, companyId, userId } = await requirePermissions(request, {
+    create: "accounting"
+  });
+
+  const { journalEntryId } = params;
+  if (!journalEntryId) throw new Error("Could not find journalEntryId");
+
+  const nextSequence = await getNextSequence(client, "journalEntry", companyId);
+
+  if (nextSequence.error) {
+    throw redirect(
+      path.to.journalEntryDetails(journalEntryId),
+      await flash(
+        request,
+        error(nextSequence.error, "Failed to get next sequence")
+      )
+    );
+  }
+
+  const result = await reverseJournalEntry(client, journalEntryId, {
+    journalEntryId: nextSequence.data,
+    companyId,
+    userId
+  });
+
+  if (result.error) {
+    throw redirect(
+      path.to.journalEntryDetails(journalEntryId),
+      await flash(
+        request,
+        error(result.error, "Failed to reverse journal entry")
+      )
+    );
+  }
+
+  throw redirect(
+    path.to.journalEntryDetails(journalEntryId),
+    await flash(request, success("Journal entry reversed"))
+  );
+}

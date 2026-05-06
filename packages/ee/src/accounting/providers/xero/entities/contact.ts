@@ -139,8 +139,9 @@ export class ContactSyncer extends BaseEntitySyncer<
 
     // First, get the first contact ID for each customer (subquery)
     // We use a lateral join pattern to get the first contact per customer
-    const rows = await this.database
+    const rows = await (this.database as any)
       .selectFrom("customer")
+      .leftJoin("customerTax", "customerTax.customerId", "customer.id")
       .leftJoin(
         "customerLocation",
         "customerLocation.customerId",
@@ -153,7 +154,7 @@ export class ContactSyncer extends BaseEntitySyncer<
         "customer.id",
         "customer.name",
         "customer.companyId",
-        "customer.taxId",
+        "customerTax.taxId as taxId",
         "customer.phone",
         "customer.fax",
         "customer.website",
@@ -184,8 +185,9 @@ export class ContactSyncer extends BaseEntitySyncer<
   ): Promise<Map<string, Accounting.Contact>> {
     if (ids.length === 0) return new Map();
 
-    const rows = await this.database
+    const rows = await (this.database as any)
       .selectFrom("supplier")
+      .leftJoin("supplierTax", "supplierTax.supplierId", "supplier.id")
       .leftJoin(
         "supplierLocation",
         "supplierLocation.supplierId",
@@ -198,7 +200,7 @@ export class ContactSyncer extends BaseEntitySyncer<
         "supplier.id",
         "supplier.name",
         "supplier.companyId",
-        "supplier.taxId",
+        "supplierTax.taxId as taxId",
         "supplier.phone",
         "supplier.fax",
         "supplier.website",
@@ -452,6 +454,7 @@ export class ContactSyncer extends BaseEntitySyncer<
       existingLocalId,
       isVendor
     );
+    await this.upsertEntityTax(tx, entityId, data.taxId ?? null, isVendor);
 
     // 2. Upsert contact and link to customer/supplier
     await this.upsertContactAndLink(tx, data, remoteId, entityId, isVendor);
@@ -492,7 +495,6 @@ export class ContactSyncer extends BaseEntitySyncer<
         .updateTable(table)
         .set({
           name: data.name,
-          taxId: data.taxId,
           website: data.website,
           phone: data.workPhone,
           fax: data.fax,
@@ -509,7 +511,6 @@ export class ContactSyncer extends BaseEntitySyncer<
       .values({
         companyId: this.companyId,
         name: data.name!,
-        taxId: data.taxId,
         website: data.website,
         phone: data.workPhone,
         fax: data.fax,
@@ -521,6 +522,32 @@ export class ContactSyncer extends BaseEntitySyncer<
       .executeTakeFirstOrThrow();
 
     return result.id;
+  }
+
+  private async upsertEntityTax(
+    tx: KyselyTx,
+    entityId: string,
+    taxId: string | null,
+    isVendor: boolean
+  ): Promise<void> {
+    const table = isVendor ? "supplierTax" : "customerTax";
+    const fkColumn = isVendor ? "supplierId" : "customerId";
+
+    await (tx as any)
+      .insertInto(table)
+      .values({
+        [fkColumn]: entityId,
+        taxId,
+        companyId: this.companyId,
+        updatedAt: new Date().toISOString()
+      })
+      .onConflict((oc: any) =>
+        oc.column(fkColumn).doUpdateSet({
+          taxId,
+          updatedAt: new Date().toISOString()
+        })
+      )
+      .execute();
   }
 
   private async upsertContactAndLink(

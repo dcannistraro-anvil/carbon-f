@@ -53,7 +53,7 @@ export const buttonVariants = cva(
         false: ""
       },
       isRound: {
-        true: "rounded-full",
+        true: "rounded-full before:rounded-full after:rounded-full",
         false: "rounded-md"
       }
     },

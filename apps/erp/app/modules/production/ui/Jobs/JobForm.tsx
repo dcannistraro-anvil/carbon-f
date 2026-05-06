@@ -33,8 +33,7 @@ import {
   NumberControlled,
   Select,
   SequenceOrCustomId,
-  Submit,
-  UnitOfMeasure
+  Submit
 } from "~/components/Form";
 import { usePermissions, useUser } from "~/hooks";
 import type {
@@ -251,6 +250,7 @@ const JobForm = ({ initialValues }: JobFormProps) => {
                     name="modelUploadId"
                     value={itemData.modelUploadId ?? undefined}
                   />
+                  <Hidden name="unitOfMeasureCode" value={itemData.uom} />
                   {!isEditing && requiresConfiguration && (
                     <Hidden
                       name="configuration"
@@ -329,18 +329,6 @@ const JobForm = ({ initialValues }: JobFormProps) => {
                         minValue={0}
                       />
 
-                      <UnitOfMeasure
-                        name="unitOfMeasureCode"
-                        value={itemData.uom}
-                        onChange={(value) => {
-                          if (value?.value) {
-                            setItemData((prev) => ({
-                              ...prev,
-                              uom: value.value
-                            }));
-                          }
-                        }}
-                      />
                       <Location name="locationId" label={t`Location`} />
 
                       <DatePicker
@@ -425,6 +413,7 @@ const JobForm = ({ initialValues }: JobFormProps) => {
                       name="modelUploadId"
                       value={itemData.modelUploadId ?? undefined}
                     />
+                    <Hidden name="unitOfMeasureCode" value={itemData.uom} />
                     {!isEditing && requiresConfiguration && (
                       <Hidden
                         name="configuration"
@@ -490,20 +479,6 @@ const JobForm = ({ initialValues }: JobFormProps) => {
                           minValue={0}
                         />
 
-                        <UnitOfMeasure
-                          name="unitOfMeasureCode"
-                          value={itemData.uom}
-                          onChange={(value) => {
-                            if (value?.value) {
-                              setItemData((prev) => ({
-                                ...prev,
-                                uom: value.value
-                              }));
-                            }
-                          }}
-                        />
-                        <Location name="locationId" label={t`Location`} />
-
                         <DatePicker
                           name="dueDateOfFirstJob"
                           label={t`Due Date of First Job`}
@@ -516,6 +491,7 @@ const JobForm = ({ initialValues }: JobFormProps) => {
                           isDisabled={isCustomer}
                         />
 
+                        <Location name="locationId" label={t`Location`} />
                         <Select
                           name="deadlineType"
                           label={t`Deadline Type`}
@@ -528,12 +504,6 @@ const JobForm = ({ initialValues }: JobFormProps) => {
                               </div>
                             )
                           }))}
-                        />
-
-                        <Customer
-                          name="customerId"
-                          label={t`Customer`}
-                          isOptional
                         />
 
                         <CustomFormFields table="job" />

@@ -11,22 +11,25 @@ const tw = createTw({
 
 interface FooterProps {
   label?: string;
+  documentId?: string | null;
 }
 
-const Footer = ({ label }: FooterProps) => {
+const Footer = ({ label, documentId }: FooterProps) => {
   return (
     <View style={tw("absolute bottom-0 left-0 right-0 px-10 pb-5")} fixed>
-      <View
-        style={tw(
-          "flex flex-row justify-between items-center text-sm text-gray-500"
-        )}
-      >
-        <Text>{label ?? ""}</Text>
-        <Text
-          render={({ pageNumber, totalPages }) =>
-            `${pageNumber} of ${totalPages}`
-          }
-        />
+      <View style={tw("border-t border-gray-200 pt-2")}>
+        <View
+          style={tw(
+            "flex flex-row justify-between items-center text-xs text-gray-500"
+          )}
+        >
+          <Text>{label ?? ""}</Text>
+          <Text
+            render={({ pageNumber, totalPages }) =>
+              `${documentId ? `${documentId}   ` : ""}Page ${pageNumber} of ${totalPages}`
+            }
+          />
+        </View>
       </View>
     </View>
   );

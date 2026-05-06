@@ -133,6 +133,7 @@ const Combobox = forwardRef<HTMLButtonElement, ComboboxProps>(
                 icon={isLoading ? <Spinner className="size-3" /> : undefined}
                 ref={ref}
                 {...props}
+                disabled={isReadOnly}
                 onClick={() => setOpen(true)}
               >
                 {value ? (

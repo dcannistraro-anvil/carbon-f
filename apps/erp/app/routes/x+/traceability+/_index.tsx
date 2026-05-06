@@ -12,7 +12,7 @@ import {
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useEffect, useRef, useState } from "react";
-import { LuQrCode, LuRoute } from "react-icons/lu";
+import { LuNetwork, LuQrCode } from "react-icons/lu";
 import { useFetcher, useNavigate } from "react-router";
 import { SearchLandingPage } from "~/components";
 import { useUser } from "~/hooks";
@@ -148,7 +148,7 @@ export default function TraceabilityRoute() {
 
   return (
     <SearchLandingPage
-      icon={LuRoute}
+      icon={LuNetwork}
       heading={t`Traceability`}
       description={t`Scan a label or search by ID, serial number, or batch number.`}
     >

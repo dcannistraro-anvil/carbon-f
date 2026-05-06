@@ -7,6 +7,7 @@ import CustomerLocations from "./CustomerLocations";
 import CustomerPaymentForm from "./CustomerPaymentForm";
 import CustomerShippingForm from "./CustomerShippingForm";
 import CustomerSidebar from "./CustomerSidebar";
+import CustomerTaxForm from "./CustomerTaxForm";
 
 export {
   CustomerContactForm,
@@ -17,5 +18,6 @@ export {
   CustomerLocations,
   CustomerPaymentForm,
   CustomerShippingForm,
-  CustomerSidebar
+  CustomerSidebar,
+  CustomerTaxForm
 };

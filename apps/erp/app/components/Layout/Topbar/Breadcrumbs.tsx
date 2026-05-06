@@ -18,6 +18,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalTitle,
+  ScrollArea,
   useDisclosure,
   useIsMobile,
   VStack
@@ -25,6 +26,7 @@ import {
 import { useMode } from "@carbon/remix";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { ReactNode } from "react";
+import { useMemo } from "react";
 import { BsFillHexagonFill } from "react-icons/bs";
 import { IoMdAdd } from "react-icons/io";
 import { LuChevronsUpDown } from "react-icons/lu";
@@ -123,7 +125,7 @@ const Breadcrumbs = () => {
 };
 
 function CompanyBreadcrumb() {
-  const { t: tShared } = useLingui();
+  const { t } = useLingui();
   const routeData = useRouteData<{ company: Company; companies: Company[] }>(
     path.to.authenticatedRoot
   );
@@ -138,6 +140,53 @@ function CompanyBreadcrumb() {
   const companyForm = useDisclosure();
 
   const mode = useMode();
+
+  const companyGroups = useMemo(() => {
+    if (!routeData?.companies) return [];
+
+    const groups = new Map<
+      string,
+      { name: string; companies: typeof routeData.companies }
+    >();
+
+    for (const c of routeData.companies) {
+      const groupName = c.companyGroupName ?? t`Companies`;
+      const existing = groups.get(groupName);
+      if (existing) {
+        existing.companies.push(c);
+      } else {
+        groups.set(groupName, { name: groupName, companies: [c] });
+      }
+    }
+
+    // If a group has only one company, move it to "Companies"
+    const result = new Map<
+      string,
+      { name: string; companies: typeof routeData.companies }
+    >();
+    for (const [key, group] of groups) {
+      if (group.companies.length === 1 && key !== "Companies") {
+        const existing = result.get("Companies");
+        if (existing) {
+          existing.companies.push(...group.companies);
+        } else {
+          result.set("Companies", {
+            name: "Companies",
+            companies: [...group.companies]
+          });
+        }
+      } else {
+        const existing = result.get(key);
+        if (existing) {
+          existing.companies.push(...group.companies);
+        } else {
+          result.set(key, group);
+        }
+      }
+    }
+
+    return Array.from(result.values());
+  }, [routeData?.companies]);
 
   return (
     <BreadcrumbItem isFirstChild>
@@ -155,40 +204,45 @@ function CompanyBreadcrumb() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="min-w-[240px]">
-              <DropdownMenuLabel>{tShared`Companies`}</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuGroup>
-                {routeData?.companies.map((c) => {
-                  const logo =
-                    mode === "dark" ? c.logoDarkIcon : c.logoLightIcon;
-                  return (
-                    <Form
-                      key={c.companyId}
-                      method="post"
-                      action={path.to.companySwitch(c.companyId!)}
-                    >
-                      <DropdownMenuItem
-                        className="flex items-center justify-between w-full"
-                        asChild
-                      >
-                        <button type="submit">
-                          <HStack>
-                            <Avatar
-                              size="xs"
-                              name={c.name ?? undefined}
-                              src={logo ?? undefined}
-                            />
-                            <span>{c.name}</span>
-                          </HStack>
-                          <Badge variant="secondary" className="ml-2">
-                            {c.employeeType}
-                          </Badge>
-                        </button>
-                      </DropdownMenuItem>
-                    </Form>
-                  );
-                })}
-              </DropdownMenuGroup>
+              <ScrollArea className="max-h-[300px]">
+                {companyGroups.map((group, index) => (
+                  <DropdownMenuGroup key={group.name}>
+                    {index > 0 && <DropdownMenuSeparator />}
+                    <DropdownMenuLabel>{group.name}</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    {group.companies.map((c) => {
+                      const logo =
+                        mode === "dark" ? c.logoDarkIcon : c.logoLightIcon;
+                      return (
+                        <Form
+                          key={c.companyId}
+                          method="post"
+                          action={path.to.companySwitch(c.companyId!)}
+                        >
+                          <DropdownMenuItem
+                            className="flex items-center justify-between w-full"
+                            asChild
+                          >
+                            <button type="submit">
+                              <HStack>
+                                <Avatar
+                                  size="xs"
+                                  name={c.name ?? undefined}
+                                  src={logo ?? undefined}
+                                />
+                                <span>{c.name}</span>
+                              </HStack>
+                              <Badge variant="secondary" className="ml-2">
+                                {c.employeeType}
+                              </Badge>
+                            </button>
+                          </DropdownMenuItem>
+                        </Form>
+                      );
+                    })}
+                  </DropdownMenuGroup>
+                ))}
+              </ScrollArea>
 
               {canCreateCompany && (
                 <>
@@ -196,7 +250,7 @@ function CompanyBreadcrumb() {
                   <DropdownMenuGroup>
                     <DropdownMenuItem onClick={companyForm.onOpen}>
                       <DropdownMenuIcon icon={<IoMdAdd />} />
-                      {tShared`Add Company`}
+                      {t`Add Company`}
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
                 </>
@@ -222,29 +276,16 @@ function CompanyBreadcrumb() {
               >
                 <ModalHeader>
                   <ModalTitle>
-                    {tShared({
-                      id: "Let's set up your new company",
-                      message: "Let's set up your new company"
-                    })}
+                    <Trans>Let's set up your new company</Trans>
                   </ModalTitle>
                 </ModalHeader>
                 <ModalBody>
                   <VStack spacing={4}>
-                    <Input
-                      autoFocus
-                      name="name"
-                      label={tShared({
-                        id: "Company Name",
-                        message: "Company Name"
-                      })}
-                    />
+                    <Input autoFocus name="name" label={t`Company Name`} />
                     <AddressAutocomplete variant="grid" />
                     <Currency
                       name="baseCurrencyCode"
-                      label={tShared({
-                        id: "Base Currency",
-                        message: "Base Currency"
-                      })}
+                      label={t`Base Currency`}
                     />
                   </VStack>
                 </ModalBody>

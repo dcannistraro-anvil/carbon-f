@@ -46,7 +46,11 @@ export const jobStatus = [
   "Due Today" // deprecated
 ] as const;
 
-export const JOB_LOCKED_STATUSES = ["Completed", "Cancelled"] as const;
+export const JOB_LOCKED_STATUSES = [
+  "Completed",
+  "Closed",
+  "Cancelled"
+] as const;
 
 export function isJobLocked(status: string | null | undefined): boolean {
   return JOB_LOCKED_STATUSES.includes(

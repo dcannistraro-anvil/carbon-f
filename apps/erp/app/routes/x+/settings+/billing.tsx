@@ -105,9 +105,12 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export async function action({ request }: ActionFunctionArgs) {
   assertIsPost(request);
-  const { client, companyId } = await requirePermissions(request, {
-    update: "settings"
-  });
+  const { client, companyId, companyGroupId } = await requirePermissions(
+    request,
+    {
+      update: "settings"
+    }
+  );
 
   const formData = await request.formData();
   const intent = formData.get("intent");
@@ -147,9 +150,9 @@ export async function action({ request }: ActionFunctionArgs) {
 
     try {
       const updateResult = await client
-        .from("company")
+        .from("companyGroup")
         .update({ ownerId: newOwnerId })
-        .eq("id", companyId);
+        .eq("id", companyGroupId);
 
       if (updateResult.error) {
         throw new Error(updateResult.error.message);
