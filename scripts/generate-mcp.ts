@@ -11,6 +11,7 @@ import * as fs from "fs";
 import * as path from "path";
 
 import { MCP_BLOCKED_TOOL_NAMES } from "../apps/erp/app/routes/api+/mcp+/lib/mcp-blocked-tools";
+import type { AuthField } from "../apps/erp/app/routes/api+/mcp+/lib/types";
 
 const ROOT = path.resolve(__dirname, "..");
 const MCP_LIB_DIR = path.join(ROOT, "apps/erp/app/routes/api+/mcp+/lib");
@@ -25,6 +26,27 @@ interface ToolMetadata {
   description: string;
   paramCount: number;
   serviceParams: string[];
+  injectAuth: AuthField[];
+}
+
+function computeInjectAuth(
+  funcName: string,
+  classification: ToolMetadata["classification"]
+): AuthField[] {
+  const lower = funcName.toLowerCase();
+
+  if (classification === "READ" || classification === "DESTRUCTIVE") {
+    return ["companyId"];
+  }
+  // upsertX uses `"createdBy" in payload` to pick INSERT vs UPDATE.
+  if (/^(upsert|create|insert|add|new|copy|duplicate|generate)/.test(lower)) {
+    return ["companyId", "createdBy", "updatedBy"];
+  }
+  // Don't stamp createdBy on updates — it'd overwrite the audit column.
+  if (/^(update|modify|set|change|edit|approve|reject|finalize|toggle|move|reorder|recalculate|sync|favorite|unfavorite)/.test(lower)) {
+    return ["companyId", "updatedBy"];
+  }
+  return ["companyId"];
 }
 
 function extractParamNames(paramsStr: string): string[] {
@@ -135,13 +157,18 @@ function extractToolsFromFile(filePath: string, moduleName: string): ToolMetadat
       paramCount = propMatches ? propMatches.length : 0;
     }
     
+    const funcName = toolName.startsWith(`${moduleName}_`)
+      ? toolName.slice(moduleName.length + 1)
+      : toolName;
+
     tools.push({
       name: toolName,
       module: moduleName,
       classification,
       description,
       paramCount,
-      serviceParams: []
+      serviceParams: [],
+      injectAuth: computeInjectAuth(funcName, classification)
     });
   }
   

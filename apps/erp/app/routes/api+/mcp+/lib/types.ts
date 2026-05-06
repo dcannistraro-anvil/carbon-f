@@ -10,6 +10,8 @@ export interface McpContext {
 
 export type RegisterTools = (server: McpServer, ctx: McpContext) => void;
 
+export type AuthField = "companyId" | "createdBy" | "updatedBy";
+
 export const READ_ONLY_ANNOTATIONS = {
   readOnlyHint: true,
   destructiveHint: false,

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-04T15:38:33.743Z",
+  "generated": "2026-05-06T10:58:51.980Z",
   "totalTools": 1015,
   "modules": 15,
   "tools": [
@@ -12,6 +12,9 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -23,6 +26,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -36,6 +42,9 @@
         "userId",
         "companyId",
         "isPublic"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -47,6 +56,9 @@
       "serviceParams": [
         "client",
         "userId",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -60,6 +72,9 @@
         "client",
         "userId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -71,6 +86,9 @@
       "serviceParams": [
         "client",
         "userId",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -85,6 +103,9 @@
         "categoryId",
         "userId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -97,6 +118,10 @@
         "client",
         "userId",
         "avatarUrl"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -108,6 +133,10 @@
       "serviceParams": [
         "client",
         "account"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -119,6 +148,11 @@
       "serviceParams": [
         "client",
         "update"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -130,6 +164,9 @@
       "serviceParams": [
         "client",
         "accountId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -141,6 +178,9 @@
       "serviceParams": [
         "client",
         "accountCategoryId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -152,6 +192,9 @@
       "serviceParams": [
         "client",
         "accountSubcategoryId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -163,6 +206,9 @@
       "serviceParams": [
         "client",
         "paymentTermId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -174,6 +220,9 @@
       "serviceParams": [
         "client",
         "accountId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -186,6 +235,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -198,6 +250,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -210,6 +265,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -220,6 +278,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -233,6 +294,9 @@
         "client",
         "accountCategoryId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -245,6 +309,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -257,6 +324,9 @@
         "client",
         "accountCategoryId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -268,6 +338,9 @@
       "serviceParams": [
         "client",
         "accountSubcategoryId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -278,6 +351,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -291,6 +367,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -302,6 +381,9 @@
       "serviceParams": [
         "client",
         "currencyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -314,6 +396,9 @@
         "client",
         "companyId",
         "currencyCode"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -326,6 +411,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -336,6 +424,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -348,6 +439,9 @@
         "client",
         "companyId",
         "date"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -359,6 +453,9 @@
       "serviceParams": [
         "client",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -369,6 +466,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -382,6 +482,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -394,6 +497,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -405,6 +511,9 @@
       "serviceParams": [
         "client",
         "paymentTermId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -417,6 +526,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -427,6 +539,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -440,6 +555,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -452,6 +570,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -463,6 +584,9 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -475,6 +599,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -486,6 +613,10 @@
       "serviceParams": [
         "client",
         "defaultAccounts"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -497,6 +628,10 @@
       "serviceParams": [
         "client",
         "defaultAccounts"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -508,6 +643,10 @@
       "serviceParams": [
         "client",
         "fiscalYearSettings"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -519,6 +658,11 @@
       "serviceParams": [
         "client",
         "account"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -530,6 +674,11 @@
       "serviceParams": [
         "client",
         "accountCategory"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -541,6 +690,11 @@
       "serviceParams": [
         "client",
         "accountSubcategory"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -552,6 +706,11 @@
       "serviceParams": [
         "client",
         "currency"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -563,6 +722,11 @@
       "serviceParams": [
         "client",
         "paymentTerm"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -574,6 +738,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -586,6 +753,9 @@
         "client",
         "id",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -598,6 +768,9 @@
         "client",
         "id",
         "label"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -609,6 +782,9 @@
       "serviceParams": [
         "client",
         "documentId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -621,6 +797,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -631,6 +810,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -642,6 +824,9 @@
       "serviceParams": [
         "client",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -654,6 +839,11 @@
         "client",
         "id",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -667,6 +857,11 @@
         "id",
         "label",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -679,6 +874,10 @@
         "client",
         "id",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -691,6 +890,9 @@
         "client",
         "id",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -702,6 +904,11 @@
       "serviceParams": [
         "client",
         "document"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -713,6 +920,10 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -724,6 +935,10 @@
       "serviceParams": [
         "client",
         "document"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -735,6 +950,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -746,6 +964,9 @@
       "serviceParams": [
         "client",
         "kanbanId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -757,6 +978,9 @@
       "serviceParams": [
         "client",
         "receiptId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -768,6 +992,9 @@
       "serviceParams": [
         "client",
         "receiptLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -779,6 +1006,9 @@
       "serviceParams": [
         "client",
         "storageUnitId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -790,6 +1020,9 @@
       "serviceParams": [
         "client",
         "shipmentId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -801,6 +1034,9 @@
       "serviceParams": [
         "client",
         "shipmentLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -812,6 +1048,9 @@
       "serviceParams": [
         "client",
         "shippingMethodId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -823,6 +1062,9 @@
       "serviceParams": [
         "client",
         "stockTransferId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -834,6 +1076,9 @@
       "serviceParams": [
         "client",
         "stockTransferLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -845,6 +1090,9 @@
       "serviceParams": [
         "client",
         "transferId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -856,6 +1104,9 @@
       "serviceParams": [
         "client",
         "transferLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -871,6 +1122,9 @@
         "locationId",
         "sortDescending",
         "page"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -882,6 +1136,9 @@
       "serviceParams": [
         "client",
         "itemIds",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -896,6 +1153,9 @@
         "locationId",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -909,6 +1169,9 @@
         "locationId",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -922,6 +1185,9 @@
         "locationId",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -933,6 +1199,9 @@
       "serviceParams": [
         "client",
         "kanbanId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -944,6 +1213,9 @@
       "serviceParams": [
         "client",
         "stockTransferId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -955,6 +1227,9 @@
       "serviceParams": [
         "client",
         "stockTransferLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -966,6 +1241,9 @@
       "serviceParams": [
         "client",
         "stockTransferId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -977,6 +1255,9 @@
       "serviceParams": [
         "client",
         "stockTransferId",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -990,6 +1271,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1003,6 +1287,9 @@
         "itemId",
         "locationId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1015,6 +1302,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1026,6 +1316,9 @@
       "serviceParams": [
         "client",
         "receiptId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1037,6 +1330,9 @@
       "serviceParams": [
         "client",
         "receiptId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1048,6 +1344,9 @@
       "serviceParams": [
         "client",
         "receiptId",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -1061,6 +1360,9 @@
         "client",
         "receiptLineId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1073,6 +1375,9 @@
         "client",
         "companyId",
         "lineIds"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1084,6 +1389,9 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1095,6 +1403,9 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1105,6 +1416,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -1118,6 +1432,9 @@
         "client",
         "companyId",
         "locationId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1131,6 +1448,9 @@
         "locationId",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1142,6 +1462,9 @@
       "serviceParams": [
         "client",
         "storageUnitId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1154,6 +1477,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1165,6 +1491,9 @@
       "serviceParams": [
         "client",
         "shipmentId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1176,6 +1505,9 @@
       "serviceParams": [
         "client",
         "shipmentId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1187,6 +1519,9 @@
       "serviceParams": [
         "client",
         "shipmentId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1199,6 +1534,9 @@
         "client",
         "companyId",
         "lineIds"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1211,6 +1549,9 @@
         "client",
         "shipmentId",
         "sourceDocumentId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1222,6 +1563,9 @@
       "serviceParams": [
         "client",
         "shipmentId",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -1235,6 +1579,9 @@
         "client",
         "shipmentLineId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1246,6 +1593,9 @@
       "serviceParams": [
         "client",
         "shippingMethodId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1258,6 +1608,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1269,6 +1622,9 @@
       "serviceParams": [
         "client",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1279,6 +1635,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -1292,6 +1651,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1303,6 +1665,9 @@
       "serviceParams": [
         "client",
         "jobMakeMethodId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1314,6 +1679,9 @@
       "serviceParams": [
         "client",
         "trackedEntityId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1325,6 +1693,9 @@
       "serviceParams": [
         "client",
         "operationId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1337,6 +1708,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1348,6 +1722,9 @@
       "serviceParams": [
         "client",
         "transferId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1360,6 +1737,9 @@
         "client",
         "transferId",
         "lineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1371,6 +1751,9 @@
       "serviceParams": [
         "client",
         "transferId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1382,6 +1765,11 @@
       "serviceParams": [
         "client",
         "inventoryAdjustment"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1393,6 +1781,10 @@
       "serviceParams": [
         "client",
         "data"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -1404,6 +1796,10 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -1415,6 +1811,11 @@
       "serviceParams": [
         "client",
         "batchProperty"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1426,6 +1827,11 @@
       "serviceParams": [
         "client",
         "kanban"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1437,6 +1843,11 @@
       "serviceParams": [
         "client",
         "receipt"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1448,6 +1859,11 @@
       "serviceParams": [
         "client",
         "storageUnit"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1459,6 +1875,11 @@
       "serviceParams": [
         "client",
         "shippingMethod"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1470,6 +1891,11 @@
       "serviceParams": [
         "client",
         "shipment"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1481,6 +1907,11 @@
       "serviceParams": [
         "client",
         "stockTransfer"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1492,6 +1923,11 @@
       "serviceParams": [
         "client",
         "stockTransferLine"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1503,6 +1939,11 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1514,6 +1955,11 @@
       "serviceParams": [
         "client",
         "transfer"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1527,6 +1973,10 @@
         "transferId",
         "status",
         "updatedBy"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -1538,6 +1988,11 @@
       "serviceParams": [
         "client",
         "line"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1550,6 +2005,9 @@
         "client",
         "itemId",
         "locationId",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -1564,6 +2022,11 @@
         "purchaseOrderId",
         "companyId",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1577,6 +2040,11 @@
         "salesOrderId",
         "companyId",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1590,6 +2058,11 @@
         "shipmentId",
         "companyId",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1601,6 +2074,9 @@
       "serviceParams": [
         "client",
         "purchaseInvoiceId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1612,6 +2088,9 @@
       "serviceParams": [
         "client",
         "purchaseInvoiceLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1623,6 +2102,9 @@
       "serviceParams": [
         "client",
         "salesInvoiceId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1634,6 +2116,9 @@
       "serviceParams": [
         "client",
         "salesInvoiceLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1645,6 +2130,9 @@
       "serviceParams": [
         "client",
         "purchaseInvoiceId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1657,6 +2145,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1668,6 +2159,9 @@
       "serviceParams": [
         "client",
         "purchaseInvoiceId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1679,6 +2173,9 @@
       "serviceParams": [
         "client",
         "purchaseInvoiceId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1690,6 +2187,9 @@
       "serviceParams": [
         "client",
         "purchaseInvoiceLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1701,6 +2201,9 @@
       "serviceParams": [
         "client",
         "salesInvoiceId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1712,6 +2215,9 @@
       "serviceParams": [
         "client",
         "salesInvoiceId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1724,6 +2230,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1735,6 +2244,9 @@
       "serviceParams": [
         "client",
         "salesInvoiceId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1746,6 +2258,9 @@
       "serviceParams": [
         "client",
         "salesInvoiceId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1757,6 +2272,9 @@
       "serviceParams": [
         "client",
         "salesInvoiceLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1768,6 +2286,10 @@
       "serviceParams": [
         "client",
         "data"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -1779,6 +2301,10 @@
       "serviceParams": [
         "client",
         "update"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -1790,6 +2316,10 @@
       "serviceParams": [
         "client",
         "data"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -1801,6 +2331,10 @@
       "serviceParams": [
         "client",
         "update"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -1812,6 +2346,11 @@
       "serviceParams": [
         "client",
         "purchaseInvoice"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1823,6 +2362,11 @@
       "serviceParams": [
         "client",
         "purchaseInvoiceDelivery"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1834,6 +2378,11 @@
       "serviceParams": [
         "client",
         "purchaseInvoiceLine"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1845,6 +2394,11 @@
       "serviceParams": [
         "client",
         "salesInvoice"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1856,6 +2410,11 @@
       "serviceParams": [
         "client",
         "salesInvoiceShipment"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1867,6 +2426,11 @@
       "serviceParams": [
         "client",
         "salesInvoiceLine"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1878,6 +2442,9 @@
       "serviceParams": [
         "client",
         "payload"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1889,6 +2456,11 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1900,6 +2472,11 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1911,6 +2488,11 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -1922,6 +2504,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1934,6 +2519,9 @@
         "client",
         "field",
         "itemId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1946,6 +2534,9 @@
         "client",
         "id",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1957,6 +2548,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1968,6 +2562,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1979,6 +2576,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -1990,6 +2590,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2001,6 +2604,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2012,6 +2618,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2023,6 +2632,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2034,6 +2646,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2045,6 +2660,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2056,6 +2674,9 @@
       "serviceParams": [
         "client",
         "operationId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2067,6 +2688,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2078,6 +2702,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2089,6 +2716,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2100,6 +2730,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2111,6 +2744,9 @@
       "serviceParams": [
         "client",
         "itemId",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -2124,6 +2760,9 @@
         "client",
         "itemId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2135,6 +2774,9 @@
       "serviceParams": [
         "client",
         "itemId",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -2148,6 +2790,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2158,6 +2803,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -2170,6 +2818,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2181,6 +2832,9 @@
       "serviceParams": [
         "client",
         "itemId",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -2194,6 +2848,9 @@
         "client",
         "itemId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2205,6 +2862,9 @@
       "serviceParams": [
         "client",
         "id",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -2218,6 +2878,9 @@
         "client",
         "itemId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2229,6 +2892,9 @@
       "serviceParams": [
         "client",
         "{"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2241,6 +2907,9 @@
         "client",
         "itemId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2252,6 +2921,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2264,6 +2936,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2274,6 +2949,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -2286,6 +2964,9 @@
       "serviceParams": [
         "client",
         "id",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -2300,6 +2981,9 @@
         "itemId",
         "companyId",
         "locationId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2313,6 +2997,9 @@
         "itemId",
         "companyId",
         "locationId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2324,6 +3011,9 @@
       "serviceParams": [
         "client",
         "itemId",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -2338,6 +3028,9 @@
         "itemId",
         "companyId",
         "locationId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2349,6 +3042,9 @@
       "serviceParams": [
         "client",
         "{"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2360,6 +3056,9 @@
       "serviceParams": [
         "client",
         "id",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -2373,6 +3072,9 @@
         "client",
         "itemId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2384,6 +3086,9 @@
       "serviceParams": [
         "client",
         "itemId",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -2397,6 +3102,9 @@
         "client",
         "makeMethodId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2408,6 +3116,9 @@
       "serviceParams": [
         "client",
         "itemId",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -2421,6 +3132,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2431,6 +3145,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -2443,6 +3160,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2455,6 +3175,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2468,6 +3191,9 @@
         "materialFormId",
         "isMetric",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2479,6 +3205,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2491,6 +3220,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2503,6 +3235,9 @@
         "client",
         "materialSubstanceId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2514,6 +3249,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2526,6 +3264,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2536,6 +3277,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -2549,6 +3293,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2560,6 +3307,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2572,6 +3322,9 @@
         "client",
         "materialSubstanceId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2583,6 +3336,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2595,6 +3351,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2605,6 +3364,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -2617,6 +3379,9 @@
       "serviceParams": [
         "client",
         "materialId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2629,6 +3394,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2640,6 +3408,9 @@
       "serviceParams": [
         "client",
         "makeMethodId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2652,6 +3423,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2663,6 +3437,9 @@
       "serviceParams": [
         "client",
         "makeMethodId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2674,6 +3451,9 @@
       "serviceParams": [
         "client",
         "makeMethodId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2685,6 +3465,9 @@
       "serviceParams": [
         "client",
         "makeMethodId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2696,6 +3479,9 @@
       "serviceParams": [
         "client",
         "{"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2707,6 +3493,9 @@
       "serviceParams": [
         "client",
         "{"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2718,6 +3507,9 @@
       "serviceParams": [
         "client",
         "{"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2729,6 +3521,9 @@
       "serviceParams": [
         "client",
         "{"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2740,6 +3535,9 @@
       "serviceParams": [
         "client",
         "itemId",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -2753,6 +3551,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2763,6 +3564,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -2775,6 +3579,9 @@
       "serviceParams": [
         "client",
         "itemId",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -2789,6 +3596,9 @@
         "itemId",
         "companyId",
         "locationId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2800,6 +3610,9 @@
       "serviceParams": [
         "client",
         "itemId",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -2813,6 +3626,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2825,6 +3641,9 @@
         "client",
         "itemId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2835,6 +3654,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -2848,6 +3670,9 @@
         "client",
         "id",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2859,6 +3684,9 @@
       "serviceParams": [
         "client",
         "itemId",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -2872,6 +3700,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2882,6 +3713,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -2895,6 +3729,9 @@
         "client",
         "id",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2907,6 +3744,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -2917,6 +3757,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -2929,6 +3772,10 @@
       "serviceParams": [
         "client",
         "data"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -2940,6 +3787,10 @@
       "serviceParams": [
         "client",
         "data"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -2951,6 +3802,10 @@
       "serviceParams": [
         "client",
         "data"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -2963,6 +3818,10 @@
         "client",
         "itemId",
         "cost"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -2974,6 +3833,10 @@
       "serviceParams": [
         "client",
         "updates"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -2985,6 +3848,10 @@
       "serviceParams": [
         "client",
         "updates"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -2996,6 +3863,10 @@
       "serviceParams": [
         "client",
         "revision"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -3007,6 +3878,11 @@
       "serviceParams": [
         "client",
         "configurationParameter"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3018,6 +3894,11 @@
       "serviceParams": [
         "client",
         "configurationParameterGroup"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3029,6 +3910,11 @@
       "serviceParams": [
         "client",
         "configurationRule"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3040,6 +3926,11 @@
       "serviceParams": [
         "client",
         "consumable"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3051,6 +3942,11 @@
       "serviceParams": [
         "client",
         "part"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3062,6 +3958,10 @@
       "serviceParams": [
         "client",
         "item"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -3073,6 +3973,11 @@
       "serviceParams": [
         "client",
         "itemCost"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3084,6 +3989,11 @@
       "serviceParams": [
         "client",
         "pickMethod"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3095,6 +4005,11 @@
       "serviceParams": [
         "client",
         "partManufacturing"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3106,6 +4021,11 @@
       "serviceParams": [
         "client",
         "partPlanning"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3117,6 +4037,11 @@
       "serviceParams": [
         "client",
         "itemPurchasing"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3128,6 +4053,11 @@
       "serviceParams": [
         "client",
         "itemPostingGroup"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3139,6 +4069,11 @@
       "serviceParams": [
         "client",
         "supplierPart"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3150,6 +4085,11 @@
       "serviceParams": [
         "client",
         "customerPart"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3161,6 +4101,11 @@
       "serviceParams": [
         "client",
         "itemUnitSalePrice"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3172,6 +4117,11 @@
       "serviceParams": [
         "client",
         "makeMethodVersion"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3183,6 +4133,11 @@
       "serviceParams": [
         "client",
         "methodMaterial"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3194,6 +4149,11 @@
       "serviceParams": [
         "client",
         "methodOperation"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3205,6 +4165,11 @@
       "serviceParams": [
         "client",
         "methodOperationStep"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3216,6 +4181,11 @@
       "serviceParams": [
         "client",
         "methodOperationParameter"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3227,6 +4197,11 @@
       "serviceParams": [
         "client",
         "methodOperationTool"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3238,6 +4213,11 @@
       "serviceParams": [
         "client",
         "material"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3249,6 +4229,11 @@
       "serviceParams": [
         "client",
         "materialDimension"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3260,6 +4245,11 @@
       "serviceParams": [
         "client",
         "materialFinish"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3271,6 +4261,11 @@
       "serviceParams": [
         "client",
         "materialForm"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3282,6 +4277,11 @@
       "serviceParams": [
         "client",
         "materialGrade"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3293,6 +4293,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3305,6 +4308,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3316,6 +4322,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3329,6 +4338,9 @@
         "materialSubstanceId",
         "materialFormId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3340,6 +4352,11 @@
       "serviceParams": [
         "client",
         "materialType"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3351,6 +4368,11 @@
       "serviceParams": [
         "client",
         "materialSubstance"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3362,6 +4384,11 @@
       "serviceParams": [
         "client",
         "service"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3373,6 +4400,11 @@
       "serviceParams": [
         "client",
         "unitOfMeasure"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3384,6 +4416,11 @@
       "serviceParams": [
         "client",
         "tool"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3395,6 +4432,9 @@
       "serviceParams": [
         "client",
         "itemIds"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3408,6 +4448,9 @@
         "itemId",
         "qty",
         "fallbackCost"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3419,6 +4462,9 @@
       "serviceParams": [
         "client",
         "supplierPartId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3430,6 +4476,9 @@
       "serviceParams": [
         "client",
         "attributeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3441,6 +4490,9 @@
       "serviceParams": [
         "client",
         "attributeCategoryId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3452,6 +4504,9 @@
       "serviceParams": [
         "client",
         "departmentId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3463,6 +4518,9 @@
       "serviceParams": [
         "client",
         "holidayId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3474,6 +4532,9 @@
       "serviceParams": [
         "client",
         "shiftId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3485,6 +4546,9 @@
       "serviceParams": [
         "client",
         "attributeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3497,6 +4561,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3508,6 +4575,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3518,6 +4588,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3529,6 +4602,9 @@
       "serviceParams": [
         "client",
         "departmentId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3541,6 +4617,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3551,6 +4630,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -3564,6 +4646,9 @@
         "client",
         "employeeId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3576,6 +4661,9 @@
         "client",
         "employeeId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3587,6 +4675,9 @@
       "serviceParams": [
         "client",
         "holidayId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3599,6 +4690,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3611,6 +4705,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3623,6 +4720,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3634,6 +4734,9 @@
       "serviceParams": [
         "client",
         "shiftId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3646,6 +4749,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3657,6 +4763,9 @@
       "serviceParams": [
         "client",
         "locationId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3668,6 +4777,11 @@
       "serviceParams": [
         "client",
         "attribute"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3679,6 +4793,11 @@
       "serviceParams": [
         "client",
         "attributeCategory"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3690,6 +4809,11 @@
       "serviceParams": [
         "client",
         "job"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3701,6 +4825,10 @@
       "serviceParams": [
         "client",
         "attribute"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -3712,6 +4840,10 @@
       "serviceParams": [
         "client",
         "attributeCategory"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -3723,6 +4855,10 @@
       "serviceParams": [
         "client",
         "updates"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -3735,6 +4871,10 @@
         "client",
         "employeeId",
         "employeeJob"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -3746,6 +4886,11 @@
       "serviceParams": [
         "client",
         "department"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3757,6 +4902,11 @@
       "serviceParams": [
         "client",
         "holiday"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3768,6 +4918,11 @@
       "serviceParams": [
         "client",
         "shift"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3779,6 +4934,9 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3790,6 +4948,9 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3801,6 +4962,11 @@
       "serviceParams": [
         "client",
         "entry"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -3812,6 +4978,9 @@
       "serviceParams": [
         "client",
         "entryId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3822,6 +4991,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -3835,6 +5007,9 @@
         "client",
         "employeeId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3845,6 +5020,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -3857,6 +5035,9 @@
       "serviceParams": [
         "client",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3868,6 +5049,9 @@
       "serviceParams": [
         "client",
         "entryId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3879,6 +5063,9 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3891,6 +5078,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3903,6 +5093,9 @@
         "client",
         "companyId",
         "employeeIds"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3914,6 +5107,10 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -3925,6 +5122,9 @@
       "serviceParams": [
         "client",
         "{"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3936,6 +5136,9 @@
       "serviceParams": [
         "client",
         "params"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3947,6 +5150,9 @@
       "serviceParams": [
         "client",
         "params"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3958,6 +5164,9 @@
       "serviceParams": [
         "client",
         "params"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3969,6 +5178,9 @@
       "serviceParams": [
         "client",
         "jobId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3980,6 +5192,9 @@
       "serviceParams": [
         "client",
         "jobMaterialId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -3991,6 +5206,9 @@
       "serviceParams": [
         "client",
         "jobOperationId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4002,6 +5220,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4013,6 +5234,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4024,6 +5248,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4035,6 +5262,9 @@
       "serviceParams": [
         "client",
         "procedureId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4046,6 +5276,9 @@
       "serviceParams": [
         "client",
         "procedureStepId",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -4059,6 +5292,9 @@
         "client",
         "procedureParameterId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4070,6 +5306,9 @@
       "serviceParams": [
         "client",
         "productionEventId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4081,6 +5320,9 @@
       "serviceParams": [
         "client",
         "productionQuantityId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4092,6 +5334,9 @@
       "serviceParams": [
         "client",
         "jobId",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -4105,6 +5350,9 @@
         "client",
         "locationId",
         "workCenterIds"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4118,6 +5366,9 @@
         "locationId",
         "startDate",
         "endDate"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4129,6 +5380,9 @@
       "serviceParams": [
         "client",
         "locationId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4139,6 +5393,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -4151,6 +5408,9 @@
       "serviceParams": [
         "client",
         "scrapReasonId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4162,6 +5422,9 @@
       "serviceParams": [
         "client",
         "failureModeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4173,6 +5436,9 @@
       "serviceParams": [
         "client",
         "dispatchId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4184,6 +5450,9 @@
       "serviceParams": [
         "client",
         "commentId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4195,6 +5464,9 @@
       "serviceParams": [
         "client",
         "eventId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4206,6 +5478,9 @@
       "serviceParams": [
         "client",
         "itemId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4217,6 +5492,9 @@
       "serviceParams": [
         "client",
         "workCenterId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4228,6 +5506,9 @@
       "serviceParams": [
         "client",
         "scheduleId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4239,6 +5520,9 @@
       "serviceParams": [
         "client",
         "itemId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4250,6 +5534,9 @@
       "serviceParams": [
         "client",
         "params"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4261,6 +5548,9 @@
       "serviceParams": [
         "client",
         "params"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4273,6 +5563,9 @@
         "client",
         "companyId",
         "job"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4286,6 +5579,9 @@
         "companyId",
         "job",
         "itemId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4297,6 +5593,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4308,6 +5607,9 @@
       "serviceParams": [
         "client",
         "operationId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4319,6 +5621,9 @@
       "serviceParams": [
         "client",
         "jobId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4331,6 +5636,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4342,6 +5650,9 @@
       "serviceParams": [
         "client",
         "salesOrderLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4352,6 +5663,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -4365,6 +5679,9 @@
         "client",
         "jobMakeMethodId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4376,6 +5693,9 @@
       "serviceParams": [
         "client",
         "jobId",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -4391,6 +5711,9 @@
         "companyId",
         "locationId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4402,6 +5725,9 @@
       "serviceParams": [
         "client",
         "jobId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4413,6 +5739,9 @@
       "serviceParams": [
         "client",
         "jobId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4424,6 +5753,9 @@
       "serviceParams": [
         "client",
         "materialId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4435,6 +5767,9 @@
       "serviceParams": [
         "client",
         "jobMakeMethodId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4446,6 +5781,9 @@
       "serviceParams": [
         "client",
         "jobOperationId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4458,6 +5796,9 @@
         "client",
         "jobId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4470,6 +5811,9 @@
         "client",
         "employeeId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4481,6 +5825,9 @@
       "serviceParams": [
         "client",
         "jobOperationIds"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4492,6 +5839,9 @@
       "serviceParams": [
         "client",
         "jobId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4503,6 +5853,9 @@
       "serviceParams": [
         "client",
         "jobMakeMethodId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4515,6 +5868,9 @@
         "client",
         "jobId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4527,6 +5883,9 @@
         "client",
         "jobId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4538,6 +5897,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4549,6 +5911,9 @@
       "serviceParams": [
         "client",
         "procedureId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4560,6 +5925,9 @@
       "serviceParams": [
         "client",
         "procedureId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4571,6 +5939,9 @@
       "serviceParams": [
         "client",
         "procedure",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -4584,6 +5955,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4594,6 +5968,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -4606,6 +5983,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4618,6 +5998,9 @@
         "client",
         "jobOperationIds",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4632,6 +6015,9 @@
         "companyId",
         "sortDescending",
         "page"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4643,6 +6029,9 @@
       "serviceParams": [
         "client",
         "jobOperationIds"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4657,6 +6046,9 @@
         "companyId",
         "periods",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4671,6 +6063,9 @@
         "periods",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4682,6 +6077,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4694,6 +6092,9 @@
         "client",
         "jobOperationIds",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4705,6 +6106,9 @@
       "serviceParams": [
         "client",
         "jobOperationIds"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4715,6 +6119,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -4727,6 +6134,9 @@
       "serviceParams": [
         "client",
         "scrapReasonId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4739,6 +6149,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4750,6 +6163,9 @@
       "serviceParams": [
         "client",
         "failureModeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4762,6 +6178,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4772,6 +6191,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -4784,6 +6206,9 @@
       "serviceParams": [
         "client",
         "dispatchId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4796,6 +6221,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4807,6 +6235,9 @@
       "serviceParams": [
         "client",
         "dispatchId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4818,6 +6249,9 @@
       "serviceParams": [
         "client",
         "dispatchId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4829,6 +6263,9 @@
       "serviceParams": [
         "client",
         "dispatchId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4840,6 +6277,9 @@
       "serviceParams": [
         "client",
         "dispatchId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4851,6 +6291,9 @@
       "serviceParams": [
         "client",
         "scheduleId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4863,6 +6306,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4874,6 +6320,9 @@
       "serviceParams": [
         "client",
         "scheduleId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4885,6 +6334,9 @@
       "serviceParams": [
         "client",
         "jobId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4896,6 +6348,9 @@
       "serviceParams": [
         "client",
         "jobId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4907,6 +6362,10 @@
       "serviceParams": [
         "client",
         "params"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -4918,6 +6377,10 @@
       "serviceParams": [
         "client",
         "params"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -4929,6 +6392,10 @@
       "serviceParams": [
         "client",
         "params"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -4940,6 +6407,9 @@
       "serviceParams": [
         "client",
         "params"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -4952,6 +6422,10 @@
         "client",
         "trackedEntityId",
         "value"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -4963,6 +6437,10 @@
       "serviceParams": [
         "client",
         "params"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -4974,6 +6452,10 @@
       "serviceParams": [
         "client",
         "updates"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -4985,6 +6467,10 @@
       "serviceParams": [
         "client",
         "updates"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -4996,6 +6482,10 @@
       "serviceParams": [
         "client",
         "updates"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -5007,6 +6497,10 @@
       "serviceParams": [
         "client",
         "params"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -5018,6 +6512,10 @@
       "serviceParams": [
         "client",
         "updates"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -5029,6 +6527,10 @@
       "serviceParams": [
         "client",
         "updates"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -5041,6 +6543,10 @@
         "client",
         "id",
         "status",
+        "updatedBy"
+      ],
+      "injectAuth": [
+        "companyId",
         "updatedBy"
       ]
     },
@@ -5055,6 +6561,10 @@
         "id",
         "dueDate",
         "updatedBy"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -5066,6 +6576,10 @@
       "serviceParams": [
         "client",
         "updates"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -5077,6 +6591,11 @@
       "serviceParams": [
         "client",
         "productionEvent"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5088,6 +6607,10 @@
       "serviceParams": [
         "client",
         "productionQuantity"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -5099,6 +6622,11 @@
       "serviceParams": [
         "client",
         "productionQuantity"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5111,6 +6639,11 @@
         "client",
         "job",
         "status"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5122,6 +6655,11 @@
       "serviceParams": [
         "client",
         "jobMaterial"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5133,6 +6671,11 @@
       "serviceParams": [
         "client",
         "jobOperation"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5144,6 +6687,11 @@
       "serviceParams": [
         "client",
         "jobOperationStep"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5155,6 +6703,11 @@
       "serviceParams": [
         "client",
         "jobOperationParameter"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5166,6 +6719,11 @@
       "serviceParams": [
         "client",
         "jobOperationTool"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5178,6 +6736,11 @@
         "client",
         "type",
         "jobMethod"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5189,6 +6752,11 @@
       "serviceParams": [
         "client",
         "jobMaterial"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5200,6 +6768,11 @@
       "serviceParams": [
         "client",
         "jobMethod"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5211,6 +6784,11 @@
       "serviceParams": [
         "client",
         "jobMethod"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5222,6 +6800,11 @@
       "serviceParams": [
         "client",
         "procedure"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5233,6 +6816,11 @@
       "serviceParams": [
         "client",
         "procedureStep"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5244,6 +6832,11 @@
       "serviceParams": [
         "client",
         "procedureParameter"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5255,6 +6848,11 @@
       "serviceParams": [
         "client",
         "scrapReason"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5266,6 +6864,11 @@
       "serviceParams": [
         "client",
         "failureMode"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5277,6 +6880,11 @@
       "serviceParams": [
         "client",
         "dispatch"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5288,6 +6896,11 @@
       "serviceParams": [
         "client",
         "comment"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5299,6 +6912,11 @@
       "serviceParams": [
         "client",
         "event"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5310,6 +6928,11 @@
       "serviceParams": [
         "client",
         "item"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5321,6 +6944,11 @@
       "serviceParams": [
         "client",
         "workCenter"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5332,6 +6960,11 @@
       "serviceParams": [
         "client",
         "schedule"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5343,6 +6976,11 @@
       "serviceParams": [
         "client",
         "item"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5354,6 +6992,11 @@
       "serviceParams": [
         "client",
         "forecasts"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5365,6 +7008,11 @@
       "serviceParams": [
         "client",
         "forecasts"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5379,6 +7027,9 @@
         "userId",
         "mode",
         "direction"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5391,6 +7042,9 @@
         "client",
         "purchaseOrderId",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5402,6 +7056,9 @@
       "serviceParams": [
         "client",
         "payload"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5413,6 +7070,9 @@
       "serviceParams": [
         "client",
         "purchaseOrderId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5424,6 +7084,9 @@
       "serviceParams": [
         "client",
         "purchaseOrderLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5435,6 +7098,9 @@
       "serviceParams": [
         "client",
         "supplierId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5447,6 +7113,9 @@
         "client",
         "supplierId",
         "supplierContactId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5459,6 +7128,9 @@
         "client",
         "supplierId",
         "supplierLocationId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5470,6 +7142,9 @@
       "serviceParams": [
         "client",
         "supplierProcessId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5481,6 +7156,9 @@
       "serviceParams": [
         "client",
         "supplierQuoteId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5492,6 +7170,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5503,6 +7184,9 @@
       "serviceParams": [
         "client",
         "supplierTypeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5514,6 +7198,9 @@
       "serviceParams": [
         "client",
         "purchaseOrderId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5526,6 +7213,10 @@
         "client",
         "supplierQuoteId",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -5538,6 +7229,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5549,6 +7243,9 @@
       "serviceParams": [
         "client",
         "purchaseOrderId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5560,6 +7257,9 @@
       "serviceParams": [
         "client",
         "purchaseOrderId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5571,6 +7271,9 @@
       "serviceParams": [
         "client",
         "purchaseOrderId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5582,6 +7285,9 @@
       "serviceParams": [
         "client",
         "purchaseOrderId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5593,6 +7299,9 @@
       "serviceParams": [
         "client",
         "purchaseOrderLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5603,6 +7312,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -5615,6 +7327,9 @@
       "serviceParams": [
         "client",
         "userId",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -5630,6 +7345,9 @@
         "companyId",
         "periods",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5640,6 +7358,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -5652,6 +7373,9 @@
       "serviceParams": [
         "client",
         "supplierId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5666,6 +7390,9 @@
         "status",
         "companyId",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5677,6 +7404,9 @@
       "serviceParams": [
         "client",
         "supplierContactId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5688,6 +7418,9 @@
       "serviceParams": [
         "client",
         "supplierId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5699,6 +7432,9 @@
       "serviceParams": [
         "client",
         "opportunityId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5711,6 +7447,9 @@
         "client",
         "companyId",
         "interactionId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5723,6 +7462,9 @@
         "client",
         "companyId",
         "lineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5734,6 +7476,9 @@
       "serviceParams": [
         "client",
         "supplierId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5745,6 +7490,9 @@
       "serviceParams": [
         "client",
         "supplierContactId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5756,6 +7504,9 @@
       "serviceParams": [
         "client",
         "supplierId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5767,6 +7518,9 @@
       "serviceParams": [
         "client",
         "supplierProcessId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5778,6 +7532,9 @@
       "serviceParams": [
         "client",
         "processId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5789,6 +7546,9 @@
       "serviceParams": [
         "client",
         "supplierId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5800,6 +7560,9 @@
       "serviceParams": [
         "client",
         "supplierQuoteId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5811,6 +7574,9 @@
       "serviceParams": [
         "client",
         "interactionId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5822,6 +7588,9 @@
       "serviceParams": [
         "client",
         "externalLinkId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5834,6 +7603,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5845,6 +7617,9 @@
       "serviceParams": [
         "client",
         "supplierQuoteLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5856,6 +7631,9 @@
       "serviceParams": [
         "client",
         "supplierQuoteId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5867,6 +7645,9 @@
       "serviceParams": [
         "client",
         "supplierQuoteLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5878,6 +7659,9 @@
       "serviceParams": [
         "client",
         "supplierQuoteId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5888,6 +7672,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -5900,6 +7687,9 @@
       "serviceParams": [
         "client",
         "supplierId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5912,6 +7702,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5922,6 +7715,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -5934,6 +7730,9 @@
       "serviceParams": [
         "client",
         "supplierTypeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5946,6 +7745,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -5956,6 +7758,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -5968,6 +7773,11 @@
       "serviceParams": [
         "client",
         "supplier"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5979,6 +7789,11 @@
       "serviceParams": [
         "client",
         "supplierContact"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -5991,6 +7806,11 @@
         "client",
         "companyId",
         "supplierId"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -6002,6 +7822,11 @@
       "serviceParams": [
         "client",
         "supplierLocation"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -6014,6 +7839,10 @@
         "client",
         "purchaseOrderId",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -6026,6 +7855,9 @@
         "client",
         "supplierQuoteId",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6037,6 +7869,10 @@
       "serviceParams": [
         "client",
         "purchaseOrder"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -6048,6 +7884,10 @@
       "serviceParams": [
         "client",
         "data"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -6059,6 +7899,10 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -6070,6 +7914,10 @@
       "serviceParams": [
         "client",
         "update"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -6081,6 +7929,10 @@
       "serviceParams": [
         "client",
         "supplierAccounting"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -6092,6 +7944,10 @@
       "serviceParams": [
         "client",
         "supplierContact"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -6103,6 +7959,10 @@
       "serviceParams": [
         "client",
         "supplierLocation"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -6114,6 +7974,10 @@
       "serviceParams": [
         "client",
         "supplierPayment"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -6125,6 +7989,10 @@
       "serviceParams": [
         "client",
         "data"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -6136,6 +8004,10 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -6147,6 +8019,10 @@
       "serviceParams": [
         "client",
         "update"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -6158,6 +8034,10 @@
       "serviceParams": [
         "client",
         "supplierShipping"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -6170,6 +8050,11 @@
         "client",
         "purchaseOrder",
         "receiptRequestedDate"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -6181,6 +8066,11 @@
       "serviceParams": [
         "client",
         "purchaseOrderDelivery"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -6192,6 +8082,11 @@
       "serviceParams": [
         "client",
         "purchaseOrderLine"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -6203,6 +8098,11 @@
       "serviceParams": [
         "client",
         "purchaseOrderPayment"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -6214,6 +8114,11 @@
       "serviceParams": [
         "client",
         "supplier"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -6225,6 +8130,11 @@
       "serviceParams": [
         "client",
         "supplierProcess"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -6236,6 +8146,11 @@
       "serviceParams": [
         "client",
         "supplierQuote"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -6247,6 +8162,11 @@
       "serviceParams": [
         "client",
         "supplierQuoteLine"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -6258,6 +8178,11 @@
       "serviceParams": [
         "client",
         "supplierType"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -6269,6 +8194,9 @@
       "serviceParams": [
         "client",
         "purchasingRfqId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6280,6 +8208,9 @@
       "serviceParams": [
         "client",
         "purchasingRfqLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6291,6 +8222,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6303,6 +8237,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6314,6 +8251,9 @@
       "serviceParams": [
         "client",
         "lineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6325,6 +8265,9 @@
       "serviceParams": [
         "client",
         "purchasingRfqId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6336,6 +8279,9 @@
       "serviceParams": [
         "client",
         "purchasingRfqId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6347,6 +8293,11 @@
       "serviceParams": [
         "client",
         "purchasingRfq"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -6358,6 +8309,11 @@
       "serviceParams": [
         "client",
         "purchasingRfqLine"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -6372,6 +8328,11 @@
         "supplierIds",
         "companyId",
         "createdBy"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -6383,6 +8344,10 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -6394,6 +8359,9 @@
       "serviceParams": [
         "client",
         "purchasingRfqId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6405,6 +8373,9 @@
       "serviceParams": [
         "client",
         "supplierQuoteId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6416,6 +8387,9 @@
       "serviceParams": [
         "client",
         "supplierInteractionId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6427,6 +8401,9 @@
       "serviceParams": [
         "client",
         "supplierQuoteId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6438,6 +8415,9 @@
       "serviceParams": [
         "client",
         "purchaseOrderId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6449,6 +8429,9 @@
       "serviceParams": [
         "client",
         "purchasingRfqId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6460,6 +8443,9 @@
       "serviceParams": [
         "client",
         "purchasingRfqId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6471,6 +8457,9 @@
       "serviceParams": [
         "client",
         "gaugeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6482,6 +8471,9 @@
       "serviceParams": [
         "client",
         "gaugeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6493,6 +8485,9 @@
       "serviceParams": [
         "client",
         "gaugeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6504,6 +8499,9 @@
       "serviceParams": [
         "client",
         "gaugeCalibrationRecordId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6515,6 +8513,9 @@
       "serviceParams": [
         "client",
         "gaugeTypeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6526,6 +8527,9 @@
       "serviceParams": [
         "client",
         "nonConformanceId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6538,6 +8542,9 @@
         "client",
         "type",
         "associationId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6549,6 +8556,9 @@
       "serviceParams": [
         "client",
         "nonConformanceTypeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6560,6 +8570,9 @@
       "serviceParams": [
         "client",
         "nonConformanceWorkflowId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6571,6 +8584,9 @@
       "serviceParams": [
         "client",
         "requiredActionId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6582,6 +8598,9 @@
       "serviceParams": [
         "client",
         "qualityDocumentId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6594,6 +8613,9 @@
         "client",
         "qualityDocumentStepId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6605,6 +8627,9 @@
       "serviceParams": [
         "client",
         "riskId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6616,6 +8641,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6627,6 +8655,9 @@
       "serviceParams": [
         "client",
         "gaugeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6639,6 +8670,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6649,6 +8683,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -6661,6 +8698,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6673,6 +8713,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6684,6 +8727,9 @@
       "serviceParams": [
         "client",
         "gaugeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6694,6 +8740,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -6706,6 +8755,9 @@
       "serviceParams": [
         "client",
         "gaugeTypeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6718,6 +8770,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6729,6 +8784,9 @@
       "serviceParams": [
         "client",
         "nonConformanceId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6741,6 +8799,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6752,6 +8813,9 @@
       "serviceParams": [
         "client",
         "nonConformanceWorkflowId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6763,6 +8827,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6776,6 +8843,9 @@
         "id",
         "companyId",
         "supplierId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6787,6 +8857,9 @@
       "serviceParams": [
         "client",
         "id",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -6800,6 +8873,9 @@
         "client",
         "id",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6811,6 +8887,9 @@
       "serviceParams": [
         "client",
         "nonConformanceId",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -6824,6 +8903,9 @@
         "client",
         "id",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6835,6 +8917,9 @@
       "serviceParams": [
         "client",
         "id",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -6848,6 +8933,9 @@
         "client",
         "id",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6859,6 +8947,9 @@
       "serviceParams": [
         "client",
         "nonConformanceTypeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6871,6 +8962,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6883,6 +8977,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6894,6 +8991,9 @@
       "serviceParams": [
         "client",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6904,6 +9004,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -6917,6 +9020,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6928,6 +9034,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6939,6 +9048,9 @@
       "serviceParams": [
         "client",
         "qualityDocumentId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6950,6 +9062,9 @@
       "serviceParams": [
         "client",
         "qualityDocument",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -6963,6 +9078,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6973,6 +9091,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -6986,6 +9107,9 @@
         "client",
         "id",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -6996,6 +9120,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -7009,6 +9136,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7020,6 +9150,9 @@
       "serviceParams": [
         "client",
         "requiredActionId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7031,6 +9164,9 @@
       "serviceParams": [
         "client",
         "riskId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7043,6 +9179,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7054,6 +9193,11 @@
       "serviceParams": [
         "client",
         "reviewer"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -7065,6 +9209,10 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -7076,6 +9224,10 @@
       "serviceParams": [
         "client",
         "update"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -7087,6 +9239,10 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -7098,6 +9254,10 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -7109,6 +9269,10 @@
       "serviceParams": [
         "client",
         "updates"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -7121,6 +9285,10 @@
         "client",
         "riskId",
         "status"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -7132,6 +9300,11 @@
       "serviceParams": [
         "client",
         "gauge"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -7143,6 +9316,11 @@
       "serviceParams": [
         "client",
         "gaugeCalibrationRecord"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -7154,6 +9332,11 @@
       "serviceParams": [
         "client",
         "gaugeType"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -7165,6 +9348,11 @@
       "serviceParams": [
         "client",
         "nonConformance"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -7176,6 +9364,11 @@
       "serviceParams": [
         "client",
         "nonConformanceWorkflow"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -7187,6 +9380,11 @@
       "serviceParams": [
         "client",
         "nonConformanceType"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -7198,6 +9396,11 @@
       "serviceParams": [
         "client",
         "requiredAction"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -7209,6 +9412,11 @@
       "serviceParams": [
         "client",
         "qualityDocument"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -7220,6 +9428,11 @@
       "serviceParams": [
         "client",
         "qualityDocumentStep"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -7231,6 +9444,11 @@
       "serviceParams": [
         "client",
         "risk"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -7242,6 +9460,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7254,6 +9475,9 @@
         "client",
         "abilityId",
         "hardDelete"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7265,6 +9489,9 @@
       "serviceParams": [
         "client",
         "contractorId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7276,6 +9503,9 @@
       "serviceParams": [
         "client",
         "employeeAbilityId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7287,6 +9517,9 @@
       "serviceParams": [
         "client",
         "failureModeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7298,6 +9531,9 @@
       "serviceParams": [
         "client",
         "locationId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7309,6 +9545,9 @@
       "serviceParams": [
         "client",
         "dispatchId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7320,6 +9559,9 @@
       "serviceParams": [
         "client",
         "commentId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7331,6 +9573,9 @@
       "serviceParams": [
         "client",
         "eventId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7342,6 +9587,9 @@
       "serviceParams": [
         "client",
         "itemId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7353,6 +9601,9 @@
       "serviceParams": [
         "client",
         "workCenterId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7364,6 +9615,9 @@
       "serviceParams": [
         "client",
         "scheduleId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7375,6 +9629,9 @@
       "serviceParams": [
         "client",
         "itemId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7386,6 +9643,9 @@
       "serviceParams": [
         "client",
         "partnerId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7397,6 +9657,9 @@
       "serviceParams": [
         "client",
         "processId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7408,6 +9671,9 @@
       "serviceParams": [
         "client",
         "processId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7419,6 +9685,9 @@
       "serviceParams": [
         "client",
         "processId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7430,6 +9699,9 @@
       "serviceParams": [
         "client",
         "shiftId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7441,6 +9713,9 @@
       "serviceParams": [
         "client",
         "suggestionId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7452,6 +9727,9 @@
       "serviceParams": [
         "client",
         "trainingId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7463,6 +9741,9 @@
       "serviceParams": [
         "client",
         "assignmentId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7475,6 +9756,9 @@
         "client",
         "trainingQuestionId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7486,6 +9770,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7498,6 +9785,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7508,6 +9798,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -7520,6 +9813,9 @@
       "serviceParams": [
         "client",
         "abilityId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7531,6 +9827,9 @@
       "serviceParams": [
         "client",
         "contractorId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7543,6 +9842,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7554,6 +9856,9 @@
       "serviceParams": [
         "client",
         "employeeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7565,6 +9870,9 @@
       "serviceParams": [
         "client",
         "failureModeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7577,6 +9885,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7587,6 +9898,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -7599,6 +9913,9 @@
       "serviceParams": [
         "client",
         "locationId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7611,6 +9928,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7621,6 +9941,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -7633,6 +9956,9 @@
       "serviceParams": [
         "client",
         "dispatchId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7644,6 +9970,9 @@
       "serviceParams": [
         "client",
         "dispatchId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7655,6 +9984,9 @@
       "serviceParams": [
         "client",
         "dispatchId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7666,6 +9998,9 @@
       "serviceParams": [
         "client",
         "dispatchId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7677,6 +10012,9 @@
       "serviceParams": [
         "client",
         "maintenanceDispatchItemId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7689,6 +10027,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7702,6 +10043,9 @@
         "companyId",
         "locationId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7713,6 +10057,9 @@
       "serviceParams": [
         "client",
         "dispatchId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7724,6 +10071,9 @@
       "serviceParams": [
         "client",
         "scheduleId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7735,6 +10085,9 @@
       "serviceParams": [
         "client",
         "scheduleId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7747,6 +10100,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7760,6 +10116,9 @@
         "companyId",
         "locationId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7772,6 +10131,9 @@
         "client",
         "companyId",
         "employeeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7784,6 +10146,9 @@
         "client",
         "partnerId",
         "abilityId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7795,6 +10160,9 @@
       "serviceParams": [
         "client",
         "partnerId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7807,6 +10175,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7818,6 +10189,9 @@
       "serviceParams": [
         "client",
         "processId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7830,6 +10204,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7840,6 +10217,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -7852,6 +10232,9 @@
       "serviceParams": [
         "client",
         "suggestionId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7864,6 +10247,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7875,6 +10261,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7886,6 +10275,9 @@
       "serviceParams": [
         "client",
         "assignmentId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7897,6 +10289,9 @@
       "serviceParams": [
         "client",
         "assignmentId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7909,6 +10304,9 @@
         "client",
         "companyId",
         "trainingId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7921,6 +10319,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7931,6 +10332,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -7943,6 +10347,9 @@
       "serviceParams": [
         "client",
         "trainingId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7955,6 +10362,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7965,6 +10375,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -7977,6 +10390,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -7989,6 +10405,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8000,6 +10419,9 @@
       "serviceParams": [
         "client",
         "locationId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8010,6 +10432,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -8022,6 +10447,9 @@
       "serviceParams": [
         "client",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8033,6 +10461,11 @@
       "serviceParams": [
         "client",
         "ability"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -8046,6 +10479,11 @@
         "abilityId",
         "employeeIds",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -8057,6 +10495,11 @@
       "serviceParams": [
         "client",
         "completion"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -8069,6 +10512,10 @@
         "client",
         "id",
         "ability"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -8081,6 +10528,10 @@
         "client",
         "suggestionId",
         "emoji"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -8093,6 +10544,10 @@
         "client",
         "suggestionId",
         "tags"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -8104,6 +10559,10 @@
       "serviceParams": [
         "client",
         "updates"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -8115,6 +10574,11 @@
       "serviceParams": [
         "client",
         "contractorWithAbilities"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -8126,6 +10590,11 @@
       "serviceParams": [
         "client",
         "employeeAbility"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -8137,6 +10606,11 @@
       "serviceParams": [
         "client",
         "failureMode"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -8148,6 +10622,11 @@
       "serviceParams": [
         "client",
         "location"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -8159,6 +10638,11 @@
       "serviceParams": [
         "client",
         "dispatch"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -8170,6 +10654,11 @@
       "serviceParams": [
         "client",
         "comment"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -8181,6 +10670,11 @@
       "serviceParams": [
         "client",
         "event"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -8192,6 +10686,11 @@
       "serviceParams": [
         "client",
         "item"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -8203,6 +10702,11 @@
       "serviceParams": [
         "client",
         "workCenter"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -8214,6 +10718,11 @@
       "serviceParams": [
         "client",
         "schedule"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -8225,6 +10734,11 @@
       "serviceParams": [
         "client",
         "item"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -8236,6 +10750,11 @@
       "serviceParams": [
         "client",
         "partner"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -8247,6 +10766,11 @@
       "serviceParams": [
         "client",
         "process"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -8258,6 +10782,11 @@
       "serviceParams": [
         "client",
         "training"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -8269,6 +10798,11 @@
       "serviceParams": [
         "client",
         "assignment"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -8280,6 +10814,11 @@
       "serviceParams": [
         "client",
         "trainingQuestion"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -8291,6 +10830,11 @@
       "serviceParams": [
         "client",
         "workCenter"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -8303,6 +10847,9 @@
         "client",
         "salesOrderId",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8314,6 +10861,9 @@
       "serviceParams": [
         "client",
         "payload"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8325,6 +10875,9 @@
       "serviceParams": [
         "client",
         "payload"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8336,6 +10889,11 @@
       "serviceParams": [
         "client",
         "payload"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -8347,6 +10905,11 @@
       "serviceParams": [
         "client",
         "payload"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -8358,6 +10921,9 @@
       "serviceParams": [
         "client",
         "customerId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8370,6 +10936,9 @@
         "client",
         "customerId",
         "customerContactId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8382,6 +10951,9 @@
         "client",
         "customerId",
         "customerLocationId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8393,6 +10965,9 @@
       "serviceParams": [
         "client",
         "customerStatusId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8404,6 +10979,9 @@
       "serviceParams": [
         "client",
         "customerTypeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8415,6 +10993,9 @@
       "serviceParams": [
         "client",
         "noQuoteReasonId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8426,6 +11007,9 @@
       "serviceParams": [
         "client",
         "quoteId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8437,6 +11021,9 @@
       "serviceParams": [
         "client",
         "quoteMakeMethodId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8448,6 +11035,9 @@
       "serviceParams": [
         "client",
         "quoteLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8459,6 +11049,9 @@
       "serviceParams": [
         "client",
         "quoteMaterialId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8470,6 +11063,9 @@
       "serviceParams": [
         "client",
         "quoteOperationId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8481,6 +11077,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8492,6 +11091,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8503,6 +11105,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8514,6 +11119,9 @@
       "serviceParams": [
         "client",
         "salesOrderId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8525,6 +11133,9 @@
       "serviceParams": [
         "client",
         "salesOrderLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8536,6 +11147,9 @@
       "serviceParams": [
         "client",
         "salesRfqId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8547,6 +11161,9 @@
       "serviceParams": [
         "client",
         "salesRFQLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8559,6 +11176,9 @@
         "client",
         "quoteLineId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8570,6 +11190,9 @@
       "serviceParams": [
         "client",
         "customerId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8581,6 +11204,9 @@
       "serviceParams": [
         "client",
         "customerContactId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8592,6 +11218,9 @@
       "serviceParams": [
         "client",
         "customerId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8603,6 +11232,9 @@
       "serviceParams": [
         "client",
         "customerLocationId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8614,6 +11246,9 @@
       "serviceParams": [
         "client",
         "customerId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8625,6 +11260,9 @@
       "serviceParams": [
         "client",
         "customerId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8636,6 +11274,9 @@
       "serviceParams": [
         "client",
         "customerId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8648,6 +11289,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8658,6 +11302,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -8670,6 +11317,9 @@
       "serviceParams": [
         "client",
         "customerStatusId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8682,6 +11332,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8692,6 +11345,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -8704,6 +11360,9 @@
       "serviceParams": [
         "client",
         "customerTypeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8716,6 +11375,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8726,6 +11388,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -8739,6 +11404,9 @@
         "client",
         "customerId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8750,6 +11418,9 @@
       "serviceParams": [
         "client",
         "quoteLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8760,6 +11431,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -8772,6 +11446,9 @@
       "serviceParams": [
         "client",
         "noQuoteReasonId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8784,6 +11461,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8795,6 +11475,9 @@
       "serviceParams": [
         "client",
         "opportunityId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8807,6 +11490,9 @@
         "client",
         "companyId",
         "opportunityId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8820,6 +11506,9 @@
         "companyId",
         "lineId",
         "itemId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8831,6 +11520,9 @@
       "serviceParams": [
         "client",
         "quoteId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8843,6 +11535,9 @@
         "client",
         "companyId",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8855,6 +11550,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8865,6 +11563,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -8877,6 +11578,9 @@
       "serviceParams": [
         "client",
         "quoteLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8888,6 +11592,9 @@
       "serviceParams": [
         "client",
         "quoteId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8899,6 +11606,9 @@
       "serviceParams": [
         "client",
         "quoteId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8910,6 +11620,9 @@
       "serviceParams": [
         "client",
         "quoteLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8921,6 +11634,9 @@
       "serviceParams": [
         "client",
         "quoteId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8932,6 +11648,9 @@
       "serviceParams": [
         "client",
         "quoteMakeMethodId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8943,6 +11662,9 @@
       "serviceParams": [
         "client",
         "quoteLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8954,6 +11676,9 @@
       "serviceParams": [
         "client",
         "quoteId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8965,6 +11690,9 @@
       "serviceParams": [
         "client",
         "quoteId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8976,6 +11704,9 @@
       "serviceParams": [
         "client",
         "quoteId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8987,6 +11718,9 @@
       "serviceParams": [
         "client",
         "externalId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -8998,6 +11732,9 @@
       "serviceParams": [
         "client",
         "quoteLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9009,6 +11746,9 @@
       "serviceParams": [
         "client",
         "quoteId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9021,6 +11761,9 @@
         "client",
         "itemId",
         "currentQuoteId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9033,6 +11776,9 @@
         "client",
         "itemIds",
         "currentQuoteId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9044,6 +11790,9 @@
       "serviceParams": [
         "client",
         "quoteId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9055,6 +11804,9 @@
       "serviceParams": [
         "client",
         "materialId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9066,6 +11818,9 @@
       "serviceParams": [
         "client",
         "quoteLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9077,6 +11832,9 @@
       "serviceParams": [
         "client",
         "quoteMakeMethodId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9088,6 +11846,9 @@
       "serviceParams": [
         "client",
         "quoteOperationId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9099,6 +11860,9 @@
       "serviceParams": [
         "client",
         "quoteOperationId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9110,6 +11874,9 @@
       "serviceParams": [
         "client",
         "quoteLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9121,6 +11888,9 @@
       "serviceParams": [
         "client",
         "quoteMakeMethodId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9132,6 +11902,9 @@
       "serviceParams": [
         "client",
         "quoteId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9143,6 +11916,9 @@
       "serviceParams": [
         "client",
         "quoteId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9154,6 +11930,9 @@
       "serviceParams": [
         "client",
         "quoteId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9166,6 +11945,9 @@
         "client",
         "itemId",
         "quoteId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9178,6 +11960,9 @@
         "client",
         "userId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9189,6 +11974,9 @@
       "serviceParams": [
         "client",
         "salesOrderId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9200,6 +11988,9 @@
       "serviceParams": [
         "client",
         "salesOrderId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9212,6 +12003,9 @@
         "client",
         "companyId",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9224,6 +12018,9 @@
         "client",
         "salesOrderId",
         "opportunityId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9236,6 +12033,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9246,6 +12046,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -9258,6 +12061,9 @@
       "serviceParams": [
         "client",
         "salesOrderId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9268,6 +12074,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -9280,6 +12089,9 @@
       "serviceParams": [
         "client",
         "salesOrderId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9290,6 +12102,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9301,6 +12116,9 @@
       "serviceParams": [
         "client",
         "salesOrderId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9312,6 +12130,9 @@
       "serviceParams": [
         "client",
         "salesOrderId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9323,6 +12144,9 @@
       "serviceParams": [
         "client",
         "invoiceIds"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9334,6 +12158,9 @@
       "serviceParams": [
         "client",
         "itemId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9345,6 +12172,9 @@
       "serviceParams": [
         "client",
         "itemIds"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9356,6 +12186,9 @@
       "serviceParams": [
         "client",
         "salesOrderLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9367,6 +12200,9 @@
       "serviceParams": [
         "client",
         "salesOrderLineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9378,6 +12214,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9390,6 +12229,9 @@
         "client",
         "companyId",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9402,6 +12244,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9413,6 +12258,9 @@
       "serviceParams": [
         "client",
         "lineId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9424,6 +12272,9 @@
       "serviceParams": [
         "client",
         "salesRfqId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9435,6 +12286,11 @@
       "serviceParams": [
         "client",
         "customerContact"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9446,6 +12302,11 @@
       "serviceParams": [
         "client",
         "customerLocation"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9457,6 +12318,11 @@
       "serviceParams": [
         "client",
         "salesOrderLines"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9469,6 +12335,10 @@
         "client",
         "quoteId",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -9481,6 +12351,9 @@
         "client",
         "salesOrderId",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9492,6 +12365,11 @@
       "serviceParams": [
         "client",
         "customer"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9503,6 +12381,10 @@
       "serviceParams": [
         "client",
         "customerAccounting"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -9514,6 +12396,10 @@
       "serviceParams": [
         "client",
         "customerContact"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -9525,6 +12411,10 @@
       "serviceParams": [
         "client",
         "customerLocation"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -9536,6 +12426,10 @@
       "serviceParams": [
         "client",
         "customerPayment"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -9547,6 +12441,10 @@
       "serviceParams": [
         "client",
         "customerShipping"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -9558,6 +12456,11 @@
       "serviceParams": [
         "client",
         "customerStatus"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9569,6 +12472,11 @@
       "serviceParams": [
         "client",
         "customerType"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9580,6 +12488,11 @@
       "serviceParams": [
         "client",
         "noQuoteReason"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9591,6 +12504,10 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -9602,6 +12519,10 @@
       "serviceParams": [
         "client",
         "updates"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -9613,6 +12534,10 @@
       "serviceParams": [
         "client",
         "data"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -9625,6 +12550,10 @@
         "client",
         "quoteLineId",
         "precision"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -9636,6 +12565,10 @@
       "serviceParams": [
         "client",
         "data"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -9647,6 +12580,10 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -9658,6 +12595,10 @@
       "serviceParams": [
         "client",
         "update"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -9669,6 +12610,10 @@
       "serviceParams": [
         "client",
         "updates"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -9680,6 +12625,10 @@
       "serviceParams": [
         "client",
         "updates"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -9691,6 +12640,10 @@
       "serviceParams": [
         "client",
         "update"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -9702,6 +12655,11 @@
       "serviceParams": [
         "client",
         "lineMethod"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9713,6 +12671,11 @@
       "serviceParams": [
         "client",
         "quoteMethod"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9724,6 +12687,11 @@
       "serviceParams": [
         "client",
         "quote"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9735,6 +12703,11 @@
       "serviceParams": [
         "client",
         "quotationLine"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9747,6 +12720,11 @@
         "client",
         "lineId",
         "update"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9760,6 +12738,11 @@
         "quoteId",
         "lineId",
         "quoteLinePrices"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9774,6 +12757,9 @@
         "quoteLineId",
         "quantities",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9787,6 +12773,10 @@
         "quoteId",
         "quoteLineId",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -9798,6 +12788,11 @@
       "serviceParams": [
         "client",
         "lineMethod"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9809,6 +12804,11 @@
       "serviceParams": [
         "client",
         "quoteMaterial"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9820,6 +12820,11 @@
       "serviceParams": [
         "client",
         "quoteMethod"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9831,6 +12836,11 @@
       "serviceParams": [
         "client",
         "operation"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9842,6 +12852,11 @@
       "serviceParams": [
         "client",
         "quoteOperationStep"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9853,6 +12868,11 @@
       "serviceParams": [
         "client",
         "quoteOperationParameter"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9864,6 +12884,11 @@
       "serviceParams": [
         "client",
         "quoteOperationTool"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9875,6 +12900,11 @@
       "serviceParams": [
         "client",
         "quotePayment"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9886,6 +12916,11 @@
       "serviceParams": [
         "client",
         "quoteShipment"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9897,6 +12932,10 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -9908,6 +12947,10 @@
       "serviceParams": [
         "client",
         "update"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -9919,6 +12962,11 @@
       "serviceParams": [
         "client",
         "salesOrder"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9930,6 +12978,11 @@
       "serviceParams": [
         "client",
         "salesOrderShipment"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9941,6 +12994,11 @@
       "serviceParams": [
         "client",
         "salesOrderLine"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9952,6 +13010,11 @@
       "serviceParams": [
         "client",
         "salesOrderPayment"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9963,6 +13026,11 @@
       "serviceParams": [
         "client",
         "rfq"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9974,6 +13042,11 @@
       "serviceParams": [
         "client",
         "salesRfqLine"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -9985,6 +13058,9 @@
       "serviceParams": [
         "client",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -9995,6 +13071,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -10009,6 +13088,10 @@
         "companyId",
         "data",
         "updatedBy"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10022,6 +13105,10 @@
         "companyId",
         "data",
         "updatedBy"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10033,6 +13120,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10044,6 +13134,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10054,6 +13147,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -10067,6 +13163,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10078,6 +13177,9 @@
       "serviceParams": [
         "client",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10088,6 +13190,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -10100,6 +13205,9 @@
       "serviceParams": [
         "client",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10110,6 +13218,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -10122,6 +13233,9 @@
       "serviceParams": [
         "client",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10132,6 +13246,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10144,6 +13261,9 @@
         "client",
         "table",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10155,6 +13275,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10166,6 +13289,9 @@
       "serviceParams": [
         "client",
         "table",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -10179,6 +13305,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10191,6 +13320,9 @@
         "client",
         "id",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10201,6 +13333,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -10213,6 +13348,9 @@
       "serviceParams": [
         "client",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10224,6 +13362,9 @@
       "serviceParams": [
         "client",
         "planId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10234,6 +13375,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10245,6 +13389,9 @@
       "serviceParams": [
         "client",
         "table",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -10258,6 +13405,9 @@
         "client",
         "table",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10270,6 +13420,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10282,6 +13435,9 @@
         "client",
         "table",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10292,6 +13448,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -10304,6 +13463,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10314,6 +13476,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10326,6 +13491,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10338,6 +13506,11 @@
         "client",
         "company",
         "ownerId"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -10349,6 +13522,10 @@
       "serviceParams": [
         "client",
         "data"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10361,6 +13538,10 @@
         "client",
         "companyId",
         "company"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10373,6 +13554,10 @@
         "client",
         "companyId",
         "kanbanOutput"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10385,6 +13570,10 @@
         "client",
         "companyId",
         "useMetric"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10396,6 +13585,11 @@
       "serviceParams": [
         "client",
         "apiKey"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -10410,6 +13604,10 @@
         "digitalQuoteEnabled",
         "digitalQuoteNotificationGroup",
         "digitalQuoteIncludesPurchaseOrders"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10422,6 +13620,10 @@
         "client",
         "companyId",
         "logoDark"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10434,6 +13636,10 @@
         "client",
         "companyId",
         "logoLight"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10446,6 +13652,10 @@
         "client",
         "companyId",
         "logoDarkIcon"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10458,6 +13668,10 @@
         "client",
         "companyId",
         "logoLightIcon"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10470,6 +13684,10 @@
         "client",
         "companyId",
         "materialGeneratedIds"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10482,6 +13700,10 @@
         "client",
         "companyId",
         "useMetric"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10494,6 +13716,10 @@
         "client",
         "companyId",
         "productLabelSize"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10506,6 +13732,10 @@
         "client",
         "companyId",
         "includeThumbnailsOnPurchasingPdfs"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10518,6 +13748,10 @@
         "client",
         "companyId",
         "includeThumbnailsOnSalesPdfs"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10530,6 +13764,10 @@
         "client",
         "companyId",
         "jobTravelerIncludeWorkInstructions"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10542,6 +13780,10 @@
         "client",
         "companyId",
         "timeCardEnabled"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10555,6 +13797,10 @@
         "companyId",
         "consoleEnabled",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10567,6 +13813,10 @@
         "client",
         "companyId",
         "rfqReadyNotificationGroup"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10579,6 +13829,10 @@
         "client",
         "companyId",
         "suggestionNotificationGroup"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10591,6 +13845,10 @@
         "client",
         "companyId",
         "settings"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10603,6 +13861,10 @@
         "client",
         "companyId",
         "supplierQuoteNotificationGroup"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10615,6 +13877,10 @@
         "client",
         "companyId",
         "purchasePriceUpdateTiming"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10627,6 +13893,10 @@
         "client",
         "companyId",
         "updateLeadTimesOnReceipt"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10639,6 +13909,10 @@
         "client",
         "companyId",
         "accountsPayableAddress"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10651,6 +13925,10 @@
         "client",
         "companyId",
         "accountsReceivableAddress"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10663,6 +13941,10 @@
         "client",
         "companyId",
         "accountsPayableEmail"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10675,6 +13957,10 @@
         "client",
         "companyId",
         "accountsReceivableEmail"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10687,6 +13973,10 @@
         "client",
         "companyId",
         "defaultSupplierCc"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10699,6 +13989,10 @@
         "client",
         "companyId",
         "defaultCustomerCc"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10711,6 +14005,10 @@
         "client",
         "companyId",
         "quoteLineCategoryMarkups"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10724,6 +14022,10 @@
         "table",
         "companyId",
         "sequence"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10738,6 +14040,10 @@
         "integrationId",
         "metadata",
         "updatedBy"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10749,6 +14055,11 @@
       "serviceParams": [
         "client",
         "webhook"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -10762,6 +14073,10 @@
         "id",
         "userId",
         "notes"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -10774,6 +14089,9 @@
         "client",
         "approvalRequest",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10786,6 +14104,9 @@
         "client",
         "approvalRequest",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10798,6 +14119,9 @@
         "client",
         "id",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10810,6 +14134,9 @@
         "client",
         "approvalRequest",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10821,6 +14148,11 @@
       "serviceParams": [
         "client",
         "request"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -10833,6 +14165,9 @@
         "client",
         "id",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10844,6 +14179,9 @@
       "serviceParams": [
         "client",
         "noteId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10855,6 +14193,9 @@
       "serviceParams": [
         "client",
         "viewId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10866,6 +14207,11 @@
       "serviceParams": [
         "client",
         "text"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -10877,6 +14223,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10889,6 +14238,9 @@
         "client",
         "documentType",
         "documentId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10902,6 +14254,9 @@
         "documentType",
         "companyId",
         "amount"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10913,6 +14268,9 @@
       "serviceParams": [
         "client",
         "rule"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10925,6 +14283,9 @@
         "client",
         "id",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10935,6 +14296,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -10947,6 +14311,9 @@
       "serviceParams": [
         "client",
         "documentType",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -10961,6 +14328,9 @@
         "userId",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10972,6 +14342,9 @@
       "serviceParams": [
         "client",
         "path"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10982,6 +14355,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -10994,6 +14370,9 @@
         "client",
         "documentType",
         "documentId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11005,6 +14384,9 @@
       "serviceParams": [
         "client",
         "itemId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11016,6 +14398,9 @@
       "serviceParams": [
         "client",
         "documentId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11028,6 +14413,9 @@
         "client",
         "userId",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11039,6 +14427,9 @@
       "serviceParams": [
         "client",
         "{"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11050,6 +14441,9 @@
       "serviceParams": [
         "client",
         "userId",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -11063,6 +14457,9 @@
         "client",
         "companyId",
         "table"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11075,6 +14472,9 @@
         "client",
         "documentType",
         "documentId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11086,6 +14486,9 @@
       "serviceParams": [
         "client",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11097,6 +14500,11 @@
       "serviceParams": [
         "client",
         "note"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -11108,6 +14516,11 @@
       "serviceParams": [
         "client",
         "tag"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -11121,6 +14534,9 @@
         "documentType",
         "companyId",
         "amount"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11132,6 +14548,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11143,6 +14562,11 @@
       "serviceParams": [
         "client",
         "externalLink"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -11155,6 +14579,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11166,6 +14593,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11177,6 +14607,9 @@
       "serviceParams": [
         "client",
         "id"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11189,6 +14622,10 @@
         "client",
         "modelId",
         "thumbnailPath"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -11200,6 +14637,11 @@
       "serviceParams": [
         "client",
         "upload"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -11212,6 +14654,10 @@
         "client",
         "id",
         "note"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -11225,6 +14671,10 @@
         "id",
         "userId",
         "notes"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -11236,6 +14686,11 @@
       "serviceParams": [
         "client",
         "rule"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -11247,6 +14702,11 @@
       "serviceParams": [
         "client",
         "view"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -11258,6 +14718,10 @@
       "serviceParams": [
         "client",
         "updates"
+      ],
+      "injectAuth": [
+        "companyId",
+        "updatedBy"
       ]
     },
     {
@@ -11269,6 +14733,9 @@
       "serviceParams": [
         "client",
         "employeeTypeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11280,6 +14747,9 @@
       "serviceParams": [
         "client",
         "groupId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11291,6 +14761,9 @@
       "serviceParams": [
         "client",
         "userId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11303,6 +14776,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11314,6 +14790,9 @@
       "serviceParams": [
         "client",
         "id",
+        "companyId"
+      ],
+      "injectAuth": [
         "companyId"
       ]
     },
@@ -11327,6 +14806,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11339,6 +14821,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11350,6 +14835,9 @@
       "serviceParams": [
         "client",
         "employeeTypeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11362,6 +14850,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11373,6 +14864,9 @@
       "serviceParams": [
         "client",
         "companyId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11383,6 +14877,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11394,6 +14891,9 @@
       "serviceParams": [
         "client",
         "groupId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11405,6 +14905,9 @@
       "serviceParams": [
         "client",
         "groupId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11417,6 +14920,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11428,6 +14934,9 @@
       "serviceParams": [
         "client",
         "groupIds"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11439,6 +14948,9 @@
       "serviceParams": [
         "client",
         "employeeTypeId"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11451,6 +14963,9 @@
         "client",
         "companyId",
         "args"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11461,6 +14976,9 @@
       "paramCount": 0,
       "serviceParams": [
         "client"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11472,6 +14990,9 @@
       "serviceParams": [
         "client",
         "userIds"
+      ],
+      "injectAuth": [
+        "companyId"
       ]
     },
     {
@@ -11483,6 +15004,11 @@
       "serviceParams": [
         "client",
         "employeeType"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -11494,6 +15020,11 @@
       "serviceParams": [
         "client",
         "group"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -11505,6 +15036,11 @@
       "serviceParams": [
         "client",
         "employeeType"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -11518,6 +15054,11 @@
         "employeeTypeId",
         "companyId",
         "permissions"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -11529,6 +15070,11 @@
       "serviceParams": [
         "client",
         "{"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     },
     {
@@ -11541,6 +15087,11 @@
         "client",
         "groupId",
         "selections"
+      ],
+      "injectAuth": [
+        "companyId",
+        "createdBy",
+        "updatedBy"
       ]
     }
   ]

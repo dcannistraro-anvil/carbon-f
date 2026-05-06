@@ -19,6 +19,7 @@ import * as sharedFunctions from "~/modules/shared/shared.service";
 import * as usersFunctions from "~/modules/users/users.service";
 import { isMcpBlockedTool } from "./mcp-blocked-tools";
 import toolMetadata from "./tool-metadata.json";
+import type { AuthField } from "./types";
 
 // Combine all functions into a single registry
 const functionRegistry = {
@@ -43,6 +44,34 @@ export interface ExecutorContext {
   client: SupabaseClient<Database>;
   companyId: string;
   userId: string;
+}
+
+// Stamps auth identity onto typed payloads. Carbon's services expect auth
+// fields inside the payload (predates MCP). `fields` is per-tool from
+// tool-metadata.json so reads stay clean and updates don't overwrite createdBy.
+function enrichWithAuthContext(
+  value: unknown,
+  context: ExecutorContext,
+  fields: AuthField[]
+): unknown {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return value;
+  if (fields.length === 0) return value;
+
+  const enriched: Record<string, unknown> = {
+    ...(value as Record<string, unknown>)
+  };
+
+  if (fields.includes("createdBy") && !("createdBy" in enriched)) {
+    enriched.createdBy = context.userId;
+  }
+  if (fields.includes("updatedBy")) {
+    enriched.updatedBy = context.userId;
+  }
+  if (fields.includes("companyId")) {
+    enriched.companyId = context.companyId;
+  }
+
+  return enriched;
 }
 
 export async function executeFunction(
@@ -110,6 +139,10 @@ export async function executeFunction(
       toolMeta && "serviceParams" in toolMeta
         ? (toolMeta as any).serviceParams
         : [];
+    const injectAuth: AuthField[] =
+      toolMeta && "injectAuth" in toolMeta
+        ? ((toolMeta as any).injectAuth as AuthField[])
+        : [];
 
     // Build arguments array based on parameter names
     const functionArgs: any[] = [];
@@ -129,15 +162,19 @@ export async function executeFunction(
         const argsValue = normalizedArgs || {};
         functionArgs.push(argsValue);
       } else if (normalizedArgs && paramName in normalizedArgs) {
-        functionArgs.push(normalizedArgs[paramName]);
+        functionArgs.push(
+          enrichWithAuthContext(normalizedArgs[paramName], context, injectAuth)
+        );
       } else if (
         normalizedArgs &&
         Object.keys(normalizedArgs).length === 1 &&
         !paramNames.some((p: string) => p in normalizedArgs)
       ) {
-        // If single arg that doesn't match param names, use it as positional
+        // Single-key payload whose name doesn't match any parameter — unwrap
+        // and use as positional. Hits the documented `{ args: {...} }` wrapper
+        // and any LLM that guesses a key name (e.g. `{ item: {...} }`).
         const value = Object.values(normalizedArgs)[0];
-        functionArgs.push(value);
+        functionArgs.push(enrichWithAuthContext(value, context, injectAuth));
       } else {
         // Skip optional parameters
         continue;

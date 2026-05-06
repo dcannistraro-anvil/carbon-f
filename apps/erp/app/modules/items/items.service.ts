@@ -2539,7 +2539,7 @@ export async function upsertConsumable(
         ...sanitize(consumableUpdate),
         updatedAt: today(getLocalTimeZone()).toString()
       })
-      .eq("itemId", consumable.id)
+      .eq("id", consumable.id)
   ]);
 
   if (updateItem.error) return updateItem;
@@ -2693,7 +2693,7 @@ export async function upsertPart(
         ...sanitize(partUpdate),
         updatedAt: today(getLocalTimeZone()).toString()
       })
-      .eq("itemId", part.id)
+      .eq("id", part.id)
   ]);
 
   if (updateItem.error) return updateItem;
@@ -3372,7 +3372,7 @@ export async function upsertMaterial(
         ...sanitize(materialUpdate),
         updatedAt: today(getLocalTimeZone()).toString()
       })
-      .eq("itemId", material.id)
+      .eq("id", material.id)
   ]);
 
   if (updateItem.error) return updateItem;
@@ -3877,7 +3877,7 @@ export async function upsertTool(
         ...sanitize(toolUpdate),
         updatedAt: today(getLocalTimeZone()).toString()
       })
-      .eq("itemId", tool.id)
+      .eq("id", tool.id)
   ]);
 
   if (updateItem.error) return updateItem;
