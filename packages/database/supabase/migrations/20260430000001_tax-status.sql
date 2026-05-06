@@ -1,19 +1,22 @@
 -- Tax Exemption Reason Enum
-CREATE TYPE "taxExemptionReason" AS ENUM (
-  'Resale',
-  'Government',
-  'Nonprofit',
-  'Agriculture',
-  'Industrial',
-  'Export',
-  'Medical',
-  'Educational',
-  'Religious',
-  'Other'
-);
+DO $$ BEGIN
+  CREATE TYPE "taxExemptionReason" AS ENUM (
+    'Resale',
+    'Government',
+    'Nonprofit',
+    'Agriculture',
+    'Industrial',
+    'Export',
+    'Medical',
+    'Educational',
+    'Religious',
+    'Other'
+  );
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
 
 -- Customer Tax Table (1:1 with customer)
-CREATE TABLE "customerTax" (
+CREATE TABLE IF NOT EXISTS "customerTax" (
   "customerId" TEXT NOT NULL,
   "taxId" TEXT,
   "vatNumber" TEXT,
@@ -32,10 +35,11 @@ CREATE TABLE "customerTax" (
   CONSTRAINT "customerTax_updatedBy_fkey" FOREIGN KEY ("updatedBy") REFERENCES "user"("id") ON UPDATE CASCADE ON DELETE SET NULL
 );
 
-CREATE INDEX "customerTax_customerId_idx" ON "customerTax"("customerId");
+CREATE INDEX IF NOT EXISTS "customerTax_customerId_idx" ON "customerTax"("customerId");
 
 ALTER TABLE "customerTax" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "SELECT" ON "public"."customerTax";
 CREATE POLICY "SELECT" ON "public"."customerTax"
 FOR SELECT USING (
   "companyId" = ANY (
@@ -43,6 +47,7 @@ FOR SELECT USING (
   )
 );
 
+DROP POLICY IF EXISTS "UPDATE" ON "public"."customerTax";
 CREATE POLICY "UPDATE" ON "public"."customerTax"
 FOR UPDATE USING (
   "companyId" = ANY (
@@ -51,7 +56,7 @@ FOR UPDATE USING (
 );
 
 -- Supplier Tax Table (1:1 with supplier)
-CREATE TABLE "supplierTax" (
+CREATE TABLE IF NOT EXISTS "supplierTax" (
   "supplierId" TEXT NOT NULL,
   "taxId" TEXT,
   "vatNumber" TEXT,
@@ -70,10 +75,11 @@ CREATE TABLE "supplierTax" (
   CONSTRAINT "supplierTax_updatedBy_fkey" FOREIGN KEY ("updatedBy") REFERENCES "user"("id") ON UPDATE CASCADE ON DELETE SET NULL
 );
 
-CREATE INDEX "supplierTax_supplierId_idx" ON "supplierTax"("supplierId");
+CREATE INDEX IF NOT EXISTS "supplierTax_supplierId_idx" ON "supplierTax"("supplierId");
 
 ALTER TABLE "supplierTax" ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "SELECT" ON "public"."supplierTax";
 CREATE POLICY "SELECT" ON "public"."supplierTax"
 FOR SELECT USING (
   "companyId" = ANY (
@@ -81,6 +87,7 @@ FOR SELECT USING (
   )
 );
 
+DROP POLICY IF EXISTS "UPDATE" ON "public"."supplierTax";
 CREATE POLICY "UPDATE" ON "public"."supplierTax"
 FOR UPDATE USING (
   "companyId" = ANY (
@@ -88,19 +95,34 @@ FOR UPDATE USING (
   )
 );
 
--- Backfill customerTax from existing customer records
-INSERT INTO "customerTax" ("customerId", "taxId", "vatNumber", "eori", "companyId")
-SELECT c.id, c."taxId", c."vatNumber", c."eori", c."companyId"
-FROM "customer" c
-ON CONFLICT ("customerId") DO NOTHING;
+-- Backfill customerTax from existing customer records (only if source columns still exist)
+DO $$ BEGIN
+  IF EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_name = 'customer' AND column_name = 'taxId'
+  ) THEN
+    INSERT INTO "customerTax" ("customerId", "taxId", "vatNumber", "eori", "companyId")
+    SELECT c.id, c."taxId", c."vatNumber", c."eori", c."companyId"
+    FROM "customer" c
+    ON CONFLICT ("customerId") DO NOTHING;
+  END IF;
+END $$;
 
--- Backfill supplierTax from existing supplier records
-INSERT INTO "supplierTax" ("supplierId", "taxId", "vatNumber", "eori", "companyId")
-SELECT s.id, s."taxId", s."vatNumber", s."eori", s."companyId"
-FROM "supplier" s
-ON CONFLICT ("supplierId") DO NOTHING;
+-- Backfill supplierTax from existing supplier records (only if source columns still exist)
+DO $$ BEGIN
+  IF EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_name = 'supplier' AND column_name = 'taxId'
+  ) THEN
+    INSERT INTO "supplierTax" ("supplierId", "taxId", "vatNumber", "eori", "companyId")
+    SELECT s.id, s."taxId", s."vatNumber", s."eori", s."companyId"
+    FROM "supplier" s
+    ON CONFLICT ("supplierId") DO NOTHING;
+  END IF;
+END $$;
 
 -- Storage RLS for tax certificate uploads
+DROP POLICY IF EXISTS "Employees with sales_create can upload tax certificates" ON storage.objects;
 CREATE POLICY "Employees with sales_create can upload tax certificates" ON storage.objects
   FOR INSERT WITH CHECK (
     bucket_id = 'private'
@@ -109,6 +131,7 @@ CREATE POLICY "Employees with sales_create can upload tax certificates" ON stora
     AND (storage.foldername(name))[2] = 'tax-certificates'
   );
 
+DROP POLICY IF EXISTS "Employees can view tax certificates" ON storage.objects;
 CREATE POLICY "Employees can view tax certificates" ON storage.objects
   FOR SELECT USING (
     bucket_id = 'private'
@@ -116,6 +139,8 @@ CREATE POLICY "Employees can view tax certificates" ON storage.objects
     AND (storage.foldername(name))[2] = 'tax-certificates'
   );
 
+DROP POLICY IF EXISTS "Employees with sales_delete or purchasing_delete can delete tax certificates" ON storage.objects;
+DROP POLICY IF EXISTS "Employees with sales_delete or purchasing_delete can delete tax" ON storage.objects;
 CREATE POLICY "Employees with sales_delete or purchasing_delete can delete tax certificates" ON storage.objects
   FOR DELETE USING (
     bucket_id = 'private'
