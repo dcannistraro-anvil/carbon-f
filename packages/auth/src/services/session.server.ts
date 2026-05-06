@@ -64,17 +64,20 @@ export async function setAuthSession(
   return sessionStorage.commitSession(session, { maxAge: SESSION_MAX_AGE });
 }
 
-export async function destroyAuthSession(request: Request) {
+export async function clearAuthCookies(request: Request) {
   const session = await getSession(request);
-
   const sessionCookie = await sessionStorage.destroySession(session);
   const companyIdCookie = setCompanyId(null);
+  return [
+    ["Set-Cookie", sessionCookie] as [string, string],
+    ["Set-Cookie", companyIdCookie] as [string, string]
+  ];
+}
 
+export async function destroyAuthSession(request: Request) {
+  const headers = await clearAuthCookies(request);
   return redirect(path.to.login, {
-    headers: [
-      ["Set-Cookie", sessionCookie],
-      ["Set-Cookie", companyIdCookie]
-    ]
+    headers
   });
 }
 

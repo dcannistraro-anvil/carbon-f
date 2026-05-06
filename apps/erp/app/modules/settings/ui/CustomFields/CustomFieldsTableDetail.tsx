@@ -196,8 +196,13 @@ const CustomFieldCategoryDetail = ({
                           icon={<LuGripVertical />}
                           variant="ghost"
                         />
-                        <p className="flex-grow text-foreground">
-                          {fieldMap[sortId]?.name}
+                        <p className="flex-grow text-foreground flex items-center justify-between">
+                          <span>{fieldMap[sortId]?.name}</span>
+                          {fieldMap[sortId]?.required && (
+                            <span className="text-muted-foreground text-xxs">
+                              <Trans>Required</Trans>
+                            </span>
+                          )}
                         </p>
                         <Button
                           isDisabled
