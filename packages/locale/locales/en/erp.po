@@ -12414,8 +12414,8 @@ msgid "Show sync options"
 msgstr "Show sync options"
 
 #: apps/erp/app/modules/items/ui/ItemRules/MessageWithTokens.tsx:161
-msgid "Shown to the user when this rule fails. Use {item.name} or other tokens."
-msgstr "Shown to the user when this rule fails. Use {item.name} or other tokens."
+msgid "Shown to the user when this rule fails."
+msgstr "Shown to the user when this rule fails."
 
 #: apps/erp/app/routes/_public+/login.tsx:344
 msgid "Sign in with Email"

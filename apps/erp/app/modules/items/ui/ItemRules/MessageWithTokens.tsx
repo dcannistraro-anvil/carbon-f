@@ -158,7 +158,7 @@ export default function MessageWithTokens({
       <TextArea
         name={name}
         label={label ?? t`Message`}
-        placeholder={t`Shown to the user when this rule fails. Use {item.name} or other tokens.`}
+        placeholder={t`Shown to the user when this rule fails.`}
       />
       <HStack className="justify-end mt-2">
         <DropdownMenu>
