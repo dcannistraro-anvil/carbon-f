@@ -24625,7 +24625,6 @@ export type Database = {
           itemIds: string[] | null
           itemPostingGroupId: string | null
           maxQuantity: number | null
-          minMarginPercent: number | null
           minQuantity: number | null
           name: string
           priority: number
@@ -24648,7 +24647,6 @@ export type Database = {
           itemIds?: string[] | null
           itemPostingGroupId?: string | null
           maxQuantity?: number | null
-          minMarginPercent?: number | null
           minQuantity?: number | null
           name: string
           priority?: number
@@ -24671,7 +24669,6 @@ export type Database = {
           itemIds?: string[] | null
           itemPostingGroupId?: string | null
           maxQuantity?: number | null
-          minMarginPercent?: number | null
           minQuantity?: number | null
           name?: string
           priority?: number

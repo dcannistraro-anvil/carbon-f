@@ -5922,10 +5922,6 @@ msgstr "Фиксированный заказ"
 msgid "Fixed Shelf Life"
 msgstr "Фиксированный срок годности"
 
-#: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:281
-msgid "Floor: price won't drop below this margin over cost"
-msgstr "Минимум: цена не упадет ниже этой маржи от стоимости"
-
 #: apps/erp/app/routes/onboarding+/plan.tsx:44
 msgid "For growing businesses that need support"
 msgstr "Для растущих компаний, нуждающихся в поддержке"
@@ -7770,10 +7766,6 @@ msgstr "Метрические единицы отключены"
 #: apps/erp/app/routes/x+/settings+/items.tsx:187
 msgid "Metric units are enabled"
 msgstr "Метрические единицы включены"
-
-#: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:280
-msgid "Min Margin %"
-msgstr "Мин. маржа %"
 
 #: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:266
 msgid "Min Qty"

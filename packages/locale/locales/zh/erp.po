@@ -5922,10 +5922,6 @@ msgstr "固定重新订购"
 msgid "Fixed Shelf Life"
 msgstr "固定保质期"
 
-#: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:281
-msgid "Floor: price won't drop below this margin over cost"
-msgstr "底价：价格不会低于成本之上的此利润率"
-
 #: apps/erp/app/routes/onboarding+/plan.tsx:44
 msgid "For growing businesses that need support"
 msgstr "适合需要支持的成长型企业"
@@ -7770,10 +7766,6 @@ msgstr "公制单位已禁用"
 #: apps/erp/app/routes/x+/settings+/items.tsx:187
 msgid "Metric units are enabled"
 msgstr "公制单位已启用"
-
-#: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:280
-msgid "Min Margin %"
-msgstr "最低利润率 %"
 
 #: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:266
 msgid "Min Qty"

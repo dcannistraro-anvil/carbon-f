@@ -5922,10 +5922,6 @@ msgstr "Feste Nachbestellung"
 msgid "Fixed Shelf Life"
 msgstr "Feste Haltbarkeit"
 
-#: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:281
-msgid "Floor: price won't drop below this margin over cost"
-msgstr "Untergrenze: Der Preis wird diese Marge über den Kosten nicht unterschreiten"
-
 #: apps/erp/app/routes/onboarding+/plan.tsx:44
 msgid "For growing businesses that need support"
 msgstr "Für wachsende Unternehmen, die Unterstützung benötigen"
@@ -7770,10 +7766,6 @@ msgstr "Metrische Einheiten sind deaktiviert"
 #: apps/erp/app/routes/x+/settings+/items.tsx:187
 msgid "Metric units are enabled"
 msgstr "Metrische Einheiten sind aktiviert"
-
-#: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:280
-msgid "Min Margin %"
-msgstr "Min Marge %"
 
 #: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:266
 msgid "Min Qty"

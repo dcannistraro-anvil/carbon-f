@@ -5922,10 +5922,6 @@ msgstr "निश्चित पुनः ऑर्डर"
 msgid "Fixed Shelf Life"
 msgstr "निश्चित शेल्फ जीवन"
 
-#: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:281
-msgid "Floor: price won't drop below this margin over cost"
-msgstr "फ़्लोर: कीमत इस मार्जिन से लागत के ऊपर नहीं गिरेगी"
-
 #: apps/erp/app/routes/onboarding+/plan.tsx:44
 msgid "For growing businesses that need support"
 msgstr "बढ़ते हुए व्यवसायों के लिए जिन्हें समर्थन की आवश्यकता है"
@@ -7770,10 +7766,6 @@ msgstr "मीट्रिक इकाइयाँ अक्षम हैं"
 #: apps/erp/app/routes/x+/settings+/items.tsx:187
 msgid "Metric units are enabled"
 msgstr "मीट्रिक इकाइयाँ सक्षम हैं"
-
-#: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:280
-msgid "Min Margin %"
-msgstr "न्यूनतम मार्जिन %"
 
 #: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:266
 msgid "Min Qty"

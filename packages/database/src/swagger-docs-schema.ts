@@ -15778,9 +15778,6 @@ export default {
             $ref: "#/parameters/rowFilter.pricingRule.validTo"
           },
           {
-            $ref: "#/parameters/rowFilter.pricingRule.minMarginPercent"
-          },
-          {
             $ref: "#/parameters/rowFilter.pricingRule.active"
           },
           {
@@ -15900,9 +15897,6 @@ export default {
             $ref: "#/parameters/rowFilter.pricingRule.validTo"
           },
           {
-            $ref: "#/parameters/rowFilter.pricingRule.minMarginPercent"
-          },
-          {
             $ref: "#/parameters/rowFilter.pricingRule.active"
           },
           {
@@ -15974,9 +15968,6 @@ export default {
           },
           {
             $ref: "#/parameters/rowFilter.pricingRule.validTo"
-          },
-          {
-            $ref: "#/parameters/rowFilter.pricingRule.minMarginPercent"
           },
           {
             $ref: "#/parameters/rowFilter.pricingRule.active"
@@ -84535,10 +84526,6 @@ export default {
           format: "date",
           type: "string"
         },
-        minMarginPercent: {
-          format: "numeric",
-          type: "number"
-        },
         active: {
           default: true,
           format: "boolean",
@@ -118326,12 +118313,6 @@ export default {
     },
     "rowFilter.pricingRule.validTo": {
       name: "validTo",
-      required: false,
-      in: "query",
-      type: "string"
-    },
-    "rowFilter.pricingRule.minMarginPercent": {
-      name: "minMarginPercent",
       required: false,
       in: "query",
       type: "string"

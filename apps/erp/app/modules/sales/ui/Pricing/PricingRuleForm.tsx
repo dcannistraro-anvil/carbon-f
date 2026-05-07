@@ -274,20 +274,6 @@ const PricingRuleForm = ({ initialValues, onClose }: PricingRuleFormProps) => {
                   minValue={0}
                   step={1}
                 />
-
-                <Number
-                  name="minMarginPercent"
-                  label={t`Min Margin %`}
-                  helperText={t`Floor: price won't drop below this margin over cost`}
-                  minValue={0}
-                  maxValue={1}
-                  step={0.01}
-                  formatOptions={{
-                    style: "percent",
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 2
-                  }}
-                />
               </VStack>
             </ModalDrawerBody>
             <ModalDrawerFooter>

@@ -71,8 +71,7 @@ import type {
 
 export function applyPriceRules(
   startingPrice: number,
-  matchedRules: MatchedRule[],
-  unitCost: number | null = null
+  matchedRules: MatchedRule[]
 ): { finalPrice: number; appendedTrace: PriceTraceStep[] } {
   const appendedTrace: PriceTraceStep[] = [];
   let finalPrice = startingPrice;
@@ -100,18 +99,14 @@ export function applyPriceRules(
 
     const winner = ranked[0];
     if (winner && winner.effective > 0) {
-      finalPrice = clampAndTrace(
-        finalPrice - winner.effective,
-        unitCost,
-        winner.rule,
-        appendedTrace,
-        {
-          step: "Discount",
-          source: `Rule: ${winner.rule.name}`,
-          adjustment: -winner.effective,
-          ruleId: winner.rule.id
-        }
-      );
+      finalPrice = finalPrice - winner.effective;
+      appendedTrace.push({
+        step: "Discount",
+        source: `Rule: ${winner.rule.name}`,
+        amount: finalPrice,
+        adjustment: -winner.effective,
+        ruleId: winner.rule.id
+      });
     }
   }
 
@@ -123,19 +118,14 @@ export function applyPriceRules(
   for (const rule of sortedMarkups) {
     const adjustment =
       rule.amountType === "Percentage" ? finalPrice * rule.amount : rule.amount;
-
-    finalPrice = clampAndTrace(
-      finalPrice + adjustment,
-      unitCost,
-      rule,
-      appendedTrace,
-      {
-        step: "Markup",
-        source: `Rule: ${rule.name}`,
-        adjustment,
-        ruleId: rule.id
-      }
-    );
+    finalPrice = finalPrice + adjustment;
+    appendedTrace.push({
+      step: "Markup",
+      source: `Rule: ${rule.name}`,
+      amount: finalPrice,
+      adjustment,
+      ruleId: rule.id
+    });
   }
 
   if (finalPrice < 0) {
@@ -149,34 +139,6 @@ export function applyPriceRules(
   }
 
   return { finalPrice, appendedTrace };
-}
-
-// If the rule carries a minMarginPercent and cost is known, enforce the floor
-// (price >= cost / (1 - margin)) and log a trace entry on clamp.
-function clampAndTrace(
-  proposedPrice: number,
-  unitCost: number | null,
-  rule: MatchedRule,
-  trace: PriceTraceStep[],
-  baseEntry: Omit<PriceTraceStep, "amount">
-): number {
-  const margin = rule.minMarginPercent;
-  if (margin !== null && margin < 1 && unitCost !== null && unitCost > 0) {
-    const floor = unitCost / (1 - margin);
-    if (proposedPrice < floor) {
-      trace.push({ ...baseEntry, amount: floor });
-      trace.push({
-        step: "Min Margin",
-        source: `Rule: ${rule.name} (floor ${(margin * 100).toFixed(1)}%)`,
-        amount: floor,
-        adjustment: floor - proposedPrice,
-        ruleId: rule.id
-      });
-      return floor;
-    }
-  }
-  trace.push({ ...baseEntry, amount: proposedPrice });
-  return proposedPrice;
 }
 
 export async function closeSalesOrder(
@@ -293,7 +255,6 @@ export async function createPricingRule(
         validFrom: data.validFrom || null,
         validTo: data.validTo || null,
         priority: data.priority ?? 0,
-        minMarginPercent: data.minMarginPercent ?? null,
         active: data.active ?? true,
         companyId,
         createdBy: userId
@@ -500,7 +461,6 @@ export async function duplicatePricingRule(
         validFrom: original.validFrom,
         validTo: original.validTo,
         priority: original.priority,
-        minMarginPercent: original.minMarginPercent,
         active: false,
         companyId,
         createdBy: userId
@@ -2020,22 +1980,17 @@ export async function resolvePrice(
     resolvedCustomerTypeId = cust?.customerTypeId ?? null;
   }
 
-  // Pull posting group + unit cost from itemCost. The posting group is needed
-  // to match rules scoped to itemPostingGroupId; the unit cost feeds
-  // rule-level minMarginPercent clamps.
+  // Pull posting group from itemCost so we can match rules scoped to
+  // itemPostingGroupId.
   let resolvedItemPostingGroupId = input.itemPostingGroupId ?? null;
-  let unitCost: number | null = null;
-  const { data: costRow } = await client
-    .from("itemCost")
-    .select("itemPostingGroupId, unitCost")
-    .eq("itemId", input.itemId)
-    .eq("companyId", companyId)
-    .maybeSingle();
-  if (costRow) {
-    if (!resolvedItemPostingGroupId) {
-      resolvedItemPostingGroupId = costRow.itemPostingGroupId ?? null;
-    }
-    unitCost = costRow.unitCost ?? null;
+  if (!resolvedItemPostingGroupId) {
+    const { data: costRow } = await client
+      .from("itemCost")
+      .select("itemPostingGroupId")
+      .eq("itemId", input.itemId)
+      .eq("companyId", companyId)
+      .maybeSingle();
+    resolvedItemPostingGroupId = costRow?.itemPostingGroupId ?? null;
   }
 
   let basePrice: number;
@@ -2182,7 +2137,7 @@ export async function resolvePrice(
       return true;
     }) as MatchedRule[];
 
-    const ruleResult = applyPriceRules(startingPrice, matchedRules, unitCost);
+    const ruleResult = applyPriceRules(startingPrice, matchedRules);
     finalPrice = ruleResult.finalPrice;
     trace.push(...ruleResult.appendedTrace);
   }
@@ -2268,7 +2223,7 @@ export async function resolvePriceList(
   let itemQuery = client
     .from("item")
     .select(
-      "id, readableId, name, thumbnailPath, itemUnitSalePrice(unitSalePrice), itemCost(itemPostingGroupId, unitCost)",
+      "id, readableId, name, thumbnailPath, itemUnitSalePrice(unitSalePrice), itemCost(itemPostingGroupId)",
       { count: "exact" }
     )
     .eq("active", true)
@@ -2391,7 +2346,6 @@ export async function resolvePriceList(
       ? item.itemCost[0]
       : item.itemCost;
     const itemPostingGroupId = itemCostRow?.itemPostingGroupId ?? null;
-    const unitCost = itemCostRow?.unitCost ?? null;
     const trace: PriceTraceStep[] = [];
 
     let startingPrice = basePrice;
@@ -2501,7 +2455,7 @@ export async function resolvePriceList(
         return true;
       });
 
-      const ruleResult = applyPriceRules(startingPrice, matchedRules, unitCost);
+      const ruleResult = applyPriceRules(startingPrice, matchedRules);
       finalPrice = ruleResult.finalPrice;
       trace.push(...ruleResult.appendedTrace);
       hasRuleAdjustment = ruleResult.appendedTrace.length > 0;

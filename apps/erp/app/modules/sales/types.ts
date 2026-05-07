@@ -39,7 +39,6 @@ export type MatchedRule = {
   amountType: string;
   amount: number;
   priority: number;
-  minMarginPercent: number | null;
 };
 
 export type PriceOverrideBreak = {

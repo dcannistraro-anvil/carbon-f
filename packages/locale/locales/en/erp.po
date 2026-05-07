@@ -5922,10 +5922,6 @@ msgstr "Fixed Reorder"
 msgid "Fixed Shelf Life"
 msgstr "Fixed Shelf Life"
 
-#: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:281
-msgid "Floor: price won't drop below this margin over cost"
-msgstr "Floor: price won't drop below this margin over cost"
-
 #: apps/erp/app/routes/onboarding+/plan.tsx:44
 msgid "For growing businesses that need support"
 msgstr "For growing businesses that need support"
@@ -7770,10 +7766,6 @@ msgstr "Metric units are disabled"
 #: apps/erp/app/routes/x+/settings+/items.tsx:187
 msgid "Metric units are enabled"
 msgstr "Metric units are enabled"
-
-#: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:280
-msgid "Min Margin %"
-msgstr "Min Margin %"
 
 #: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:266
 msgid "Min Qty"

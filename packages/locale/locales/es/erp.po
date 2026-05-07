@@ -5922,10 +5922,6 @@ msgstr "Reorden Fijo"
 msgid "Fixed Shelf Life"
 msgstr "Vida Útil Fija"
 
-#: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:281
-msgid "Floor: price won't drop below this margin over cost"
-msgstr "Piso: el precio no caerá por debajo de este margen sobre el costo"
-
 #: apps/erp/app/routes/onboarding+/plan.tsx:44
 msgid "For growing businesses that need support"
 msgstr "Para empresas en crecimiento que necesitan soporte"
@@ -7770,10 +7766,6 @@ msgstr "Las unidades métricas están deshabilitadas"
 #: apps/erp/app/routes/x+/settings+/items.tsx:187
 msgid "Metric units are enabled"
 msgstr "Las unidades métricas están habilitadas"
-
-#: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:280
-msgid "Min Margin %"
-msgstr "% Margen Mín"
 
 #: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:266
 msgid "Min Qty"

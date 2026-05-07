@@ -5922,10 +5922,6 @@ msgstr "Stałe Zamówienie"
 msgid "Fixed Shelf Life"
 msgstr "Stały okres przydatności"
 
-#: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:281
-msgid "Floor: price won't drop below this margin over cost"
-msgstr "Minimum: cena nie spadnie poniżej tej marży w stosunku do kosztu"
-
 #: apps/erp/app/routes/onboarding+/plan.tsx:44
 msgid "For growing businesses that need support"
 msgstr "Dla rozwijających się firm, które potrzebują wsparcia"
@@ -7770,10 +7766,6 @@ msgstr "Jednostki metryczne są wyłączone"
 #: apps/erp/app/routes/x+/settings+/items.tsx:187
 msgid "Metric units are enabled"
 msgstr "Jednostki metryczne są włączone"
-
-#: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:280
-msgid "Min Margin %"
-msgstr "Min Marża %"
 
 #: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:266
 msgid "Min Qty"

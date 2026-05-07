@@ -5922,10 +5922,6 @@ msgstr "固定再注文"
 msgid "Fixed Shelf Life"
 msgstr "固定棚卸し期間"
 
-#: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:281
-msgid "Floor: price won't drop below this margin over cost"
-msgstr "フロア：価格はこのマージンを下回りません"
-
 #: apps/erp/app/routes/onboarding+/plan.tsx:44
 msgid "For growing businesses that need support"
 msgstr "成長中のビジネスをサポートするために"
@@ -7770,10 +7766,6 @@ msgstr "メートル法の単位は無効です"
 #: apps/erp/app/routes/x+/settings+/items.tsx:187
 msgid "Metric units are enabled"
 msgstr "メートル法単位が有効です"
-
-#: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:280
-msgid "Min Margin %"
-msgstr "最小マージン %"
 
 #: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:266
 msgid "Min Qty"

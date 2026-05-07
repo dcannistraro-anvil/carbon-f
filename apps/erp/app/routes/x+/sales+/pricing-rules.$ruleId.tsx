@@ -108,7 +108,6 @@ export default function EditPricingRuleRoute() {
     validFrom: pricingRule.validFrom ?? undefined,
     validTo: pricingRule.validTo ?? undefined,
     priority: pricingRule.priority ?? 0,
-    minMarginPercent: pricingRule.minMarginPercent ?? undefined,
     active: pricingRule.active
   };
 
