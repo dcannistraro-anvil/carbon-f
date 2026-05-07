@@ -11,7 +11,9 @@ export function useSupplierApprovalRequired(): boolean {
   useEffect(() => {
     routeData?.supplierApprovalRequired
       ?.then((v) => setValue(!!v))
-      ?.catch(() => {});
+      ?.catch(() => {
+        // swallow rejection — surfaces as default `false`
+      });
   }, [routeData?.supplierApprovalRequired]);
 
   return value;

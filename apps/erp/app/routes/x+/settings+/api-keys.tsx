@@ -4,7 +4,12 @@ import { flash } from "@carbon/auth/session.server";
 import { msg } from "@lingui/core/macro";
 import type { LoaderFunctionArgs } from "react-router";
 import { Outlet, redirect, useLoaderData } from "react-router";
-import { ApiKeysTable, getApiKeys } from "~/modules/settings";
+import { usePlanGate } from "~/hooks/usePlanGate";
+import {
+  ApiKeysTable,
+  ApiKeysUpgradeOverlay,
+  getApiKeys
+} from "~/modules/settings";
 import type { Handle } from "~/utils/handle";
 import { path } from "~/utils/path";
 import { getGenericQueryFilters } from "~/utils/query";
@@ -48,6 +53,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export default function ApiKeysRoute() {
   const { apiKeys, count } = useLoaderData<typeof loader>();
+  const { isGated } = usePlanGate();
+
+  if (isGated) {
+    return <ApiKeysUpgradeOverlay />;
+  }
   return (
     <>
       <ApiKeysTable count={count} data={apiKeys} />

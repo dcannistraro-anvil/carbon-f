@@ -153,7 +153,7 @@ const ProductionQuantitiesTable = memo(
           cell: ({ row }) => formatDateTime(row.original.createdAt)
         }
       ];
-    }, [operations, people, scrapReasons, t]);
+    }, [operations, people, scrapReasons, t, formatDateTime]);
 
     const permissions = usePermissions();
 

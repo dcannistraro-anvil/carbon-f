@@ -1,12 +1,18 @@
 import type { Database } from "@carbon/database";
 import { checkApiKeyRateLimit } from "@carbon/database/ratelimit";
+import { Edition, Plan } from "@carbon/utils";
 import type {
   AuthSession as SupabaseAuthSession,
   SupabaseClient
 } from "@supabase/supabase-js";
 import { createHash } from "crypto";
 import { redirect } from "react-router";
-import { REFRESH_ACCESS_TOKEN_THRESHOLD, VERCEL_URL } from "../config/env";
+import {
+  CarbonEdition,
+  REFRESH_ACCESS_TOKEN_THRESHOLD,
+  STRIPE_BYPASS_COMPANY_IDS,
+  VERCEL_URL
+} from "../config/env";
 import { getCarbon } from "../lib/supabase";
 import { getCarbonAPIKeyClient } from "../lib/supabase/client";
 import { getCarbonServiceRole } from "../lib/supabase/client.server";
@@ -244,6 +250,32 @@ export async function requirePermissions(
         throw new Response("API key lacks required permissions", {
           status: 403
         });
+      }
+
+      // Plan gate: API access is a Business-tier feature. Block Starter
+      // companies from authenticating with their API key. Self-hosted editions
+      // and bypass-listed companies are never gated.
+      if (CarbonEdition === Edition.Cloud) {
+        const isBypass = STRIPE_BYPASS_COMPANY_IDS
+          ? STRIPE_BYPASS_COMPANY_IDS.split(",")
+              .map((id: string) => id.trim())
+              .includes(companyId)
+          : false;
+
+        if (!isBypass) {
+          const { data: planData } = await serviceRole
+            .from("companyPlan")
+            .select("planId")
+            .eq("id", companyId)
+            .single();
+
+          if (planData?.planId === Plan.Starter) {
+            throw new Response(
+              "API access requires the Business plan and above. Please upgrade your plan to use API keys.",
+              { status: 403 }
+            );
+          }
+        }
       }
 
       const client = getCarbonAPIKeyClient(apiKey);

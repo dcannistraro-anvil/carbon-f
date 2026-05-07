@@ -351,7 +351,8 @@ const PartsTable = memo(({ data, tags, count }: PartsTableProps) => {
     t,
     translateMethodType,
     translateReplenishment,
-    translateTrackingType
+    translateTrackingType,
+    formatDate
   ]);
 
   const fetcher = useFetcher<typeof action>();

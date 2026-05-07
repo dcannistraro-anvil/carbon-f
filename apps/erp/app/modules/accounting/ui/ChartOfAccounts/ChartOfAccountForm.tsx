@@ -70,7 +70,7 @@ const ChartOfAccountForm = ({
     } else if (fetcher.state === "idle" && fetcher.data?.error) {
       toast.error(`Failed to save account: ${fetcher.data.error.message}`);
     }
-  }, [fetcher.data, fetcher.state, onClose, initialValues.id]);
+  }, [fetcher.data, fetcher.state, onClose, initialValues.id, t]);
 
   const isEditing = initialValues.id !== undefined;
   const isDisabled = isEditing

@@ -8,6 +8,7 @@ import { data, useNavigate } from "react-router";
 import { useRouteData } from "~/hooks";
 import { ApiKeyForm, apiKeyValidator, upsertApiKey } from "~/modules/settings";
 import { path } from "~/utils/path";
+import { requirePlan } from "~/utils/planGate.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   await requirePermissions(request, {
@@ -21,6 +22,13 @@ export async function action({ request }: ActionFunctionArgs) {
   assertIsPost(request);
   const { client, companyId, userId } = await requirePermissions(request, {
     update: "users"
+  });
+
+  await requirePlan({
+    request,
+    client,
+    companyId,
+    redirectTo: path.to.apiKeys
   });
 
   const formData = await request.formData();

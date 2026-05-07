@@ -41,6 +41,7 @@ export const jobStatus = [
   "In Progress",
   "Paused",
   "Completed",
+  "Closed",
   "Cancelled",
   "Overdue", // deprecated
   "Due Today" // deprecated

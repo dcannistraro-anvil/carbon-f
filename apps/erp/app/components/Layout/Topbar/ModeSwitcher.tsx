@@ -4,6 +4,7 @@ import { useLingui } from "@lingui/react/macro";
 import { BiLaptop, BiMoon, BiSun } from "react-icons/bi";
 import { useFetcher } from "react-router";
 import type { action } from "~/root";
+import { startModeTransition } from "~/utils/dom";
 import { path } from "~/utils/path";
 
 const ModeSwitcher = () => {
@@ -18,24 +19,22 @@ const ModeSwitcher = () => {
 
   const fetcher = useFetcher<typeof action>();
 
-  return (
-    <fetcher.Form
-      action={path.to.root}
-      method="post"
-      onSubmit={() => {
-        document.body.removeAttribute("style");
-      }}
-      className="hidden sm:block"
-    >
-      <input type="hidden" name="mode" value={nextMode} />
+  const onClick = () => {
+    const formData = new FormData();
+    formData.append("mode", nextMode);
+    startModeTransition(nextMode, () => {
+      fetcher.submit(formData, { method: "post", action: path.to.root });
+    });
+  };
 
-      <IconButton
-        icon={modeLabel[nextMode]}
-        aria-label={t`Light Mode`}
-        variant="ghost"
-        type="submit"
-      />
-    </fetcher.Form>
+  return (
+    <IconButton
+      icon={modeLabel[nextMode]}
+      aria-label={t`Light Mode`}
+      variant="ghost"
+      onClick={onClick}
+      className="hidden sm:block"
+    />
   );
 };
 

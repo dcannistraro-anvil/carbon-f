@@ -121,7 +121,7 @@ export const moveAccountValidator = z.object({
 export const accountValidator = z
   .object({
     id: zfd.text(z.string().optional()),
-    number: z.string().min(1, { message: "Number is required" }),
+    number: z.string().min(1, { message: "Number is required" }).nullish(),
     name: z.string().min(1, { message: "Name is required" }),
     parentId: zfd.text(z.string().optional()),
     isGroup: zfd.checkbox(),

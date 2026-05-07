@@ -8,11 +8,19 @@ import { useRouteData } from "~/hooks";
 import type { ApiKey } from "~/modules/settings";
 import { ApiKeyForm, apiKeyValidator, upsertApiKey } from "~/modules/settings";
 import { getParams, path } from "~/utils/path";
+import { requirePlan } from "~/utils/planGate.server";
 
 export async function action({ request, params }: ActionFunctionArgs) {
   assertIsPost(request);
-  const { client } = await requirePermissions(request, {
+  const { client, companyId } = await requirePermissions(request, {
     update: "users"
+  });
+
+  await requirePlan({
+    request,
+    client,
+    companyId,
+    redirectTo: path.to.apiKeys
   });
 
   const { id } = params;

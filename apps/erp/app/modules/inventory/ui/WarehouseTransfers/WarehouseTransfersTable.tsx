@@ -184,7 +184,7 @@ const WarehouseTransfersTable = memo(
       ];
 
       return [...result, ...customColumns];
-    }, [people, customColumns, t]);
+    }, [people, customColumns, t, formatDate]);
 
     const [selectedTransfer, setSelectedTransfer] =
       useState<WarehouseTransfer | null>(null);

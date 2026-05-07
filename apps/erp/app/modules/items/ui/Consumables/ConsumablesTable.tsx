@@ -324,7 +324,8 @@ const ConsumablesTable = memo(
       itemPostingGroups,
       t,
       translateMethodType,
-      translateTrackingType
+      translateTrackingType,
+      formatDate
     ]);
 
     const fetcher = useFetcher<typeof action>();

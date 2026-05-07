@@ -1,5 +1,6 @@
 "use client";
 import { useCarbon } from "@carbon/auth";
+import type { Database } from "@carbon/database";
 import { ValidatedForm } from "@carbon/form";
 import {
   Badge,
@@ -66,6 +67,7 @@ import type {
 } from "~/components/SortableList";
 import { SortableList, SortableListItem } from "~/components/SortableList";
 import { usePermissions, useRouteData, useUrlParams, useUser } from "~/hooks";
+import { ItemTrackingType } from "~/modules/items";
 import { getLinkToItemDetails } from "~/modules/items/ui/Item/ItemForm";
 import type { MethodItemType, MethodType } from "~/modules/shared";
 import type { Item as ItemType } from "~/stores";
@@ -81,7 +83,10 @@ import type { Job } from "../../types";
 type Material = z.infer<typeof jobMaterialValidator> & {
   requiresBatchTracking: boolean;
   requiresSerialTracking: boolean;
-  item?: { replenishmentSystem: string | null } | null;
+  item?: {
+    replenishmentSystem: string | null;
+    itemTrackingType: Database["public"]["Enums"]["itemTrackingType"];
+  } | null;
 };
 
 type Operation = z.infer<typeof jobOperationValidator>;
@@ -710,8 +715,10 @@ function MaterialForm({
     unitOfMeasureCode: item.data.unitOfMeasureCode ?? "EA",
     quantity: item.data.quantity ?? 1,
     kit: item.data.kit ?? false,
-    requiresBatchTracking: item.data.requiresBatchTracking ?? false,
-    requiresSerialTracking: item.data.requiresSerialTracking ?? false,
+    requiresBatchTracking:
+      item.data.item?.itemTrackingType === ItemTrackingType.Batch,
+    requiresSerialTracking:
+      item.data.item?.itemTrackingType === ItemTrackingType.Serial,
     storageUnitId: item.data.storageUnitId ?? undefined,
     itemReplenishmentSystem: item.data.item?.replenishmentSystem ?? "Buy"
   });
@@ -774,8 +781,10 @@ function MaterialForm({
       unitCost: itemCost.data?.unitCost ?? 0,
       unitOfMeasureCode: item.data?.unitOfMeasureCode ?? "EA",
       methodType: item.data?.defaultMethodType ?? "Pull from Inventory",
-      requiresBatchTracking: item.data?.itemTrackingType === "Batch",
-      requiresSerialTracking: item.data?.itemTrackingType === "Serial",
+      requiresBatchTracking:
+        item.data?.itemTrackingType === ItemTrackingType.Batch,
+      requiresSerialTracking:
+        item.data?.itemTrackingType === ItemTrackingType.Serial,
       storageUnitId: pickMethod.data?.defaultStorageUnitId ?? "",
       itemReplenishmentSystem: item.data?.replenishmentSystem ?? "Buy"
     }));
@@ -977,68 +986,73 @@ function MaterialForm({
         </div>
       </div>
 
-      <div className="border border-border rounded-md shadow-sm p-4 flex flex-col gap-4 w-full">
-        <HStack
-          className="w-full justify-between cursor-pointer"
-          onClick={backflushDisclosure.onToggle}
-        >
-          <HStack>
-            <LuGitPullRequestCreateArrow />
-            <Label>
-              <Trans>Backflush</Trans>
-            </Label>
+      {(itemData.requiresBatchTracking || itemData.requiresSerialTracking) && (
+        <Hidden name="jobOperationId" value={itemData.jobOperationId} />
+      )}
+      {!itemData.requiresBatchTracking && !itemData.requiresSerialTracking && (
+        <div className="border border-border rounded-md shadow-sm p-4 flex flex-col gap-4 w-full">
+          <HStack
+            className="w-full justify-between cursor-pointer"
+            onClick={backflushDisclosure.onToggle}
+          >
+            <HStack>
+              <LuGitPullRequestCreateArrow />
+              <Label>
+                <Trans>Backflush</Trans>
+              </Label>
+            </HStack>
+            <HStack>
+              <Badge
+                variant={jobOperations.length > 0 ? "secondary" : "destructive"}
+              >
+                <LuCog className="size-3 mr-1" />
+                {itemData.jobOperationId
+                  ? jobOperations.find((o) => o.id === itemData.jobOperationId)
+                      ?.description || t`Selected Operation`
+                  : t`First Operation`}
+              </Badge>
+              <IconButton
+                icon={<LuChevronRight />}
+                aria-label={
+                  backflushDisclosure.isOpen
+                    ? "Collapse Backflush"
+                    : "Expand Backflush"
+                }
+                variant="ghost"
+                size="md"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  backflushDisclosure.onToggle();
+                }}
+                className={`transition-transform ${
+                  backflushDisclosure.isOpen ? "rotate-90" : ""
+                }`}
+              />
+            </HStack>
           </HStack>
-          <HStack>
-            <Badge
-              variant={jobOperations.length > 0 ? "secondary" : "destructive"}
-            >
-              <LuCog className="size-3 mr-1" />
-              {itemData.jobOperationId
-                ? jobOperations.find((o) => o.id === itemData.jobOperationId)
-                    ?.description || t`Selected Operation`
-                : t`First Operation`}
-            </Badge>
-            <IconButton
-              icon={<LuChevronRight />}
-              aria-label={
-                backflushDisclosure.isOpen
-                  ? "Collapse Backflush"
-                  : "Expand Backflush"
-              }
-              variant="ghost"
-              size="md"
-              onClick={(e) => {
-                e.stopPropagation();
-                backflushDisclosure.onToggle();
+          <div
+            className={`grid w-full gap-x-8 gap-y-4 grid-cols-1 lg:grid-cols-3 pb-4 ${
+              backflushDisclosure.isOpen ? "" : "hidden"
+            }`}
+          >
+            <Select
+              name="jobOperationId"
+              label={t`Operation`}
+              isClearable
+              options={jobOperations.map((o) => ({
+                value: o.id!,
+                label: o.description
+              }))}
+              onChange={(newValue) => {
+                setItemData((d) => ({
+                  ...d,
+                  jobOperationId: newValue?.value as string
+                }));
               }}
-              className={`transition-transform ${
-                backflushDisclosure.isOpen ? "rotate-90" : ""
-              }`}
             />
-          </HStack>
-        </HStack>
-        <div
-          className={`grid w-full gap-x-8 gap-y-4 grid-cols-1 lg:grid-cols-3 pb-4 ${
-            backflushDisclosure.isOpen ? "" : "hidden"
-          }`}
-        >
-          <Select
-            name="jobOperationId"
-            label={t`Operation`}
-            isClearable
-            options={jobOperations.map((o) => ({
-              value: o.id!,
-              label: o.description
-            }))}
-            onChange={(newValue) => {
-              setItemData((d) => ({
-                ...d,
-                jobOperationId: newValue?.value as string
-              }));
-            }}
-          />
+          </div>
         </div>
-      </div>
+      )}
 
       <motion.div
         className="flex flex-1 items-center justify-end w-full pt-2"

@@ -77,7 +77,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
       number: null,
       isGroup: true,
       consolidatedRate: "Average",
-      parentId: d.parentId || null,
+      parentId: d.parentId || undefined,
       updatedBy: userId
     });
 
@@ -109,7 +109,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
   const updateAccount = await upsertAccount(client, {
     id,
     ...d,
-    parentId: d.parentId || null,
+    parentId: d.parentId || undefined,
     customFields: setCustomFields(formData),
     updatedBy: userId
   });

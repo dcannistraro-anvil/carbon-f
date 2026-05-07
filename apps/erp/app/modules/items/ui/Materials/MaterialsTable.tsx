@@ -448,7 +448,8 @@ const MaterialsTable = memo(({ data, tags, count }: MaterialsTableProps) => {
     customColumns,
     t,
     translateMethodType,
-    translateTrackingType
+    translateTrackingType,
+    formatDate
   ]);
 
   const fetcher = useFetcher<typeof action>();

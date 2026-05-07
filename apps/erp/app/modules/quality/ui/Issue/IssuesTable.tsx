@@ -293,7 +293,7 @@ const IssuesTable = memo(({ data, types, count }: IssuesTableProps) => {
       }
     ];
     return [...defaultColumns, ...customColumns];
-  }, [customColumns, items, locations, people, types, t]);
+  }, [customColumns, items, locations, people, types, t, formatDate]);
 
   const renderContextMenu = useCallback(
     (row: Issue) => {

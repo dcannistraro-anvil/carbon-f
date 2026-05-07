@@ -262,7 +262,8 @@ const PriceListTable = memo(
       currencyFormatter,
       hasScope,
       itemPostingGroups,
-      t
+      t,
+      formatDate
     ]);
 
     const handleQuantityCommit = useCallback(

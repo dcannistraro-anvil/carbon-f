@@ -161,7 +161,7 @@ const WebhooksTable = memo(({ data, count }: WebhooksTableProps) => {
         }
       }
     ];
-  }, [people, webhookTables, t]);
+  }, [people, webhookTables, t, formatDate]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: suppressed due to migration
   const renderContextMenu = useCallback(

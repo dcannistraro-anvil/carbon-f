@@ -51,7 +51,7 @@ export async function action({ request }: ActionFunctionArgs) {
     number: null,
     isGroup: true,
     consolidatedRate: "Average",
-    parentId: d.parentId || null,
+    parentId: d.parentId || undefined,
     companyGroupId,
     createdBy: userId
   });

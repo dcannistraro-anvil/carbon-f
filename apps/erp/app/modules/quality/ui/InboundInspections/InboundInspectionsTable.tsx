@@ -163,7 +163,7 @@ const InboundInspectionsTable = memo(
           meta: { icon: <LuCalendar /> }
         }
       ];
-    }, [items, t, params]);
+    }, [items, t, params, formatDate]);
 
     return (
       <Table<InboundInspection>

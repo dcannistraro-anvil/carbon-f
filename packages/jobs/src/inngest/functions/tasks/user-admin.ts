@@ -54,25 +54,40 @@ export const userAdminFunction = inngest.createFunction(
             throw new Error("Failed to load company or user");
           }
 
-          const invite = await serviceRole
+          const existingInvite = await serviceRole
             .from("invite")
-            .select("code, createdBy")
+            .select("createdBy")
             .eq("email", user.data.email)
             .eq("companyId", companyId)
-            .is("acceptedAt", null)
-            .single();
+            .maybeSingle();
 
-          if (invite.error || !invite.data) {
+          if (existingInvite.error || !existingInvite.data) {
             return {
               success: false,
-              message: "Failed to load existing invite"
+              message: "No invite record found for user"
+            };
+          }
+
+          const newCode = nanoid();
+          const refreshed = await serviceRole
+            .from("invite")
+            .update({ code: newCode, acceptedAt: null })
+            .eq("email", user.data.email)
+            .eq("companyId", companyId)
+            .select("code")
+            .single();
+
+          if (refreshed.error || !refreshed.data) {
+            return {
+              success: false,
+              message: "Failed to refresh invite"
             };
           }
 
           const inviter = await serviceRole
             .from("user")
             .select("email, fullName")
-            .eq("id", invite.data.createdBy)
+            .eq("id", existingInvite.data.createdBy)
             .single();
 
           await sendEmail({
@@ -89,7 +104,7 @@ export const userAdminFunction = inngest.createFunction(
                 email: user.data.email,
                 name: user.data.fullName ?? "",
                 companyName: company.data.name,
-                inviteLink: `${getAppUrl()}/invite/${invite.data.code}`,
+                inviteLink: `${getAppUrl()}/invite/${refreshed.data.code}`,
                 ip,
                 location
               })

@@ -23,7 +23,7 @@ import { ItarDisclosure, useEdition, useMode } from "@carbon/remix";
 import { Edition, themes } from "@carbon/utils";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useLocale } from "@react-aria/i18n";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   LuCheck,
   LuCreditCard,
@@ -42,6 +42,7 @@ import { Avatar } from "~/components";
 import { usePermissions, useUser } from "~/hooks";
 import { useTheme } from "~/hooks/useTheme";
 import type { action } from "~/root";
+import { startModeTransition } from "~/utils/dom";
 import { path } from "~/utils/path";
 
 const AvatarMenu = () => {
@@ -55,9 +56,16 @@ const AvatarMenu = () => {
   const serverTheme = useTheme();
 
   const nextMode = mode === "dark" ? "light" : "dark";
-  const modeSubmitRef = useRef<HTMLButtonElement>(null);
 
   const fetcher = useFetcher<typeof action>();
+
+  const onModeToggle = () => {
+    const formData = new FormData();
+    formData.append("mode", nextMode);
+    startModeTransition(nextMode, () => {
+      fetcher.submit(formData, { method: "post", action: path.to.root });
+    });
+  };
   const localeFetcher = useFetcher<{ ok?: boolean }>();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTheme, setSelectedTheme] = useState<string | null>(null);
@@ -126,23 +134,8 @@ const AvatarMenu = () => {
               <div>
                 <Switch
                   checked={mode === "dark"}
-                  onCheckedChange={() => modeSubmitRef.current?.click()}
+                  onCheckedChange={onModeToggle}
                 />
-                <fetcher.Form
-                  action={path.to.root}
-                  method="post"
-                  onSubmit={() => {
-                    document.body.removeAttribute("style");
-                  }}
-                  className="sr-only"
-                >
-                  <input type="hidden" name="mode" value={nextMode} />
-                  <button
-                    ref={modeSubmitRef}
-                    className="sr-only"
-                    type="submit"
-                  />
-                </fetcher.Form>
               </div>
             </div>
           </DropdownMenuItem>

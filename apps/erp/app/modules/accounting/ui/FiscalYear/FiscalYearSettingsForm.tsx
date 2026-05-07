@@ -44,7 +44,7 @@ const FiscalYearSettingsForm = ({
         description: t`This is the month your tax year starts.`
       }
     ],
-    []
+    [t]
   );
 
   return (

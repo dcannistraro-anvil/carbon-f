@@ -366,7 +366,8 @@ const ToolsTable = memo(({ data, tags, count }: ToolsTableProps) => {
     t,
     translateMethodType,
     translateReplenishment,
-    translateTrackingType
+    translateTrackingType,
+    formatDate
   ]);
 
   const fetcher = useFetcher<typeof action>();

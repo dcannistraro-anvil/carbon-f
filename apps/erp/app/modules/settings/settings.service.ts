@@ -124,7 +124,7 @@ export async function getCompanies(
 ) {
   const companies = await client
     .from("companies")
-    .select("*")
+    .select("*, companyGroup(name)")
     .eq("userId", userId)
     .order("name");
 
@@ -133,8 +133,9 @@ export async function getCompanies(
   }
 
   return {
-    data: companies.data.map((company) => ({
+    data: companies.data.map(({ companyGroup, ...company }) => ({
       ...company,
+      companyGroupName: (companyGroup as { name: string } | null)?.name ?? null,
       logoLightIcon: company.logoLightIcon
         ? `${SUPABASE_URL}/storage/v1/object/public/public/${company.logoLightIcon}`
         : null,
@@ -512,14 +513,12 @@ export async function updateCompanyPlan(
 export async function updateDefaultCustomerCc(
   client: SupabaseClient<Database>,
   companyId: string,
-  userId: string
+  defaultCustomerCc: string[]
 ) {
-  return client.functions.invoke("seed-company", {
-    body: {
-      companyId,
-      userId
-    }
-  });
+  return client
+    .from("companySettings")
+    .update({ defaultCustomerCc })
+    .eq("companyId", companyId);
 }
 
 export async function updateCompany(

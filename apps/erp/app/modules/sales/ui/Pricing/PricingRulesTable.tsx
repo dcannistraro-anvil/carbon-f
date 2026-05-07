@@ -358,7 +358,8 @@ const PricingRulesTable = memo(({ data, count }: PricingRulesTableProps) => {
     items,
     params,
     percentFormatter,
-    t
+    t,
+    formatDate
   ]);
 
   const renderContextMenu = useCallback(

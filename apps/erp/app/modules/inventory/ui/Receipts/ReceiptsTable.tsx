@@ -303,7 +303,7 @@ const ReceiptsTable = memo(({ data, count }: ReceiptsTableProps) => {
     ];
 
     return [...result, ...customColumns];
-  }, [people, suppliers, customColumns, t]);
+  }, [people, suppliers, customColumns, t, formatDate]);
 
   const [selectedReceipt, setSelectedReceipt] = useState<Receipt | null>(null);
   const deleteReceiptModal = useDisclosure();

@@ -336,7 +336,8 @@ const PurchaseOrdersTable = memo(
       currencyFormatter,
       shippingMethods,
       paymentTerms,
-      t
+      t,
+      formatDate
     ]);
 
     const fetcher = useFetcher<typeof action>();

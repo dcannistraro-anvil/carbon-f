@@ -32,6 +32,13 @@ export const itemTrackingTypes = [
   "Batch"
 ] as const;
 
+export const ItemTrackingType = {
+  Inventory: "Inventory",
+  NonInventory: "Non-Inventory",
+  Serial: "Serial",
+  Batch: "Batch"
+} as const satisfies Record<string, (typeof itemTrackingTypes)[number]>;
+
 export const itemCostingMethods = [
   "Standard",
   "Average",

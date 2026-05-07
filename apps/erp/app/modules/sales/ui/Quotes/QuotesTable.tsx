@@ -274,7 +274,7 @@ const QuotesTable = memo(({ data, count }: QuotesTableProps) => {
     ];
 
     return [...defaultColumns, ...customColumns];
-  }, [customers, people, customColumns, t]);
+  }, [customers, people, customColumns, t, formatDate]);
 
   const renderContextMenu = useMemo(() => {
     return (row: Quotation) => (

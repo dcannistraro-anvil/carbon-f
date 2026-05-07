@@ -216,7 +216,7 @@ const ActionsTable = memo(
         }
       ];
       return defaultColumns;
-    }, [requiredActions, people, items, issueTypes, t]);
+    }, [requiredActions, people, items, issueTypes, t, formatDate]);
 
     const renderContextMenu = useCallback(
       (row: QualityAction) => {

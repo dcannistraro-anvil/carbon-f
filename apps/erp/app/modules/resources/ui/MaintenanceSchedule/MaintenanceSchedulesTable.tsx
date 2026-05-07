@@ -212,7 +212,7 @@ const MaintenanceSchedulesTable = memo(
           }
         }
       ];
-    }, [allDaysSelected, allLocations, renderDays, t]);
+    }, [allDaysSelected, allLocations, renderDays, t, locale]);
 
     const renderContextMenu = useCallback(
       (row: MaintenanceSchedule) => {

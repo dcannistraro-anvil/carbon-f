@@ -1714,7 +1714,9 @@ export async function upsertSupplierQuoteLine(
   }
   return client
     .from("supplierQuoteLine")
-    .insert([supplierQuoteLine])
+    .insert([
+      { ...supplierQuoteLine, description: supplierQuoteLine.description ?? "" }
+    ])
     .select("id")
     .single();
 }

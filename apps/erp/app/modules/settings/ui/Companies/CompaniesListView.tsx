@@ -13,6 +13,7 @@ import {
   LuPlus,
   LuTrash2
 } from "react-icons/lu";
+import type { Country } from "react-phone-number-input";
 import type { Company } from "../../types";
 
 interface CompaniesListViewProps {
@@ -55,7 +56,7 @@ function CompaniesRow({
         <div className="flex size-8 shrink-0 items-center justify-center bg-muted">
           {company.countryCode && !isElimination ? (
             <CountryFlag
-              countryCode={company.countryCode}
+              countryCode={company.countryCode as Country}
               className="flex h-4 w-6 overflow-hidden rounded-sm"
             />
           ) : (

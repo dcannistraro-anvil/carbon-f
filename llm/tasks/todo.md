@@ -1,57 +1,120 @@
-# Plan: accountDefault stores account IDs, not numbers
+# Refactor: Configurable Upgrade Overlay System
 
 ## Context
 
-The `accountDefault` table has 35+ columns that store account **numbers** (like "4010", "5010"). These require composite FKs with `companyGroupId` to resolve to the correct account. Edge functions then call `resolveAccountIds()` to translate numbers → IDs before writing journal lines.
+3 near-duplicate overlay components exist (ApiKeysUpgradeOverlay,
+WebhooksUpgradeOverlay, AuditLogUpgradeOverlay) plus an inline
+upgrade-restricted block inside `AuditLogDrawer.tsx`. Server gate is
+`requireBusinessPlan` (currently buggy: `return true;` short-circuits all
+logic). `audit-logs.tsx` action duplicates the gate inline. Client-side
+gate pattern `isCloud && plan === Plan.Starter` is repeated across 6+
+files.
 
-**Goal:** Make `accountDefault` store account **IDs** directly. This:
-- Eliminates `companyGroupId` from `accountDefault` (no longer needed for FK resolution)
-- Eliminates the `resolveAccountIds` helper in edge functions
-- Makes the data flow simpler: edge function reads accountDefault → gets IDs → writes to journalLine
+Goal: shared, composable upgrade-overlay system + generic plan-gate
+hook + generic server-side `requirePlan`.
 
-## Phase 1: Migrations (DB schema)
+## Design (compound components, avoid boolean props)
 
-### 1.1 Company-groups migration — accountDefault section
-- [x] Replace composite FKs with simple FKs `("col") → account("id")`
-- [x] Add DO block to backfill all 38 account columns from numbers to IDs
-- [x] Remove `companyGroupId` column addition from accountDefault
+### `UpgradeOverlay` — compound component
 
-### 1.2 Reset-chart-of-accounts migration
-- [x] Move accountDefault INSERT inside DO block to use `key_to_id` for IDs
-- [x] Remove `companyGroupId` from INSERT column list
-- [x] Convert Phase 6 FKs from composite to simple
-- [x] Add `currencyTranslationAccount` column in Phase 2.5
-- [x] Add accountId NULL updates to Phase 2
+```tsx
+<UpgradeOverlay>
+  <UpgradeOverlay.Preview>
+    <ApiKeysTable data={mockApiKeys} count={mockApiKeys.length} />
+  </UpgradeOverlay.Preview>
+  <UpgradeOverlay.Card>
+    <UpgradeOverlay.Icon><LuKeyRound /></UpgradeOverlay.Icon>
+    <UpgradeOverlay.Title>API Keys</UpgradeOverlay.Title>
+    <UpgradeOverlay.Description>...</UpgradeOverlay.Description>
+    <UpgradeOverlay.Actions>
+      <UpgradeOverlay.UpgradeButton />
+    </UpgradeOverlay.Actions>
+  </UpgradeOverlay.Card>
+</UpgradeOverlay>
+```
 
-### 1.3 Intercompany tracking migration
-- [x] Write `accountId` (from `jl."accountId"`) in `generateEliminationEntries`
+Inline variant for non-overlay contexts (e.g. drawer panel — no preview,
+no absolute positioning, no card chrome):
 
-### 1.4 Make journalLine.accountNumber nullable
-- [x] Added `ALTER COLUMN "accountNumber" DROP NOT NULL` in company-groups migration
+```tsx
+<UpgradeOverlay.Inline>
+  <UpgradeOverlay.Icon>...</UpgradeOverlay.Icon>
+  <UpgradeOverlay.Title>...</UpgradeOverlay.Title>
+  <UpgradeOverlay.Description>...</UpgradeOverlay.Description>
+  <UpgradeOverlay.Actions>...</UpgradeOverlay.Actions>
+</UpgradeOverlay.Inline>
+```
 
-## Phase 2: Edge functions
+Layout pieces (`UpgradeOverlay`, `Preview`, `Card`, `Inline`) provide
+positioning. Content pieces (`Icon`, `Title`, `Description`, `Actions`,
+`UpgradeButton`) are reusable across both layouts. No boolean variant
+props — composition decides shape.
 
-- [x] Remove resolveAccountIds from post-purchase-invoice
-- [x] Remove resolveAccountIds from post-sales-invoice
-- [x] Remove resolveAccountIds from post-receipt
-- [x] Delete resolve-account-ids.ts
-- [x] Remove accountNumber from journal line pushes (would contain IDs, not numbers)
+### `usePlanGate` hook
 
-## Phase 3: Seed data
+```tsx
+const { isGated } = usePlanGate({ requiredPlan: Plan.Business });
+if (isGated) return <UpgradeOverlay>...</UpgradeOverlay>;
+```
 
-- [x] seed-company/index.ts: resolve account numbers to IDs via accountIdByKey map
-- [x] seed-dev.ts: resolve account numbers to IDs via resolveAccountId helper
-- [x] Remove companyGroupId from accountDefault inserts in both seed paths
+Default `requiredPlan = Plan.Business`. Internally uses `usePlan()` +
+`useFlags()`. Returns `{ isGated, plan, requiredPlan }`.
 
-## Phase 4: App layer
+### Server `requirePlan`
 
-- [x] AccountDefaultsForm: changed Combobox options from `value: c.number` to `value: c.id`
-- [x] Verified accounting.service.ts works with IDs (getAccountsList already selects id)
-- [x] Verified validators use z.string() — works for both numbers and IDs
+```ts
+await requirePlan({
+  request,
+  client,
+  companyId,
+  redirectTo: path.to.auditLog,
+  requiredPlan: Plan.Business,
+  message: "Upgrade to enable audit logging",
+});
+```
 
-## Phase 5: Verification
+Replaces `requireBusinessPlan`. Adds `Edition.Cloud` check (currently
+missing — non-cloud installs should never gate). Removes the `return
+true;` bug.
 
-- [ ] Rebuild database — all migrations apply cleanly
-- [ ] Regenerate types — `npm run db:types` in packages/database
-- [ ] Type check changed files
-- [ ] End-to-end testing
+## Files
+
+### New
+
+- [ ] `apps/erp/app/components/UpgradeOverlay/UpgradeOverlay.tsx`
+- [ ] `apps/erp/app/components/UpgradeOverlay/index.ts`
+- [ ] `apps/erp/app/hooks/usePlanGate.ts`
+- [ ] `apps/erp/app/utils/planGate.ts` — shared `planMeetsRequirement`
+
+### Modify
+
+- [ ] `apps/erp/app/utils/planGate.server.ts` — replace
+      `requireBusinessPlan` with generic `requirePlan`. Add Cloud check.
+      Remove dead code.
+- [ ] `apps/erp/app/modules/settings/ui/ApiKeys/ApiKeysUpgradeOverlay.tsx`
+      — re-implement as composition over `<UpgradeOverlay>`.
+- [ ] `apps/erp/app/modules/settings/ui/Webhooks/WebhooksUpgradeOverlay.tsx`
+- [ ] `apps/erp/app/modules/settings/ui/AuditLog/AuditLogUpgradeOverlay.tsx`
+- [ ] `apps/erp/app/components/AuditLog/AuditLogDrawer.tsx` — replace
+      inline `planRestricted` block with `<UpgradeOverlay.Inline>`.
+- [ ] Routes calling `requireBusinessPlan` — change to `requirePlan`:
+  - `api-keys.$id.tsx`, `api-keys.delete.$id.tsx`, `api-keys.new.tsx`
+  - `webhooks.$id.tsx`, `webhooks.delete.$id.tsx`, `webhooks.new.tsx`
+  - `integrations.$id.tsx`, `integrations.deactivate.$id.tsx`
+- [ ] `audit-logs.tsx` — replace inline action plan check with
+      `requirePlan`. Replace `isStarterTeaser` with `usePlanGate`.
+- [ ] `api-keys.tsx`, `webhooks.tsx` — fix `if (true)` bug → use
+      `usePlanGate` and check `isGated`.
+- [ ] `useAuditLog.tsx`, `IntegrationCard.tsx` — replace ad-hoc
+      `isCloud && plan === Plan.Starter` with `usePlanGate`.
+
+## Verification
+
+- `npm run typecheck` passes.
+- `npm run lingui:compile` passes.
+- Spot-check routes (api-keys, webhooks, audit-logs) on Starter +
+  Business cloud users.
+
+## Review
+
+(filled in after implementation)

@@ -76,7 +76,7 @@ const CompanySwitcher = () => {
     }
 
     return Array.from(result.values());
-  }, [routeData?.companies]);
+  }, [routeData?.companies, t]);
 
   if (!canSwitchCompany) {
     // Just show the company logo without dropdown

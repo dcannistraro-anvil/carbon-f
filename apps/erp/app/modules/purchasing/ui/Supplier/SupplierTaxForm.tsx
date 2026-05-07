@@ -28,12 +28,11 @@ type SupplierTaxFormProps = {
   };
 };
 
-const taxExemptionReasonOptions = taxExemptionReasons.map((reason) => ({
-  label: <Enumerable value={reason} />,
-  value: reason
-}));
-
 const SupplierTaxForm = ({ initialValues }: SupplierTaxFormProps) => {
+  const taxExemptionReasonOptions = taxExemptionReasons.map((reason) => ({
+    label: <Enumerable value={reason} />,
+    value: reason
+  }));
   const permissions = usePermissions();
   const { carbon } = useCarbon();
   const { company } = useUser();

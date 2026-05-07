@@ -3,7 +3,7 @@ import { requirePermissions } from "@carbon/auth/auth.server";
 import { flash } from "@carbon/auth/session.server";
 import { validationError, validator } from "@carbon/form";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
-import { redirect, useLoaderData, useNavigate } from "react-router";
+import { redirect, useLoaderData } from "react-router";
 import {
   CompanyForm,
   getSubsidiary,
@@ -23,7 +23,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   const subsidiary = await getSubsidiary(client, id);
   if (subsidiary.error) {
     throw redirect(
-      path.to.subsidiaries,
+      path.to.companies,
       await flash(request, error(subsidiary.error, "Failed to load subsidiary"))
     );
   }
@@ -54,20 +54,19 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
   if (result.error) {
     throw redirect(
-      path.to.subsidiaries,
+      path.to.companies,
       await flash(request, error(result.error, "Failed to update subsidiary"))
     );
   }
 
   throw redirect(
-    path.to.subsidiaries,
+    path.to.companies,
     await flash(request, success("Updated subsidiary"))
   );
 }
 
 export default function EditSubsidiaryRoute() {
   const { subsidiary } = useLoaderData<typeof loader>();
-  const navigate = useNavigate();
 
   const initialValues = {
     name: subsidiary.name ?? "",
@@ -85,14 +84,5 @@ export default function EditSubsidiaryRoute() {
     website: subsidiary.website ?? ""
   };
 
-  return (
-    <CompanyForm
-      company={initialValues}
-      subsidiaryMode={{
-        id: subsidiary.id,
-        parentCompanyId: subsidiary.parentCompanyId ?? undefined,
-        onClose: () => navigate(path.to.subsidiaries)
-      }}
-    />
-  );
+  return <CompanyForm company={initialValues} />;
 }

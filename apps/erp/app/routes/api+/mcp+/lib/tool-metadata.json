@@ -14215,7 +14215,7 @@
       "serviceParams": [
         "client",
         "companyId",
-        "userId"
+        "defaultCustomerCc"
       ],
       "injectAuth": [
         "companyId",
@@ -14743,7 +14743,7 @@
       "serviceParams": [
         "client",
         "companyId",
-        "userId"
+        "defaultCustomerCc"
       ],
       "injectAuth": [
         "companyId",

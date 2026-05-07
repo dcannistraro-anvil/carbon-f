@@ -188,7 +188,7 @@ const StockTransfersTable = memo(
       ];
 
       return [...result, ...customColumns];
-    }, [locations, people, customColumns, t]);
+    }, [locations, people, customColumns, t, formatDate]);
 
     const [selectedStockTransfer, setSelectedStockTransfer] =
       useState<StockTransfer | null>(null);

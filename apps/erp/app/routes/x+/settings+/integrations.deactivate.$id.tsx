@@ -10,11 +10,19 @@ import {
   invalidateIntegrationHealthCache
 } from "~/modules/settings/settings.server";
 import { path } from "~/utils/path";
+import { requirePlan } from "~/utils/planGate.server";
 
 export async function action({ request, params }: ActionFunctionArgs) {
   assertIsPost(request);
   const { client, companyId, userId } = await requirePermissions(request, {
     update: "settings"
+  });
+
+  await requirePlan({
+    request,
+    client,
+    companyId,
+    redirectTo: path.to.integrations
   });
 
   const { id: integrationId } = params;

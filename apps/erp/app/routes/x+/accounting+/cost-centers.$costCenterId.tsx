@@ -82,7 +82,7 @@ export default function CostCenterRoute() {
     id: costCenter.id,
     name: costCenter.name,
     parentCostCenterId: costCenter.parentCostCenterId ?? undefined,
-    ownerId: costCenter.ownerId ?? undefined,
+    ownerId: costCenter.ownerId ?? "",
     ...getCustomFields(costCenter.customFields)
   };
 

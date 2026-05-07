@@ -29,9 +29,10 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   if (!currencyId) throw notFound("currencyId not found");
 
   const currency = await getCurrency(client, currencyId);
-  const exchangeRateHistory = currency.data
-    ? await getExchangeRateHistory(client, companyGroupId, currency.data.code)
-    : { data: [] };
+  const exchangeRateHistory =
+    currency.data && currency.data.code
+      ? await getExchangeRateHistory(client, companyGroupId, currency.data.code)
+      : { data: [] };
 
   return {
     currency: currency?.data ?? null,
@@ -89,7 +90,7 @@ export default function EditExchangeRateRoute() {
 
   const initialValues = {
     id: currency?.id ?? undefined,
-    name: currency?.name ?? "",
+    name: currency?.currencyCode?.name ?? "",
     code: currency?.code ?? "",
     exchangeRate: currency?.exchangeRate ?? 1,
     historicalExchangeRate: currency?.historicalExchangeRate ?? undefined,

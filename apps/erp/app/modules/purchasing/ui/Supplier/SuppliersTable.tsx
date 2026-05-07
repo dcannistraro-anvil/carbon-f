@@ -242,7 +242,7 @@ const SuppliersTable = memo(({ data, count, tags }: SuppliersTableProps) => {
     ];
 
     return [...defaultColumns, ...customColumns];
-  }, [supplierTypes, people, tags, customColumns, t]);
+  }, [supplierTypes, people, tags, customColumns, t, formatDate]);
 
   const renderContextMenu = useMemo(
     () => (row: Supplier) => (

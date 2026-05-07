@@ -211,7 +211,7 @@ const SupplierQuotesTable = memo(
       ];
 
       return [...defaultColumns, ...customColumns];
-    }, [suppliers, people, customColumns, t]);
+    }, [suppliers, people, customColumns, t, formatDate]);
 
     const renderContextMenu = useMemo(() => {
       return (row: SupplierQuote) => (

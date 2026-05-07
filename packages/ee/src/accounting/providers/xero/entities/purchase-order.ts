@@ -526,7 +526,7 @@ export class PurchaseOrderSyncer extends BaseEntitySyncer<
           .where("active", "=", true)
           .execute();
         for (const a of accounts) {
-          accountIdMap.set(a.number, a.id);
+          if (a.number) accountIdMap.set(a.number, a.id);
         }
       }
     }

@@ -2,6 +2,7 @@ import type { Database, Json } from "@carbon/database";
 import { getDateNYearsAgo, toStoredAmount } from "@carbon/utils";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { z } from "zod";
+import { getNextSequence } from "~/modules/settings";
 import type { GenericQueryFilters } from "~/utils/query";
 import { setGenericQueryFilters } from "~/utils/query";
 import { sanitize } from "~/utils/supabase";
@@ -51,7 +52,7 @@ function applyRootSignCorrection<
   T extends {
     id: string;
     parentId: string | null;
-    isSystem?: boolean;
+    isSystem?: boolean | null;
     class: string | null;
     balance: number;
     balanceAtDate: number;
@@ -115,7 +116,7 @@ export async function getTrialBalance(
 ) {
   return client.rpc("trialBalance", {
     p_company_group_id: companyGroupId,
-    p_company_id: companyId,
+    p_company_id: companyId ?? undefined,
     from_date:
       args.startDate ?? getDateNYearsAgo(50).toISOString().split("T")[0],
     to_date: args.endDate ?? new Date().toISOString().split("T")[0]
@@ -140,7 +141,7 @@ export async function getFinancialStatementBalances(
 
   const balancesQuery = client.rpc("accountTreeBalancesByCompany", {
     p_company_group_id: companyGroupId,
-    p_company_id: companyId,
+    p_company_id: companyId ?? undefined,
     from_date:
       args.startDate ?? getDateNYearsAgo(50).toISOString().split("T")[0],
     to_date: args.endDate ?? new Date().toISOString().split("T")[0]
@@ -168,12 +169,14 @@ export async function getFinancialStatementBalances(
 
   return {
     data: applyRootSignCorrection(
-      (accountsResponse.data ?? []).map((account) => ({
-        ...account,
-        netChange: balancesByAccountId[account.id]?.netChange ?? 0,
-        balance: balancesByAccountId[account.id]?.balance ?? 0,
-        balanceAtDate: balancesByAccountId[account.id]?.balanceAtDate ?? 0
-      }))
+      (accountsResponse.data ?? [])
+        .filter((a): a is typeof a & { id: string } => a.id !== null)
+        .map((account) => ({
+          ...account,
+          netChange: balancesByAccountId[account.id]?.netChange ?? 0,
+          balance: balancesByAccountId[account.id]?.balance ?? 0,
+          balanceAtDate: balancesByAccountId[account.id]?.balanceAtDate ?? 0
+        }))
     ),
     error: null
   };
@@ -360,12 +363,14 @@ export async function getChartOfAccounts(
 
   return {
     data: applyRootSignCorrection(
-      (accountsResponse.data ?? []).map((account) => ({
-        ...account,
-        netChange: balancesByAccountId[account.id]?.netChange ?? 0,
-        balance: balancesByAccountId[account.id]?.balance ?? 0,
-        balanceAtDate: balancesByAccountId[account.id]?.balanceAtDate ?? 0
-      }))
+      (accountsResponse.data ?? [])
+        .filter((a): a is typeof a & { id: string } => a.id !== null)
+        .map((account) => ({
+          ...account,
+          netChange: balancesByAccountId[account.id]?.netChange ?? 0,
+          balance: balancesByAccountId[account.id]?.balance ?? 0,
+          balanceAtDate: balancesByAccountId[account.id]?.balanceAtDate ?? 0
+        }))
     ),
     error: null
   };
@@ -375,7 +380,11 @@ export async function getCurrency(
   client: SupabaseClient<Database>,
   currencyId: string
 ) {
-  return client.from("currencies").select("*").eq("id", currencyId).single();
+  return client
+    .from("currency")
+    .select("*, currencyCode!inner(name)")
+    .eq("id", currencyId)
+    .single();
 }
 
 export async function getCurrencyByCode(
@@ -1121,10 +1130,10 @@ export async function translateCompanyBalances(
 }> {
   const { data, error } = await client.rpc("translateTrialBalance", {
     p_company_group_id: companyGroupId,
-    p_company_id: companyId,
+    p_company_id: companyId ?? undefined,
     p_target_currency: targetCurrency,
     p_period_end: periodEnd,
-    p_period_start: periodStart ?? null
+    p_period_start: periodStart ?? undefined
   });
 
   if (error) {
@@ -1351,10 +1360,18 @@ export async function createIntercompanyTransaction(
   const today = new Date().toISOString().split("T")[0];
   const postingDate = input.postingDate || today;
 
+  const nextSequence = await getNextSequence(
+    client,
+    "journalEntry",
+    input.sourceCompanyId
+  );
+  if (nextSequence.error) return nextSequence;
+
   // Create the journal entry on the source company
   const journal = await client
     .from("journal")
     .insert({
+      journalEntryId: nextSequence.data,
       description: `IC: ${input.description}`,
       companyId: input.sourceCompanyId,
       postingDate
@@ -1481,7 +1498,7 @@ export async function getJournalEntries(
   }
 
   if (args.status) {
-    query = query.eq("status", args.status);
+    query = query.eq("status", args.status as "Draft" | "Posted" | "Reversed");
   }
 
   query = setGenericQueryFilters(query, args, [
@@ -1793,7 +1810,6 @@ export async function reverseJournalEntry(
       companyId: data.companyId,
       description: `Reversal of ${original.data.journalEntryId}`,
       postingDate: new Date().toISOString().split("T")[0],
-      entryType: original.data.entryType,
       sourceType: "Manual" as const,
       reversalOfId: id,
       status: "Posted" as const,

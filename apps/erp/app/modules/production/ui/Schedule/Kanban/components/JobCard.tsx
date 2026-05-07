@@ -127,6 +127,7 @@ const cardVariants = cva(
         "In Progress": "border-emerald-600/30",
         Paused: "border-orange-500/30",
         Completed: "border-green-500/30",
+        Closed: "border-border",
         Cancelled: "border-red-500/30",
         Overdue: "border-red-500/50",
         "Due Today": "border-orange-500/50"

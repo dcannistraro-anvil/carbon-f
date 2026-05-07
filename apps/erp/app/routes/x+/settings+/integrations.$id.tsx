@@ -18,6 +18,7 @@ import {
   upsertCompanyIntegration
 } from "~/modules/settings/settings.server";
 import { path } from "~/utils/path";
+import { requirePlan } from "~/utils/planGate.server";
 
 /**
  * Transforms flat owner settings (customerOwner, vendorOwner, etc.) into
@@ -216,6 +217,13 @@ export async function action({ request, params }: ActionFunctionArgs) {
   assertIsPost(request);
   const { client, companyId, userId } = await requirePermissions(request, {
     update: "settings"
+  });
+
+  await requirePlan({
+    request,
+    client,
+    companyId,
+    redirectTo: path.to.integrations
   });
 
   const { id: integrationId } = params;

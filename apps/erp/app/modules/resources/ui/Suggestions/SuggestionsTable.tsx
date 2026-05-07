@@ -115,7 +115,7 @@ const SuggestionsTable = memo(
         }
       ];
       return defaultColumns;
-    }, [tags, people, t]);
+    }, [tags, people, t, formatDate]);
 
     const renderContextMenu = useCallback(
       (row: SuggestionListItem) => {

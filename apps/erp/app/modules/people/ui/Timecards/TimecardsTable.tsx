@@ -184,7 +184,7 @@ const TimecardsTable = memo(({ data, count }: TimecardsTableProps) => {
         }
       }
     ],
-    [locations, t]
+    [locations, t, formatDate, locale]
   );
 
   const renderContextMenu = useCallback(

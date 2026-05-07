@@ -270,7 +270,7 @@ const PurchaseInvoicesTable = memo(
       ];
 
       return [...defaultColumns, ...customColumns];
-    }, [currencyFormatter, customColumns, people, suppliers, t]);
+    }, [currencyFormatter, customColumns, people, suppliers, t, formatDate]);
 
     const renderContextMenu = useMemo(() => {
       return (row: PurchaseInvoice) => (

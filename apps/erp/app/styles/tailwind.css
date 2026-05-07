@@ -5,6 +5,29 @@
 @tailwind components;
 @tailwind utilities;
 
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 0;
+}
+
+::view-transition-new(root) {
+  z-index: 1;
+}
+
+html.mode-transitioning,
+html.mode-transitioning *,
+html.mode-transitioning *::before,
+html.mode-transitioning *::after {
+  transition-property: none !important;
+  transition-duration: 0s !important;
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+}
 
 @layer base {
   *::-webkit-scrollbar {

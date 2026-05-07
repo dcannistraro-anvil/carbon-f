@@ -12,6 +12,7 @@ import {
 import { useRouteData } from "@carbon/remix";
 import { Trans } from "@lingui/react/macro";
 import { Link, useFetcher, useNavigate } from "react-router";
+import { usePlanGate } from "~/hooks/usePlanGate";
 import { path } from "~/utils/path";
 
 export type IntegrationHealth = {
@@ -30,6 +31,7 @@ export function IntegrationCard({
   const fetcher = useFetcher<{}>();
   const navigate = useNavigate();
   const routeData = useRouteData<{ state: string }>(path.to.integrations);
+  const { isGated: isStarterPlan } = usePlanGate();
 
   const getOauthUrl = (integration: Integration) => {
     if ("oauth" in integration && !!integration.oauth) {
@@ -96,12 +98,22 @@ export function IntegrationCard({
         {integration.description}
       </CardContent>
       <CardFooter className="flex flex-end flex-row-reverse gap-2">
-        <Button isDisabled={!installed} variant="secondary" asChild>
-          <Link to={integration.active && installed ? integration.id : "#"}>
-            <Trans>Details</Trans>
-          </Link>
+        <Button
+          isDisabled={!installed || isStarterPlan}
+          variant="secondary"
+          asChild={!!installed && !isStarterPlan}
+        >
+          {!installed || isStarterPlan ? (
+            <span>
+              <Trans>Details</Trans>
+            </span>
+          ) : (
+            <Link to={integration.active && installed ? integration.id : "#"}>
+              <Trans>Details</Trans>
+            </Link>
+          )}
         </Button>
-        {installed ? (
+        {installed && !isStarterPlan ? (
           <fetcher.Form
             method="post"
             action={path.to.integrationDeactivate(integration.id)}
@@ -118,7 +130,9 @@ export function IntegrationCard({
           </fetcher.Form>
         ) : (
           <Button
-            isDisabled={!integration.active || fetcher.state !== "idle"}
+            isDisabled={
+              !integration.active || fetcher.state !== "idle" || isStarterPlan
+            }
             isLoading={fetcher.state !== "idle"}
             onClick={handleInstall}
           >

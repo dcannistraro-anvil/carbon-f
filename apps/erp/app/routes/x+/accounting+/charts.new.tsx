@@ -51,7 +51,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
   const insertAccount = await upsertAccount(client, {
     ...d,
-    parentId: d.parentId || null,
+    parentId: d.parentId || undefined,
     companyGroupId,
     customFields: setCustomFields(formData),
     createdBy: userId

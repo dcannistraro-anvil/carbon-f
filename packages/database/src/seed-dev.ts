@@ -377,7 +377,7 @@ async function seedDev() {
             acc.incomeBalance,
             acc.class,
             parentKey ? (accountIdByKey[parentKey] ?? null) : null,
-            acc.isSystem ?? false,
+            ("isSystem" in acc ? acc.isSystem : false) ?? false,
             companyGroupId
           ]
         );

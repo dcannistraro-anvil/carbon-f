@@ -68,7 +68,7 @@ const HolidaysTable = memo(({ data, count, years }: HolidaysTableProps) => {
       }
     ];
     return [...defaultColumns, ...customColumns];
-  }, [customColumns, years, t]);
+  }, [customColumns, years, t, formatDate]);
 
   const renderContextMenu = useCallback(
     (row: (typeof data)[number]) => {

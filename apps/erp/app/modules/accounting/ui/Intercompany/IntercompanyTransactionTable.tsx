@@ -81,7 +81,12 @@ const IntercompanyTransactionTable = memo(
           accessorKey: "status",
           header: "Status",
           cell: ({ row }) => (
-            <IntercompanyTransactionStatus status={row.original.status} />
+            <IntercompanyTransactionStatus
+              status={
+                row.original
+                  .status as (typeof intercompanyTransactionStatuses)[number]
+              }
+            />
           ),
           meta: {
             filter: {

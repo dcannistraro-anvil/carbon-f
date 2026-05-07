@@ -280,7 +280,7 @@ const AuditLogTable = memo(({ entries, count }: AuditLogTableProps) => {
         )
       }
     ],
-    [t]
+    [t, formatDateTime]
   );
 
   const renderExpandedRow = useCallback(

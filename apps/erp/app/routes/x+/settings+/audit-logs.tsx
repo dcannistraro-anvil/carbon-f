@@ -1,4 +1,4 @@
-import { CarbonEdition, error, success } from "@carbon/auth";
+import { error, success } from "@carbon/auth";
 import { requirePermissions } from "@carbon/auth/auth.server";
 import { getCarbonServiceRole } from "@carbon/auth/client.server";
 import { flash } from "@carbon/auth/session.server";
@@ -11,17 +11,17 @@ import {
   syncAuditSubscriptions
 } from "@carbon/database/audit";
 import { Button, Heading, ScrollArea, VStack } from "@carbon/react";
-import { usePlan } from "@carbon/remix";
-import { Edition, Plan } from "@carbon/utils";
+import { Plan } from "@carbon/utils";
 import { msg } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
 import { LuHistory } from "react-icons/lu";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import { Link, Outlet, redirect, useLoaderData } from "react-router";
-import { useFlags } from "~/hooks/useFlags";
+import { usePlanGate } from "~/hooks/usePlanGate";
 import { AuditLogSettings, AuditLogUpgradeOverlay } from "~/modules/settings";
 import type { Handle } from "~/utils/handle";
 import { path } from "~/utils/path";
+import { requirePlan } from "~/utils/planGate.server";
 
 export const handle: Handle = {
   breadcrumb: msg`Audit Log`,
@@ -77,24 +77,13 @@ export async function action({ request }: ActionFunctionArgs) {
 
   switch (actionType) {
     case "enable": {
-      // Server-side plan gate: only Business+ can enable audit logs on Cloud
-      if (CarbonEdition === Edition.Cloud) {
-        const companyPlan = await client
-          .from("companyPlan")
-          .select("planId")
-          .eq("id", companyId)
-          .single();
-
-        if (companyPlan.data?.planId === Plan.Starter) {
-          throw redirect(
-            path.to.auditLog,
-            await flash(
-              request,
-              error(null, "Upgrade to Business to enable audit logging")
-            )
-          );
-        }
-      }
+      await requirePlan({
+        request,
+        client,
+        companyId,
+        redirectTo: path.to.auditLog,
+        message: "Upgrade to Business to enable audit logging"
+      });
 
       try {
         await enableAuditLog(client, companyId);
@@ -159,10 +148,13 @@ export async function action({ request }: ActionFunctionArgs) {
 
 export default function AuditLogRoute() {
   const { enabled, archives } = useLoaderData<typeof loader>();
-  const plan = usePlan();
-  const { isCloud } = useFlags();
+  const { isGated } = usePlanGate({
+    plan: [Plan.Business]
+  });
 
-  const isStarterTeaser = isCloud && plan === Plan.Starter;
+  if (isGated) {
+    return <AuditLogUpgradeOverlay />;
+  }
 
   return (
     <ScrollArea className="w-full h-[calc(100dvh-49px)]">
@@ -174,7 +166,7 @@ export default function AuditLogRoute() {
           <Heading size="h3">
             <Trans>Audit Logs</Trans>
           </Heading>
-          {enabled && !isStarterTeaser && (
+          {enabled && (
             <Button leftIcon={<LuHistory />} asChild>
               <Link to={path.to.auditLogDetails}>
                 <Trans>View All</Trans>
@@ -182,14 +174,8 @@ export default function AuditLogRoute() {
             </Button>
           )}
         </div>
-        {isStarterTeaser ? (
-          <AuditLogUpgradeOverlay />
-        ) : (
-          <>
-            <AuditLogSettings enabled={enabled} archives={archives} />
-            {enabled && <Outlet />}
-          </>
-        )}
+        <AuditLogSettings enabled={enabled} archives={archives} />
+        {enabled && <Outlet />}
       </VStack>
     </ScrollArea>
   );

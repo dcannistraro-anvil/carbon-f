@@ -102,7 +102,7 @@ const SalesRFQHeader = () => {
             <DropdownMenuContent>
               <DropdownMenuItem
                 disabled={
-                  routeData?.rfq?.status === "Draft" ||
+                  routeData?.rfqSummary?.status === "Draft" ||
                   (routeData?.opportunity?.quotes.length ?? 0) > 0 ||
                   statusFetcher.state !== "idle" ||
                   !permissions.can("update", "sales")

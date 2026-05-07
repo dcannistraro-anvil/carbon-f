@@ -255,7 +255,8 @@ const CustomersTable = memo(
       customColumns,
       tags,
       t,
-      translateStatus
+      translateStatus,
+      formatDate
     ]);
 
     const renderContextMenu = useMemo(

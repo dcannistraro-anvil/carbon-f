@@ -216,7 +216,7 @@ const SalesRFQsTable = memo(({ data, count }: SalesRFQsTableProps) => {
     ];
 
     return [...defaultColumns, ...customColumns];
-  }, [customers, people, customColumns, t]);
+  }, [customers, people, customColumns, t, formatDate]);
 
   const renderContextMenu = useMemo(() => {
     return (row: SalesRFQ) => (

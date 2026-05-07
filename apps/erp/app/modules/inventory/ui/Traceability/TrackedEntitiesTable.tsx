@@ -209,7 +209,14 @@ const TrackedEntitiesTable = memo(
           }
         }
       ],
-      [numberFormatter, items, t, nearExpiryWarningDays, shelfLifePolicies]
+      [
+        numberFormatter,
+        items,
+        t,
+        nearExpiryWarningDays,
+        shelfLifePolicies,
+        formatDate
+      ]
     );
 
     const renderContextMenu = useCallback(

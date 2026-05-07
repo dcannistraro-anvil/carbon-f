@@ -186,7 +186,7 @@ function CompanyBreadcrumb() {
     }
 
     return Array.from(result.values());
-  }, [routeData?.companies]);
+  }, [routeData?.companies, t]);
 
   return (
     <BreadcrumbItem isFirstChild>

@@ -13,6 +13,7 @@ import {
   LuPlus,
   LuTrash2
 } from "react-icons/lu";
+import type { Country } from "react-phone-number-input";
 import type { Company } from "../../types";
 
 interface CompanyNodeData extends Record<string, unknown> {
@@ -44,7 +45,7 @@ function CompanyNodeComponent({ data }: NodeProps & { data: CompanyNodeData }) {
         <div className="flex size-9 shrink-0 items-center justify-center rounded-md bg-muted">
           {company.countryCode && !isElimination ? (
             <CountryFlag
-              countryCode={company.countryCode}
+              countryCode={company.countryCode as Country}
               className="flex h-5 w-7 overflow-hidden rounded-sm"
             />
           ) : (

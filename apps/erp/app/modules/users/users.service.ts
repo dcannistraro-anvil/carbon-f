@@ -98,6 +98,14 @@ export async function getEmployees(
     query = query.ilike("name", `%${args.search}%`);
   }
 
+  // Default to active employees when the user hasn't explicitly filtered on
+  // active status. The Active/Inactive dropdown still works because picking
+  // a value puts an `active:eq:...` filter in the URL, which overrides this.
+  const hasActiveFilter = args.filters?.some((f) => f.column === "active");
+  if (!hasActiveFilter) {
+    query = query.eq("active", true);
+  }
+
   query = setGenericQueryFilters(query, args, [
     { column: "lastName", ascending: true }
   ]);

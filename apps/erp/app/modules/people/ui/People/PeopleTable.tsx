@@ -91,7 +91,7 @@ const PeopleTable = memo(
 
         return "Unknown";
       },
-      []
+      [locale]
     );
 
     const columns = useMemo<ColumnDef<(typeof data)[number]>[]>(() => {

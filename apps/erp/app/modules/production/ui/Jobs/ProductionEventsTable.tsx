@@ -170,7 +170,7 @@ const ProductionEventsTable = memo(
           )
         }
       ];
-    }, [operations, people, workCenters, t]);
+    }, [operations, people, workCenters, t, formatDateTime]);
 
     const permissions = usePermissions();
 

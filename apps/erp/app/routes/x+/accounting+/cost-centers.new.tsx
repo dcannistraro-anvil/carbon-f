@@ -69,7 +69,7 @@ export default function NewCostCenterRoute() {
   const initialValues = {
     name: "",
     parentCostCenterId,
-    ownerId: undefined
+    ownerId: ""
   };
 
   return (

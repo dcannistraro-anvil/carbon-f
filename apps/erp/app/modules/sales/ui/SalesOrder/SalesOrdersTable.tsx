@@ -540,7 +540,8 @@ const SalesOrdersTable = memo(({ data, count }: SalesOrdersTableProps) => {
     currencyFormatter,
     shippingMethods,
     paymentTerms,
-    t
+    t,
+    formatDate
   ]);
 
   const renderContextMenu = useMemo(() => {

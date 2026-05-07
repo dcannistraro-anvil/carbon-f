@@ -17,6 +17,7 @@ const STATUS_COLOR_MAP: Record<
   Paused: "orange",
   "Due Today": "orange",
   Completed: "green",
+  Closed: "gray",
   Overdue: "red",
   Cancelled: "red"
 } as const;

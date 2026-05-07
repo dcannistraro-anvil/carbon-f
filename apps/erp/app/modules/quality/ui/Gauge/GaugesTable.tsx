@@ -296,7 +296,7 @@ const GaugesTable = memo(({ data, types, count }: GaugesTableProps) => {
       }
     ];
     return [...defaultColumns, ...customColumns];
-  }, [customColumns, locations, people, suppliers, types, t]);
+  }, [customColumns, locations, people, suppliers, types, t, formatDate]);
 
   const renderContextMenu = useCallback(
     (row: Gauge) => {

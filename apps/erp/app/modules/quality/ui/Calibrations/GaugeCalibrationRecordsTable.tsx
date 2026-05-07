@@ -334,7 +334,8 @@ const GaugeCalibrationRecordsTable = memo(
       suppliers,
       temperatureFormatter,
       types,
-      t
+      t,
+      formatDate
     ]);
 
     const renderContextMenu = useCallback(

@@ -316,7 +316,7 @@ const ShipmentsTable = memo(({ data, count }: ShipmentsTableProps) => {
     ];
 
     return [...result, ...customColumns];
-  }, [people, customers, customColumns, t]);
+  }, [people, customers, customColumns, t, formatDate]);
 
   const [selectedShipment, setSelectedShipment] = useState<Shipment | null>(
     null

@@ -223,7 +223,7 @@ const JobOperationStepRecordsTable = memo(
           }
         }
       ];
-    }, [numberFormatter, unitOfMeasures, employees, t]);
+    }, [numberFormatter, unitOfMeasures, employees, t, formatDateTime]);
 
     return (
       <Table<JobOperationStepRecord>

@@ -264,7 +264,7 @@ const SalesInvoicesTable = memo(({ data, count }: SalesInvoicesTableProps) => {
     ];
 
     return [...defaultColumns, ...customColumns];
-  }, [currencyFormatter, customColumns, people, customers, t]);
+  }, [currencyFormatter, customColumns, people, customers, t, formatDate]);
 
   const renderContextMenu = useMemo(() => {
     return (row: SalesInvoice) => (

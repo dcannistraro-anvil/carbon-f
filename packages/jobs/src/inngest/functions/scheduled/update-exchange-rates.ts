@@ -171,10 +171,16 @@ export const updateExchangeRatesFunction = inngest.createFunction(
         const updatedAt = new Date().toISOString();
 
         try {
+          if (!company.data.companyGroupId) {
+            console.warn(
+              `Company ${integration.companyId} has no companyGroupId, skipping`
+            );
+            continue;
+          }
           const { data, error } = await serviceRole
             .from("currency")
             .select("*")
-            .eq("companyId", integration.companyId);
+            .eq("companyGroupId", company.data.companyGroupId);
 
           if (error) {
             console.error(

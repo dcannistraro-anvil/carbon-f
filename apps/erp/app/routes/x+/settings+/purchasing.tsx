@@ -3,7 +3,6 @@ import { requirePermissions } from "@carbon/auth/auth.server";
 import { flash } from "@carbon/auth/session.server";
 import {
   Input,
-  // biome-ignore lint/suspicious/noShadowRestrictedNames: suppressed due to migration
   PhoneInput,
   Select,
   Submit,

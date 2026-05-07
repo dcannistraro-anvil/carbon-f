@@ -4,8 +4,12 @@ import { flash } from "@carbon/auth/session.server";
 import { msg } from "@lingui/core/macro";
 import type { LoaderFunctionArgs } from "react-router";
 import { Outlet, redirect, useLoaderData } from "react-router";
+import { usePlanGate } from "~/hooks/usePlanGate";
 import { getConfig, getWebhooks } from "~/modules/settings";
-import { WebhooksTable } from "~/modules/settings/ui/Webhooks";
+import {
+  WebhooksTable,
+  WebhooksUpgradeOverlay
+} from "~/modules/settings/ui/Webhooks";
 import type { Handle } from "~/utils/handle";
 import { path } from "~/utils/path";
 import { getGenericQueryFilters } from "~/utils/query";
@@ -60,12 +64,17 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return {
     webhooks: webhooks.data ?? [],
     count: webhooks.count ?? 0,
-    config: config.data
+    config: config.data ?? null
   };
 }
 
 export default function WebhooksRoute() {
   const { webhooks, count } = useLoaderData<typeof loader>();
+  const { isGated } = usePlanGate();
+
+  if (isGated) {
+    return <WebhooksUpgradeOverlay />;
+  }
   return (
     <>
       <WebhooksTable count={count} data={webhooks} />

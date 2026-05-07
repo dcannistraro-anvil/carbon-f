@@ -153,6 +153,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
       await upsertSupplierQuoteLine(client, {
         supplierQuoteId,
+        supplierQuoteLineType: "Part",
         itemId: line.itemId,
         description: line.description ?? "",
         quantity: line.quantity ?? [1],

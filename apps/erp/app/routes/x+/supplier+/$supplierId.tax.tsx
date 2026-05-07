@@ -88,7 +88,7 @@ export default function SupplierTaxRoute() {
     vatNumber: supplierTax?.vatNumber ?? "",
     eori: supplierTax?.eori ?? "",
     taxExempt: supplierTax?.taxExempt ?? false,
-    taxExemptionReason: supplierTax?.taxExemptionReason ?? "",
+    taxExemptionReason: supplierTax?.taxExemptionReason ?? undefined,
     taxExemptionCertificateNumber:
       supplierTax?.taxExemptionCertificateNumber ?? "",
     taxExemptionCertificatePath:

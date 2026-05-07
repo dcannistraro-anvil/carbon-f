@@ -8,9 +8,20 @@ import {
   SelectValue
 } from "@carbon/react";
 import { useUrlParams } from "@carbon/remix";
-import { useLingui } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { useMemo, useState } from "react";
+import { LuPuzzle } from "react-icons/lu";
 import { SearchFilter } from "~/components";
+import {
+  UpgradeOverlayActions,
+  UpgradeOverlayContent,
+  UpgradeOverlayDescription,
+  UpgradeOverlayIcon,
+  UpgradeOverlayStickyGradient,
+  UpgradeOverlayTitle,
+  UpgradeOverlayUpgradeButton
+} from "~/components/UpgradeOverlay";
+import { usePlanGate } from "~/hooks/usePlanGate";
 import type { IntegrationHealth } from "./IntegrationCard";
 import { IntegrationCard } from "./IntegrationCard";
 
@@ -28,6 +39,7 @@ const IntegrationsList = ({
   const [filter, setFilter] = useState<"all" | "installed" | "available">(
     "all"
   );
+  const { isGated } = usePlanGate();
   const search = params.get("search") || "";
 
   const installed = integrations.filter((i) => i.id && i.active);
@@ -80,7 +92,11 @@ const IntegrationsList = ({
           </Select>
         </div>
       </div>
-      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pb-4 px-4 w-full">
+      <div
+        className={`grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4 w-full ${
+          isGated ? "" : "pb-4"
+        }`}
+      >
         {filteredIntegrations.map((integration) => {
           return (
             <IntegrationCard
@@ -91,6 +107,30 @@ const IntegrationsList = ({
           );
         })}
       </div>
+
+      {isGated && (
+        <>
+          <UpgradeOverlayStickyGradient>
+            <UpgradeOverlayIcon>
+              <LuPuzzle className="size-6 text-muted-foreground" />
+            </UpgradeOverlayIcon>
+            <UpgradeOverlayContent>
+              <UpgradeOverlayTitle>
+                <Trans>Integrations</Trans>
+              </UpgradeOverlayTitle>
+              <UpgradeOverlayDescription>
+                <Trans>
+                  Connect Carbon to your accounting, project, and CAD tools and
+                  much more.
+                </Trans>
+              </UpgradeOverlayDescription>
+            </UpgradeOverlayContent>
+            <UpgradeOverlayActions>
+              <UpgradeOverlayUpgradeButton />
+            </UpgradeOverlayActions>
+          </UpgradeOverlayStickyGradient>
+        </>
+      )}
     </div>
   );
 };
