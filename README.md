@@ -155,8 +155,16 @@ Posthog has a free tier which should be plenty to support local development. If 
 
 First download and initialize the repository dependencies.
 
+This repo uses **pnpm** as its package manager. Enable Corepack so the correct pnpm version (pinned via `packageManager` in `package.json`) is used automatically:
+
 ```bash
-$ nvm use           # use node v20
+$ corepack enable    # one-time: activates pnpm shim from packageManager field
+```
+
+Then install + start the database:
+
+```bash
+$ nvm use            # use node v22
 $ pnpm install       # install dependencies
 $ pnpm run db:start  # pull and run the containers
 ```
