@@ -275,6 +275,10 @@ msgstr "संचय अवधि (सप्ताह)"
 msgid "Accumulation Period:"
 msgstr "संचय अवधि:"
 
+#: apps/erp/app/components/ItemRuleViolationModal.tsx:105
+msgid "Acknowledge & continue"
+msgstr ""
+
 #: apps/erp/app/modules/production/ui/Jobs/JobMaterialsTable.tsx:592
 msgid "Action Items"
 msgstr "कार्य आइटम"
@@ -292,7 +296,7 @@ msgid "Action Types"
 msgstr "कार्रवाई प्रकार"
 
 #: apps/erp/app/components/Configurator/ConfigurationEditor/ConfigurationEditor.ee.tsx:348
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:255
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:260
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbansTable.tsx:600
 #: apps/erp/app/modules/items/ui/Item/BoMExplorer.tsx:174
 #: apps/erp/app/modules/items/ui/Item/BoMExplorer.tsx:406
@@ -325,13 +329,16 @@ msgstr "वर्क सेंटर सक्रिय करें"
 
 #: apps/erp/app/components/Configurator/ConfigurationEditor/ConfigurationEditor.ee.tsx:338
 #: apps/erp/app/components/Contact.tsx:57
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:470
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:505
 #: apps/erp/app/modules/inventory/ui/StorageUnits/StorageUnitsTable.tsx:287
 #: apps/erp/app/modules/items/ui/Consumables/ConsumableProperties.tsx:418
 #: apps/erp/app/modules/items/ui/Consumables/ConsumablesTable.tsx:238
 #: apps/erp/app/modules/items/ui/Consumables/ConsumablesTable.tsx:244
 #: apps/erp/app/modules/items/ui/Item/ItemForm.tsx:183
 #: apps/erp/app/modules/items/ui/Item/MakeMethodVersionStatus.tsx:24
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:196
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleForm.tsx:123
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRulesTable.tsx:82
 #: apps/erp/app/modules/items/ui/Materials/MaterialProperties.tsx:681
 #: apps/erp/app/modules/items/ui/Materials/MaterialsTable.tsx:375
 #: apps/erp/app/modules/items/ui/Materials/MaterialsTable.tsx:381
@@ -370,7 +377,7 @@ msgstr "सक्रिय"
 msgid "Active Jobs"
 msgstr "सक्रिय नौकरियां"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:480
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:515
 #: apps/erp/app/modules/inventory/ui/StorageUnits/StorageUnitsTable.tsx:297
 #: apps/erp/app/modules/items/ui/Consumables/ConsumablesTable.tsx:248
 #: apps/erp/app/modules/items/ui/Materials/MaterialsTable.tsx:385
@@ -463,6 +470,10 @@ msgstr "बाल भंडारण इकाई जोड़ें"
 msgid "Add Company"
 msgstr "कंपनी जोड़ें"
 
+#: apps/erp/app/modules/items/ui/ItemRules/RuleBuilder.tsx:155
+msgid "Add condition"
+msgstr ""
+
 #: apps/erp/app/modules/purchasing/ui/Supplier/SupplierContacts.tsx:80
 msgid "Add Contractor"
 msgstr "ठेकेदार जोड़ें"
@@ -470,6 +481,11 @@ msgstr "ठेकेदार जोड़ें"
 #: apps/erp/app/routes/x+/person+/$personId.timecard.tsx:446
 msgid "Add Entry"
 msgstr "प्रविष्टि जोड़ें"
+
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:126
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:273
+msgid "Add from library…"
+msgstr ""
 
 #: apps/erp/app/modules/items/ui/Parts/ConfigurationParameters.tsx:294
 #: apps/erp/app/modules/items/ui/Parts/ConfigurationParameters.tsx:417
@@ -569,6 +585,10 @@ msgstr "आवश्यकता जोड़ें"
 msgid "Add Risk"
 msgstr "जोखिम जोड़ें"
 
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:131
+msgid "Add rule"
+msgstr ""
+
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentsTable.tsx:53
 msgid "Add Shipment"
 msgstr ""
@@ -637,7 +657,7 @@ msgstr "पता पंक्ति 1"
 msgid "Address Line 2"
 msgstr "पता लाइन 2"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:357
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:362
 msgid "Adjustment Type"
 msgstr "समायोजन प्रकार"
 
@@ -702,6 +722,10 @@ msgstr "सभी प्रकार"
 msgid "All Work Centers"
 msgstr "सभी कार्य केंद्र"
 
+#: apps/erp/app/modules/items/ui/ItemRules/SeveritySelect.tsx:34
+msgid "Allows acknowledge & continue"
+msgstr ""
+
 #: apps/erp/app/modules/sales/ui/Pricing/PriceOverridesTable.tsx:244
 #: apps/erp/app/modules/sales/ui/Pricing/PricingRulesTable.tsx:321
 msgid "Always"
@@ -753,6 +777,11 @@ msgstr "एपीआई कुंजी"
 #: apps/erp/app/routes/x+/settings+/api-keys.tsx:18
 msgid "API Keys"
 msgstr "एपीआई कुंजियाँ"
+
+#: apps/erp/app/modules/items/ui/ItemRules/SurfacesField.tsx:84
+#: apps/erp/app/modules/items/ui/ItemRules/SurfacesField.tsx:102
+msgid "Applies to"
+msgstr ""
 
 #: apps/erp/app/modules/sales/ui/Pricing/PriceOverrideForm.tsx:206
 msgid "Apply pricing rules"
@@ -906,8 +935,8 @@ msgstr "क्या आप {0} को हटाना सुनिश्चि�
 #. placeholder {0}: routeData?.document?.name
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptForm/ReceiptForm.tsx:321
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentForm/ShipmentForm.tsx:350
-#: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferHeader.tsx:226
-#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:396
+#: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferHeader.tsx:235
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:400
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceHeader.tsx:409
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoiceHeader.tsx:411
 #: apps/erp/app/modules/items/ui/Consumables/ConsumableHeader.tsx:97
@@ -1236,11 +1265,11 @@ msgstr "क्या आप {0} को स्थायी रूप से ह�
 msgid "Are you sure you want to permanently delete the supplier process?"
 msgstr "क्या आप सुनिश्चित हैं कि आप आपूर्तिकर्ता प्रक्रिया को स्थायी रूप से हटाना चाहते हैं?"
 
-#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptPostModal.tsx:164
+#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptPostModal.tsx:167
 msgid "Are you sure you want to post this receipt?"
 msgstr "क्या आप सुनिश्चित हैं कि आप इस रसीद को पोस्ट करना चाहते हैं?"
 
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:160
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:163
 msgid "Are you sure you want to post this shipment?"
 msgstr "क्या आप सुनिश्चित हैं कि आप इस शिपमेंट को पोस्ट करना चाहते हैं?"
 
@@ -1363,6 +1392,10 @@ msgstr "असाइनमेंट"
 #: apps/erp/app/routes/x+/resources+/assignments.tsx:47
 msgid "Assignments"
 msgstr "असाइनमेंट"
+
+#: apps/erp/app/modules/items/ui/ItemRules/RuleBuilder.tsx:57
+msgid "At least one condition must match"
+msgstr ""
 
 #: apps/erp/app/components/Layout/Topbar/Feedback.tsx:147
 #: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:212
@@ -1523,8 +1556,8 @@ msgstr "बैच आइटम के लिए बिक्री आदेश 
 msgid "Batch number"
 msgstr "बैच नंबर"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:392
-#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:772
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:397
+#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:776
 msgid "Batch Number"
 msgstr "बैच नंबर"
 
@@ -1594,6 +1627,10 @@ msgstr "ब्लॉक करें, ओवरराइड की अनुम�
 msgid "Blocked by {0}"
 msgstr "{0} द्वारा अवरुद्ध"
 
+#: apps/erp/app/modules/items/ui/ItemRules/SeveritySelect.tsx:28
+msgid "Blocks save until resolved"
+msgstr ""
+
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteExplorer.tsx:487
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteExplorer.tsx:527
 msgid "BoM"
@@ -1612,6 +1649,10 @@ msgstr "BOM सफलतापूर्वक सिंक हो गया"
 msgid "Breadcrumb"
 msgstr "ब्रेडक्रम्ब"
 
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:295
+msgid "Browse library"
+msgstr ""
+
 #: apps/erp/app/modules/sales/ui/Opportunity/OpportunityLineDocuments.tsx:467
 msgid "Bucket"
 msgstr "बकेट"
@@ -1624,7 +1665,7 @@ msgstr "बल्क आयात"
 msgid "Bulk Jobs"
 msgstr "बल्क जॉब्स"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:87
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:90
 #: apps/erp/app/modules/items/ui/Item/ItemForm.tsx:91
 #: apps/erp/app/modules/items/ui/Parts/PartForm.tsx:200
 #: apps/erp/app/modules/items/ui/Parts/PartProperties.tsx:343
@@ -1637,7 +1678,7 @@ msgstr "बल्क जॉब्स"
 msgid "Buy"
 msgstr "खरीदें"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:87
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:90
 #: apps/erp/app/modules/items/ui/Item/ItemForm.tsx:94
 #: apps/erp/app/modules/items/ui/Parts/PartForm.tsx:203
 #: apps/erp/app/modules/items/ui/Parts/PartProperties.tsx:346
@@ -1727,6 +1768,7 @@ msgstr "केवल सक्रिय ब्रेक को अक्षम �
 #: apps/erp/app/components/Form/ConversionFactor.tsx:321
 #: apps/erp/app/components/Form/Item.tsx:370
 #: apps/erp/app/components/Form/Items.tsx:115
+#: apps/erp/app/components/ItemRuleViolationModal.tsx:96
 #: apps/erp/app/components/Layout/Topbar/Feedback.tsx:135
 #: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:200
 #: apps/erp/app/components/Modals/ConfirmDelete/ConfirmDelete.tsx:62
@@ -1739,23 +1781,24 @@ msgstr "केवल सक्रिय ब्रेक को अक्षम �
 #: apps/erp/app/modules/accounting/ui/FiscalYear/FiscalYearSettingsForm.tsx:75
 #: apps/erp/app/modules/documents/ui/Documents/DocumentForm.tsx:82
 #: apps/erp/app/modules/inventory/ui/Batches/BatchPropertiesConfig.tsx:395
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:423
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:428
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbanForm.tsx:332
-#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptPostModal.tsx:195
+#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptPostModal.tsx:198
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptVoidModal.tsx:85
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:191
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:194
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentVoidModal.tsx:85
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferCompleteModal.tsx:165
 #: apps/erp/app/modules/inventory/ui/StorageTypes/StorageTypeForm.tsx:104
 #: apps/erp/app/modules/inventory/ui/StorageUnits/StorageUnitForm.tsx:116
 #: apps/erp/app/modules/inventory/ui/Traceability/EditExpiryModal.tsx:89
-#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:213
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:217
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferLineForm.tsx:184
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferLines.tsx:283
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoicePostModal.tsx:154
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceVoidModal.tsx:87
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoicePostModal.tsx:180
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoiceVoidModal.tsx:78
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleForm.tsx:148
 #: apps/erp/app/modules/items/ui/MaterialDimensions/MaterialDimensionForm.tsx:105
 #: apps/erp/app/modules/items/ui/MaterialFinishes/MaterialFinishForm.tsx:105
 #: apps/erp/app/modules/items/ui/MaterialGrades/MaterialGradeForm.tsx:105
@@ -1925,8 +1968,8 @@ msgstr "RFQ नहीं भेज सकते"
 msgid "Cannot upload to parts bucket without item ID"
 msgstr "आइटम आईडी के बिना पार्ट्स बकेट में अपलोड नहीं कर सकते"
 
-#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptPostModal.tsx:66
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:66
+#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptPostModal.tsx:67
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:67
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferCompleteModal.tsx:65
 msgid "Carbon client is not available"
 msgstr "Carbon क्लाइंट उपलब्ध नहीं है"
@@ -1934,7 +1977,7 @@ msgstr "Carbon क्लाइंट उपलब्ध नहीं है"
 #: apps/erp/app/components/Documents.tsx:194
 #: apps/erp/app/components/ImportCSVModal/UploadCSV.tsx:81
 #: apps/erp/app/components/ImportCSVModal/UploadCSV.tsx:105
-#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:1278
+#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:1219
 #: apps/erp/app/modules/items/ui/Item/ItemDocuments.tsx:412
 #: apps/erp/app/modules/production/ui/Jobs/JobDocuments.tsx:202
 #: apps/erp/app/modules/production/ui/Jobs/JobDocuments.tsx:243
@@ -2132,7 +2175,7 @@ msgstr "{0} से घड़ी में है"
 
 #: apps/erp/app/components/Layout/Topbar/Search.tsx:395
 #: apps/erp/app/components/TrainingPanel.tsx:45
-#: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferWizard.tsx:1300
+#: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferWizard.tsx:1301
 #: apps/erp/app/modules/production/ui/Jobs/JobMaterialsTable.tsx:616
 #: apps/erp/app/modules/purchasing/ui/Planning/PurchasingPlanningOrderDrawer.tsx:760
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:551
@@ -2221,7 +2264,11 @@ msgstr "कॉलम"
 msgid "Coming soon"
 msgstr "जल्द ही आ रहा है"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:418
+#: apps/erp/app/modules/items/ui/ItemRules/ValueInput.tsx:138
+msgid "comma-separated values"
+msgstr ""
+
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:423
 msgid "Comment"
 msgstr "टिप्पणी"
 
@@ -2270,7 +2317,7 @@ msgid "Compare Supplier Quotes"
 msgstr "आपूर्तिकर्ता उद्धरणों की तुलना करें"
 
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbansTable.tsx:218
-#: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferHeader.tsx:211
+#: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferHeader.tsx:219
 #: apps/erp/app/modules/quality/ui/Issue/IssueHeader.tsx:180
 #: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceDispatchHeader.tsx:151
 msgid "Complete"
@@ -2326,6 +2373,10 @@ msgstr "पूर्ण बारकोड"
 msgid "Completion Time"
 msgstr "पूर्ण होने का समय"
 
+#: apps/erp/app/modules/items/ui/ItemRules/RuleBuilder.tsx:106
+msgid "Conditions"
+msgstr ""
+
 #: apps/erp/app/modules/items/ui/Parts/ConfigurationParameters.tsx:185
 msgid "Configuration Parameters"
 msgstr "कॉन्फ़िगरेशन पैरामीटर"
@@ -2338,7 +2389,7 @@ msgstr "कॉन्फ़िगरेटर"
 #: apps/erp/app/modules/inventory/ui/useInventorySubmodules.tsx:85
 #: apps/erp/app/modules/items/ui/Item/BillOfMaterial.tsx:524
 #: apps/erp/app/modules/items/ui/Item/BillOfProcess.tsx:840
-#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:97
+#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:98
 #: apps/erp/app/modules/people/ui/usePeopleSubmodules.tsx:38
 #: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:308
 #: apps/erp/app/modules/production/ui/useProductionSubmodules.tsx:61
@@ -2367,7 +2418,7 @@ msgstr "रखरखाव शेड्यूल से निवारक र�
 msgid "Configure Item"
 msgstr "आइटम कॉन्फ़िगर करें"
 
-#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:56
+#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:57
 msgid "Configure Materials"
 msgstr "सामग्री कॉन्फ़िगर करें"
 
@@ -2414,7 +2465,8 @@ msgid "Configured"
 msgstr "कॉन्फ़िगर किया गया"
 
 #: apps/erp/app/components/Form/ConversionFactor.tsx:324
-#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:188
+#: apps/erp/app/components/ItemRuleViolationModal.tsx:107
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:193
 #: apps/erp/app/modules/items/ui/Item/MakeMethodTools.tsx:535
 #: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:448
 #: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:573
@@ -2501,7 +2553,7 @@ msgstr "उपभोग्य ID"
 
 #: apps/erp/app/modules/items/ui/Consumables/ConsumablesTable.tsx:491
 #: apps/erp/app/modules/items/ui/Consumables/ConsumablesTable.tsx:508
-#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:48
+#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:49
 #: apps/erp/app/routes/x+/consumable+/$itemId.tsx:35
 #: apps/erp/app/routes/x+/consumable+/new.tsx:15
 #: apps/erp/app/routes/x+/items+/consumables.tsx:16
@@ -2898,6 +2950,11 @@ msgstr "नौकरियां बनाएं"
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbanForm.tsx:338
 msgid "Create Kanban"
 msgstr "कनबन बनाएं"
+
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:282
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:300
+msgid "Create new rule"
+msgstr ""
 
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteHeader.tsx:156
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteHeader.tsx:434
@@ -3477,7 +3534,7 @@ msgstr "तारीख की सीमा"
 msgid "Dates"
 msgstr "तारीखें"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:149
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:152
 #: apps/erp/app/modules/people/ui/Shifts/ShiftForm.tsx:78
 #: apps/erp/app/modules/people/ui/Shifts/ShiftsTable.tsx:99
 #: apps/erp/app/modules/resources/ui/MaintenanceSchedule/MaintenanceScheduleForm.tsx:76
@@ -3771,7 +3828,7 @@ msgstr "कर्मचारी प्रकार हटाएं"
 msgid "Delete Failure Mode"
 msgstr "विफलता मोड हटाएं"
 
-#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:542
+#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:546
 msgid "Delete file"
 msgstr "फ़ाइल हटाएं"
 
@@ -3896,7 +3953,7 @@ msgstr "कारण हटाएं"
 msgid "Delete Receipt"
 msgstr "रसीद हटाएं"
 
-#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:371
+#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:370
 msgid "Delete receipt line"
 msgstr "रसीद लाइन हटाएं"
 
@@ -3914,6 +3971,7 @@ msgid "Delete rows"
 msgstr "पंक्तियों को हटाएं"
 
 #: apps/erp/app/components/Configurator/ConfigurationEditor/ConfigurationEditor.ee.tsx:358
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRulesTable.tsx:123
 #: apps/erp/app/modules/settings/ui/Approvals/ApprovalRuleCard.tsx:126
 msgid "Delete Rule"
 msgstr "नियम हटाएं"
@@ -3951,7 +4009,7 @@ msgstr "शिपिंग विधि हटाएं"
 msgid "Delete Step"
 msgstr "स्टेप हटाएं"
 
-#: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferHeader.tsx:144
+#: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferHeader.tsx:156
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransfersTable.tsx:227
 msgid "Delete Stock Transfer"
 msgstr "स्टॉक ट्रांसफर हटाएं"
@@ -4011,7 +4069,7 @@ msgstr "स्थानांतरण लाइन हटाएं"
 msgid "Delete View"
 msgstr "दृश्य हटाएं"
 
-#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:153
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:162
 msgid "Delete Warehouse Transfer"
 msgstr "गोदाम स्थानांतरण हटाएं"
 
@@ -4037,7 +4095,7 @@ msgstr "डिलीवरी स्थान"
 msgid "Demand"
 msgstr "मांग"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:281
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:284
 msgid "Demand Forecast"
 msgstr "मांग पूर्वानुमान"
 
@@ -4076,6 +4134,7 @@ msgstr "विभाग"
 #: apps/erp/app/modules/items/ui/Item/ItemForm.tsx:154
 #: apps/erp/app/modules/items/ui/ItemPostingGroups/ItemPostingGroupForm.tsx:97
 #: apps/erp/app/modules/items/ui/ItemPostingGroups/ItemPostingGroupsTable.tsx:49
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleForm.tsx:128
 #: apps/erp/app/modules/items/ui/Materials/MaterialsTable.tsx:146
 #: apps/erp/app/modules/items/ui/Methods/MethodMaterialsTable.tsx:64
 #: apps/erp/app/modules/items/ui/Methods/MethodOperationsTable.tsx:28
@@ -4148,7 +4207,7 @@ msgstr "डिजिटल उद्धरण"
 msgid "Digital Quotes"
 msgstr "डिजिटल उद्धरण"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:382
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:385
 #: apps/erp/app/modules/items/ui/MaterialDimensions/MaterialDimensionsTable.tsx:55
 #: apps/erp/app/modules/items/ui/Materials/MaterialsTable.tsx:228
 #: apps/erp/app/modules/items/ui/Parts/ConfigurationParameters.tsx:1047
@@ -4158,7 +4217,7 @@ msgstr "आयाम"
 #: apps/erp/app/modules/accounting/ui/useAccountingSubmodules.tsx:98
 #: apps/erp/app/modules/items/ui/Materials/MaterialForm.tsx:278
 #: apps/erp/app/modules/items/ui/Materials/MaterialProperties.tsx:566
-#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:59
+#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:60
 #: apps/erp/app/routes/x+/items+/dimensions.tsx:16
 msgid "Dimensions"
 msgstr "आयाम"
@@ -4682,6 +4741,11 @@ msgstr "रसीद संपादित करें"
 msgid "Edit Revision"
 msgstr "संशोधन संपादित करें"
 
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleForm.tsx:113
+msgid "Edit rule"
+msgstr ""
+
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRulesTable.tsx:113
 #: apps/erp/app/modules/settings/ui/Approvals/ApprovalRuleCard.tsx:114
 msgid "Edit Rule"
 msgstr "नियम संपादित करें"
@@ -4968,6 +5032,14 @@ msgstr "अंतिम तारीख"
 msgid "End Time"
 msgstr "समाप्ति समय"
 
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:111
+msgid "Enforce constraints on receipts, shipments, transfers and job operations for this item."
+msgstr ""
+
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRulesUpgradeOverlay.tsx:82
+msgid "Enforce per-item validation and guidelines across receipts, shipments, transfers, and adjustments."
+msgstr ""
+
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteForm.tsx:181
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteProperties.tsx:282
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderForm.tsx:184
@@ -4977,7 +5049,7 @@ msgstr "समाप्ति समय"
 msgid "Engineering Contact"
 msgstr "इंजीनियरिंग संपर्क"
 
-#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:812
+#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:816
 msgid "Enter a batch number before setting the expiration date"
 msgstr "समाप्ति तारीख सेट करने से पहले एक बैच नंबर दर्ज करें"
 
@@ -5021,6 +5093,9 @@ msgstr "Entity {status} है"
 msgid "ERP, MES, QMS"
 msgstr "ERP, MES, QMS"
 
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:182
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRulesTable.tsx:63
+#: apps/erp/app/modules/items/ui/ItemRules/SeveritySelect.tsx:27
 #: apps/erp/app/routes/_public+/callback.tsx:159
 msgid "Error"
 msgstr "त्रुटि"
@@ -5116,6 +5191,10 @@ msgstr "बिक्रय आदेश लाइन से मॉडल हट�
 msgid "Error validating serial number"
 msgstr "सीरियल नंबर को मान्य करने में त्रुटि"
 
+#: apps/erp/app/components/ItemRuleViolationModal.tsx:77
+msgid "Errors"
+msgstr ""
+
 #: apps/erp/app/modules/settings/ui/Approvals/ApprovalRuleDetails.tsx:92
 msgid "Escalation"
 msgstr "संवर्धन"
@@ -5158,6 +5237,10 @@ msgstr "ईवेंट प्रकार"
 #: apps/erp/app/modules/production/ui/Jobs/JobBillOfProcess.tsx:891
 msgid "Events"
 msgstr "घटनाएं"
+
+#: apps/erp/app/modules/items/ui/ItemRules/RuleBuilder.tsx:51
+msgid "Every condition must match"
+msgstr ""
 
 #: apps/erp/app/routes/onboarding+/plan.tsx:47
 msgid "Everything from Starter"
@@ -5220,12 +5303,12 @@ msgstr "सबट्री को विस्तृत करें"
 msgid "Expected Receipt"
 msgstr "अपेक्षित रसीद"
 
-#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:374
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:377
 msgid "Expected Receipt Date"
 msgstr "अपेक्षित प्राप्ति तारीख"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:397
-#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:797
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:402
+#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:801
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQProperties.tsx:279
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteForm.tsx:178
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteProperties.tsx:275
@@ -5237,7 +5320,7 @@ msgstr "अपेक्षित प्राप्ति तारीख"
 msgid "Expiration Date"
 msgstr "समाप्ति तारीख"
 
-#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:1019
+#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:1023
 msgid "Expiration Date (applies to all serials on this line)"
 msgstr "समाप्ति तारीख (इस लाइन पर सभी सीरीज़ पर लागू होता है)"
 
@@ -5778,6 +5861,10 @@ msgstr "शुल्क"
 msgid "Fetch"
 msgstr "लाएं"
 
+#: apps/erp/app/modules/items/ui/ItemRules/RuleBuilder.tsx:124
+msgid "Field"
+msgstr ""
+
 #: apps/erp/app/components/ImportCSVModal/FieldMappings.tsx:192
 msgid "Field Mapping"
 msgstr "फील्ड मैपिंग"
@@ -5865,7 +5952,7 @@ msgstr "फ़िल्टरिंग"
 msgid "Finalize"
 msgstr "अंतिम रूप दें"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:348
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:351
 #: apps/erp/app/modules/items/ui/MaterialFinishes/MaterialFinishesTable.tsx:55
 #: apps/erp/app/modules/items/ui/Materials/MaterialForm.tsx:267
 #: apps/erp/app/modules/items/ui/Materials/MaterialProperties.tsx:586
@@ -5879,7 +5966,7 @@ msgstr "फिनिश"
 msgid "Finish To"
 msgstr "समाप्त करने के लिए"
 
-#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:65
+#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:66
 #: apps/erp/app/routes/x+/items+/finishes.tsx:15
 msgid "Finishes"
 msgstr "फिनिशेस"
@@ -5960,7 +6047,7 @@ msgstr "आवृत्ति"
 msgid "Friday"
 msgstr "शुक्रवार"
 
-#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:367
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:370
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransfersTable.tsx:90
 msgid "From Location"
 msgstr "स्थान से"
@@ -6066,7 +6153,7 @@ msgstr "शुभ प्रभात, {0}"
 msgid "Google Places API key not configured"
 msgstr "Google Places API key कॉन्फ़िगर नहीं है"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:365
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:368
 #: apps/erp/app/modules/items/ui/MaterialGrades/MaterialGradesTable.tsx:55
 #: apps/erp/app/modules/items/ui/Materials/MaterialForm.tsx:227
 #: apps/erp/app/modules/items/ui/Materials/MaterialProperties.tsx:546
@@ -6075,7 +6162,7 @@ msgstr "Google Places API key कॉन्फ़िगर नहीं है"
 msgid "Grade"
 msgstr "ग्रेड"
 
-#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:71
+#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:72
 #: apps/erp/app/routes/x+/items+/grades.tsx:15
 msgid "Grades"
 msgstr "ग्रेड"
@@ -6245,6 +6332,8 @@ msgstr "चयनित अवधि में"
 #: apps/erp/app/components/Configurator/ConfigurationEditor/ConfigurationEditor.ee.tsx:338
 #: apps/erp/app/components/Contact.tsx:63
 #: apps/erp/app/modules/items/ui/Consumables/ConsumablesTable.tsx:245
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:200
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRulesTable.tsx:86
 #: apps/erp/app/modules/items/ui/Materials/MaterialsTable.tsx:382
 #: apps/erp/app/modules/items/ui/Parts/PartsTable.tsx:287
 #: apps/erp/app/modules/items/ui/Tools/ToolsTable.tsx:286
@@ -6351,6 +6440,10 @@ msgstr "सामग्री से विरासत में प्रा�
 msgid "Insert rows"
 msgstr "पंक्तियाँ सम्मिलित करें"
 
+#: apps/erp/app/modules/items/ui/ItemRules/MessageWithTokens.tsx:167
+msgid "Insert token"
+msgstr ""
+
 #: apps/erp/app/modules/quality/ui/InboundInspections/InboundInspectionForm.tsx:90
 #: apps/erp/app/modules/quality/ui/InboundInspections/InboundInspectionLotView.tsx:163
 msgid "Inspect"
@@ -6437,7 +6530,7 @@ msgstr "अमान्य निमंत्रण"
 #: apps/erp/app/components/Form/ConversionFactor.tsx:274
 #: apps/erp/app/components/Form/ConversionFactor.tsx:299
 #: apps/erp/app/hooks/useModules.tsx:52
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:553
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:590
 #: apps/erp/app/modules/items/ui/Consumables/ConsumableForm.tsx:82
 #: apps/erp/app/modules/items/ui/Consumables/ConsumableProperties.tsx:50
 #: apps/erp/app/modules/items/ui/Consumables/ConsumablesTable.tsx:82
@@ -6470,7 +6563,7 @@ msgstr "अमान्य निमंत्रण"
 msgid "Inventory"
 msgstr "इन्वेंटरी"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:340
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:345
 msgid "Inventory Adjustment"
 msgstr "इन्वेंटरी समायोजन"
 
@@ -6757,11 +6850,11 @@ msgstr "आइटम समूह"
 #: apps/erp/app/modules/items/ui/Materials/MaterialsTable.tsx:651
 #: apps/erp/app/modules/items/ui/Parts/PartsTable.tsx:580
 #: apps/erp/app/modules/items/ui/Tools/ToolsTable.tsx:568
-#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:100
+#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:101
 msgid "Item Groups"
 msgstr "आइटम समूह"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:104
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:107
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferWizard.tsx:373
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferWizard.tsx:705
 #: apps/erp/app/modules/items/ui/Item/BoMExplorer.tsx:535
@@ -6775,11 +6868,17 @@ msgstr "आइटम आईडी"
 msgid "Item Master"
 msgstr "आइटम मास्टर"
 
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRulesTable.tsx:144
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRulesUpgradeOverlay.tsx:79
+#: apps/erp/app/routes/x+/items+/rules.tsx:17
+msgid "Item Rules"
+msgstr ""
+
 #: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:212
 msgid "Item Scope"
 msgstr "आइटम स्कोप"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:419
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:422
 #: apps/erp/app/modules/items/ui/Item/BoMExplorer.tsx:587
 #: apps/erp/app/modules/production/ui/Jobs/JobBoMExplorer.tsx:445
 msgid "Item Type"
@@ -6790,6 +6889,7 @@ msgid "items"
 msgstr "आइटम"
 
 #: apps/erp/app/hooks/useModules.tsx:46
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRulesTable.tsx:92
 #: apps/erp/app/modules/quality/ui/Actions/ActionsTable.tsx:116
 #: apps/erp/app/modules/quality/ui/Issue/IssueForm.tsx:157
 #: apps/erp/app/modules/quality/ui/Issue/IssuesTable.tsx:225
@@ -7044,7 +7144,7 @@ msgstr "अंतिम सिंक: {0}"
 msgid "Last updated: {formattedDate}"
 msgstr "अंतिम अपडेट: {formattedDate}"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:159
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:162
 #: apps/erp/app/modules/items/ui/Item/BillOfProcess.tsx:1231
 #: apps/erp/app/modules/production/ui/Jobs/JobBillOfProcess.tsx:2401
 #: apps/erp/app/modules/purchasing/ui/Planning/PurchasingPlanningTable.tsx:356
@@ -7130,7 +7230,7 @@ msgstr "संभावना"
 msgid "Line Item Comparison"
 msgstr "लाइन आइटम तुलना"
 
-#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:351
+#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:350
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:354
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferLines.tsx:185
 msgid "Line options"
@@ -7232,7 +7332,7 @@ msgstr "आइटम विवरण लोड हो रहे हैं..."
 msgid "Loading..."
 msgstr "लोड हो रहा है..."
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:348
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:353
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbanForm.tsx:277
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptForm/ReceiptForm.tsx:258
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentForm/ShipmentForm.tsx:287
@@ -7412,7 +7512,7 @@ msgstr "रखरखाव शेड्यूलिंग"
 msgid "Maintenance Type"
 msgstr "रखरखाव प्रकार"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:87
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:90
 #: apps/erp/app/modules/items/ui/Item/ItemForm.tsx:93
 #: apps/erp/app/modules/items/ui/Parts/PartForm.tsx:202
 #: apps/erp/app/modules/items/ui/Parts/PartProperties.tsx:345
@@ -7490,7 +7590,7 @@ msgstr "यह दस्तावेज़ सक्रिय और दृश�
 
 #: apps/erp/app/modules/accounting/ui/useAccountingSubmodules.tsx:59
 #: apps/erp/app/modules/inventory/ui/useInventorySubmodules.tsx:26
-#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:27
+#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:28
 #: apps/erp/app/modules/people/ui/usePeopleSubmodules.tsx:20
 #: apps/erp/app/modules/purchasing/ui/usePurchasingSubmodules.tsx:23
 #: apps/erp/app/modules/sales/ui/useSalesSubmodules.tsx:28
@@ -7568,6 +7668,22 @@ msgstr "आंशिक रूप से चिह्नित करें"
 #: apps/erp/app/components/SortableList.tsx:130
 msgid "Mark to delete"
 msgstr "हटाने के लिए चिह्नित करें"
+
+#: apps/erp/app/modules/items/ui/ItemRules/RuleBuilder.tsx:112
+msgid "Match"
+msgstr ""
+
+#: apps/erp/app/modules/items/ui/ItemRules/RuleBuilder.tsx:50
+msgid "Match all"
+msgstr ""
+
+#: apps/erp/app/modules/items/ui/ItemRules/RuleBuilder.tsx:56
+msgid "Match any"
+msgstr ""
+
+#: apps/erp/app/modules/items/ui/ItemRules/RuleBuilder.tsx:62
+msgid "Match none"
+msgstr ""
 
 #: apps/erp/app/components/Table/components/Filter/ActiveFilters.tsx:145
 msgid "matches"
@@ -7659,7 +7775,7 @@ msgstr "सामग्री प्रकार"
 
 #: apps/erp/app/modules/items/ui/Materials/MaterialsTable.tsx:643
 #: apps/erp/app/modules/items/ui/Materials/MaterialsTable.tsx:660
-#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:36
+#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:37
 #: apps/erp/app/modules/production/ui/Jobs/JobHeader.tsx:91
 #: apps/erp/app/modules/production/ui/Jobs/JobMaterialsTable.tsx:510
 #: apps/erp/app/routes/x+/items+/materials.tsx:16
@@ -7723,6 +7839,11 @@ msgstr "मापन मानक"
 #: apps/erp/app/modules/users/ui/Groups/GroupsTable.tsx:65
 msgid "Members"
 msgstr "सदस्य"
+
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:163
+#: apps/erp/app/modules/items/ui/ItemRules/MessageWithTokens.tsx:160
+msgid "Message"
+msgstr ""
 
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoiceLineForm.tsx:398
 #: apps/erp/app/modules/items/ui/Item/BoMExplorer.tsx:578
@@ -7833,8 +7954,8 @@ msgstr "मिनट/1000 पीस"
 msgid "Minutes/Piece"
 msgstr "मिनट/टुकड़ा"
 
-#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptPostModal.tsx:172
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:168
+#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptPostModal.tsx:175
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:171
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferCompleteModal.tsx:142
 msgid "Missing Information"
 msgstr "लापता जानकारी"
@@ -7939,8 +8060,8 @@ msgid "More actions"
 msgstr "अधिक क्रियाएं"
 
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentForm/ShipmentForm.tsx:175
-#: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferHeader.tsx:101
-#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:112
+#: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferHeader.tsx:113
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:121
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceHeader.tsx:210
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoiceHeader.tsx:198
 #: apps/erp/app/modules/items/ui/Consumables/ConsumableHeader.tsx:62
@@ -8003,7 +8124,7 @@ msgstr "ट्रैश में स्थानांतरित करें
 msgid "Moved {0} to {1} bucket"
 msgstr "{0} को {1} बकेट में स्थानांतरित किया गया"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:547
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:584
 #: apps/erp/app/modules/production/ui/Planning/ProductionPlanningTable.tsx:490
 msgid "MRP runs automatically every 3 hours, but you can run it manually here."
 msgstr "MRP हर 3 घंटे में स्वचालित रूप से चलता है, लेकिन आप इसे यहां मैन्युअल रूप से चला सकते हैं।"
@@ -8040,6 +8161,9 @@ msgstr "मेरा सहेजा गया दृश्य"
 #: apps/erp/app/modules/items/ui/Item/ItemDocuments.tsx:107
 #: apps/erp/app/modules/items/ui/ItemPostingGroups/ItemPostingGroupForm.tsx:96
 #: apps/erp/app/modules/items/ui/ItemPostingGroups/ItemPostingGroupsTable.tsx:32
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:151
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleForm.tsx:120
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRulesTable.tsx:47
 #: apps/erp/app/modules/items/ui/MaterialDimensions/MaterialDimensionForm.tsx:96
 #: apps/erp/app/modules/items/ui/MaterialFinishes/MaterialFinishForm.tsx:96
 #: apps/erp/app/modules/items/ui/MaterialGrades/MaterialGradeForm.tsx:96
@@ -8099,8 +8223,8 @@ msgstr "नेविगेट करें"
 msgid "NCRs by Type"
 msgstr "प्रकार के अनुसार NCR"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:363
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:381
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:368
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:386
 msgid "Negative Adjustment"
 msgstr "नकारात्मक समायोजन"
 
@@ -8330,7 +8454,7 @@ msgstr "नया उद्धरण"
 msgid "New Quote Line"
 msgstr "नई उद्धरण पंक्ति"
 
-#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:302
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:305
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:416
 msgid "New Receipt"
 msgstr "नई रसीद"
@@ -8346,6 +8470,10 @@ msgstr "नया संस्करण"
 #: apps/erp/app/modules/sales/ui/SalesRFQ/SalesRFQForm.tsx:122
 msgid "New RFQ"
 msgstr "नया RFQ"
+
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleForm.tsx:113
+msgid "New rule"
+msgstr ""
 
 #: apps/erp/app/modules/settings/ui/Approvals/ApprovalRules.tsx:63
 #: apps/erp/app/modules/settings/ui/Approvals/ApprovalRules.tsx:108
@@ -8377,7 +8505,7 @@ msgstr "नया निर्धारित रखरखाव"
 msgid "New Shift"
 msgstr "नई शिफ्ट"
 
-#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:238
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:241
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:318
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:488
 msgid "New Shipment"
@@ -8437,7 +8565,7 @@ msgstr "नई माप की इकाई"
 msgid "New Version"
 msgstr "नया संस्करण"
 
-#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:343
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:346
 msgid "New Warehouse Transfer"
 msgstr ""
 
@@ -8561,6 +8689,10 @@ msgstr "अभी तक कोई टिप्पणी नहीं है। 
 msgid "No completed jobs within range"
 msgstr "निर्धारित सीमा के भीतर कोई पूर्ण किए गए कार्य नहीं"
 
+#: apps/erp/app/modules/items/ui/ItemRules/RuleBuilder.tsx:63
+msgid "No condition may match"
+msgstr ""
+
 #: apps/erp/app/components/Form/ConversionFactor.tsx:122
 msgid "No conversion is required"
 msgstr "कोई रूपांतरण आवश्यक नहीं है"
@@ -8601,6 +8733,10 @@ msgstr "अभी तक कोई कर्मचारी असाइन न�
 msgid "No employees found"
 msgstr "कोई कर्मचारी नहीं मिला"
 
+#: apps/erp/app/modules/items/ui/ItemRules/FieldCombobox.tsx:110
+msgid "No fields found."
+msgstr ""
+
 #: apps/erp/app/components/Documents.tsx:436
 #: apps/erp/app/modules/items/ui/Item/ItemDocuments.tsx:250
 #: apps/erp/app/modules/purchasing/ui/SupplierInteraction/SupplierInteractionLineDocuments.tsx:338
@@ -8634,6 +8770,8 @@ msgstr "कोई समस्या प्रकार कॉन्फ़िग
 msgid "No logo uploaded"
 msgstr "कोई लोगो अपलोड नहीं किया गया"
 
+#: apps/erp/app/modules/items/ui/ItemRules/MultiValueCombobox.tsx:138
+#: apps/erp/app/modules/items/ui/ItemRules/ValueCombobox.tsx:109
 #: apps/erp/app/routes/x+/traceability+/_index.tsx:187
 msgid "No matches"
 msgstr ""
@@ -8649,6 +8787,10 @@ msgstr "कोई नई सूचनाएं नहीं"
 #: apps/erp/app/components/RichText.tsx:63
 msgid "No notes"
 msgstr "कोई नोट नहीं"
+
+#: apps/erp/app/modules/items/ui/ItemRules/OperatorCombobox.tsx:135
+msgid "No operators."
+msgstr ""
 
 #: apps/erp/app/components/Assignee.tsx:169
 #: packages/react/src/CreateableMultiSelect.tsx:304
@@ -8725,6 +8867,10 @@ msgstr "कोई परिणाम नहीं"
 msgid "No results found"
 msgstr "कोई परिणाम नहीं मिला"
 
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:254
+msgid "No rules assigned"
+msgstr ""
+
 #: apps/erp/app/modules/quality/ui/InboundInspections/InboundInspectionLotView.tsx:265
 msgid "No samples inspected yet."
 msgstr "अभी तक कोई नमूना निरीक्षण नहीं किया गया है।"
@@ -8736,6 +8882,15 @@ msgstr "इस दृश्य पर कोई सॉर्ट लागू न
 #: apps/erp/app/routes/x+/person+/$personId.timecard.tsx:630
 msgid "No time entries for this week"
 msgstr "इस सप्ताह के लिए कोई समय प्रविष्टि नहीं"
+
+#: apps/erp/app/modules/items/ui/ItemRules/ValueInput.tsx:44
+msgid "No value needed"
+msgstr ""
+
+#: apps/erp/app/modules/items/ui/ItemRules/MultiValueCombobox.tsx:138
+#: apps/erp/app/modules/items/ui/ItemRules/ValueCombobox.tsx:109
+msgid "No values available"
+msgstr ""
 
 #: apps/erp/app/routes/x+/production+/_index.tsx:158
 msgid "No work center utilization data within range"
@@ -8810,7 +8965,7 @@ msgstr "प्रशिक्षण शुरू नहीं किया ग�
 msgid "Note"
 msgstr "नोट"
 
-#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:379
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:382
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferLineForm.tsx:170
 #: apps/erp/app/modules/items/ui/Item/ItemNotes.tsx:82
 #: apps/erp/app/modules/people/ui/Person/PersonSidebar/usePersonSidebar.tsx:28
@@ -8872,6 +9027,11 @@ msgstr "सूचनाएं"
 msgid "Now let's set up your company"
 msgstr "अब अपनी कंपनी सेट अप करते हैं"
 
+#: apps/erp/app/modules/items/ui/ItemRules/ValueInput.tsx:107
+#: apps/erp/app/modules/items/ui/ItemRules/ValueInput.tsx:110
+msgid "Number"
+msgstr ""
+
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbanForm.tsx:270
 msgid "Number of inventory units per purchase unit"
 msgstr "प्रति क्रय इकाई इन्वेंटरी इकाइयों की संख्या"
@@ -8891,7 +9051,7 @@ msgstr "का"
 msgid "OK"
 msgstr "ठीक है"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:133
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:136
 #: apps/erp/app/modules/production/ui/Jobs/JobMaterialsTable.tsx:303
 #: apps/erp/app/modules/production/ui/Planning/ProductionPlanningTable.tsx:325
 #: apps/erp/app/modules/purchasing/ui/Planning/PurchasingPlanningTable.tsx:402
@@ -8902,16 +9062,16 @@ msgstr "हाथ में"
 msgid "On Hold"
 msgstr "होल्ड पर"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:249
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:260
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:252
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:263
 msgid "On Jobs"
 msgstr "नौकरियों पर"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:239
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:242
 msgid "On Purchase Order"
 msgstr "खरीद आदेश पर"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:271
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:274
 msgid "On Sales Order"
 msgstr "बिक्रय आदेश पर"
 
@@ -9059,6 +9219,7 @@ msgstr "संचालन"
 msgid "Operations Type"
 msgstr "संचालन प्रकार"
 
+#: apps/erp/app/modules/items/ui/ItemRules/RuleBuilder.tsx:127
 #: apps/erp/app/routes/x+/users+/operators.tsx:200
 msgid "Operator"
 msgstr "ऑपरेटर"
@@ -9089,6 +9250,10 @@ msgstr "अवसर"
 #: packages/react/src/Form/FormLabel.tsx:44
 msgid "Optional"
 msgstr "वैकल्पिक"
+
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleForm.tsx:129
+msgid "Optional context for this rule"
+msgstr ""
 
 #: apps/erp/app/components/Layout/Navigation/GroupedContentSidebar.tsx:258
 #: apps/erp/app/modules/quality/ui/Issue/IssueAssociations.tsx:261
@@ -9337,7 +9502,7 @@ msgstr "भागीदार"
 
 #: apps/erp/app/modules/items/ui/Parts/PartsTable.tsx:572
 #: apps/erp/app/modules/items/ui/Parts/PartsTable.tsx:589
-#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:30
+#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:31
 #: apps/erp/app/routes/x+/items+/parts.tsx:17
 #: apps/erp/app/routes/x+/part+/$itemId.tsx:50
 #: apps/erp/app/routes/x+/part+/new.tsx:16
@@ -9490,7 +9655,11 @@ msgstr ""
 msgid "Pick a date or leave blank to clear it."
 msgstr "एक तारीख चुनें या इसे साफ करने के लिए खाली छोड़ें।"
 
-#: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferHeader.tsx:164
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:257
+msgid "Pick an existing rule from the library or create a new one to start enforcing constraints on this item."
+msgstr ""
+
+#: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferHeader.tsx:176
 msgid "Pick List"
 msgstr "पिक लिस्ट"
 
@@ -9606,7 +9775,7 @@ msgstr "पोर्टल लिंक"
 msgid "Portals"
 msgstr "पोर्टल"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:377
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:382
 msgid "Positive Adjustment"
 msgstr "सकारात्मक समायोजन"
 
@@ -9631,11 +9800,11 @@ msgstr "टिप्पणी पोस्ट करें"
 msgid "Post Invoice"
 msgstr "चालान पोस्ट करें"
 
-#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptPostModal.tsx:161
+#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptPostModal.tsx:164
 msgid "Post Receipt"
 msgstr "रसीद पोस्ट करें"
 
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:157
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:160
 msgid "Post Shipment"
 msgstr "शिपमेंट पोस्ट करें"
 
@@ -9759,7 +9928,7 @@ msgstr "मूल्य निर्धारण नियम"
 msgid "Pricing Trace"
 msgstr "मूल्य निर्धारण ट्रेस"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:278
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:283
 msgid "Print Label"
 msgstr "लेबल प्रिंट करें"
 
@@ -10200,10 +10369,10 @@ msgstr "गुणवत्ता प्रकार"
 msgid "Quantities"
 msgstr "मात्रा"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:218
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:404
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:223
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:409
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbanForm.tsx:215
-#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:1152
+#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:1156
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:1161
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferLineForm.tsx:168
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferWizard.tsx:685
@@ -10419,7 +10588,7 @@ msgstr "कारणें"
 msgid "Reassign specific tracked entities from this row to another disposition row."
 msgstr "इस पंक्ति से विशिष्ट ट्रैक किए गए इकाइयों को दूसरी निपटान पंक्ति में पुनः असाइन करें।"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:543
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:580
 #: apps/erp/app/modules/items/ui/Item/ItemCostingForm.tsx:98
 #: apps/erp/app/modules/items/ui/Item/ItemCostingForm.tsx:108
 #: apps/erp/app/modules/production/ui/Jobs/JobMaterialsTable.tsx:504
@@ -10450,7 +10619,7 @@ msgstr "रसीद आईडी"
 msgid "Receipt Line"
 msgstr "रसीद लाइन"
 
-#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:233
+#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:232
 msgid "Receipt Lines"
 msgstr "रसीद लाइनें"
 
@@ -10464,7 +10633,7 @@ msgstr "प्राप्ति अनुरोधित तारीख"
 
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptsTable.tsx:364
 #: apps/erp/app/modules/inventory/ui/useInventorySubmodules.tsx:29
-#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:289
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:292
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceHeader.tsx:304
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:398
 #: apps/erp/app/routes/x+/inventory+/receipts.tsx:14
@@ -10476,7 +10645,7 @@ msgstr "प्राप्ति अनुरोधित तारीख"
 msgid "Receipts"
 msgstr "रसीदें"
 
-#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:335
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:338
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:452
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrdersTable.tsx:417
 msgid "Receive"
@@ -10538,7 +10707,7 @@ msgstr "रिकॉर्ड"
 msgid "Redirecting to verification page..."
 msgstr "सत्यापन पृष्ठ पर पुनः निर्देशित किया जा रहा है..."
 
-#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:366
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:369
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransfersTable.tsx:106
 #: apps/erp/app/modules/quality/ui/Calibrations/GaugeCalibrationRecordForm.tsx:336
 msgid "Reference"
@@ -10589,7 +10758,7 @@ msgid "Rejected Date"
 msgstr "अस्वीकृत तारीख"
 
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbansTable.tsx:438
-#: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferHeader.tsx:186
+#: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferHeader.tsx:195
 msgid "Release"
 msgstr "रिलीज़"
 
@@ -10632,6 +10801,10 @@ msgstr "{0} को हटाएं"
 msgid "Remove attachment"
 msgstr "संलग्नक हटाएं"
 
+#: apps/erp/app/modules/items/ui/ItemRules/ConditionRow.tsx:88
+msgid "Remove condition"
+msgstr ""
+
 #: apps/erp/app/components/Table/components/Filter/ActiveFilters.tsx:213
 #: apps/erp/app/components/Table/components/Filter/Filter.tsx:134
 msgid "Remove filter"
@@ -10645,7 +10818,7 @@ msgstr "फ़िल्टर हटाएं"
 msgid "Remove from Price List"
 msgstr "मूल्य सूची से हटाएं"
 
-#: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferWizard.tsx:1350
+#: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferWizard.tsx:1351
 #: apps/erp/app/modules/production/ui/Jobs/JobMaterialsTable.tsx:672
 #: apps/erp/app/modules/production/ui/Jobs/JobMaterialsTable.tsx:715
 msgid "Remove item"
@@ -10684,8 +10857,8 @@ msgstr "इस स्टोरेज प्रकार को सभी सं�
 msgid "Remove Transfer"
 msgstr "ट्रांसफर हटाएं"
 
-#: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferHeader.tsx:129
-#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:140
+#: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferHeader.tsx:141
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:149
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:199
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:133
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:176
@@ -10716,7 +10889,7 @@ msgstr "पुनः ऑर्डर बिंदु"
 msgid "Reorder Point:"
 msgstr "पुनः ऑर्डर बिंदु:"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:169
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:172
 #: apps/erp/app/modules/production/ui/Planning/ProductionPlanningTable.tsx:295
 #: apps/erp/app/modules/purchasing/ui/Planning/PurchasingPlanningTable.tsx:372
 msgid "Reorder Policy"
@@ -10747,7 +10920,7 @@ msgstr "पुनः ऑर्डर करने की नीति"
 msgid "Replace existing pricing with source values"
 msgstr "मौजूदा मूल्य निर्धारण को स्रोत मानों से बदलें"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:199
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:202
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbansTable.tsx:396
 #: apps/erp/app/modules/items/ui/Parts/PartProperties.tsx:337
 #: apps/erp/app/modules/items/ui/Parts/PartsTable.tsx:177
@@ -11058,6 +11231,10 @@ msgstr "भूमिका:"
 msgid "rows"
 msgstr "पंक्तियाँ"
 
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRulesTable.tsx:138
+msgid "Rule"
+msgstr ""
+
 #: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:169
 msgid "Rule applies to every customer."
 msgstr "नियम हर ग्राहक पर लागू होता है।"
@@ -11069,6 +11246,15 @@ msgstr "नियम हर आइटम पर लागू होता है
 #: apps/erp/app/modules/sales/ui/Pricing/PricingRuleForm.tsx:109
 msgid "Rule Type"
 msgstr "नियम प्रकार"
+
+#: apps/erp/app/components/ItemRuleViolationModal.tsx:68
+msgid "Rule Violation"
+msgstr ""
+
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:101
+#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:107
+msgid "Rules"
+msgstr ""
 
 #: apps/erp/app/components/Configurator/ConfigurationEditor/ConfigurationEditor.ee.tsx:405
 msgid "Run Test"
@@ -11235,7 +11421,7 @@ msgstr "शनिवार"
 #: apps/erp/app/modules/inventory/ui/StorageTypes/StorageTypeForm.tsx:101
 #: apps/erp/app/modules/inventory/ui/StorageUnits/StorageUnitForm.tsx:113
 #: apps/erp/app/modules/inventory/ui/Traceability/EditExpiryModal.tsx:92
-#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:385
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:388
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceDeliveryForm.tsx:142
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceForm.tsx:287
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceLineForm.tsx:788
@@ -11253,6 +11439,7 @@ msgstr "शनिवार"
 #: apps/erp/app/modules/items/ui/Item/PickMethodForm.tsx:152
 #: apps/erp/app/modules/items/ui/Item/RevisionForm.tsx:122
 #: apps/erp/app/modules/items/ui/ItemPostingGroups/ItemPostingGroupForm.tsx:104
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleForm.tsx:145
 #: apps/erp/app/modules/items/ui/MaterialDimensions/MaterialDimensionForm.tsx:102
 #: apps/erp/app/modules/items/ui/MaterialFinishes/MaterialFinishForm.tsx:102
 #: apps/erp/app/modules/items/ui/MaterialGrades/MaterialGradeForm.tsx:102
@@ -11522,6 +11709,10 @@ msgstr ""
 msgid "Search employees..."
 msgstr "कर्मचारियों को खोजें..."
 
+#: apps/erp/app/modules/items/ui/ItemRules/FieldCombobox.tsx:105
+msgid "Search fields..."
+msgstr ""
+
 #: apps/erp/app/modules/quality/ui/Issue/Jira/IssueDialog.tsx:95
 #: apps/erp/app/modules/quality/ui/Issue/Linear/IssueDialog.tsx:94
 msgid "Search for existing or create a new one"
@@ -11534,6 +11725,10 @@ msgstr "इतिहास खोजें"
 #: apps/erp/app/components/Gantt/Gantt.tsx:882
 msgid "Search Job"
 msgstr "Job खोजें"
+
+#: apps/erp/app/modules/items/ui/ItemRules/OperatorCombobox.tsx:130
+msgid "Search operators..."
+msgstr ""
 
 #: apps/erp/app/modules/quality/ui/Issue/IssueTask.tsx:873
 msgid "Search processes..."
@@ -11558,6 +11753,8 @@ msgstr "वेब खोजें"
 #: apps/erp/app/modules/documents/ui/Documents/DocumentsTable.tsx:565
 #: apps/erp/app/modules/items/ui/Item/BoMExplorer.tsx:165
 #: apps/erp/app/modules/items/ui/Item/UsedIn.tsx:136
+#: apps/erp/app/modules/items/ui/ItemRules/MultiValueCombobox.tsx:128
+#: apps/erp/app/modules/items/ui/ItemRules/ValueCombobox.tsx:99
 #: apps/erp/app/modules/production/ui/Jobs/JobBoMExplorer.tsx:157
 #: apps/erp/app/modules/quality/ui/Issue/IssueAssociations.tsx:112
 #: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceDispatchExplorer.tsx:175
@@ -11694,6 +11891,10 @@ msgstr "कर्मचारी चुनें"
 msgid "Select Employee Type"
 msgstr "कर्मचारी प्रकार चुनें"
 
+#: apps/erp/app/modules/items/ui/ItemRules/FieldCombobox.tsx:94
+msgid "Select field"
+msgstr ""
+
 #: apps/erp/app/modules/quality/ui/Calibrations/GaugeCalibrationRecordForm.tsx:230
 #: apps/erp/app/modules/quality/ui/Calibrations/GaugeCalibrationRecordForm.tsx:414
 msgid "Select Gauge"
@@ -11732,9 +11933,23 @@ msgstr "आपूर्तिकर्ता स्थिति चुनें"
 msgid "Select Supplier Type"
 msgstr "आपूर्तिकर्ता प्रकार चुनें"
 
+#: apps/erp/app/modules/items/ui/ItemRules/SurfacesField.tsx:101
+msgid "Select surfaces"
+msgstr ""
+
 #: apps/erp/app/modules/resources/ui/Training/TrainingAssignmentForm.tsx:465
 msgid "Select the groups that should complete this training"
 msgstr "उन समूहों का चयन करें जिन्हें इस प्रशिक्षण को पूरा करना चाहिए"
+
+#: apps/erp/app/modules/items/ui/ItemRules/ValueCombobox.tsx:81
+#: apps/erp/app/modules/items/ui/ItemRules/ValueInput.tsx:87
+msgid "Select value"
+msgstr ""
+
+#: apps/erp/app/modules/items/ui/ItemRules/MultiValueCombobox.tsx:110
+#: apps/erp/app/modules/items/ui/ItemRules/ValueInput.tsx:69
+msgid "Select values"
+msgstr ""
 
 #: apps/erp/app/modules/quality/ui/InboundInspections/ScanInspectionSample.tsx:202
 msgid "Selected"
@@ -11831,7 +12046,7 @@ msgstr "सीरियल / बैच"
 msgid "Serial items require a sales order"
 msgstr "सीरियल आइटम के लिए बिक्री आदेश आवश्यक है"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:392
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:397
 #: apps/erp/app/modules/quality/ui/Gauge/GaugeForm.tsx:381
 #: apps/erp/app/modules/quality/ui/Gauge/GaugesTable.tsx:171
 msgid "Serial Number"
@@ -11883,7 +12098,7 @@ msgstr "देय तारीख सेट करें"
 msgid "Set Pricing"
 msgstr "मूल्य निर्धारण सेट करें"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:361
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:366
 msgid "Set Quantity"
 msgstr "मात्रा निर्धारित करें"
 
@@ -11935,6 +12150,9 @@ msgstr "सेटअप यूनिट"
 msgid "Severities"
 msgstr "गंभीरताएं"
 
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:154
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRulesTable.tsx:59
+#: apps/erp/app/modules/items/ui/ItemRules/SeveritySelect.tsx:42
 #: apps/erp/app/modules/quality/ui/RiskRegister/RiskRegisterForm.tsx:181
 #: apps/erp/app/modules/quality/ui/RiskRegister/RiskRegistersTable.tsx:156
 #: apps/erp/app/modules/quality/ui/SamplingPlan/SamplingPlanForm.tsx:251
@@ -11943,7 +12161,7 @@ msgstr "गंभीरताएं"
 msgid "Severity"
 msgstr "गंभीरता"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:308
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:311
 #: apps/erp/app/modules/items/ui/MaterialDimensions/MaterialDimensionForm.tsx:95
 #: apps/erp/app/modules/items/ui/MaterialDimensions/MaterialDimensionsTable.tsx:40
 #: apps/erp/app/modules/items/ui/Materials/MaterialForm.tsx:238
@@ -11954,7 +12172,7 @@ msgstr "गंभीरता"
 msgid "Shape"
 msgstr "आकार"
 
-#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:77
+#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:78
 #: apps/erp/app/routes/x+/items+/forms.tsx:15
 msgid "Shapes"
 msgstr "आकार"
@@ -12005,7 +12223,7 @@ msgstr "शिफ्ट का नाम"
 msgid "Shifts"
 msgstr "शिफ्ट"
 
-#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:271
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:274
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:353
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:526
 msgid "Ship"
@@ -12052,7 +12270,7 @@ msgstr "शिपमेंट स्थान"
 
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentsTable.tsx:381
 #: apps/erp/app/modules/inventory/ui/useInventorySubmodules.tsx:35
-#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:225
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:228
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoiceHeader.tsx:287
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:301
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:471
@@ -12194,6 +12412,10 @@ msgstr "उद्धरण, बिक्री आदेश, बिक्री 
 #: apps/erp/app/components/OnshapeSync.tsx:247
 msgid "Show sync options"
 msgstr "सिंक विकल्प दिखाएं"
+
+#: apps/erp/app/modules/items/ui/ItemRules/MessageWithTokens.tsx:161
+msgid "Shown to the user when this rule fails. Use {item.name} or other tokens."
+msgstr ""
 
 #: apps/erp/app/routes/_public+/login.tsx:344
 msgid "Sign in with Email"
@@ -12366,7 +12588,7 @@ msgstr "लाइन को विभाजित करें"
 msgid "Split off quantity"
 msgstr "विभाजित करने के लिए मात्रा"
 
-#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:363
+#: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:362
 msgid "Split receipt line"
 msgstr "रसीद लाइन को विभाजित करें"
 
@@ -12481,6 +12703,8 @@ msgstr "सांख्यिकीय स्वीकृति विफल ह
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransfersTable.tsx:70
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoicesTable.tsx:135
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoicesTable.tsx:129
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:160
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRulesTable.tsx:78
 #: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:142
 #: apps/erp/app/modules/production/ui/Jobs/JobsTable.tsx:315
 #: apps/erp/app/modules/production/ui/Planning/ProductionPlanningOrderDrawer.tsx:374
@@ -12586,14 +12810,16 @@ msgstr "स्टॉक ट्रांसफर विज़ार्ड"
 #: apps/erp/app/modules/inventory/ui/useInventorySubmodules.tsx:41
 #: apps/erp/app/routes/x+/inventory+/stock-transfers.tsx:17
 #: apps/erp/app/routes/x+/stock-transfer+/$id.tsx:18
-#: apps/erp/app/routes/x+/stock-transfer+/new.tsx:20
+#: apps/erp/app/routes/x+/stock-transfer+/new.tsx:25
 msgid "Stock Transfers"
 msgstr "स्टॉक ट्रांसफर"
 
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:473
 #: apps/erp/app/modules/inventory/ui/StorageTypes/StorageTypesTable.tsx:92
 msgid "Storage Type"
 msgstr "स्टोरेज प्रकार"
 
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:499
 #: apps/erp/app/modules/inventory/ui/StorageTypes/StorageTypesTable.tsx:98
 #: apps/erp/app/modules/inventory/ui/StorageUnits/StorageUnitForm.tsx:105
 #: apps/erp/app/modules/inventory/ui/StorageUnits/StorageUnitsTable.tsx:258
@@ -12603,8 +12829,8 @@ msgstr "स्टोरेज प्रकार"
 msgid "Storage Types"
 msgstr "स्टोरेज प्रकार"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:214
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:352
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:219
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:357
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbanForm.tsx:284
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbansTable.tsx:430
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:1198
@@ -12623,7 +12849,7 @@ msgstr "स्टोरेज प्रकार"
 msgid "Storage Unit"
 msgstr "भंडारण इकाई"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:191
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:197
 #: apps/erp/app/modules/inventory/ui/StorageUnits/StorageUnitsTable.tsx:394
 #: apps/erp/app/modules/inventory/ui/useInventorySubmodules.tsx:88
 #: apps/erp/app/routes/x+/inventory+/storage-units.tsx:22
@@ -12687,7 +12913,7 @@ msgstr "द्वारा प्रस्तुत"
 msgid "Subscribe to changes"
 msgstr "परिवर्तनों की सदस्यता लें"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:328
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:331
 #: apps/erp/app/modules/items/ui/MaterialFinishes/MaterialFinishesTable.tsx:40
 #: apps/erp/app/modules/items/ui/MaterialFinishes/MaterialFinishForm.tsx:95
 #: apps/erp/app/modules/items/ui/MaterialGrades/MaterialGradeForm.tsx:95
@@ -12701,7 +12927,7 @@ msgstr "परिवर्तनों की सदस्यता लें"
 msgid "Substance"
 msgstr "पदार्थ"
 
-#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:83
+#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:84
 #: apps/erp/app/routes/x+/items+/substances.tsx:15
 msgid "Substances"
 msgstr "पदार्थ"
@@ -12962,6 +13188,11 @@ msgstr "आपूर्ति और मांग"
 msgid "Supports {0} files"
 msgstr "{0} फ़ाइलों को समर्थन करता है"
 
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:157
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRulesTable.tsx:73
+msgid "Surfaces"
+msgstr ""
+
 #: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceDispatchesTable.tsx:250
 #: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceDispatchForm.tsx:213
 #: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceDispatchProperties.tsx:519
@@ -12992,7 +13223,7 @@ msgstr "तालिका"
 msgid "Table actions"
 msgstr "तालिका क्रियाएं"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:445
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:448
 #: apps/erp/app/modules/items/ui/Consumables/ConsumableProperties.tsx:458
 #: apps/erp/app/modules/items/ui/Consumables/ConsumablesTable.tsx:214
 #: apps/erp/app/modules/items/ui/Materials/MaterialProperties.tsx:721
@@ -13384,7 +13615,7 @@ msgstr "समय क्षेत्र"
 msgid "Title"
 msgstr "शीर्षक"
 
-#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:368
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:371
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransfersTable.tsx:98
 msgid "To Location"
 msgstr "स्थान को"
@@ -13507,7 +13738,7 @@ msgstr "टूल आईडी"
 #: apps/erp/app/modules/items/ui/Item/MakeMethodTools.tsx:658
 #: apps/erp/app/modules/items/ui/Tools/ToolsTable.tsx:560
 #: apps/erp/app/modules/items/ui/Tools/ToolsTable.tsx:577
-#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:42
+#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:43
 #: apps/erp/app/modules/production/ui/Jobs/JobBillOfProcess.tsx:869
 #: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:688
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteBillOfProcess.tsx:738
@@ -13606,7 +13837,7 @@ msgstr "ट्रैक किया गया इकाई ID आवश्य�
 msgid "Tracking"
 msgstr "ट्रैकिंग"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:221
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:226
 msgid "Tracking ID"
 msgstr "ट्रैकिंग आईडी"
 
@@ -13667,7 +13898,7 @@ msgstr "प्रशिक्षण"
 msgid "Transfer"
 msgstr "स्थानांतरण"
 
-#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:371
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:374
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransfersTable.tsx:114
 msgid "Transfer Date"
 msgstr "स्थानांतरण तारीख"
@@ -13676,8 +13907,8 @@ msgstr "स्थानांतरण तारीख"
 msgid "Transfer From"
 msgstr "से स्थानांतरित करें"
 
-#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:355
-#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:362
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:358
+#: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransferForm.tsx:365
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransfersTable.tsx:58
 msgid "Transfer ID"
 msgstr "ट्रांसफर आईडी"
@@ -13716,7 +13947,7 @@ msgstr "मंगलवार"
 
 #: apps/erp/app/modules/api/ui/TableDocs.tsx:436
 #: apps/erp/app/modules/documents/ui/Documents/DocumentsTable.tsx:302
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:399
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:402
 #: apps/erp/app/modules/items/ui/Item/BillOfProcess.tsx:1880
 #: apps/erp/app/modules/items/ui/Item/BillOfProcess.tsx:2165
 #: apps/erp/app/modules/items/ui/Materials/MaterialForm.tsx:251
@@ -13772,7 +14003,7 @@ msgstr "अपने वर्कस्पेस में खोजने क�
 msgid "Type:"
 msgstr "प्रकार:"
 
-#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:89
+#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:90
 #: apps/erp/app/modules/purchasing/ui/usePurchasingSubmodules.tsx:73
 #: apps/erp/app/modules/sales/ui/useSalesSubmodules.tsx:98
 #: apps/erp/app/routes/x+/items+/types.tsx:15
@@ -13788,6 +14019,10 @@ msgstr "नमूना न लिए गए इकाइयां On Hold प�
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:201
 msgid "Unapproved Supplier"
 msgstr "अनुमोदित नहीं आपूर्तिकर्ता"
+
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:217
+msgid "Unassign rule"
+msgstr ""
 
 #: apps/erp/app/components/Assignee.tsx:88
 #: apps/erp/app/components/Assignee.tsx:110
@@ -13828,8 +14063,8 @@ msgstr "इकाई"
 msgid "Unit Cost"
 msgstr "इकाई लागत"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:414
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:291
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:419
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:294
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceLineForm.tsx:519
 #: apps/erp/app/modules/items/ui/Consumables/ConsumableForm.tsx:171
 #: apps/erp/app/modules/items/ui/Consumables/ConsumableProperties.tsx:374
@@ -13886,7 +14121,7 @@ msgstr "यूनिट मूल्य"
 msgid "Unit Sale Price"
 msgstr "यूनिट विक्रय मूल्य"
 
-#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:106
+#: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:113
 msgid "Units"
 msgstr "इकाइयाँ"
 
@@ -13928,7 +14163,7 @@ msgstr "UoM"
 msgid "Update"
 msgstr "अपडेट करें"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:205
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:210
 msgid "Update Inventory"
 msgstr "इन्वेंटरी अपडेट करें"
 
@@ -13961,7 +14196,7 @@ msgstr "अनुमतियों को अपडेट करें"
 msgid "Update prices on"
 msgstr "कीमतें अपडेट करें"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:272
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:277
 msgid "Update Quantity"
 msgstr "मात्रा अपडेट करें"
 
@@ -14119,11 +14354,11 @@ msgstr "अपलोड किया जा रहा है {fileName}"
 msgid "Upon clicking Convert, parts will be created with the following internal part numbers:"
 msgstr "Convert पर क्लिक करने पर, निम्नलिखित आंतरिक भाग संख्याओं के साथ भाग बनाए जाएंगे:"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:219
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:222
 msgid "Usage/Day (30d)"
 msgstr "उपयोग/दिन (30d)"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:229
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:232
 msgid "Usage/Day (90d)"
 msgstr "उपयोग/दिन (90d)"
 
@@ -14218,6 +14453,8 @@ msgstr "नौकरी को मान्य कर रहे हैं..."
 
 #: apps/erp/app/modules/items/ui/Item/BillOfProcess.tsx:2515
 #: apps/erp/app/modules/items/ui/Item/BillOfProcess.tsx:2626
+#: apps/erp/app/modules/items/ui/ItemRules/RuleBuilder.tsx:130
+#: apps/erp/app/modules/items/ui/ItemRules/ValueInput.tsx:138
 #: apps/erp/app/modules/production/ui/Jobs/JobBillOfProcess.tsx:1911
 #: apps/erp/app/modules/production/ui/Jobs/JobBillOfProcess.tsx:1998
 #: apps/erp/app/modules/production/ui/Jobs/JobOperationStepRecordsTable.tsx:86
@@ -14496,6 +14733,10 @@ msgstr "गोदाम स्थानांतरण"
 msgid "Warehouse Transfers"
 msgstr "गोदाम स्थानांतरण"
 
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRulesTable.tsx:67
+msgid "Warn"
+msgstr ""
+
 #: apps/erp/app/routes/x+/settings+/inventory.tsx:364
 msgid "Warn but allow"
 msgstr "चेतावनी दें लेकिन अनुमति दें"
@@ -14512,8 +14753,14 @@ msgstr "चेतावनी दें जब आने वाली वस्�
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentVoidModal.tsx:61
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceVoidModal.tsx:61
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoiceVoidModal.tsx:62
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:186
+#: apps/erp/app/modules/items/ui/ItemRules/SeveritySelect.tsx:33
 msgid "Warning"
 msgstr "चेतावनी"
+
+#: apps/erp/app/components/ItemRuleViolationModal.tsx:85
+msgid "Warnings"
+msgstr ""
 
 #: apps/erp/app/components/TrainingPanel.tsx:81
 msgid "Watch full video"
