@@ -296,7 +296,7 @@ msgid "Action Types"
 msgstr "Action Types"
 
 #: apps/erp/app/components/Configurator/ConfigurationEditor/ConfigurationEditor.ee.tsx:348
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:260
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:259
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbansTable.tsx:600
 #: apps/erp/app/modules/items/ui/Item/BoMExplorer.tsx:174
 #: apps/erp/app/modules/items/ui/Item/BoMExplorer.tsx:406
@@ -657,7 +657,7 @@ msgstr "Address Line 1"
 msgid "Address Line 2"
 msgstr "Address Line 2"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:362
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:361
 msgid "Adjustment Type"
 msgstr "Adjustment Type"
 
@@ -1556,7 +1556,7 @@ msgstr "Batch items require a sales order"
 msgid "Batch number"
 msgstr "Batch number"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:397
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:396
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:776
 msgid "Batch Number"
 msgstr "Batch Number"
@@ -1781,7 +1781,7 @@ msgstr "Can't disable the only active break. Add another break or toggle the ove
 #: apps/erp/app/modules/accounting/ui/FiscalYear/FiscalYearSettingsForm.tsx:75
 #: apps/erp/app/modules/documents/ui/Documents/DocumentForm.tsx:82
 #: apps/erp/app/modules/inventory/ui/Batches/BatchPropertiesConfig.tsx:395
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:428
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:427
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbanForm.tsx:332
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptPostModal.tsx:198
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptVoidModal.tsx:85
@@ -2268,7 +2268,7 @@ msgstr "Coming soon"
 msgid "comma-separated values"
 msgstr "comma-separated values"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:423
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:422
 msgid "Comment"
 msgstr "Comment"
 
@@ -5307,7 +5307,7 @@ msgstr "Expected Receipt"
 msgid "Expected Receipt Date"
 msgstr "Expected Receipt Date"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:402
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:401
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:801
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQProperties.tsx:279
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteForm.tsx:178
@@ -6563,7 +6563,7 @@ msgstr "Invalid Invite"
 msgid "Inventory"
 msgstr "Inventory"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:345
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:344
 msgid "Inventory Adjustment"
 msgstr "Inventory Adjustment"
 
@@ -7332,7 +7332,7 @@ msgstr "Loading item details..."
 msgid "Loading..."
 msgstr "Loading..."
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:353
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:352
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbanForm.tsx:277
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptForm/ReceiptForm.tsx:258
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentForm/ShipmentForm.tsx:287
@@ -8223,8 +8223,8 @@ msgstr "Navigate"
 msgid "NCRs by Type"
 msgstr "NCRs by Type"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:368
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:386
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:367
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:385
 msgid "Negative Adjustment"
 msgstr "Negative Adjustment"
 
@@ -9775,7 +9775,7 @@ msgstr "Portal Link"
 msgid "Portals"
 msgstr "Portals"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:382
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:381
 msgid "Positive Adjustment"
 msgstr "Positive Adjustment"
 
@@ -9928,7 +9928,7 @@ msgstr "Pricing Rules"
 msgid "Pricing Trace"
 msgstr "Pricing Trace"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:283
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:282
 msgid "Print Label"
 msgstr "Print Label"
 
@@ -10369,8 +10369,8 @@ msgstr "Quality Type"
 msgid "Quantities"
 msgstr "Quantities"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:223
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:409
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:222
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:408
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbanForm.tsx:215
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:1156
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:1161
@@ -12046,7 +12046,7 @@ msgstr "Serial / Batch"
 msgid "Serial items require a sales order"
 msgstr "Serial items require a sales order"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:397
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:396
 #: apps/erp/app/modules/quality/ui/Gauge/GaugeForm.tsx:381
 #: apps/erp/app/modules/quality/ui/Gauge/GaugesTable.tsx:171
 msgid "Serial Number"
@@ -12098,7 +12098,7 @@ msgstr "Set due date"
 msgid "Set Pricing"
 msgstr "Set Pricing"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:366
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:365
 msgid "Set Quantity"
 msgstr "Set Quantity"
 
@@ -12829,8 +12829,8 @@ msgstr "Storage Type"
 msgid "Storage Types"
 msgstr "Storage Types"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:219
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:357
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:218
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:356
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbanForm.tsx:284
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbansTable.tsx:430
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:1198
@@ -12849,7 +12849,7 @@ msgstr "Storage Types"
 msgid "Storage Unit"
 msgstr "Storage Unit"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:197
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:196
 #: apps/erp/app/modules/inventory/ui/StorageUnits/StorageUnitsTable.tsx:394
 #: apps/erp/app/modules/inventory/ui/useInventorySubmodules.tsx:88
 #: apps/erp/app/routes/x+/inventory+/storage-units.tsx:22
@@ -13837,7 +13837,7 @@ msgstr "Tracked entity ID is required but none was found"
 msgid "Tracking"
 msgstr "Tracking"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:226
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:225
 msgid "Tracking ID"
 msgstr "Tracking ID"
 
@@ -14063,7 +14063,7 @@ msgstr "Unit"
 msgid "Unit Cost"
 msgstr "Unit Cost"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:419
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:418
 #: apps/erp/app/modules/inventory/ui/Inventory/InventoryTable.tsx:294
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceLineForm.tsx:519
 #: apps/erp/app/modules/items/ui/Consumables/ConsumableForm.tsx:171
@@ -14163,7 +14163,7 @@ msgstr "UoM"
 msgid "Update"
 msgstr "Update"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:210
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:209
 msgid "Update Inventory"
 msgstr "Update Inventory"
 
@@ -14196,7 +14196,7 @@ msgstr "Update Permissions"
 msgid "Update prices on"
 msgstr "Update prices on"
 
-#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:277
+#: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:276
 msgid "Update Quantity"
 msgstr "Update Quantity"
 
