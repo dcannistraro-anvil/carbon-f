@@ -1,7 +1,7 @@
-import { useCarbon } from "@carbon/auth";
 import type { RealtimeChannel, SupabaseClient } from "@supabase/supabase-js";
 import { REALTIME_SUBSCRIBE_STATES } from "@supabase/supabase-js";
 import { useCallback, useEffect, useRef } from "react";
+import { useCarbon } from "../CarbonContext";
 
 interface UseRealtimeChannelOptions<TDeps extends any[]> {
   topic: string;

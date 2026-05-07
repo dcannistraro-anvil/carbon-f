@@ -2,7 +2,7 @@ import { assertIsPost, error } from "@carbon/auth";
 import { requirePermissions } from "@carbon/auth/auth.server";
 import { flash } from "@carbon/auth/session.server";
 import { validationError, validator } from "@carbon/form";
-import { useRouteData } from "@carbon/remix";
+import { useRouteData } from "@carbon/react";
 import type { ActionFunctionArgs } from "react-router";
 import { redirect, useParams } from "react-router";
 import { useUser } from "~/hooks";

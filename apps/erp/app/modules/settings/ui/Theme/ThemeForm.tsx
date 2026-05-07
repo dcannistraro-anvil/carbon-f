@@ -6,9 +6,9 @@ import {
   CardHeader,
   CardTitle,
   cn,
+  useMode,
   VStack
 } from "@carbon/react";
-import { useMode } from "@carbon/remix";
 import type { Theme } from "@carbon/utils";
 import { themes } from "@carbon/utils";
 import { Trans } from "@lingui/react/macro";

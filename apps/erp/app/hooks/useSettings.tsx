@@ -1,5 +1,5 @@
 import type { Database } from "@carbon/database";
-import { useRouteData } from "@carbon/remix";
+import { useRouteData } from "@carbon/react";
 import { path } from "~/utils/path";
 
 export function useSettings(): Database["public"]["Tables"]["companySettings"]["Row"] {

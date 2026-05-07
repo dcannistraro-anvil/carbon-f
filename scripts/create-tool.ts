@@ -5,8 +5,8 @@ const toolName = process.argv[2];
 
 if (!toolName) {
   console.error("Error: Tool name is required");
-  console.log("Usage: npm run tool:new <toolName>");
-  console.log("Example: npm run tool:new getPart");
+  console.log("Usage: pnpm run tool:new <toolName>");
+  console.log("Example: pnpm run tool:new getPart");
   process.exit(1);
 }
 

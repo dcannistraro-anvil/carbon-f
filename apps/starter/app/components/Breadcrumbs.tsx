@@ -14,9 +14,9 @@ import {
   getValidChildren,
   HStack,
   ScrollArea,
-  useIsMobile
+  useIsMobile,
+  useMode
 } from "@carbon/react";
-import { useMode } from "@carbon/remix";
 import type { ComponentProps } from "react";
 import { cloneElement, forwardRef, useMemo } from "react";
 import { LuChevronsUpDown } from "react-icons/lu";

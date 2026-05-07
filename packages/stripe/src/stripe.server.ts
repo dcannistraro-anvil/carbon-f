@@ -1,14 +1,14 @@
+import { getCarbonServiceRole } from "@carbon/auth/client.server";
+import type { Database } from "@carbon/database";
 import {
   CarbonEdition,
   getAppUrl,
   STRIPE_BYPASS_COMPANY_IDS,
   STRIPE_BYPASS_USER_IDS,
   STRIPE_SECRET_KEY
-} from "@carbon/auth";
-import { getCarbonServiceRole } from "@carbon/auth/client.server";
-import type { Database } from "@carbon/database";
-import { trigger } from "@carbon/jobs";
+} from "@carbon/env";
 import { redis } from "@carbon/kv";
+import { trigger } from "@carbon/lib/trigger";
 import { Edition, Plan } from "@carbon/utils";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { Stripe } from "stripe";

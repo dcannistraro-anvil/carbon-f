@@ -31,10 +31,10 @@ import {
   Thead,
   Tr,
   useDisclosure,
+  useMode,
   VStack
 } from "@carbon/react";
 import { Editor } from "@carbon/react/Editor";
-import { useMode } from "@carbon/remix";
 import { formatDate } from "@carbon/utils";
 import { useLingui } from "@lingui/react/macro";
 import { useLocale } from "@react-aria/i18n";

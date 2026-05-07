@@ -1,7 +1,7 @@
-diff --git a/node_modules/@react-router/dev/dist/cli/index.js b/node_modules/@react-router/dev/dist/cli/index.js
+diff --git a/dist/cli/index.js b/dist/cli/index.js
 index da54c0d..e51d41f 100644
---- a/node_modules/@react-router/dev/dist/cli/index.js
-+++ b/node_modules/@react-router/dev/dist/cli/index.js
+--- a/dist/cli/index.js
++++ b/dist/cli/index.js
 @@ -1616,16 +1616,19 @@ async function cleanViteManifests(environmentsOptions, ctx) {
    );
    await Promise.all(

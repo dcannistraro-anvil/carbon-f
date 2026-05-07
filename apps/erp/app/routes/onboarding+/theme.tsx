@@ -11,9 +11,9 @@ import {
   cn,
   HStack,
   useKeyboardShortcuts,
+  useMode,
   VStack
 } from "@carbon/react";
-import { useMode } from "@carbon/remix";
 import type { Theme } from "@carbon/utils";
 import { themes } from "@carbon/utils";
 import { msg } from "@lingui/core/macro";

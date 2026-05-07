@@ -9,13 +9,14 @@ import { validator } from "@carbon/form";
 import { LocaleProvider, resolveLanguage } from "@carbon/locale";
 import {
   Button,
+  getPreferenceHeaders,
   Heading,
   OperatingSystemContextProvider,
   Toaster,
   TooltipProvider,
+  useMode,
   useMount
 } from "@carbon/react";
-import { getPreferenceHeaders, useMode } from "@carbon/remix";
 import type { Theme } from "@carbon/utils";
 import { modeValidator, themes } from "@carbon/utils";
 import { I18nProvider } from "@react-aria/i18n";

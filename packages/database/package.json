@@ -1,17 +1,18 @@
 {
   "name": "@carbon/database",
   "devDependencies": {
-    "@carbon/config": "*",
-    "@supabase/supabase-js": "2.80.0",
+    "@carbon/config": "workspace:*",
+    "@supabase/supabase-js": "catalog:",
     "@types/node": "20.19.39",
+    "@types/pg": "8.15.6",
     "@types/uuid": "8.3.4",
     "dotenv": "16.3.1",
-    "npm-run-all": "4.1.5",
-    "rimraf": "5.0.10",
-    "supabase": "2.89.0",
-    "tsup": "8.5.1",
-    "tsx": "4.21.0",
-    "typescript": "5.8.3",
+    "npm-run-all": "catalog:",
+    "rimraf": "catalog:",
+    "supabase": "catalog:",
+    "tsup": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
     "uuid": "9.0.0"
   },
   "exports": {
@@ -45,15 +46,17 @@
     "typecheck": "tsgo --noEmit"
   },
   "sideEffects": false,
-  "version": "*",
+  "version": "0.0.0",
   "dependencies": {
-    "cookie": "1.1.1",
-    "dompurify": "3.4.0",
-    "kysely": "0.28.15",
+    "@supabase/postgrest-js": "catalog:",
+    "cookie": "catalog:",
+    "dompurify": "catalog:",
+    "kysely": "catalog:",
     "kysely-supabase": "0.2.1",
-    "nanoid": "5.1.7",
+    "nanoid": "catalog:",
     "pg": "8.20.0",
-    "react-pdf": "10.4.1",
-    "sst": "4.6.9"
+    "react-pdf": "catalog:",
+    "sst": "catalog:",
+    "zod": "catalog:"
   }
 }

@@ -1,4 +1,4 @@
-import { useOptimisticLocation } from "@carbon/remix";
+import { useOptimisticLocation } from "@carbon/react";
 import { useCallback, useState } from "react";
 import type { Location } from "react-router";
 

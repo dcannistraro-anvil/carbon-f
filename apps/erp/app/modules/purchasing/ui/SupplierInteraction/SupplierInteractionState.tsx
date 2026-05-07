@@ -7,9 +7,9 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
   Menubar,
-  SplitButton
+  SplitButton,
+  useOptimisticLocation
 } from "@carbon/react";
-import { useOptimisticLocation } from "@carbon/remix";
 import { useLingui } from "@lingui/react/macro";
 import { LuChevronDown, LuCircle, LuCreditCard } from "react-icons/lu";
 import {

@@ -1,12 +1,13 @@
 {
   "name": "@carbon/auth",
   "devDependencies": {
-    "@carbon/config": "*",
-    "@carbon/utils": "*",
-    "@types/react": "18.3.28",
-    "tsup": "8.5.1",
-    "typescript": "5.8.3",
-    "vitest": "4.1.4"
+    "@carbon/config": "workspace:*",
+    "@carbon/utils": "workspace:*",
+    "@types/react": "catalog:",
+    "sst": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
   "exports": {
     ".": "./src/index.ts",
@@ -22,18 +23,18 @@
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "peerDependencies": {
-    "@carbon/database": "*",
-    "@carbon/react": "*",
-    "@carbon/utils": "*",
-    "@react-router/dev": "7.12.0",
-    "@supabase/functions-js": "2.1.5",
-    "@supabase/supabase-js": "2.80.0",
-    "@vercel/analytics": "^1.2.2",
-    "@vercel/react-router": "^1.2.4",
-    "react": "^18.3.1",
-    "react-router": "7.12.0",
-    "zod": "^3.25.76",
-    "zod-form-data": "2.0.8"
+    "@carbon/database": "workspace:*",
+    "@carbon/react": "workspace:*",
+    "@carbon/utils": "workspace:*",
+    "@react-router/dev": "catalog:",
+    "@supabase/functions-js": "catalog:",
+    "@supabase/supabase-js": "catalog:",
+    "@vercel/analytics": "catalog:",
+    "@vercel/react-router": "catalog:",
+    "react": "catalog:",
+    "react-router": "catalog:",
+    "zod": "catalog:",
+    "zod-form-data": "catalog:"
   },
   "private": true,
   "scripts": {
@@ -43,10 +44,16 @@
     "typecheck": "tsgo --noEmit"
   },
   "sideEffects": false,
-  "version": "*",
+  "version": "0.0.0",
   "dependencies": {
-    "cookie": "1.1.1",
-    "dompurify": "3.4.0",
-    "nanoid": "5.1.7"
+    "@carbon/documents": "workspace:*",
+    "@carbon/env": "workspace:*",
+    "@carbon/kv": "workspace:*",
+    "@carbon/lib": "workspace:*",
+    "@react-email/components": "catalog:",
+    "cookie": "catalog:",
+    "dompurify": "catalog:",
+    "nanoid": "catalog:",
+    "zustand": "catalog:"
   }
 }

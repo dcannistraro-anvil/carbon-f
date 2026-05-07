@@ -1,4 +1,4 @@
-import { getAppUrl, SLACK_BOT_TOKEN } from "@carbon/auth";
+import { getAppUrl, SLACK_BOT_TOKEN } from "@carbon/env";
 import { WebClient } from "@slack/web-api";
 
 interface SlackMessage {

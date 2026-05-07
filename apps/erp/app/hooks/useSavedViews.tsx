@@ -1,4 +1,4 @@
-import { useRouteData, useUrlParams } from "@carbon/remix";
+import { useRouteData, useUrlParams } from "@carbon/react";
 import type { SavedView } from "~/modules/shared/types";
 import type { Route } from "~/types";
 import { path } from "~/utils/path";

@@ -21,9 +21,9 @@ import {
   ScrollArea,
   useDisclosure,
   useIsMobile,
+  useMode,
   VStack
 } from "@carbon/react";
-import { useMode } from "@carbon/remix";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { ReactNode } from "react";
 import { useMemo } from "react";

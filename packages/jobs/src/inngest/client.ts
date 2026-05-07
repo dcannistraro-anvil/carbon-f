@@ -1,10 +1,1 @@
-import { Inngest } from "inngest";
-
-/**
- * The Inngest client for Carbon jobs.
- * This client is used to define functions and send events.
- */
-export const inngest = new Inngest({ id: "carbon" });
-
-// Re-export the typed client for use in functions
-export type InngestClient = typeof inngest;
+export { type InngestClient, inngest } from "@carbon/lib/inngest";

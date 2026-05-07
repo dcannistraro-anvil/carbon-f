@@ -1,13 +1,12 @@
 import type { Integration } from "@carbon/ee";
-
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
+  SelectValue,
+  useUrlParams
 } from "@carbon/react";
-import { useUrlParams } from "@carbon/remix";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useMemo, useState } from "react";
 import { LuPuzzle } from "react-icons/lu";

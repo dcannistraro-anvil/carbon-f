@@ -1,4 +1,4 @@
-import { useRouteData } from "@carbon/remix";
+import { useRouteData } from "@carbon/react";
 import { path } from "~/utils/path";
 
 export function useOnboarding() {

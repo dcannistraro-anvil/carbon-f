@@ -5,8 +5,8 @@ const agentName = process.argv[2];
 
 if (!agentName) {
   console.error("Error: Agent name is required");
-  console.log("Usage: npm run agent:new <agentName>");
-  console.log("Example: npm run agent:new inventory");
+  console.log("Usage: pnpm run agent:new <agentName>");
+  console.log("Example: pnpm run agent:new inventory");
   process.exit(1);
 }
 

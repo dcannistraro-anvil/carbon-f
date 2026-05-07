@@ -33,21 +33,21 @@ msgstr "{0} disponibili"
 #. placeholder {0}: serialIndex + 1
 #. placeholder {1}: operation.operationQuantity
 #. placeholder {1}: operation.targetQuantity
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:638
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:852
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1811
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:639
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:853
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1812
 msgid "{0} of {1}"
 msgstr "{0} di {1}"
 
 #. placeholder {0}: attributes.filter((a) => a.jobOperationStepRecord.some( (r) => r.index === activeStep ) ).length
 #. placeholder {1}: attributes.length
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:875
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:876
 msgid "{0} of {1} complete"
 msgstr "{0} di {1} completati"
 
 #. placeholder {0}: attributes.filter((a) => a.jobOperationStepRecord.some( (r) => r.index === activeStep ) ).length
 #. placeholder {1}: attributes.length
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1835
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1836
 msgid "{0} of {1} completed"
 msgstr "{0} di {1} completati"
 
@@ -56,22 +56,22 @@ msgstr "{0} di {1} completati"
 msgid "{0} Scrapped"
 msgstr "{0} Scartati"
 
-#: apps/mes/app/components/AppSidebar.tsx:558
+#: apps/mes/app/components/AppSidebar.tsx:560
 msgid "About"
 msgstr "Informazioni"
 
-#: apps/mes/app/components/AppSidebar.tsx:412
+#: apps/mes/app/components/AppSidebar.tsx:414
 msgid "Account Settings"
 msgstr "Impostazioni Account"
 
-#: apps/mes/app/components/AppSidebar.tsx:199
+#: apps/mes/app/components/AppSidebar.tsx:201
 #: apps/mes/app/routes/x+/active.tsx:69
 #: apps/mes/app/routes/x+/dispatch.$dispatchId.tsx:411
 #: apps/mes/app/routes/x+/timecard.tsx:429
 msgid "Active"
 msgstr "Attivo"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1018
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1019
 msgid "Actual"
 msgstr "Effettivo"
 
@@ -102,7 +102,7 @@ msgstr "Tutti"
 msgid "Are you sure you want to close out this operation? This will end all active production events for this operation."
 msgstr "Sei sicuro di voler chiudere questa operazione? Questo terminerà tutti gli eventi di produzione attivi per questa operazione."
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2380
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2381
 msgid "Are you sure you want to delete this step?"
 msgstr "Sei sicuro di voler eliminare questa fase?"
 
@@ -114,7 +114,7 @@ msgstr "Sei sicuro di voler eliminare questo cartellino? Questa azione non può 
 msgid "Are you sure you want to end all production events? This will end all active operations without completing or finishing them."
 msgstr "Sei sicuro di voler terminare tutti gli eventi di produzione? Questo terminerà tutte le operazioni attive senza completarle o finalizzarle."
 
-#: apps/mes/app/components/AppSidebar.tsx:194
+#: apps/mes/app/components/AppSidebar.tsx:196
 #: apps/mes/app/routes/x+/maintenance.tsx:362
 msgid "Assigned"
 msgstr "Assegnato"
@@ -180,7 +180,7 @@ msgstr "Effettuando l'accesso, accetti i <0>Termini di Servizio</0> e l'<1>Infor
 #: apps/mes/app/components/JobOperation/components/Step.tsx:557
 #: apps/mes/app/components/JobOperation/components/Step.tsx:605
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:658
-#: apps/mes/app/components/Suggestion.tsx:199
+#: apps/mes/app/components/Suggestion.tsx:202
 #: apps/mes/app/routes/x+/timecard.tsx:413
 #: apps/mes/app/routes/x+/timecard.tsx:510
 msgid "Cancel"
@@ -194,7 +194,7 @@ msgstr "Logo Carbon"
 msgid "Cards"
 msgstr "Schede"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:474
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:475
 msgid "Chat"
 msgstr "Chat"
 
@@ -203,7 +203,7 @@ msgid "Check your email"
 msgstr "Controlla la tua email"
 
 #: apps/mes/app/components/Feedback.tsx:147
-#: apps/mes/app/components/Suggestion.tsx:207
+#: apps/mes/app/components/Suggestion.tsx:210
 msgid "Clear"
 msgstr "Cancella"
 
@@ -246,7 +246,7 @@ msgstr "Chiudi"
 msgid "Close Anyways"
 msgstr "Chiudi Comunque"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2128
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2129
 msgid "Close Out"
 msgstr "Chiudi"
 
@@ -279,7 +279,7 @@ msgstr "Colonna: {0}"
 msgid "Columns"
 msgstr "Colonne"
 
-#: apps/mes/app/components/AppSidebar.tsx:420
+#: apps/mes/app/components/AppSidebar.tsx:422
 msgid "Company"
 msgstr "Azienda"
 
@@ -287,19 +287,19 @@ msgstr "Azienda"
 msgid "Complete"
 msgstr "Completa"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:631
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:632
 msgid "Completed"
 msgstr "Completato"
 
-#: apps/mes/app/components/AppSidebar.tsx:353
+#: apps/mes/app/components/AppSidebar.tsx:355
 msgid "Console"
 msgstr "Console"
 
-#: apps/mes/app/components/AppSidebar.tsx:525
+#: apps/mes/app/components/AppSidebar.tsx:527
 msgid "Console Mode"
 msgstr "Modalità Console"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1102
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1103
 msgid "Consumed expired"
 msgstr "Consumato scaduto"
 
@@ -310,12 +310,12 @@ msgstr "Consumato scaduto"
 msgid "Create {0}"
 msgstr "Crea {0}"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2001
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2002
 #: apps/mes/app/routes/x+/operations.tsx:473
 msgid "Customer"
 msgstr "Cliente"
 
-#: apps/mes/app/components/AppSidebar.tsx:489
+#: apps/mes/app/components/AppSidebar.tsx:491
 msgid "Dark Mode"
 msgstr "Modalità Scura"
 
@@ -323,11 +323,11 @@ msgstr "Modalità Scura"
 msgid "Date"
 msgstr "Data"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2028
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2029
 msgid "Deadline"
 msgstr "Scadenza"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1134
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1135
 msgid "Default Storage Unit"
 msgstr "Unità di Archiviazione Predefinita"
 
@@ -337,7 +337,7 @@ msgstr "Unità di Archiviazione Predefinita"
 msgid "Delete"
 msgstr "Elimina"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2379
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2380
 msgid "Delete Step"
 msgstr "Elimina Fase"
 
@@ -346,13 +346,13 @@ msgstr "Elimina Fase"
 msgid "Delete Timecard ({0})"
 msgstr "Elimina Cartellino ({0})"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2015
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2016
 #: apps/mes/app/routes/x+/dispatch.$dispatchId.tsx:286
 #: apps/mes/app/routes/x+/operations.tsx:474
 msgid "Description"
 msgstr "Descrizione"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:456
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:457
 msgid "Details"
 msgstr "Dettagli"
 
@@ -369,7 +369,7 @@ msgstr "Visualizzazione"
 msgid "Down"
 msgstr "Fermo"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1482
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1483
 msgid "Download"
 msgstr "Scarica"
 
@@ -385,15 +385,15 @@ msgstr "Trascinamento di {0} annullato."
 #. placeholder {0}: formatRelativeTime( convertDateStringToIsoString( operation.operationDueDate ) )
 #. placeholder {0}: formatRelativeTime( convertDateStringToIsoString(operation.jobDueDate) )
 #. placeholder {0}: formatRelativeTime( convertDateStringToIsoString(item.dueDate) )
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:579
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:680
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2047
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:580
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:681
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2048
 #: apps/mes/app/components/Kanban/components/ItemCard.tsx:229
 #: apps/mes/app/components/OperationsList.tsx:187
 msgid "Due {0}"
 msgstr "Scadenza {0}"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:659
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:660
 #: apps/mes/app/routes/x+/operations.tsx:475
 msgid "Due Date"
 msgstr "Data di Scadenza"
@@ -439,7 +439,7 @@ msgstr "Inserisci il PIN per {0}"
 msgid "Error"
 msgstr "Errore"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1015
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1016
 msgid "Estimated"
 msgstr "Stimato"
 
@@ -465,7 +465,7 @@ msgid "Failed to upload file: {0}"
 msgstr "Impossibile caricare il file: {0}"
 
 #: apps/mes/app/components/Feedback.tsx:74
-#: apps/mes/app/components/Suggestion.tsx:94
+#: apps/mes/app/components/Suggestion.tsx:97
 msgid "Failed to upload image"
 msgstr "Impossibile caricare l'immagine"
 
@@ -474,15 +474,15 @@ msgid "Feedback"
 msgstr "Feedback"
 
 #: apps/mes/app/components/Feedback.tsx:61
-#: apps/mes/app/components/Suggestion.tsx:80
+#: apps/mes/app/components/Suggestion.tsx:83
 msgid "File size exceeds 10MB limit"
 msgstr "La dimensione del file supera il limite di 10MB"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1409
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1410
 msgid "Files"
 msgstr "File"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1412
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1413
 msgid "Files related to the job and the opportunity line."
 msgstr "File relativi al lavoro e alla riga dell'opportunità."
 
@@ -510,7 +510,7 @@ msgstr "Sto Ancora Lavorando"
 msgid "Ideas, suggestions or problems with this page?"
 msgstr "Idee, suggerimenti o problemi con questa pagina?"
 
-#: apps/mes/app/components/Suggestion.tsx:139
+#: apps/mes/app/components/Suggestion.tsx:142
 msgid "Ideas, suggestions or problems?"
 msgstr "Idee, suggerimenti o problemi?"
 
@@ -531,7 +531,7 @@ msgstr "Quantità insufficiente"
 msgid "Inventory adjustment completed"
 msgstr "Rettifica inventario completata"
 
-#: apps/mes/app/components/AppSidebar.tsx:269
+#: apps/mes/app/components/AppSidebar.tsx:271
 msgid "Inventory Adjustments"
 msgstr "Rettifiche Inventario"
 
@@ -543,43 +543,43 @@ msgstr "è"
 msgid "is any of"
 msgstr "è uno qualsiasi di"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1215
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1216
 msgid "Issue"
 msgstr "Preleva"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:974
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:975
 msgid "Issue Material"
 msgstr "Preleva Materiale"
 
 #: apps/mes/app/components/AdjustInventory.tsx:164
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1978
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1979
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:314
 msgid "Item"
 msgstr "Articolo"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:516
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:517
 msgid "Item Master"
 msgstr "Anagrafica Articolo"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1989
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1990
 msgid "Job"
 msgstr "Commessa"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:507
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:508
 msgid "Job Details"
 msgstr "Dettagli Commessa"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:501
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:502
 msgid "Job Traveler"
 msgstr "Foglio di Lavorazione"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1117
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1285
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1118
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1286
 msgid "Kit"
 msgstr "Kit"
 
 #: apps/mes/app/components/JobOperation/components/Controls.tsx:182
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2179
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2180
 msgid "Labor"
 msgstr "Manodopera"
 
@@ -596,12 +596,12 @@ msgstr "Caricamento dettagli articolo..."
 msgid "Loading..."
 msgstr "Caricamento..."
 
-#: apps/mes/app/components/AppSidebar.tsx:460
+#: apps/mes/app/components/AppSidebar.tsx:462
 msgid "Location"
 msgstr "Ubicazione"
 
 #: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:97
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2118
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2119
 msgid "Log Completed"
 msgstr "Registra Completati"
 
@@ -620,7 +620,7 @@ msgid "Log rework for {0}"
 msgstr "Registra rilavorazione per {0}"
 
 #: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:95
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2101
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2102
 msgid "Log Scrap"
 msgstr "Registra Scarti"
 
@@ -634,11 +634,11 @@ msgid "Login"
 msgstr "Accedi"
 
 #: apps/mes/app/components/JobOperation/components/Controls.tsx:198
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2212
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2213
 msgid "Machine"
 msgstr "Macchina"
 
-#: apps/mes/app/components/AppSidebar.tsx:210
+#: apps/mes/app/components/AppSidebar.tsx:212
 #: apps/mes/app/routes/x+/maintenance.tsx:404
 msgid "Maintenance"
 msgstr "Manutenzione"
@@ -659,16 +659,16 @@ msgstr "Rimuovi manualmente articoli dall'inventario"
 msgid "matches"
 msgstr "corrisponde a"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:961
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:962
 msgid "Materials"
 msgstr "Materiali"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:836
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1795
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:837
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1796
 msgid "Maximum number of records reached"
 msgstr "Numero massimo di registrazioni raggiunto"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:462
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:463
 msgid "Model"
 msgstr "Modello"
 
@@ -699,7 +699,7 @@ msgstr "Deve essere compreso tra {minValue} e {maxValue} {unitOfMeasureCode}"
 msgid "My Hours"
 msgstr "Le Mie Ore"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1426
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1427
 msgid "Name"
 msgstr "Nome"
 
@@ -708,8 +708,8 @@ msgstr "Nome"
 msgid "New"
 msgstr "Nuovo"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:847
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1806
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:848
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1807
 msgid "New Record"
 msgstr "Nuova Registrazione"
 
@@ -743,7 +743,7 @@ msgstr "Nessun numero di serie disponibile trovato"
 msgid "No dispatches assigned to you"
 msgstr "Nessun intervento assegnato a te"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1441
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1442
 msgid "No files"
 msgstr "Nessun file"
 
@@ -757,7 +757,7 @@ msgstr "Nessun Impatto"
 msgid "No maintenance scheduled for today"
 msgstr "Nessuna manutenzione programmata per oggi"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1030
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1031
 msgid "No materials"
 msgstr "Nessun materiale"
 
@@ -800,7 +800,7 @@ msgstr "Nessun risultato trovato"
 msgid "No scheduled time"
 msgstr "Nessun orario programmato"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1621
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1622
 msgid "No serial numbers"
 msgstr "Nessun numero di serie"
 
@@ -845,7 +845,7 @@ msgstr "Ops. Non dovresti vedere questa pagina. In futuro sarà una pagina di de
 msgid "Open"
 msgstr "Aperto"
 
-#: apps/mes/app/components/AppSidebar.tsx:223
+#: apps/mes/app/components/AppSidebar.tsx:225
 msgid "Operations"
 msgstr "Operazioni"
 
@@ -861,11 +861,11 @@ msgstr "Eseguito dall'Operatore"
 msgid "Optional"
 msgstr "Facoltativo"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1714
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1715
 msgid "Parameters"
 msgstr "Parametri"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1009
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1010
 msgid "Part"
 msgstr "Componente"
 
@@ -913,7 +913,7 @@ msgstr "Preventivo"
 msgid "Priority"
 msgstr "Priorità"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:471
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:472
 #: apps/mes/app/routes/x+/dispatch.$dispatchId.tsx:518
 msgid "Procedure"
 msgstr "Procedura"
@@ -922,7 +922,7 @@ msgstr "Procedura"
 msgid "Process"
 msgstr "Processo"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:925
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:926
 msgid "Process Parameters"
 msgstr "Parametri di Processo"
 
@@ -936,7 +936,7 @@ msgstr "Avanzamento"
 
 #: apps/mes/app/components/AdjustInventory.tsx:170
 #: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:236
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2244
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2245
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:336
 msgid "Quantity"
 msgstr "Quantità"
@@ -946,7 +946,7 @@ msgstr "Quantità"
 msgid "Quantity must be greater than 0"
 msgstr "La quantità deve essere maggiore di 0"
 
-#: apps/mes/app/components/AppSidebar.tsx:205
+#: apps/mes/app/components/AppSidebar.tsx:207
 #: apps/mes/app/components/PinInOverlay.tsx:230
 #: apps/mes/app/routes/x+/recent.tsx:69
 msgid "Recent"
@@ -958,8 +958,8 @@ msgid "Record"
 msgstr "Registra"
 
 #. placeholder {0}: activeStep + 1
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:804
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1770
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:805
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1771
 msgid "Record {0}"
 msgstr "Registrazione {0}"
 
@@ -992,7 +992,7 @@ msgid "Save"
 msgstr "Salva"
 
 #: apps/mes/app/components/JobOperation/components/SerialSelectorModal.tsx:65
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1598
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1599
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:364
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:484
 msgid "Scan"
@@ -1002,8 +1002,8 @@ msgstr "Scansiona"
 msgid "Scan or enter serial number"
 msgstr "Scansiona o inserisci il numero di serie"
 
-#: apps/mes/app/components/AppSidebar.tsx:189
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:450
+#: apps/mes/app/components/AppSidebar.tsx:191
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:451
 #: apps/mes/app/routes/x+/operations.tsx:423
 msgid "Schedule"
 msgstr "Pianificazione"
@@ -1013,7 +1013,7 @@ msgstr "Pianificazione"
 msgid "Scrap Reason"
 msgstr "Motivo Scarto"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:648
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:649
 msgid "Scrapped"
 msgstr "Scartato"
 
@@ -1041,7 +1041,7 @@ msgstr "Cerca..."
 
 #: apps/mes/app/components/JobOperation/components/SerialSelectorModal.tsx:69
 #: apps/mes/app/components/JobOperation/components/SerialSelectorModal.tsx:94
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1665
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1666
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:368
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:488
 #: packages/react/src/Combobox.tsx:148
@@ -1090,11 +1090,11 @@ msgstr "Seleziona Numero di Serie"
 
 #: apps/mes/app/components/Feedback.tsx:160
 #: apps/mes/app/components/JobOperation/components/Chat.tsx:224
-#: apps/mes/app/components/Suggestion.tsx:220
+#: apps/mes/app/components/Suggestion.tsx:223
 msgid "Send"
 msgstr "Invia"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1608
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1609
 msgid "Serial"
 msgstr "Seriale"
 
@@ -1116,7 +1116,7 @@ msgstr "Numero di serie non disponibile"
 msgid "Serial number is required"
 msgstr "Il numero di serie è obbligatorio"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1579
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1580
 msgid "Serial Numbers"
 msgstr "Numeri di Serie"
 
@@ -1129,7 +1129,7 @@ msgid "Set clock-out time"
 msgstr "Imposta orario di uscita"
 
 #: apps/mes/app/components/JobOperation/components/Controls.tsx:166
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2146
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2147
 msgid "Setup"
 msgstr "Attrezzaggio"
 
@@ -1145,19 +1145,19 @@ msgstr "Accedi con Google"
 msgid "Sign in with Outlook"
 msgstr "Accedi con Outlook"
 
-#: apps/mes/app/components/AppSidebar.tsx:566
+#: apps/mes/app/components/AppSidebar.tsx:568
 msgid "Sign Out"
 msgstr "Esci"
 
-#: apps/mes/app/components/AppSidebar.tsx:406
+#: apps/mes/app/components/AppSidebar.tsx:408
 msgid "Signed in as {stationName}"
 msgstr "Connesso come {stationName}"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1429
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1430
 msgid "Size"
 msgstr "Dimensione"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1012
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1013
 msgid "Source"
 msgstr "Origine"
 
@@ -1177,7 +1177,7 @@ msgstr "Avvia"
 msgid "Station User"
 msgstr "Utente Stazione"
 
-#: apps/mes/app/components/AppSidebar.tsx:400
+#: apps/mes/app/components/AppSidebar.tsx:402
 msgid "Station: {stationName}"
 msgstr "Stazione: {stationName}"
 
@@ -1190,10 +1190,10 @@ msgstr "Stato"
 msgid "Statuses"
 msgstr "Stati"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:750
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:861
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1711
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1821
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:751
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:862
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1712
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1822
 msgid "Steps"
 msgstr "Fasi"
 
@@ -1205,12 +1205,12 @@ msgstr "Fasi mancanti"
 msgid "Storage Unit"
 msgstr "Unità di Stoccaggio"
 
-#: apps/mes/app/components/Suggestion.tsx:160
+#: apps/mes/app/components/Suggestion.tsx:163
 msgid "Submit anonymously"
 msgstr "Invia in forma anonima"
 
-#: apps/mes/app/components/Suggestion.tsx:114
 #: apps/mes/app/components/Suggestion.tsx:117
+#: apps/mes/app/components/Suggestion.tsx:120
 msgid "Suggestion"
 msgstr "Suggerimento"
 
@@ -1218,7 +1218,7 @@ msgstr "Suggerimento"
 msgid "Support Required"
 msgstr "Supporto Richiesto"
 
-#: apps/mes/app/components/AppSidebar.tsx:396
+#: apps/mes/app/components/AppSidebar.tsx:398
 msgid "Switch Operator"
 msgstr "Cambia Operatore"
 
@@ -1252,7 +1252,7 @@ msgstr "Tempo Lavorato: {0}"
 msgid "Today"
 msgstr "Oggi"
 
-#: apps/mes/app/components/AppSidebar.tsx:282
+#: apps/mes/app/components/AppSidebar.tsx:284
 msgid "Tools"
 msgstr "Utensili"
 
@@ -1270,7 +1270,7 @@ msgstr "Tempo totale: {0}"
 msgid "Total: {0}"
 msgstr "Totale: {0}"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1595
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1596
 msgid "Tracking Labels"
 msgstr "Etichette di Tracciabilità"
 
@@ -1312,11 +1312,11 @@ msgstr "Visualizza intervento di manutenzione"
 msgid "We've sent you a magic link to sign in to your account."
 msgstr "Ti abbiamo inviato un link di accesso al tuo account."
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1133
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1134
 msgid "WIP"
 msgstr "WIP"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1951
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1952
 #: apps/mes/app/routes/x+/dispatch.$dispatchId.tsx:260
 #: apps/mes/app/routes/x+/maintenance.tsx:332
 #: apps/mes/app/routes/x+/operations.tsx:366

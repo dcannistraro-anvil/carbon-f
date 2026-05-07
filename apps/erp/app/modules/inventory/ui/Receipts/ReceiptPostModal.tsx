@@ -14,9 +14,9 @@ import {
   ModalOverlay,
   ModalTitle,
   toast,
-  useMount
+  useMount,
+  useRouteData
 } from "@carbon/react";
-import { useRouteData } from "@carbon/remix";
 import type { TrackedEntityAttributes } from "@carbon/utils";
 import { getItemReadableId } from "@carbon/utils";
 import { Trans, useLingui } from "@lingui/react/macro";

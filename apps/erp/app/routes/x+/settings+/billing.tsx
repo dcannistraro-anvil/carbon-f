@@ -19,9 +19,9 @@ import {
   Heading,
   ScrollArea,
   Status,
+  useEdition,
   VStack
 } from "@carbon/react";
-import { useEdition } from "@carbon/remix";
 import { getBillingPortalRedirectUrl } from "@carbon/stripe/stripe.server";
 import { Edition } from "@carbon/utils";
 import { msg } from "@lingui/core/macro";

@@ -12,8 +12,13 @@ import {
   updateCompanySession
 } from "@carbon/auth/session.server";
 import { isAuditLogEnabled } from "@carbon/database/audit";
-import { TooltipProvider, useMount } from "@carbon/react";
-import { ItarPopup, useKeyboardWedge, useNProgress } from "@carbon/remix";
+import {
+  ItarPopup,
+  TooltipProvider,
+  useKeyboardWedge,
+  useMount,
+  useNProgress
+} from "@carbon/react";
 import { getStripeCustomerByCompanyId } from "@carbon/stripe/stripe.server";
 import { Edition } from "@carbon/utils";
 import posthog from "posthog-js";

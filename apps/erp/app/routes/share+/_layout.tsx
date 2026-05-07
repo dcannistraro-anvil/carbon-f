@@ -5,9 +5,9 @@ import {
   DropdownMenuTrigger,
   HStack,
   IconButton,
-  TooltipProvider
+  TooltipProvider,
+  useMode
 } from "@carbon/react";
-import { useMode } from "@carbon/remix";
 import { useLingui } from "@lingui/react/macro";
 import { LuMoon, LuRefreshCw, LuSun } from "react-icons/lu";
 import { Outlet, useFetcher, useRevalidator } from "react-router";

@@ -1,25 +1,24 @@
 FROM node:22 AS deps
 WORKDIR /repo
-# Install specific npm version
-RUN npm install -g npm@10.8.2
+RUN corepack enable
 # Copy root manifests for workspaces
-COPY package.json package-lock.json turbo.json lingui.config.js ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc turbo.json lingui.config.js ./
 # Copy only what we need to install and build
 COPY apps ./apps
 COPY packages ./packages
+COPY patches ./patches
 # Install all workspaces (dev deps are needed to build)
-RUN npm install --legacy-peer-deps
+RUN pnpm install --frozen-lockfile
 
 FROM deps AS build
 ARG NODE_OPTIONS
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 # Build only MES and its deps
-RUN npm run build:mes
+RUN pnpm run build:mes
 
 FROM node:22-slim
 WORKDIR /repo
-# Install specific npm version
-RUN npm install -g npm@10.8.2
+RUN corepack enable
 ENV NODE_ENV=production
 ENV PORT=3000
 # Install curl for health checks
@@ -30,4 +29,4 @@ COPY --from=deps /repo/packages ./packages
 COPY --from=build /repo/apps/mes ./apps/mes
 EXPOSE 3001
 WORKDIR /repo/apps/mes
-CMD ["npm","run","start"]
+CMD ["pnpm","run","start"]

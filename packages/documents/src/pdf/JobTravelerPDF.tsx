@@ -1,5 +1,5 @@
-import { getMESUrl } from "@carbon/auth";
 import type { Database } from "@carbon/database";
+import { getMESUrl } from "@carbon/env";
 import type { JSONContent } from "@carbon/react";
 import { formatDate, formatDurationMinutes } from "@carbon/utils";
 import { Image, StyleSheet, Text, View } from "@react-pdf/renderer";

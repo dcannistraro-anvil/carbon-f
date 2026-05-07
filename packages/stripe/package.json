@@ -1,25 +1,26 @@
 {
   "name": "@carbon/stripe",
   "dependencies": {
-    "@carbon/auth": "*",
-    "@carbon/database": "*",
-    "@carbon/jobs": "*",
-    "@carbon/kv": "*",
-    "@carbon/lib": "*",
-    "@supabase/supabase-js": "2.80.0",
+    "@carbon/auth": "workspace:*",
+    "@carbon/database": "workspace:*",
+    "@carbon/env": "workspace:*",
+    "@carbon/kv": "workspace:*",
+    "@carbon/lib": "workspace:*",
+    "@carbon/utils": "workspace:*",
+    "@supabase/supabase-js": "catalog:",
     "stripe": "18.5.0"
   },
   "type": "module",
   "devDependencies": {
-    "@carbon/config": "*",
-    "@carbon/logger": "*",
+    "@carbon/config": "workspace:*",
     "@types/node": "20.19.39",
     "dotenv": "16.3.1",
-    "rimraf": "5.0.10",
-    "tsup": "8.5.1",
-    "tsx": "4.21.0",
-    "typescript": "5.8.3",
-    "zod": "3.25.76"
+    "rimraf": "catalog:",
+    "sst": "catalog:",
+    "tsup": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "zod": "catalog:"
   },
   "exports": {
     "./stripe.server": "./src/stripe.server.ts"
@@ -34,5 +35,5 @@
     "typecheck": "tsgo --noEmit"
   },
   "sideEffects": false,
-  "version": "*"
+  "version": "0.0.0"
 }

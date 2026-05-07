@@ -11,9 +11,9 @@ import {
   ModalContent,
   ModalTitle,
   toast,
-  useDisclosure
+  useDisclosure,
+  useMode
 } from "@carbon/react";
-import { useMode } from "@carbon/remix";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { OnMount } from "@monaco-editor/react";
 import Editor from "@monaco-editor/react";

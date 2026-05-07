@@ -16,9 +16,9 @@ import {
   toast,
   useDisclosure,
   useMount,
+  useRouteData,
   VStack
 } from "@carbon/react";
-import { useRouteData } from "@carbon/remix";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { LuGitBranchPlus, LuGitPullRequestCreateArrow } from "react-icons/lu";

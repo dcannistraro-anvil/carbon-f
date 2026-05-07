@@ -1,7 +1,7 @@
 import { getCarbonServiceRole } from "@carbon/auth/client.server";
 import type { Database } from "@carbon/database";
-import { trigger } from "@carbon/jobs";
 import { redis } from "@carbon/kv";
+import { trigger } from "@carbon/lib/trigger";
 import { isUrl } from "@carbon/utils";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { createSlackWebClient } from "./client";

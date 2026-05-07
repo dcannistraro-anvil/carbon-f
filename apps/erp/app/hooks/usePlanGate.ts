@@ -1,4 +1,4 @@
-import { usePlan } from "@carbon/remix";
+import { usePlan } from "@carbon/react";
 import { useFlags } from "~/hooks/useFlags";
 import {
   DEFAULT_ALLOWED_PLANS,

@@ -7,9 +7,9 @@ import {
   DropdownMenuTrigger,
   HStack,
   IconButton,
+  useUrlParams,
   VStack
 } from "@carbon/react";
-import { useUrlParams } from "@carbon/remix";
 import { getLocalTimeZone, parseDate } from "@internationalized/date";
 import { useLingui } from "@lingui/react/macro";
 import { useDateFormatter, useNumberFormatter } from "@react-aria/i18n";

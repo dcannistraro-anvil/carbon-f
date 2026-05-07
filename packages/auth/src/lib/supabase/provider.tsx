@@ -1,10 +1,13 @@
-import type { Database } from "@carbon/database";
-import { useInterval } from "@carbon/react";
+import {
+  CarbonContext,
+  type ICarbonStore,
+  setCarbonHmrStore,
+  useInterval
+} from "@carbon/react";
 import { isBrowser } from "@carbon/utils";
-import type { SupabaseClient } from "@supabase/supabase-js";
 import type React from "react";
 import type { PropsWithChildren } from "react";
-import { createContext, useContext, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useFetcher } from "react-router";
 import type { StoreApi } from "zustand";
 import { createStore, useStore } from "zustand";
@@ -12,17 +15,7 @@ import type { AuthSession } from "../../types";
 import { path } from "../../utils/path";
 import { createCarbonWithAuthGetter } from "./client";
 
-interface ICarbonStore {
-  carbon: SupabaseClient<Database>;
-  accessToken: string;
-  isRealtimeAuthSet: boolean;
-  setAuthToken: (accessToken: string) => Promise<void>;
-}
-
-const CarbonContext = createContext<StoreApi<ICarbonStore> | null>(null);
-
-// Module-level store reference that persists across HMR
-let __hmrStore: StoreApi<ICarbonStore> | null = null;
+export { useCarbon } from "@carbon/react";
 
 export const CarbonProvider = ({
   children,
@@ -50,7 +43,7 @@ export const CarbonProvider = ({
       }
     }));
     // Keep a module-level reference for HMR recovery
-    __hmrStore = store.current;
+    setCarbonHmrStore(store.current);
   }
 
   const { carbon, setAuthToken } = useStore<StoreApi<ICarbonStore>>(
@@ -116,19 +109,4 @@ export const CarbonProvider = ({
       {children}
     </CarbonContext.Provider>
   );
-};
-
-export const useCarbon = () => {
-  let store = useContext(CarbonContext);
-
-  // During HMR, the context can temporarily be null - use the module-level store
-  if (!store && __hmrStore) {
-    store = __hmrStore;
-  }
-
-  if (!store) {
-    throw new Error("useCarbon must be used within a CarbonProvider");
-  }
-
-  return useStore(store);
 };

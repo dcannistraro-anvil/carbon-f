@@ -1,6 +1,6 @@
 {
   "name": "@carbon/ee",
-  "version": "*",
+  "version": "0.0.0",
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
@@ -28,27 +28,40 @@
     "typecheck": "tsgo --noEmit"
   },
   "dependencies": {
-    "@ai-sdk/openai": "2.0.102",
-    "@carbon/auth": "*",
-    "@carbon/react": "*",
-    "@carbon/utils": "*",
+    "@ai-sdk/openai": "catalog:",
+    "@carbon/auth": "workspace:*",
+    "@carbon/database": "workspace:*",
+    "@carbon/kv": "workspace:*",
+    "@carbon/lib": "workspace:*",
+    "@carbon/react": "workspace:*",
+    "@carbon/utils": "workspace:*",
+    "@internationalized/date": "catalog:",
     "@slack/bolt": "4.4.0",
     "@slack/oauth": "3.0.5",
-    "@slack/web-api": "7.10.0",
-    "@supabase/supabase-js": "2.80.0",
+    "@slack/types": "2.20.1",
+    "@slack/web-api": "catalog:",
+    "@supabase/supabase-js": "catalog:",
     "ai": "5.0.172",
-    "cookie": "1.1.1",
-    "dompurify": "3.4.0",
-    "nanoid": "5.1.7",
-    "react-pdf": "10.4.1",
-    "sst": "4.6.9",
-    "supabase": "2.84.5",
-    "tsup": "8.5.1",
-    "zod": "3.25.76"
+    "axios": "catalog:",
+    "cookie": "catalog:",
+    "dompurify": "catalog:",
+    "kysely": "catalog:",
+    "nanoid": "catalog:",
+    "nodemailer": "6.10.1",
+    "react": "catalog:",
+    "react-icons": "catalog:",
+    "react-pdf": "catalog:",
+    "sst": "catalog:",
+    "supabase": "catalog:",
+    "tsup": "catalog:",
+    "zod": "catalog:",
+    "zod-form-data": "catalog:"
   },
   "devDependencies": {
-    "@carbon/config": "*",
-    "typescript": "5.8.3",
-    "vitest": "4.1.4"
+    "@carbon/config": "workspace:*",
+    "@types/nodemailer": "6.4.21",
+    "@types/react": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

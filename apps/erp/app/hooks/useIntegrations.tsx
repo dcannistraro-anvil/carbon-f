@@ -1,4 +1,4 @@
-import { useRouteData } from "@carbon/remix";
+import { useRouteData } from "@carbon/react";
 import { useCallback } from "react";
 import type { Integration } from "~/modules/settings";
 import { path } from "~/utils/path";

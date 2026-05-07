@@ -1,4 +1,4 @@
-import { REDIS_URL } from "@carbon/auth";
+import { REDIS_URL } from "@carbon/env";
 import Redis from "ioredis";
 
 declare global {

@@ -1,5 +1,5 @@
-import { getAppUrl } from "@carbon/auth";
 import type { Database } from "@carbon/database";
+import { getAppUrl } from "@carbon/env";
 import { formatDate } from "@carbon/utils";
 import {
   Body,

@@ -1,0 +1,25 @@
+{
+  "name": "@carbon/env",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "sideEffects": false,
+  "scripts": {
+    "clean": "rimraf .turbo node_modules",
+    "lint": "biome lint --fix",
+    "typecheck": "tsgo --noEmit"
+  },
+  "dependencies": {
+    "@carbon/utils": "workspace:*",
+    "@types/node": "20.19.39"
+  },
+  "devDependencies": {
+    "@carbon/config": "workspace:*",
+    "typescript": "catalog:"
+  }
+}

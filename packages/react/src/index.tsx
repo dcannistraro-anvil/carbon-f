@@ -1,5 +1,12 @@
 import type { JSONContent } from "@tiptap/react";
 
+export {
+  CarbonContext,
+  type ICarbonStore,
+  setCarbonHmrStore,
+  useCarbon
+} from "./CarbonContext";
+
 import {
   Accordion,
   AccordionContent,
@@ -312,6 +319,8 @@ import { copyToClipboard } from "./utils/dom";
 import { getValidChildren, reactNodeToString } from "./utils/react";
 import { VStack } from "./VStack";
 
+export * from "./Acknowledge";
+export * from "./getPreferenceHeaders";
 export * from "./hooks";
 export {
   Accordion,

@@ -7,9 +7,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-  cn
+  cn,
+  useRouteData
 } from "@carbon/react";
-import { useRouteData } from "@carbon/remix";
 import { Trans } from "@lingui/react/macro";
 import { Link, useFetcher, useNavigate } from "react-router";
 import { usePlanGate } from "~/hooks/usePlanGate";

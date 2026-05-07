@@ -7,9 +7,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  Switch
+  Switch,
+  useMode
 } from "@carbon/react";
-import { useMode } from "@carbon/remix";
 import { useRef, useState } from "react";
 import { LuHouse, LuLogOut, LuMoon, LuSun, LuUser } from "react-icons/lu";
 import { Form, Link, useFetcher } from "react-router";

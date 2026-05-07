@@ -1,4 +1,3 @@
-import { VERCEL_URL } from "@carbon/auth";
 import { getCarbonServiceRole } from "@carbon/auth/client.server";
 import type { Database } from "@carbon/database";
 import {
@@ -12,6 +11,7 @@ import {
   type IssueTaskUpdate,
   type NonConformanceData
 } from "@carbon/ee/slack/messages";
+import { VERCEL_URL } from "@carbon/env";
 import { WebClient } from "@slack/web-api";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { inngest } from "../../client";

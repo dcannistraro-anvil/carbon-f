@@ -1,7 +1,7 @@
-import { EXCHANGE_RATES_API_KEY } from "@carbon/auth";
 import { getCarbonServiceRole } from "@carbon/auth/client.server";
 import type { Rates } from "@carbon/ee/exchange-rates.server";
 import { getExchangeRatesClient } from "@carbon/ee/exchange-rates.server";
+import { EXCHANGE_RATES_API_KEY } from "@carbon/env";
 import { inngest } from "../../client";
 
 type CurrencyCode =

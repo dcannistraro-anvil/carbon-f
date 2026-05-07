@@ -104,7 +104,7 @@ Write with the future in mind. If there are trade-offs, edge cases, or temporary
 You can build the project with:
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 Please ensure that you can make a full production build before pushing code.
@@ -120,7 +120,7 @@ More info on how to add new tests coming soon.
 To check the formatting of your code:
 
 ```sh
-npm run lint
+pnpm run lint
 ```
 
 If you get errors, be sure to fix them before committing.

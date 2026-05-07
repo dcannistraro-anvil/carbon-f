@@ -33,21 +33,21 @@ msgstr "{0} 可用"
 #. placeholder {0}: serialIndex + 1
 #. placeholder {1}: operation.operationQuantity
 #. placeholder {1}: operation.targetQuantity
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:638
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:852
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1811
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:639
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:853
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1812
 msgid "{0} of {1}"
 msgstr "{0} / {1}"
 
 #. placeholder {0}: attributes.filter((a) => a.jobOperationStepRecord.some( (r) => r.index === activeStep ) ).length
 #. placeholder {1}: attributes.length
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:875
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:876
 msgid "{0} of {1} complete"
 msgstr "{0} / {1} 已完成"
 
 #. placeholder {0}: attributes.filter((a) => a.jobOperationStepRecord.some( (r) => r.index === activeStep ) ).length
 #. placeholder {1}: attributes.length
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1835
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1836
 msgid "{0} of {1} completed"
 msgstr "{0} / {1} 已完成"
 
@@ -56,22 +56,22 @@ msgstr "{0} / {1} 已完成"
 msgid "{0} Scrapped"
 msgstr "{0} 已报废"
 
-#: apps/mes/app/components/AppSidebar.tsx:558
+#: apps/mes/app/components/AppSidebar.tsx:560
 msgid "About"
 msgstr "关于"
 
-#: apps/mes/app/components/AppSidebar.tsx:412
+#: apps/mes/app/components/AppSidebar.tsx:414
 msgid "Account Settings"
 msgstr "账户设置"
 
-#: apps/mes/app/components/AppSidebar.tsx:199
+#: apps/mes/app/components/AppSidebar.tsx:201
 #: apps/mes/app/routes/x+/active.tsx:69
 #: apps/mes/app/routes/x+/dispatch.$dispatchId.tsx:411
 #: apps/mes/app/routes/x+/timecard.tsx:429
 msgid "Active"
 msgstr "活跃"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1018
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1019
 msgid "Actual"
 msgstr "实际"
 
@@ -102,7 +102,7 @@ msgstr "全部"
 msgid "Are you sure you want to close out this operation? This will end all active production events for this operation."
 msgstr "确定要结束此工序吗？这将终止此工序的所有活跃生产事件。"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2380
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2381
 msgid "Are you sure you want to delete this step?"
 msgstr "确定要删除此步骤吗？"
 
@@ -114,7 +114,7 @@ msgstr "确定要删除此考勤记录吗？此操作无法撤销。"
 msgid "Are you sure you want to end all production events? This will end all active operations without completing or finishing them."
 msgstr "确定要结束所有生产事件吗？这将终止所有活跃工序，而不会完成它们。"
 
-#: apps/mes/app/components/AppSidebar.tsx:194
+#: apps/mes/app/components/AppSidebar.tsx:196
 #: apps/mes/app/routes/x+/maintenance.tsx:362
 msgid "Assigned"
 msgstr "已分配"
@@ -180,7 +180,7 @@ msgstr "登录即表示您同意<0>服务条款</0>和<1>隐私政策。</1>"
 #: apps/mes/app/components/JobOperation/components/Step.tsx:557
 #: apps/mes/app/components/JobOperation/components/Step.tsx:605
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:658
-#: apps/mes/app/components/Suggestion.tsx:199
+#: apps/mes/app/components/Suggestion.tsx:202
 #: apps/mes/app/routes/x+/timecard.tsx:413
 #: apps/mes/app/routes/x+/timecard.tsx:510
 msgid "Cancel"
@@ -194,7 +194,7 @@ msgstr "Carbon 标志"
 msgid "Cards"
 msgstr "卡片"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:474
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:475
 msgid "Chat"
 msgstr "聊天"
 
@@ -203,7 +203,7 @@ msgid "Check your email"
 msgstr "请查收邮件"
 
 #: apps/mes/app/components/Feedback.tsx:147
-#: apps/mes/app/components/Suggestion.tsx:207
+#: apps/mes/app/components/Suggestion.tsx:210
 msgid "Clear"
 msgstr "清除"
 
@@ -246,7 +246,7 @@ msgstr "关闭"
 msgid "Close Anyways"
 msgstr "仍然关闭"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2128
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2129
 msgid "Close Out"
 msgstr "结束"
 
@@ -279,7 +279,7 @@ msgstr "列：{0}"
 msgid "Columns"
 msgstr "列"
 
-#: apps/mes/app/components/AppSidebar.tsx:420
+#: apps/mes/app/components/AppSidebar.tsx:422
 msgid "Company"
 msgstr "公司"
 
@@ -287,19 +287,19 @@ msgstr "公司"
 msgid "Complete"
 msgstr "完成"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:631
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:632
 msgid "Completed"
 msgstr "已完成"
 
-#: apps/mes/app/components/AppSidebar.tsx:353
+#: apps/mes/app/components/AppSidebar.tsx:355
 msgid "Console"
 msgstr "控制台"
 
-#: apps/mes/app/components/AppSidebar.tsx:525
+#: apps/mes/app/components/AppSidebar.tsx:527
 msgid "Console Mode"
 msgstr "控制台模式"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1102
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1103
 msgid "Consumed expired"
 msgstr "已消耗过期"
 
@@ -310,12 +310,12 @@ msgstr "已消耗过期"
 msgid "Create {0}"
 msgstr "创建 {0}"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2001
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2002
 #: apps/mes/app/routes/x+/operations.tsx:473
 msgid "Customer"
 msgstr "客户"
 
-#: apps/mes/app/components/AppSidebar.tsx:489
+#: apps/mes/app/components/AppSidebar.tsx:491
 msgid "Dark Mode"
 msgstr "深色模式"
 
@@ -323,11 +323,11 @@ msgstr "深色模式"
 msgid "Date"
 msgstr "日期"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2028
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2029
 msgid "Deadline"
 msgstr "截止日期"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1134
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1135
 msgid "Default Storage Unit"
 msgstr "默认存储单位"
 
@@ -337,7 +337,7 @@ msgstr "默认存储单位"
 msgid "Delete"
 msgstr "删除"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2379
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2380
 msgid "Delete Step"
 msgstr "删除步骤"
 
@@ -346,13 +346,13 @@ msgstr "删除步骤"
 msgid "Delete Timecard ({0})"
 msgstr "删除考勤记录 ({0})"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2015
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2016
 #: apps/mes/app/routes/x+/dispatch.$dispatchId.tsx:286
 #: apps/mes/app/routes/x+/operations.tsx:474
 msgid "Description"
 msgstr "描述"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:456
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:457
 msgid "Details"
 msgstr "详情"
 
@@ -369,7 +369,7 @@ msgstr "显示"
 msgid "Down"
 msgstr "停机"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1482
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1483
 msgid "Download"
 msgstr "下载"
 
@@ -385,15 +385,15 @@ msgstr "拖拽 {0} 已取消。"
 #. placeholder {0}: formatRelativeTime( convertDateStringToIsoString( operation.operationDueDate ) )
 #. placeholder {0}: formatRelativeTime( convertDateStringToIsoString(operation.jobDueDate) )
 #. placeholder {0}: formatRelativeTime( convertDateStringToIsoString(item.dueDate) )
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:579
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:680
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2047
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:580
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:681
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2048
 #: apps/mes/app/components/Kanban/components/ItemCard.tsx:229
 #: apps/mes/app/components/OperationsList.tsx:187
 msgid "Due {0}"
 msgstr "截止 {0}"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:659
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:660
 #: apps/mes/app/routes/x+/operations.tsx:475
 msgid "Due Date"
 msgstr "截止日期"
@@ -439,7 +439,7 @@ msgstr "输入 {0} 的 PIN 码"
 msgid "Error"
 msgstr "错误"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1015
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1016
 msgid "Estimated"
 msgstr "估计"
 
@@ -465,7 +465,7 @@ msgid "Failed to upload file: {0}"
 msgstr "文件上传失败：{0}"
 
 #: apps/mes/app/components/Feedback.tsx:74
-#: apps/mes/app/components/Suggestion.tsx:94
+#: apps/mes/app/components/Suggestion.tsx:97
 msgid "Failed to upload image"
 msgstr "图片上传失败"
 
@@ -474,15 +474,15 @@ msgid "Feedback"
 msgstr "反馈"
 
 #: apps/mes/app/components/Feedback.tsx:61
-#: apps/mes/app/components/Suggestion.tsx:80
+#: apps/mes/app/components/Suggestion.tsx:83
 msgid "File size exceeds 10MB limit"
 msgstr "文件大小超过 10MB 限制"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1409
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1410
 msgid "Files"
 msgstr "文件"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1412
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1413
 msgid "Files related to the job and the opportunity line."
 msgstr "与工单和商机行相关的文件。"
 
@@ -510,7 +510,7 @@ msgstr "我还在工作"
 msgid "Ideas, suggestions or problems with this page?"
 msgstr "对此页面有想法、建议或问题？"
 
-#: apps/mes/app/components/Suggestion.tsx:139
+#: apps/mes/app/components/Suggestion.tsx:142
 msgid "Ideas, suggestions or problems?"
 msgstr "有想法、建议或问题？"
 
@@ -531,7 +531,7 @@ msgstr "数量不足"
 msgid "Inventory adjustment completed"
 msgstr "库存调整已完成"
 
-#: apps/mes/app/components/AppSidebar.tsx:269
+#: apps/mes/app/components/AppSidebar.tsx:271
 msgid "Inventory Adjustments"
 msgstr "库存调整"
 
@@ -543,43 +543,43 @@ msgstr "是"
 msgid "is any of"
 msgstr "是以下任一"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1215
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1216
 msgid "Issue"
 msgstr "发放"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:974
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:975
 msgid "Issue Material"
 msgstr "发放物料"
 
 #: apps/mes/app/components/AdjustInventory.tsx:164
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1978
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1979
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:314
 msgid "Item"
 msgstr "物料"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:516
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:517
 msgid "Item Master"
 msgstr "物料主数据"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1989
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1990
 msgid "Job"
 msgstr "工单"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:507
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:508
 msgid "Job Details"
 msgstr "工单详情"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:501
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:502
 msgid "Job Traveler"
 msgstr "工单流转卡"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1117
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1285
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1118
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1286
 msgid "Kit"
 msgstr "套件"
 
 #: apps/mes/app/components/JobOperation/components/Controls.tsx:182
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2179
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2180
 msgid "Labor"
 msgstr "人工"
 
@@ -596,12 +596,12 @@ msgstr "正在加载物料详情..."
 msgid "Loading..."
 msgstr "加载中..."
 
-#: apps/mes/app/components/AppSidebar.tsx:460
+#: apps/mes/app/components/AppSidebar.tsx:462
 msgid "Location"
 msgstr "位置"
 
 #: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:97
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2118
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2119
 msgid "Log Completed"
 msgstr "记录完成数量"
 
@@ -620,7 +620,7 @@ msgid "Log rework for {0}"
 msgstr "记录 {0} 的返工"
 
 #: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:95
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2101
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2102
 msgid "Log Scrap"
 msgstr "记录报废"
 
@@ -634,11 +634,11 @@ msgid "Login"
 msgstr "登录"
 
 #: apps/mes/app/components/JobOperation/components/Controls.tsx:198
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2212
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2213
 msgid "Machine"
 msgstr "机器"
 
-#: apps/mes/app/components/AppSidebar.tsx:210
+#: apps/mes/app/components/AppSidebar.tsx:212
 #: apps/mes/app/routes/x+/maintenance.tsx:404
 msgid "Maintenance"
 msgstr "维护"
@@ -659,16 +659,16 @@ msgstr "手动从库存中移除物料"
 msgid "matches"
 msgstr "匹配"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:961
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:962
 msgid "Materials"
 msgstr "物料"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:836
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1795
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:837
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1796
 msgid "Maximum number of records reached"
 msgstr "已达到最大记录数"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:462
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:463
 msgid "Model"
 msgstr "模型"
 
@@ -699,7 +699,7 @@ msgstr "必须在 {minValue} 到 {maxValue} {unitOfMeasureCode} 之间"
 msgid "My Hours"
 msgstr "我的工时"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1426
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1427
 msgid "Name"
 msgstr "名称"
 
@@ -708,8 +708,8 @@ msgstr "名称"
 msgid "New"
 msgstr "新建"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:847
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1806
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:848
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1807
 msgid "New Record"
 msgstr "新记录"
 
@@ -743,7 +743,7 @@ msgstr "未找到可用的序列号"
 msgid "No dispatches assigned to you"
 msgstr "没有分配给您的工单"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1441
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1442
 msgid "No files"
 msgstr "无文件"
 
@@ -757,7 +757,7 @@ msgstr "无影响"
 msgid "No maintenance scheduled for today"
 msgstr "今天没有计划的维护"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1030
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1031
 msgid "No materials"
 msgstr "无物料"
 
@@ -800,7 +800,7 @@ msgstr "未找到结果"
 msgid "No scheduled time"
 msgstr "无排定时间"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1621
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1622
 msgid "No serial numbers"
 msgstr "无序列号"
 
@@ -845,7 +845,7 @@ msgstr "抱歉，您不应该看到此页面。此页面最终将成为首页。
 msgid "Open"
 msgstr "打开"
 
-#: apps/mes/app/components/AppSidebar.tsx:223
+#: apps/mes/app/components/AppSidebar.tsx:225
 msgid "Operations"
 msgstr "工序"
 
@@ -861,11 +861,11 @@ msgstr "操作员执行"
 msgid "Optional"
 msgstr "可选"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1714
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1715
 msgid "Parameters"
 msgstr "参数"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1009
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1010
 msgid "Part"
 msgstr "零件"
 
@@ -913,7 +913,7 @@ msgstr "预防性"
 msgid "Priority"
 msgstr "优先级"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:471
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:472
 #: apps/mes/app/routes/x+/dispatch.$dispatchId.tsx:518
 msgid "Procedure"
 msgstr "程序"
@@ -922,7 +922,7 @@ msgstr "程序"
 msgid "Process"
 msgstr "工艺"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:925
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:926
 msgid "Process Parameters"
 msgstr "工艺参数"
 
@@ -936,7 +936,7 @@ msgstr "进度"
 
 #: apps/mes/app/components/AdjustInventory.tsx:170
 #: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:236
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2244
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2245
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:336
 msgid "Quantity"
 msgstr "数量"
@@ -946,7 +946,7 @@ msgstr "数量"
 msgid "Quantity must be greater than 0"
 msgstr "数量必须大于 0"
 
-#: apps/mes/app/components/AppSidebar.tsx:205
+#: apps/mes/app/components/AppSidebar.tsx:207
 #: apps/mes/app/components/PinInOverlay.tsx:230
 #: apps/mes/app/routes/x+/recent.tsx:69
 msgid "Recent"
@@ -958,8 +958,8 @@ msgid "Record"
 msgstr "记录"
 
 #. placeholder {0}: activeStep + 1
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:804
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1770
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:805
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1771
 msgid "Record {0}"
 msgstr "记录 {0}"
 
@@ -992,7 +992,7 @@ msgid "Save"
 msgstr "保存"
 
 #: apps/mes/app/components/JobOperation/components/SerialSelectorModal.tsx:65
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1598
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1599
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:364
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:484
 msgid "Scan"
@@ -1002,8 +1002,8 @@ msgstr "扫描"
 msgid "Scan or enter serial number"
 msgstr "扫描或输入序列号"
 
-#: apps/mes/app/components/AppSidebar.tsx:189
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:450
+#: apps/mes/app/components/AppSidebar.tsx:191
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:451
 #: apps/mes/app/routes/x+/operations.tsx:423
 msgid "Schedule"
 msgstr "排程"
@@ -1013,7 +1013,7 @@ msgstr "排程"
 msgid "Scrap Reason"
 msgstr "报废原因"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:648
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:649
 msgid "Scrapped"
 msgstr "已报废"
 
@@ -1041,7 +1041,7 @@ msgstr "搜索..."
 
 #: apps/mes/app/components/JobOperation/components/SerialSelectorModal.tsx:69
 #: apps/mes/app/components/JobOperation/components/SerialSelectorModal.tsx:94
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1665
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1666
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:368
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:488
 #: packages/react/src/Combobox.tsx:148
@@ -1090,11 +1090,11 @@ msgstr "选择序列号"
 
 #: apps/mes/app/components/Feedback.tsx:160
 #: apps/mes/app/components/JobOperation/components/Chat.tsx:224
-#: apps/mes/app/components/Suggestion.tsx:220
+#: apps/mes/app/components/Suggestion.tsx:223
 msgid "Send"
 msgstr "发送"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1608
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1609
 msgid "Serial"
 msgstr "序列号"
 
@@ -1116,7 +1116,7 @@ msgstr "序列号不可用"
 msgid "Serial number is required"
 msgstr "序列号为必填项"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1579
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1580
 msgid "Serial Numbers"
 msgstr "序列号"
 
@@ -1129,7 +1129,7 @@ msgid "Set clock-out time"
 msgstr "设置下班打卡时间"
 
 #: apps/mes/app/components/JobOperation/components/Controls.tsx:166
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:2146
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:2147
 msgid "Setup"
 msgstr "设置"
 
@@ -1145,19 +1145,19 @@ msgstr "使用 Google 登录"
 msgid "Sign in with Outlook"
 msgstr "使用 Outlook 登录"
 
-#: apps/mes/app/components/AppSidebar.tsx:566
+#: apps/mes/app/components/AppSidebar.tsx:568
 msgid "Sign Out"
 msgstr "退出登录"
 
-#: apps/mes/app/components/AppSidebar.tsx:406
+#: apps/mes/app/components/AppSidebar.tsx:408
 msgid "Signed in as {stationName}"
 msgstr "已登录为 {stationName}"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1429
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1430
 msgid "Size"
 msgstr "大小"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1012
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1013
 msgid "Source"
 msgstr "来源"
 
@@ -1177,7 +1177,7 @@ msgstr "开始"
 msgid "Station User"
 msgstr "工位用户"
 
-#: apps/mes/app/components/AppSidebar.tsx:400
+#: apps/mes/app/components/AppSidebar.tsx:402
 msgid "Station: {stationName}"
 msgstr "工位：{stationName}"
 
@@ -1190,10 +1190,10 @@ msgstr "状态"
 msgid "Statuses"
 msgstr "状态"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:750
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:861
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1711
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1821
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:751
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:862
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1712
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1822
 msgid "Steps"
 msgstr "步骤"
 
@@ -1205,12 +1205,12 @@ msgstr "缺少步骤"
 msgid "Storage Unit"
 msgstr "存储单位"
 
-#: apps/mes/app/components/Suggestion.tsx:160
+#: apps/mes/app/components/Suggestion.tsx:163
 msgid "Submit anonymously"
 msgstr "匿名提交"
 
-#: apps/mes/app/components/Suggestion.tsx:114
 #: apps/mes/app/components/Suggestion.tsx:117
+#: apps/mes/app/components/Suggestion.tsx:120
 msgid "Suggestion"
 msgstr "建议"
 
@@ -1218,7 +1218,7 @@ msgstr "建议"
 msgid "Support Required"
 msgstr "需要支持"
 
-#: apps/mes/app/components/AppSidebar.tsx:396
+#: apps/mes/app/components/AppSidebar.tsx:398
 msgid "Switch Operator"
 msgstr "切换操作员"
 
@@ -1252,7 +1252,7 @@ msgstr "工作时间：{0}"
 msgid "Today"
 msgstr "今天"
 
-#: apps/mes/app/components/AppSidebar.tsx:282
+#: apps/mes/app/components/AppSidebar.tsx:284
 msgid "Tools"
 msgstr "工具"
 
@@ -1270,7 +1270,7 @@ msgstr "总时间：{0}"
 msgid "Total: {0}"
 msgstr "合计：{0}"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1595
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1596
 msgid "Tracking Labels"
 msgstr "追踪标签"
 
@@ -1312,11 +1312,11 @@ msgstr "查看维护工单"
 msgid "We've sent you a magic link to sign in to your account."
 msgstr "我们已向您发送了登录链接，请查收。"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1133
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1134
 msgid "WIP"
 msgstr "在制品"
 
-#: apps/mes/app/components/JobOperation/JobOperation.tsx:1951
+#: apps/mes/app/components/JobOperation/JobOperation.tsx:1952
 #: apps/mes/app/routes/x+/dispatch.$dispatchId.tsx:260
 #: apps/mes/app/routes/x+/maintenance.tsx:332
 #: apps/mes/app/routes/x+/operations.tsx:366

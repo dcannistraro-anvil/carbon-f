@@ -6,8 +6,7 @@ import {
   flashResultContext
 } from "@carbon/auth/middleware/flash.server";
 import { validator } from "@carbon/form";
-import { Button, Heading, Toaster } from "@carbon/react";
-import { useMode } from "@carbon/remix";
+import { Button, Heading, Toaster, useMode } from "@carbon/react";
 import type { Theme } from "@carbon/utils";
 import { modeValidator, themes } from "@carbon/utils";
 import { Analytics } from "@vercel/analytics/react";

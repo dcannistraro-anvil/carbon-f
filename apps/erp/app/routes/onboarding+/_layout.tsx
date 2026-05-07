@@ -1,7 +1,6 @@
 import { CarbonEdition } from "@carbon/auth";
 import { requirePermissions } from "@carbon/auth/auth.server";
-import { TooltipProvider } from "@carbon/react";
-import { useMode } from "@carbon/remix";
+import { TooltipProvider, useMode } from "@carbon/react";
 import { getStripeCustomerByCompanyId } from "@carbon/stripe/stripe.server";
 import { Edition } from "@carbon/utils";
 import { MeshGradient } from "@paper-design/shaders-react";

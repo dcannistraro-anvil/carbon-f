@@ -10,6 +10,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
+  useMode,
   VStack
 } from "@carbon/react";
 import data from "@emoji-mart/data";
@@ -45,6 +46,8 @@ export default function SuggestionDetails({
   const onClose = () => navigate(-1);
   const fetcher = useFetcher();
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
+  const mode = useMode();
+  const pickerTheme = mode;
 
   const { onUpdateTags } = useTags({
     id: suggestion.id ?? "",
@@ -100,14 +103,14 @@ export default function SuggestionDetails({
                   </button>
                 </PopoverTrigger>
                 <PopoverContent
-                  className="w-auto p-0 border-0 bg-white"
+                  className="w-auto p-0 border-0"
                   align="start"
                   sideOffset={8}
                 >
                   <Picker
                     data={data}
                     onEmojiSelect={onUpdateEmoji}
-                    theme="light"
+                    theme={pickerTheme}
                     previewPosition="none"
                     skinTonePosition="none"
                     navPosition="bottom"

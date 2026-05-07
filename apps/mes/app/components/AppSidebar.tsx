@@ -18,6 +18,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
   HStack,
+  ItarDisclosure,
   Sidebar,
   SidebarContent,
   SidebarFooter,
@@ -30,9 +31,10 @@ import {
   SidebarRail,
   Switch,
   useDisclosure,
+  useMode,
+  useRouteData,
   useSidebar
 } from "@carbon/react";
-import { ItarDisclosure, useMode, useRouteData } from "@carbon/remix";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { ComponentProps } from "react";
 import { Suspense, useRef } from "react";

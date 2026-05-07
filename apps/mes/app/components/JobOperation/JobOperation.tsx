@@ -41,9 +41,10 @@ import {
   Tr,
   toast,
   useDisclosure,
+  useKeyboardWedge,
+  useMode,
   VStack
 } from "@carbon/react";
-import { useKeyboardWedge, useMode } from "@carbon/remix";
 import type { TrackedEntityAttributes } from "@carbon/utils";
 import {
   convertDateStringToIsoString,

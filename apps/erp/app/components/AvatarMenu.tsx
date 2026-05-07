@@ -16,10 +16,12 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
+  ItarDisclosure,
   Switch,
-  useDisclosure
+  useDisclosure,
+  useEdition,
+  useMode
 } from "@carbon/react";
-import { ItarDisclosure, useEdition, useMode } from "@carbon/remix";
 import { Edition, themes } from "@carbon/utils";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useLocale } from "@react-aria/i18n";

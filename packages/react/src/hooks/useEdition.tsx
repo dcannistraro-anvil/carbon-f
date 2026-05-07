@@ -1,5 +1,5 @@
-import { useRouteData } from "@carbon/remix";
 import { Edition } from "@carbon/utils";
+import { useRouteData } from "./useRouteData";
 
 export function useEdition() {
   const routeData = useRouteData<{ env: { CARBON_EDITION: Edition } }>("/");

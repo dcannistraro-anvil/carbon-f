@@ -15,9 +15,9 @@ import {
   Th,
   Thead,
   Tr,
+  useMode,
   VStack
 } from "@carbon/react";
-import { useMode } from "@carbon/remix";
 import { formatDate } from "@carbon/utils";
 import { useLocale } from "@react-aria/i18n";
 import { motion } from "framer-motion";

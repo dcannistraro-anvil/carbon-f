@@ -31,10 +31,9 @@ import {
   Tr,
   toast,
   useDisclosure,
+  useMode,
   VStack
 } from "@carbon/react";
-
-import { useMode } from "@carbon/remix";
 import { formatCityStatePostalCode, formatDate } from "@carbon/utils";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useLocale } from "@react-aria/i18n";

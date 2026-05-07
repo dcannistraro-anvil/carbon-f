@@ -44,12 +44,12 @@ import {
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import {
   data,
+  Link,
   redirect,
   useFetcher,
   useLoaderData,
   useParams
 } from "react-router";
-import { Link } from "react-router-dom";
 import { ConfirmDelete } from "~/components/Modals";
 import { useDateFormatter } from "~/hooks";
 import {

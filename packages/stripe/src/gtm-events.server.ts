@@ -1,4 +1,4 @@
-import { GTM_EVENTS_API_SECRET_KEY, GTM_URL } from "@carbon/auth";
+import { GTM_EVENTS_API_SECRET_KEY, GTM_URL } from "@carbon/env";
 
 export async function forwardToGtm(
   type: string,

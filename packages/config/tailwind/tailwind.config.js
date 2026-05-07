@@ -5,9 +5,11 @@ import plugin from "tailwindcss/plugin";
 export default {
   darkMode: ["class"],
   content: [
-    "../../apps/**/*.{ts,tsx}",
-    "../../packages/**/*.{ts,tsx}",
+    "../../apps/*/app/**/*.{ts,tsx}",
+    "../../packages/{react,form,tiptap,ee}/src/**/*.{ts,tsx}",
     "!**/node_modules/**",
+    "!**/__tests__/**",
+    "!**/*.{test,spec,server,d}.{ts,tsx}",
   ],
   theme: {
     container: {

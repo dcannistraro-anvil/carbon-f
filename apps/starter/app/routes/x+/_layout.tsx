@@ -9,8 +9,7 @@ import {
   destroyAuthSession,
   requireAuthSession
 } from "@carbon/auth/session.server";
-import { Toaster } from "@carbon/react";
-import { useNProgress } from "@carbon/remix";
+import { Toaster, useNProgress } from "@carbon/react";
 import type { LoaderFunctionArgs } from "react-router";
 import { Outlet, redirect, useLoaderData } from "react-router";
 

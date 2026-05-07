@@ -1,4 +1,4 @@
-import { useRouteData } from "@carbon/remix";
+import { useRouteData } from "@carbon/react";
 import { useEffect, useState } from "react";
 import { path } from "~/utils/path";
 

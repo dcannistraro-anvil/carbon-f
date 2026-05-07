@@ -1,5 +1,5 @@
 import { CONTROLLED_ENVIRONMENT } from "@carbon/auth";
-import { useEdition } from "@carbon/remix";
+import { useEdition } from "@carbon/react";
 import { Edition } from "@carbon/utils";
 import { useUser } from "./useUser";
 

@@ -1,4 +1,4 @@
-import dagre from "dagre";
+import Dagre from "@dagrejs/dagre";
 import {
   annotateEdgeWeights,
   type LineageEdge,
@@ -113,7 +113,7 @@ export function computeDagreLayout(
 
   const backEdges = detectBackEdges(nodes, edges);
 
-  const g = new dagre.graphlib.Graph({ multigraph: true });
+  const g = new Dagre.graphlib.Graph({ multigraph: true });
   const clamped = Math.min(Math.max(1, Math.round(spacingLevel)), 5);
   const sp = SPACING_TABLE[clamped];
   g.setGraph({
@@ -137,7 +137,7 @@ export function computeDagreLayout(
     g.setEdge(e.source, e.target, {}, e.id);
   }
 
-  dagre.layout(g);
+  Dagre.layout(g);
 
   const positioned = nodes.map((n) => {
     const p = g.node(n.id);

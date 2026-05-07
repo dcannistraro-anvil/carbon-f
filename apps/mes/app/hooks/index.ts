@@ -3,7 +3,7 @@ import {
   useOptimisticLocation,
   useRouteData,
   useUrlParams
-} from "@carbon/remix";
+} from "@carbon/react";
 
 import { useDateFormatter } from "./useDateFormatter";
 import { useRealtime } from "./useRealtime";

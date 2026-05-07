@@ -1,5 +1,5 @@
 import type { Json } from "@carbon/database";
-import { useRouteData } from "@carbon/remix";
+import { useRouteData } from "@carbon/react";
 import { useMemo } from "react";
 import { z } from "zod";
 import { path } from "~/utils/path";

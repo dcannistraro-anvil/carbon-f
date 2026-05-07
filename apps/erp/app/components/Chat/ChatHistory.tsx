@@ -6,10 +6,9 @@ import {
   PopoverTrigger,
   Skeleton,
   useDebounce,
-  useDisclosure
+  useDisclosure,
+  useUrlParams
 } from "@carbon/react";
-
-import { useUrlParams } from "@carbon/remix";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useState } from "react";
 import { LuMenu, LuSearch, LuTrash } from "react-icons/lu";

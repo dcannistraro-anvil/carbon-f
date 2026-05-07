@@ -1,5 +1,4 @@
-import { IconButton } from "@carbon/react";
-import { useMode } from "@carbon/remix";
+import { IconButton, useMode } from "@carbon/react";
 import { useLingui } from "@lingui/react/macro";
 import { BiLaptop, BiMoon, BiSun } from "react-icons/bi";
 import { useFetcher } from "react-router";

@@ -1,28 +1,33 @@
 {
   "name": "@carbon/lib",
   "dependencies": {
-    "@carbon/auth": "*",
-    "@carbon/database": "*",
-    "@carbon/kv": "*",
-    "@supabase/supabase-js": "2.80.0",
+    "@carbon/database": "workspace:*",
+    "@carbon/env": "workspace:*",
+    "@carbon/kv": "workspace:*",
+    "@carbon/notifications": "workspace:*",
+    "@slack/web-api": "catalog:",
+    "@supabase/supabase-js": "catalog:",
+    "inngest": "3.54.0",
     "resend": "3.5.0",
-    "sst": "4.6.9",
-    "supabase": "2.84.5",
-    "zod": "3.25.76"
+    "sst": "catalog:",
+    "supabase": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
-    "@carbon/config": "*",
-    "@carbon/logger": "*",
+    "@carbon/config": "workspace:*",
     "@types/node": "20.19.39",
     "dotenv": "16.3.1",
-    "rimraf": "5.0.10",
-    "tsup": "8.5.1",
-    "tsx": "4.21.0",
-    "typescript": "5.8.3"
+    "rimraf": "catalog:",
+    "tsup": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:"
   },
   "exports": {
+    "./events": "./src/events.ts",
+    "./inngest": "./src/inngest/client.ts",
     "./resend.server": "./src/resend.server.ts",
     "./slack.server": "./src/slack.server.ts",
+    "./trigger": "./src/trigger.ts",
     "./twenty.server": "./src/twenty.server.ts"
   },
   "private": true,
@@ -33,5 +38,5 @@
     "typecheck": "tsgo --noEmit"
   },
   "sideEffects": false,
-  "version": "*"
+  "version": "0.0.0"
 }

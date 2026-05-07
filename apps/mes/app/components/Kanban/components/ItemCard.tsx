@@ -10,9 +10,9 @@ import {
   HStack,
   Tooltip,
   TooltipContent,
-  TooltipTrigger
+  TooltipTrigger,
+  useRouteData
 } from "@carbon/react";
-import { useRouteData } from "@carbon/remix";
 import {
   convertDateStringToIsoString,
   formatDurationMilliseconds

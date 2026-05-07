@@ -6,7 +6,8 @@ import {
   Popover,
   PopoverContent,
   PopoverFooter,
-  PopoverTrigger
+  PopoverTrigger,
+  useMode
 } from "@carbon/react";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
@@ -28,6 +29,8 @@ const EmojiPicker = ({ name }: EmojiPickerProps) => {
   const { error } = useField(name);
   const [value, setValue] = useControlField<string>(name);
   const [open, setOpen] = useState(false);
+  const mode = useMode();
+  const pickerTheme = mode;
 
   const onEmojiSelect = (emoji: EmojiData) => {
     setValue(emoji.native);
@@ -60,14 +63,14 @@ const EmojiPicker = ({ name }: EmojiPickerProps) => {
           )}
         </PopoverTrigger>
         <PopoverContent
-          className="w-auto p-0 border-0 bg-white"
+          className="w-auto p-0 border-0"
           align="start"
           sideOffset={8}
         >
           <Picker
             data={data}
             onEmojiSelect={onEmojiSelect}
-            theme="light"
+            theme={pickerTheme}
             previewPosition="none"
             skinTonePosition="none"
             navPosition="bottom"

@@ -1,5 +1,5 @@
-import { reactRouter } from "@react-router/dev/vite";
 import { lingui } from "@lingui/vite-plugin";
+import { reactRouter } from "@react-router/dev/vite";
 import path from "node:path";
 import { defineConfig, loadEnv, PluginOption } from "vite";
 import babelMacros from "vite-plugin-babel-macros";
@@ -17,7 +17,7 @@ const repoRoot = path.resolve(__dirname, "../..");
 function applyDotenvToProcessEnv(mode: string) {
   const fromFiles = {
     ...loadEnv(mode, repoRoot, ""),
-    ...loadEnv(mode, __dirname, "")
+    ...loadEnv(mode, __dirname, ""),
   };
   for (const [key, value] of Object.entries(fromFiles)) {
     if (process.env[key] === undefined) {
@@ -58,22 +58,25 @@ export default defineConfig(({ isSsrBuild, mode }) => {
     server: {
       port: 3000,
       allowedHosts: [".ngrok-free.app", ".ngrok-free.dev"],
+      watch: {
+        awaitWriteFinish: { stabilityThreshold: 250 },
+      },
     },
     plugins: [
       babelMacros(),
       lingui(),
       reactRouter(),
-      tsconfigPaths()
+      tsconfigPaths(),
     ] as PluginOption[],
     resolve: {
       alias: {
         "@carbon/utils": path.resolve(
           __dirname,
-          "../../packages/utils/src/index.ts"
+          "../../packages/utils/src/index.ts",
         ),
         "@carbon/form": path.resolve(
           __dirname,
-          "../../packages/form/src/index.tsx"
+          "../../packages/form/src/index.tsx",
         ),
       },
     },

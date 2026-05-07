@@ -19,9 +19,9 @@ import {
   InputGroup,
   InputLeftElement,
   useDisclosure,
+  useOptimisticLocation,
   VStack
 } from "@carbon/react";
-import { useOptimisticLocation } from "@carbon/remix";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {

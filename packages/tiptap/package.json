@@ -3,10 +3,10 @@
   "dependencies": {
     "@radix-ui/react-slot": "1.2.4",
     "@tanstack/react-virtual": "3.13.23",
-    "@tiptap/core": "2.27.2",
+    "@tiptap/core": "catalog:",
     "@tiptap/extension-character-count": "2.27.2",
     "@tiptap/extension-code-block-lowlight": "2.27.2",
-    "@tiptap/extension-color": "2.27.2",
+    "@tiptap/extension-color": "catalog:",
     "@tiptap/extension-highlight": "2.27.2",
     "@tiptap/extension-horizontal-rule": "2.27.2",
     "@tiptap/extension-image": "2.27.2",
@@ -15,20 +15,20 @@
     "@tiptap/extension-placeholder": "2.27.2",
     "@tiptap/extension-task-item": "2.27.2",
     "@tiptap/extension-task-list": "2.27.2",
-    "@tiptap/extension-text-style": "2.27.2",
-    "@tiptap/extension-underline": "2.27.2",
-    "@tiptap/extension-youtube": "2.27.2",
-    "@tiptap/pm": "2.27.2",
-    "@tiptap/react": "2.27.2",
-    "@tiptap/starter-kit": "2.27.2",
+    "@tiptap/extension-text-style": "catalog:",
+    "@tiptap/extension-underline": "catalog:",
+    "@tiptap/extension-youtube": "catalog:",
+    "@tiptap/pm": "catalog:",
+    "@tiptap/react": "catalog:",
+    "@tiptap/starter-kit": "catalog:",
     "@tiptap/suggestion": "2.27.2",
     "@types/node": "22.19.7",
     "cmdk": "0.2.0",
-    "cookie": "1.1.1",
-    "dompurify": "3.4.0",
+    "cookie": "catalog:",
+    "dompurify": "catalog:",
     "jotai": "2.19.1",
     "linkifyjs": "4.3.2",
-    "nanoid": "5.1.7",
+    "nanoid": "catalog:",
     "react-markdown": "9.1.0",
     "react-moveable": "0.56.0",
     "tippy.js": "6.3.7",
@@ -37,27 +37,28 @@
     "tunnel-rat": "0.1.2"
   },
   "devDependencies": {
-    "@carbon/config": "*",
-    "@carbon/utils": "*",
+    "@carbon/config": "workspace:*",
+    "@carbon/utils": "workspace:*",
     "@testing-library/dom": "8.20.1",
     "@types/dompurify": "2.4.0",
     "@types/forge-viewer": "7.89.1",
-    "@types/react": "18.3.28",
-    "@types/react-dom": "18.3.7",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
     "@types/react-window": "1.8.8",
-    "react": "18.3.1",
-    "tsup": "8.5.1",
-    "typescript": "5.8.3",
-    "vitest": "4.1.4"
+    "react": "catalog:",
+    "sst": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
   "exports": {
     ".": "./src/index.ts"
   },
   "peerDependencies": {
-    "@internationalized/date": "^3.5.2",
-    "framer-motion": "^11.1.7",
-    "react": "^18.3.1",
-    "react-icons": "^5.3.0"
+    "@internationalized/date": "catalog:",
+    "framer-motion": "catalog:",
+    "react": "catalog:",
+    "react-icons": "catalog:"
   },
   "private": true,
   "scripts": {
@@ -67,5 +68,5 @@
     "typecheck": "tsgo --noEmit"
   },
   "sideEffects": false,
-  "version": "*"
+  "version": "0.0.0"
 }

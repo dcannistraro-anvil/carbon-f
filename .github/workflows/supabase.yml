@@ -24,18 +24,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: "20"
+          cache: pnpm
 
       - uses: supabase/setup-cli@v1
         with:
           version: latest
 
       - name: Install dependencies
-        run: |
-          npm install
-          npm install --prefix ci
+        run: pnpm install --frozen-lockfile
 
       - name: Run migrations
-        run: npm run -w ci ci:migrations
+        run: pnpm --filter ci ci:migrations

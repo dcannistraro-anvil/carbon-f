@@ -198,7 +198,7 @@ msgstr "用户在收到货物时在每个批次或序列号上记录过期日期
 msgid "Abilities"
 msgstr "能力"
 
-#: apps/erp/app/components/AvatarMenu.tsx:256
+#: apps/erp/app/components/AvatarMenu.tsx:258
 #: apps/erp/app/modules/account/ui/Profile/ProfileForm.tsx:61
 msgid "About"
 msgstr "关于"
@@ -212,8 +212,8 @@ msgstr "接受批次"
 msgid "Accept lot?"
 msgstr "接受批次？"
 
-#: apps/erp/app/routes/share+/quote.$id.tsx:1311
-#: apps/erp/app/routes/share+/quote.$id.tsx:1354
+#: apps/erp/app/routes/share+/quote.$id.tsx:1310
+#: apps/erp/app/routes/share+/quote.$id.tsx:1353
 msgid "Accept Quote"
 msgstr "接受报价"
 
@@ -236,7 +236,7 @@ msgstr "账户经理"
 msgid "Account Number"
 msgstr "账户编号"
 
-#: apps/erp/app/components/AvatarMenu.tsx:216
+#: apps/erp/app/components/AvatarMenu.tsx:218
 #: apps/erp/app/routes/x+/account+/_layout.tsx:27
 msgid "Account Settings"
 msgstr "账户设置"
@@ -761,7 +761,7 @@ msgstr "API 和 Webhooks"
 msgid "API Docs"
 msgstr "API 文档"
 
-#: apps/erp/app/components/AvatarMenu.tsx:122
+#: apps/erp/app/components/AvatarMenu.tsx:124
 msgid "API Documentation"
 msgstr "API 文档"
 
@@ -842,7 +842,7 @@ msgstr "已归档日志"
 
 #. placeholder {0}: quote.quoteId
 #. placeholder {1}: formatter.format(total)
-#: apps/erp/app/routes/share+/quote.$id.tsx:1357
+#: apps/erp/app/routes/share+/quote.$id.tsx:1356
 msgid "Are you sure you want to accept quote {0} for {1}?"
 msgstr "你确定要接受报价 {0} 的 {1} 吗？"
 
@@ -1273,7 +1273,7 @@ msgstr "你确定要过账此收据吗？"
 msgid "Are you sure you want to post this shipment?"
 msgstr "你确定要过账此发货单吗？"
 
-#: apps/erp/app/routes/share+/quote.$id.tsx:1458
+#: apps/erp/app/routes/share+/quote.$id.tsx:1457
 msgid "Are you sure you want to reject this quote?"
 msgstr "你确定要拒绝此报价吗？"
 
@@ -1398,11 +1398,11 @@ msgid "At least one condition must match"
 msgstr ""
 
 #: apps/erp/app/components/Layout/Topbar/Feedback.tsx:147
-#: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:212
+#: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:215
 msgid "Attach File"
 msgstr "附加文件"
 
-#: apps/erp/app/modules/resources/ui/Suggestions/SuggestionDetails.tsx:160
+#: apps/erp/app/modules/resources/ui/Suggestions/SuggestionDetails.tsx:163
 msgid "Attachment"
 msgstr "附件"
 
@@ -1455,7 +1455,7 @@ msgstr "审计日志未启用"
 msgid "Audit Logs"
 msgstr "审计日志"
 
-#: apps/erp/app/routes/_public+/login.tsx:292
+#: apps/erp/app/routes/_public+/login.tsx:293
 msgid "Authentication Error"
 msgstr "身份验证错误"
 
@@ -1704,7 +1704,7 @@ msgstr "由 {byUser}"
 msgid "By accepting the invite, you agree to the <0>Terms of Service</0> and <1>Privacy Policy</1>."
 msgstr "通过接受邀请，您同意<0>服务条款</0>和<1>隐私政策</1>。"
 
-#: apps/erp/app/routes/_public+/login.tsx:375
+#: apps/erp/app/routes/_public+/login.tsx:376
 msgid "By signing in, you agree to the <0>Terms of Service</0> and <1>Privacy Policy.</1>"
 msgstr "通过登录，您同意<0>服务条款</0>和<1>隐私政策。</1>"
 
@@ -1770,7 +1770,7 @@ msgstr "无法禁用唯一的活跃价格段。请添加另一个价格段或改
 #: apps/erp/app/components/Form/Items.tsx:115
 #: apps/erp/app/components/ItemRuleViolationModal.tsx:96
 #: apps/erp/app/components/Layout/Topbar/Feedback.tsx:135
-#: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:200
+#: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:203
 #: apps/erp/app/components/Modals/ConfirmDelete/ConfirmDelete.tsx:62
 #: apps/erp/app/components/Table/components/TableHeader.tsx:209
 #: apps/erp/app/modules/account/ui/UserAttributes/UserAttributesForm.tsx:195
@@ -1905,8 +1905,8 @@ msgstr "无法禁用唯一的活跃价格段。请添加另一个价格段或改
 #: apps/erp/app/modules/users/ui/Employees/EmployeePermissionsForm.tsx:139
 #: apps/erp/app/modules/users/ui/EmployeeTypes/EmployeeTypeForm.tsx:115
 #: apps/erp/app/modules/users/ui/Groups/GroupsForm.tsx:77
-#: apps/erp/app/routes/share+/quote.$id.tsx:1414
-#: apps/erp/app/routes/share+/quote.$id.tsx:1476
+#: apps/erp/app/routes/share+/quote.$id.tsx:1413
+#: apps/erp/app/routes/share+/quote.$id.tsx:1475
 #: apps/erp/app/routes/x+/inventory+/storage-types.delete.$id.tsx:227
 #: apps/erp/app/routes/x+/inventory+/storage-units.delete.$storageUnitId.tsx:220
 #: apps/erp/app/routes/x+/person+/$personId.timecard.tsx:618
@@ -2010,7 +2010,7 @@ msgstr "Carbon 列"
 
 #: apps/erp/app/routes/_public+/invite.$code.tsx:124
 #: apps/erp/app/routes/_public+/invite.$code.tsx:156
-#: apps/erp/app/routes/_public+/login.tsx:234
+#: apps/erp/app/routes/_public+/login.tsx:235
 #: apps/erp/app/routes/_public+/magic-link.tsx:26
 #: apps/erp/app/routes/_public+/verify.tsx:147
 msgid "Carbon Logo"
@@ -2053,7 +2053,7 @@ msgstr "抄送"
 #: apps/erp/app/modules/sales/ui/Pricing/PriceTracePopover.tsx:98
 #: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:206
 #: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:242
-#: apps/erp/app/routes/share+/quote.$id.tsx:1394
+#: apps/erp/app/routes/share+/quote.$id.tsx:1393
 msgid "Change"
 msgstr "更改"
 
@@ -2097,7 +2097,7 @@ msgstr "会计科目表"
 msgid "Chat"
 msgstr "聊天"
 
-#: apps/erp/app/routes/_public+/login.tsx:243
+#: apps/erp/app/routes/_public+/login.tsx:244
 msgid "Check your email"
 msgstr "检查您的电子邮件"
 
@@ -2127,7 +2127,7 @@ msgid "Class"
 msgstr "类别"
 
 #: apps/erp/app/components/Layout/Topbar/Feedback.tsx:143
-#: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:208
+#: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:211
 #: apps/erp/app/components/Select.tsx:73
 msgid "Clear"
 msgstr "清除"
@@ -2495,7 +2495,7 @@ msgstr "确认导入"
 msgid "Confirm Password"
 msgstr "确认密码"
 
-#: apps/erp/app/modules/settings/ui/Integrations/IntegrationsList.tsx:122
+#: apps/erp/app/modules/settings/ui/Integrations/IntegrationsList.tsx:121
 msgid "Connect Carbon to your accounting, project, and CAD tools and much more."
 msgstr ""
 
@@ -3464,11 +3464,11 @@ msgstr "日常使用"
 msgid "Dark"
 msgstr "深色"
 
-#: apps/erp/app/components/AvatarMenu.tsx:132
+#: apps/erp/app/components/AvatarMenu.tsx:134
 msgid "Dark Mode"
 msgstr "深色模式"
 
-#: apps/erp/app/components/AvatarMenu.tsx:114
+#: apps/erp/app/components/AvatarMenu.tsx:116
 #: apps/erp/app/components/Layout/Topbar/CompanySwitcher.tsx:134
 #: apps/erp/app/routes/x+/quality+/_index.tsx:81
 #: apps/erp/app/routes/x+/settings+/quality.tsx:268
@@ -3492,7 +3492,7 @@ msgstr "数据类型无法更改"
 #: apps/erp/app/modules/people/ui/Holidays/HolidayForm.tsx:72
 #: apps/erp/app/modules/people/ui/Holidays/HolidaysTable.tsx:63
 #: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:100
-#: apps/erp/app/modules/resources/ui/Suggestions/SuggestionDetails.tsx:145
+#: apps/erp/app/modules/resources/ui/Suggestions/SuggestionDetails.tsx:148
 #: apps/erp/app/modules/resources/ui/Suggestions/SuggestionsTable.tsx:110
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderLineShipments.tsx:97
 #: apps/erp/app/routes/x+/person+/$personId.timecard.tsx:525
@@ -3774,7 +3774,7 @@ msgstr "删除属性"
 msgid "Delete Category"
 msgstr "删除分类"
 
-#: apps/erp/app/components/Chat/ChatHistory.tsx:128
+#: apps/erp/app/components/Chat/ChatHistory.tsx:127
 msgid "Delete chat"
 msgstr "删除聊天"
 
@@ -4237,7 +4237,7 @@ msgid "Discard"
 msgstr "丢弃"
 
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteSummary.tsx:427
-#: apps/erp/app/routes/share+/quote.$id.tsx:664
+#: apps/erp/app/routes/share+/quote.$id.tsx:663
 msgid "Discount"
 msgstr "折扣"
 
@@ -4349,7 +4349,7 @@ msgstr "下载 CSV"
 msgid "Draft"
 msgstr "草稿"
 
-#: apps/erp/app/routes/share+/quote.$id.tsx:1400
+#: apps/erp/app/routes/share+/quote.$id.tsx:1399
 msgid "Drag and drop a Purchase Order PDF here, or click to select a file"
 msgstr "将采购订单 PDF 拖放到此处，或点击选择文件"
 
@@ -4893,7 +4893,7 @@ msgstr "编辑工作中心"
 msgid "Email"
 msgstr "电子邮件"
 
-#: apps/erp/app/routes/_public+/login.tsx:331
+#: apps/erp/app/routes/_public+/login.tsx:332
 #: apps/erp/app/routes/x+/users+/operators.$operatorId.tsx:143
 msgid "Email Address"
 msgstr "电子邮件地址"
@@ -4907,7 +4907,7 @@ msgstr "电子邮件通知未配置"
 msgid "Emails"
 msgstr "电子邮件"
 
-#: apps/erp/app/modules/resources/ui/Suggestions/SuggestionDetails.tsx:91
+#: apps/erp/app/modules/resources/ui/Suggestions/SuggestionDetails.tsx:94
 msgid "Emoji"
 msgstr "表情符号"
 
@@ -5335,7 +5335,7 @@ msgid "Expired batch"
 msgstr "过期批次"
 
 #: apps/erp/app/modules/settings/ui/ApiKeys/ApiKeysTable.tsx:131
-#: apps/erp/app/routes/share+/quote.$id.tsx:240
+#: apps/erp/app/routes/share+/quote.$id.tsx:239
 msgid "Expires"
 msgstr "过期"
 
@@ -5380,7 +5380,7 @@ msgstr "导出行到 CSV"
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceSummary.tsx:291
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoiceSummary.tsx:276
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteSummary.tsx:536
-#: apps/erp/app/routes/share+/quote.$id.tsx:783
+#: apps/erp/app/routes/share+/quote.$id.tsx:782
 msgid "Extended Price"
 msgstr "扩展价格"
 
@@ -5780,7 +5780,7 @@ msgid "Failed to upload file: {0}"
 msgstr "上传文件失败：{0}"
 
 #: apps/erp/app/components/Layout/Topbar/Feedback.tsx:73
-#: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:96
+#: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:99
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentNotes.tsx:58
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferNotes.tsx:43
 #: apps/erp/app/modules/items/ui/Item/BillOfProcess.tsx:1814
@@ -5853,7 +5853,7 @@ msgid "Feedback"
 msgstr "反馈"
 
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteSummary.tsx:436
-#: apps/erp/app/routes/share+/quote.$id.tsx:674
+#: apps/erp/app/routes/share+/quote.$id.tsx:673
 msgid "Fees"
 msgstr "费用"
 
@@ -5892,7 +5892,7 @@ msgid "File size exceeds {maxSizeMB}MB limit. Current size: {0}MB"
 msgstr "文件大小超过 {maxSizeMB}MB 限制。当前大小：{0}MB"
 
 #: apps/erp/app/components/Layout/Topbar/Feedback.tsx:60
-#: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:82
+#: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:85
 msgid "File size exceeds 10MB limit"
 msgstr "文件大小超过10MB限制"
 
@@ -6275,7 +6275,7 @@ msgstr "ID"
 msgid "Ideas, suggestions or problems with this page?"
 msgstr "有什么想法、建议或问题吗？"
 
-#: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:138
+#: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:141
 msgid "Ideas, suggestions or problems?"
 msgstr "想法、建议或问题？"
 
@@ -6500,7 +6500,7 @@ msgstr "说明继承自工序。"
 msgid "Integration not found"
 msgstr "集成未找到"
 
-#: apps/erp/app/modules/settings/ui/Integrations/IntegrationsList.tsx:119
+#: apps/erp/app/modules/settings/ui/Integrations/IntegrationsList.tsx:118
 #: apps/erp/app/modules/settings/ui/useSettingsSubmodules.tsx:159
 msgid "Integrations"
 msgstr "集成"
@@ -7104,7 +7104,7 @@ msgstr "劳动时间"
 msgid "Labor Unit"
 msgstr "劳动单位"
 
-#: apps/erp/app/components/AvatarMenu.tsx:178
+#: apps/erp/app/components/AvatarMenu.tsx:180
 #: apps/erp/app/modules/account/ui/Profile/ProfileLanguageForm.tsx:41
 #: apps/erp/app/modules/account/ui/Profile/ProfileLanguageForm.tsx:48
 msgid "Language"
@@ -7154,7 +7154,7 @@ msgstr "最后更新: {formattedDate}"
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteBillOfProcess.tsx:2068
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteSummary.tsx:440
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteToOrderDrawer.tsx:621
-#: apps/erp/app/routes/share+/quote.$id.tsx:678
+#: apps/erp/app/routes/share+/quote.$id.tsx:677
 msgid "Lead Time"
 msgstr "提前期"
 
@@ -7217,7 +7217,7 @@ msgstr "字母"
 msgid "Light"
 msgstr "浅色"
 
-#: apps/erp/app/components/Layout/Topbar/ModeSwitcher.tsx:33
+#: apps/erp/app/components/Layout/Topbar/ModeSwitcher.tsx:32
 msgid "Light Mode"
 msgstr "浅色模式"
 
@@ -7404,7 +7404,7 @@ msgstr "锁定"
 msgid "Log In"
 msgstr "登录"
 
-#: apps/erp/app/routes/_public+/login.tsx:369
+#: apps/erp/app/routes/_public+/login.tsx:370
 msgid "Login or create a new account"
 msgstr "登录或创建新账户"
 
@@ -7606,7 +7606,7 @@ msgstr "管理如何在整个库存中跟踪、计算和执行保质期。"
 msgid "Manage Ownership"
 msgstr "管理所有权"
 
-#: apps/erp/app/components/AvatarMenu.tsx:225
+#: apps/erp/app/components/AvatarMenu.tsx:227
 #: apps/erp/app/routes/x+/settings+/billing.tsx:203
 #: apps/erp/app/routes/x+/settings+/billing.tsx:269
 msgid "Manage Subscription"
@@ -8280,7 +8280,7 @@ msgstr "新属性"
 msgid "New Attribute Category"
 msgstr "新属性类别"
 
-#: apps/erp/app/components/Chat/ChatHistory.tsx:117
+#: apps/erp/app/components/Chat/ChatHistory.tsx:116
 msgid "New chat"
 msgstr "新聊天"
 
@@ -8671,11 +8671,11 @@ msgstr "未找到校准记录"
 msgid "No changes recorded"
 msgstr "未记录任何更改"
 
-#: apps/erp/app/components/Chat/ChatHistory.tsx:99
+#: apps/erp/app/components/Chat/ChatHistory.tsx:98
 msgid "No chat history"
 msgstr "没有聊天历史"
 
-#: apps/erp/app/components/Chat/ChatHistory.tsx:97
+#: apps/erp/app/components/Chat/ChatHistory.tsx:96
 msgid "No chats found"
 msgstr "未找到聊天"
 
@@ -8832,7 +8832,7 @@ msgstr "所选数量无定价"
 
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteCompareDrawer.tsx:798
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteToOrderDrawer.tsx:341
-#: apps/erp/app/routes/share+/quote.$id.tsx:697
+#: apps/erp/app/routes/share+/quote.$id.tsx:696
 msgid "No pricing options found"
 msgstr "未找到定价选项"
 
@@ -8987,7 +8987,7 @@ msgstr "备注"
 #: apps/erp/app/modules/sales/ui/Customer/CustomerContactForm.tsx:111
 #: apps/erp/app/modules/sales/ui/Opportunity/OpportunityLineNotes.tsx:118
 #: apps/erp/app/modules/sales/ui/Pricing/PriceOverrideForm.tsx:219
-#: apps/erp/app/routes/share+/quote.$id.tsx:1191
+#: apps/erp/app/routes/share+/quote.$id.tsx:1190
 #: apps/erp/app/routes/x+/person+/$personId.notes.tsx:46
 #: apps/erp/app/routes/x+/purchase-invoice+/$invoiceId.$lineId.details.tsx:178
 #: apps/erp/app/routes/x+/purchase-invoice+/$invoiceId.details.tsx:188
@@ -9085,12 +9085,12 @@ msgstr "在存储单元上"
 msgid "Onshape Status"
 msgstr "Onshape 状态"
 
-#: apps/erp/app/routes/share+/quote.$id.tsx:1619
+#: apps/erp/app/routes/share+/quote.$id.tsx:1618
 msgid "Oops! The link you're trying to access has expired or is no longer valid."
 msgstr "哎呀！您尝试访问的链接已过期或不再有效。"
 
-#: apps/erp/app/routes/share+/quote.$id.tsx:1612
-#: apps/erp/app/routes/share+/quote.$id.tsx:1626
+#: apps/erp/app/routes/share+/quote.$id.tsx:1611
+#: apps/erp/app/routes/share+/quote.$id.tsx:1625
 #: apps/erp/app/routes/share+/scar.$id.tsx:524
 #: apps/erp/app/routes/share+/scar.$id.tsx:531
 msgid "Oops! The link you're trying to access is not valid."
@@ -9104,7 +9104,7 @@ msgstr "打开"
 msgid "Open Actions"
 msgstr "开放操作"
 
-#: apps/erp/app/components/Chat/ChatHistory.tsx:73
+#: apps/erp/app/components/Chat/ChatHistory.tsx:72
 msgid "Open chat history"
 msgstr "打开聊天历史"
 
@@ -9268,7 +9268,7 @@ msgstr "选项"
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:281
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:287
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:305
-#: apps/erp/app/modules/sales/ui/Opportunity/OpportunityState.tsx:144
+#: apps/erp/app/modules/sales/ui/Opportunity/OpportunityState.tsx:149
 msgid "Order"
 msgstr "订单"
 
@@ -9512,7 +9512,7 @@ msgstr "零件"
 msgid "Pass"
 msgstr "通过"
 
-#: apps/erp/app/modules/resources/ui/Suggestions/SuggestionDetails.tsx:152
+#: apps/erp/app/modules/resources/ui/Suggestions/SuggestionDetails.tsx:155
 msgid "Path"
 msgstr "路径"
 
@@ -9547,7 +9547,7 @@ msgstr "支付方式"
 #: apps/erp/app/modules/sales/ui/Quotes/QuotePaymentForm.tsx:83
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteToOrderDrawer.tsx:896
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderPaymentForm.tsx:85
-#: apps/erp/app/routes/share+/quote.$id.tsx:1221
+#: apps/erp/app/routes/share+/quote.$id.tsx:1220
 msgid "Payment Term"
 msgstr "付款条款"
 
@@ -9720,13 +9720,13 @@ msgstr "规划"
 msgid "Please contact your administrator to enable audit logging."
 msgstr "请联系您的管理员以启用审计日志。"
 
-#: apps/erp/app/routes/share+/quote.$id.tsx:1375
-#: apps/erp/app/routes/share+/quote.$id.tsx:1470
+#: apps/erp/app/routes/share+/quote.$id.tsx:1374
+#: apps/erp/app/routes/share+/quote.$id.tsx:1469
 msgid "Please enter your email address"
 msgstr "请输入您的电子邮件地址"
 
-#: apps/erp/app/routes/share+/quote.$id.tsx:1371
-#: apps/erp/app/routes/share+/quote.$id.tsx:1466
+#: apps/erp/app/routes/share+/quote.$id.tsx:1370
+#: apps/erp/app/routes/share+/quote.$id.tsx:1465
 msgid "Please enter your name"
 msgstr "请输入您的名字"
 
@@ -9950,7 +9950,7 @@ msgstr "优先级"
 msgid "Priority"
 msgstr "优先级"
 
-#: apps/erp/app/components/AvatarMenu.tsx:246
+#: apps/erp/app/components/AvatarMenu.tsx:248
 msgid "Privacy Policy"
 msgstr "隐私政策"
 
@@ -10421,7 +10421,7 @@ msgstr "数量"
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderLineForm.tsx:485
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderLineJobs.tsx:224
 #: apps/erp/app/modules/sales/ui/SalesRFQ/SalesRFQLineForm.tsx:324
-#: apps/erp/app/routes/share+/quote.$id.tsx:657
+#: apps/erp/app/routes/share+/quote.$id.tsx:656
 #: apps/erp/app/routes/x+/schedule+/dates.tsx:847
 #: apps/erp/app/routes/x+/schedule+/operations.tsx:475
 msgid "Quantity"
@@ -10476,7 +10476,7 @@ msgstr "问题"
 #: apps/erp/app/components/Layout/Topbar/CreateMenu.tsx:96
 #: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:376
 #: apps/erp/app/modules/purchasing/ui/SupplierInteraction/SupplierInteractionState.tsx:80
-#: apps/erp/app/modules/sales/ui/Opportunity/OpportunityState.tsx:143
+#: apps/erp/app/modules/sales/ui/Opportunity/OpportunityState.tsx:148
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteForm.tsx:133
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteLineMethodForm.tsx:65
 #: apps/erp/app/modules/sales/ui/Quotes/QuotesTable.tsx:318
@@ -10493,7 +10493,7 @@ msgstr "报价已接受者"
 msgid "Quote Accepted By Email"
 msgstr "报价接受者邮箱"
 
-#: apps/erp/app/routes/share+/quote.$id.tsx:1618
+#: apps/erp/app/routes/share+/quote.$id.tsx:1617
 msgid "Quote expired"
 msgstr "报价已过期"
 
@@ -10520,8 +10520,8 @@ msgstr "报价加价"
 msgid "Quote Materials"
 msgstr "报价物料"
 
-#: apps/erp/app/routes/share+/quote.$id.tsx:1611
-#: apps/erp/app/routes/share+/quote.$id.tsx:1625
+#: apps/erp/app/routes/share+/quote.$id.tsx:1610
+#: apps/erp/app/routes/share+/quote.$id.tsx:1624
 msgid "Quote not found"
 msgstr "报价未找到"
 
@@ -10702,7 +10702,7 @@ msgstr "记录已删除"
 msgid "Records"
 msgstr "记录"
 
-#: apps/erp/app/routes/_public+/login.tsx:261
+#: apps/erp/app/routes/_public+/login.tsx:262
 msgid "Redirecting to verification page..."
 msgstr "正在重定向到验证页面..."
 
@@ -10739,8 +10739,8 @@ msgstr "拒绝"
 msgid "Reject Lot"
 msgstr "拒绝批次"
 
-#: apps/erp/app/routes/share+/quote.$id.tsx:1318
-#: apps/erp/app/routes/share+/quote.$id.tsx:1455
+#: apps/erp/app/routes/share+/quote.$id.tsx:1317
+#: apps/erp/app/routes/share+/quote.$id.tsx:1454
 msgid "Reject Quote"
 msgstr "拒绝报价"
 
@@ -10787,7 +10787,7 @@ msgstr "记住此PIN。您需要它来退出MES终端上的控制台模式。"
 #: apps/erp/app/modules/quality/ui/Calibrations/GaugeCalibrationRecordForm.tsx:357
 #: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:211
 #: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:247
-#: apps/erp/app/routes/share+/quote.$id.tsx:928
+#: apps/erp/app/routes/share+/quote.$id.tsx:927
 msgid "Remove"
 msgstr "移除"
 
@@ -11143,7 +11143,7 @@ msgstr "撤销邀请"
 #: apps/erp/app/components/Layout/Topbar/CreateMenu.tsx:91
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQsTable.tsx:265
 #: apps/erp/app/modules/purchasing/ui/SupplierInteraction/SupplierInteractionState.tsx:79
-#: apps/erp/app/modules/sales/ui/Opportunity/OpportunityState.tsx:142
+#: apps/erp/app/modules/sales/ui/Opportunity/OpportunityState.tsx:147
 #: apps/erp/app/modules/sales/ui/SalesRFQ/SalesRFQForm.tsx:122
 #: apps/erp/app/modules/sales/ui/SalesRFQ/SalesRFQsTable.tsx:259
 #: apps/erp/app/routes/x+/settings+/sales.tsx:552
@@ -11679,7 +11679,7 @@ msgstr "报废原因"
 #: apps/erp/app/modules/items/ui/Item/ItemPlanningChart.tsx:554
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteExplorer.tsx:467
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderExplorer.tsx:369
-#: apps/erp/app/modules/settings/ui/Integrations/IntegrationsList.tsx:75
+#: apps/erp/app/modules/settings/ui/Integrations/IntegrationsList.tsx:74
 msgid "Search"
 msgstr "搜索"
 
@@ -11717,7 +11717,7 @@ msgstr ""
 msgid "Search for existing or create a new one"
 msgstr "搜索现有问题或创建新问题"
 
-#: apps/erp/app/components/Chat/ChatHistory.tsx:84
+#: apps/erp/app/components/Chat/ChatHistory.tsx:83
 msgid "Search history"
 msgstr "搜索历史"
 
@@ -11971,7 +11971,7 @@ msgstr "自我管理"
 msgid "Self-Onboarding with Carbon Academy"
 msgstr "使用 Carbon Academy 自助入门"
 
-#: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:221
+#: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:224
 #: apps/erp/app/modules/production/ui/Jobs/JobBillOfProcess.tsx:3411
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteFinalizeModal.tsx:105
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteHeader.tsx:245
@@ -12305,8 +12305,8 @@ msgstr "已发货数量"
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteToOrderDrawer.tsx:617
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteToOrderDrawer.tsx:992
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderShipmentForm.tsx:106
-#: apps/erp/app/routes/share+/quote.$id.tsx:669
-#: apps/erp/app/routes/share+/quote.$id.tsx:1273
+#: apps/erp/app/routes/share+/quote.$id.tsx:668
+#: apps/erp/app/routes/share+/quote.$id.tsx:1272
 msgid "Shipping"
 msgstr "运输"
 
@@ -12350,7 +12350,7 @@ msgstr "配送地点"
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteToOrderDrawer.tsx:1004
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderShipmentForm.tsx:132
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrdersTable.tsx:409
-#: apps/erp/app/routes/share+/quote.$id.tsx:1208
+#: apps/erp/app/routes/share+/quote.$id.tsx:1207
 msgid "Shipping Method"
 msgstr "配送方式"
 
@@ -12416,23 +12416,23 @@ msgstr "显示同步选项"
 msgid "Shown to the user when this rule fails."
 msgstr ""
 
-#: apps/erp/app/routes/_public+/login.tsx:344
+#: apps/erp/app/routes/_public+/login.tsx:345
 msgid "Sign in with Email"
 msgstr "用邮箱登录"
 
-#: apps/erp/app/routes/_public+/login.tsx:308
+#: apps/erp/app/routes/_public+/login.tsx:309
 msgid "Sign in with Google"
 msgstr "用 Google 登录"
 
-#: apps/erp/app/routes/_public+/login.tsx:321
+#: apps/erp/app/routes/_public+/login.tsx:322
 msgid "Sign in with Outlook"
 msgstr "使用 Outlook 登录"
 
-#: apps/erp/app/components/AvatarMenu.tsx:264
+#: apps/erp/app/components/AvatarMenu.tsx:266
 msgid "Sign Out"
 msgstr "登出"
 
-#: apps/erp/app/components/AvatarMenu.tsx:109
+#: apps/erp/app/components/AvatarMenu.tsx:111
 msgid "Signed in as {name}"
 msgstr "以 {name} 身份登录"
 
@@ -12892,7 +12892,7 @@ msgstr "小组件"
 msgid "Submit"
 msgstr "提交"
 
-#: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:159
+#: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:162
 msgid "Submit anonymously"
 msgstr "匿名提交"
 
@@ -12904,7 +12904,7 @@ msgstr "提交以供批准"
 msgid "Submit Inspection"
 msgstr "提交检验"
 
-#: apps/erp/app/modules/resources/ui/Suggestions/SuggestionDetails.tsx:131
+#: apps/erp/app/modules/resources/ui/Suggestions/SuggestionDetails.tsx:134
 msgid "Submitted By"
 msgstr "提交者"
 
@@ -12933,9 +12933,9 @@ msgstr "物质"
 
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteSummary.tsx:443
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteSummary.tsx:594
-#: apps/erp/app/routes/share+/quote.$id.tsx:681
-#: apps/erp/app/routes/share+/quote.$id.tsx:841
-#: apps/erp/app/routes/share+/quote.$id.tsx:1230
+#: apps/erp/app/routes/share+/quote.$id.tsx:680
+#: apps/erp/app/routes/share+/quote.$id.tsx:840
+#: apps/erp/app/routes/share+/quote.$id.tsx:1229
 msgid "Subtotal"
 msgstr "小计"
 
@@ -12964,9 +12964,9 @@ msgstr "后缀"
 msgid "Suggested Actions"
 msgstr "建议操作"
 
-#: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:117
-#: apps/erp/app/modules/resources/ui/Suggestions/SuggestionDetails.tsx:84
-#: apps/erp/app/modules/resources/ui/Suggestions/SuggestionDetails.tsx:122
+#: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:120
+#: apps/erp/app/modules/resources/ui/Suggestions/SuggestionDetails.tsx:87
+#: apps/erp/app/modules/resources/ui/Suggestions/SuggestionDetails.tsx:125
 #: apps/erp/app/modules/resources/ui/Suggestions/SuggestionsTable.tsx:42
 msgid "Suggestion"
 msgstr "建议"
@@ -13240,7 +13240,7 @@ msgstr "表格操作"
 #: apps/erp/app/modules/quality/ui/Documents/QualityDocumentProperties.tsx:231
 #: apps/erp/app/modules/quality/ui/Documents/QualityDocumentsTable.tsx:104
 #: apps/erp/app/modules/quality/ui/Issue/IssueProperties.tsx:526
-#: apps/erp/app/modules/resources/ui/Suggestions/SuggestionDetails.tsx:184
+#: apps/erp/app/modules/resources/ui/Suggestions/SuggestionDetails.tsx:187
 #: apps/erp/app/modules/resources/ui/Suggestions/SuggestionsTable.tsx:86
 #: apps/erp/app/modules/resources/ui/Training/TrainingProperties.tsx:302
 #: apps/erp/app/modules/resources/ui/Training/TrainingsTable.tsx:150
@@ -13315,8 +13315,8 @@ msgstr "任务"
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteLineForm.tsx:306
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderLineForm.tsx:364
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderLineForm.tsx:575
-#: apps/erp/app/routes/share+/quote.$id.tsx:862
-#: apps/erp/app/routes/share+/quote.$id.tsx:1259
+#: apps/erp/app/routes/share+/quote.$id.tsx:861
+#: apps/erp/app/routes/share+/quote.$id.tsx:1258
 msgid "Tax"
 msgstr "税"
 
@@ -13353,11 +13353,11 @@ msgstr "税:"
 msgid "Temperature"
 msgstr "温度"
 
-#: apps/erp/app/components/AvatarMenu.tsx:234
+#: apps/erp/app/components/AvatarMenu.tsx:236
 msgid "Terms and Privacy"
 msgstr "条款和隐私"
 
-#: apps/erp/app/components/AvatarMenu.tsx:240
+#: apps/erp/app/components/AvatarMenu.tsx:242
 msgid "Terms of Service"
 msgstr "服务条款"
 
@@ -13444,7 +13444,7 @@ msgstr "购买时该商品的单价"
 msgid "Theme"
 msgstr "主题"
 
-#: apps/erp/app/components/AvatarMenu.tsx:145
+#: apps/erp/app/components/AvatarMenu.tsx:147
 msgid "Theme Color"
 msgstr "主题颜色"
 
@@ -13750,8 +13750,8 @@ msgstr "工具"
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceSummary.tsx:327
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoiceSummary.tsx:312
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteSummary.tsx:637
-#: apps/erp/app/routes/share+/quote.$id.tsx:885
-#: apps/erp/app/routes/share+/quote.$id.tsx:1288
+#: apps/erp/app/routes/share+/quote.$id.tsx:884
+#: apps/erp/app/routes/share+/quote.$id.tsx:1287
 #: apps/erp/app/routes/x+/quality+/_index.tsx:644
 msgid "Total"
 msgstr "总计"
@@ -14112,7 +14112,7 @@ msgstr "计量单位"
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteToOrderDrawer.tsx:321
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteSummary.tsx:424
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteToOrderDrawer.tsx:614
-#: apps/erp/app/routes/share+/quote.$id.tsx:660
+#: apps/erp/app/routes/share+/quote.$id.tsx:659
 msgid "Unit Price"
 msgstr "单价"
 
@@ -14345,7 +14345,7 @@ msgstr "已上传：{0}"
 msgid "Uploading {0}"
 msgstr "正在上传 {0}"
 
-#: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:78
+#: apps/erp/app/components/Layout/Topbar/Suggestion.tsx:81
 msgid "Uploading {fileName}"
 msgstr "正在上传 {fileName}"
 
@@ -14377,7 +14377,7 @@ msgstr "使用 ... 获取下一个零件 ID"
 msgid "Use ... to get the next tool ID"
 msgstr "使用 ... 获取下一个工具 ID"
 
-#: apps/erp/app/routes/_public+/login.tsx:274
+#: apps/erp/app/routes/_public+/login.tsx:275
 #: apps/erp/app/routes/_public+/verify.tsx:182
 msgid "Use a different email"
 msgstr "使用不同的电子邮件"
@@ -14471,7 +14471,7 @@ msgstr "增值税号"
 msgid "Verification Error"
 msgstr "验证错误"
 
-#: apps/erp/app/routes/_public+/login.tsx:255
+#: apps/erp/app/routes/_public+/login.tsx:256
 #: apps/erp/app/routes/_public+/verify.tsx:162
 msgid "Verify your email"
 msgstr "验证您的电子邮件"
@@ -14525,7 +14525,7 @@ msgstr "查看全部"
 msgid "View Assigned Jobs"
 msgstr "查看分配的工作"
 
-#: apps/erp/app/modules/resources/ui/Suggestions/SuggestionDetails.tsx:168
+#: apps/erp/app/modules/resources/ui/Suggestions/SuggestionDetails.tsx:171
 msgid "View Attachment"
 msgstr "查看附件"
 
@@ -14773,11 +14773,11 @@ msgstr "我们已将每一列映射到我们认为正确的内容，但请查看
 msgid "We've sent a verification code to {email}"
 msgstr "我们已向 {email} 发送了验证码"
 
-#: apps/erp/app/routes/_public+/login.tsx:258
+#: apps/erp/app/routes/_public+/login.tsx:259
 msgid "We've sent a verification code to {signupEmail}"
 msgstr "我们已向 {signupEmail} 发送了验证码"
 
-#: apps/erp/app/routes/_public+/login.tsx:246
+#: apps/erp/app/routes/_public+/login.tsx:247
 msgid "We've sent you a magic link to sign in to your account."
 msgstr "我们已向您发送了一个魔法链接以登录您的账户。"
 
@@ -14995,7 +14995,7 @@ msgstr "年份"
 msgid "Yes"
 msgstr "是"
 
-#: apps/erp/app/routes/share+/quote.$id.tsx:1427
+#: apps/erp/app/routes/share+/quote.$id.tsx:1426
 msgid "Yes, Accept"
 msgstr "是的，接受"
 
@@ -15003,7 +15003,7 @@ msgstr "是的，接受"
 msgid "Yes, also delete every nested storage unit."
 msgstr "是的，也删除每个嵌套的存储单元。"
 
-#: apps/erp/app/routes/share+/quote.$id.tsx:1485
+#: apps/erp/app/routes/share+/quote.$id.tsx:1484
 msgid "Yes, Reject"
 msgstr "是的，拒绝"
 

@@ -1,7 +1,7 @@
 import { error } from "@carbon/auth";
 import { requirePermissions } from "@carbon/auth/auth.server";
 import { flash } from "@carbon/auth/session.server";
-import { useRouteData } from "@carbon/remix";
+import { useRouteData } from "@carbon/react";
 import { msg } from "@lingui/core/macro";
 import { Suspense } from "react";
 import type { LoaderFunctionArgs } from "react-router";

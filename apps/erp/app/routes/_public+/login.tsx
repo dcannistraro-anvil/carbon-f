@@ -26,11 +26,12 @@ import {
   AlertTitle,
   Button,
   Heading,
+  ItarLoginDisclaimer,
   Separator,
   toast,
+  useMode,
   VStack
 } from "@carbon/react";
-import { ItarLoginDisclaimer, useMode } from "@carbon/remix";
 import { Edition } from "@carbon/utils";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Turnstile } from "@marsidev/react-turnstile";

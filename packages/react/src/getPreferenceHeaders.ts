@@ -1,6 +1,6 @@
-import type { OperatingSystemPlatform } from "@carbon/react";
 import * as cookie from "cookie";
 import { parseAcceptLanguage } from "intl-parse-accept-language";
+import type { OperatingSystemPlatform } from "./OperatingSystem";
 
 export const getPreferenceHeaders = (request: Request) => {
   const acceptLanguage = request.headers.get("accept-language");

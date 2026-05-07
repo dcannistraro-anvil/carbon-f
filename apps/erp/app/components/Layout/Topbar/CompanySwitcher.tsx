@@ -11,9 +11,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   HStack,
-  ScrollArea
+  ScrollArea,
+  useMode
 } from "@carbon/react";
-import { useMode } from "@carbon/remix";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useMemo } from "react";
 import { BsFillHexagonFill } from "react-icons/bs";

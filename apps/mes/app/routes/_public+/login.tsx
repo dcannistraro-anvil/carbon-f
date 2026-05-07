@@ -23,11 +23,11 @@ import {
   AlertTitle,
   Button,
   Heading,
+  ItarLoginDisclaimer,
   Separator,
   toast,
   VStack
 } from "@carbon/react";
-import { ItarLoginDisclaimer } from "@carbon/remix";
 import { Edition } from "@carbon/utils";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { LuCircleAlert } from "react-icons/lu";

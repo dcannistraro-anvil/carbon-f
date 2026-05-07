@@ -1,16 +1,17 @@
 {
   "name": "@carbon/locale",
   "dependencies": {
-    "@lingui/core": "5.9.4",
-    "@lingui/react": "5.9.4"
+    "@carbon/env": "workspace:*",
+    "@lingui/core": "catalog:",
+    "@lingui/react": "catalog:"
   },
   "devDependencies": {
-    "@carbon/config": "*",
-    "@types/react": "18.3.28",
-    "react": "18.3.1",
-    "tsup": "8.5.1",
-    "typescript": "5.8.3",
-    "vitest": "4.1.4"
+    "@carbon/config": "workspace:*",
+    "@types/react": "catalog:",
+    "react": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
   "exports": {
     ".": "./src/index.ts"
@@ -18,7 +19,7 @@
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "peerDependencies": {
-    "react": "^18.3.1"
+    "react": "catalog:"
   },
   "private": true,
   "scripts": {
@@ -28,5 +29,5 @@
     "typecheck": "tsgo --noEmit"
   },
   "sideEffects": false,
-  "version": "*"
+  "version": "0.0.0"
 }

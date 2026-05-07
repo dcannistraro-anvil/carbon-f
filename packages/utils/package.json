@@ -1,23 +1,27 @@
 {
   "name": "@carbon/utils",
   "dependencies": {
-    "cookie": "1.1.1",
-    "dompurify": "3.4.0",
+    "@internationalized/date": "catalog:",
+    "@supabase/supabase-js": "catalog:",
+    "@tiptap/react": "catalog:",
+    "cookie": "catalog:",
+    "dompurify": "catalog:",
     "lodash.template": "4.18.1",
-    "nanoid": "5.1.7",
-    "zod": "3.25.76"
+    "nanoid": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
-    "@carbon/config": "*",
-    "@carbon/database": "*",
+    "@carbon/config": "workspace:*",
+    "@carbon/database": "workspace:*",
     "@types/lodash.template": "4.5.3",
-    "@types/react": "18.3.28",
-    "@types/react-dom": "18.3.7",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
     "humanize-duration": "3.33.2",
-    "react": "18.3.1",
-    "tsup": "8.5.1",
-    "typescript": "5.8.3",
-    "vitest": "4.1.4"
+    "react": "catalog:",
+    "sst": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
   "exports": {
     ".": "./src/index.ts"
@@ -31,5 +35,5 @@
     "typecheck": "tsgo --noEmit"
   },
   "sideEffects": false,
-  "version": "*"
+  "version": "0.0.0"
 }

@@ -1,22 +1,23 @@
 {
   "name": "@carbon/kv",
   "dependencies": {
-    "cookie": "1.1.1",
-    "dompurify": "3.4.0",
+    "@carbon/env": "workspace:*",
+    "cookie": "catalog:",
+    "dompurify": "catalog:",
     "ioredis": "5.10.1",
-    "nanoid": "5.1.7"
+    "nanoid": "catalog:"
   },
   "devDependencies": {
-    "@carbon/config": "*",
-    "@carbon/logger": "*",
+    "@carbon/config": "workspace:*",
     "@types/node": "20.19.39",
     "dotenv": "16.3.1",
     "ioredis-mock": "8.13.1",
-    "rimraf": "5.0.10",
-    "tsup": "8.5.1",
-    "tsx": "4.21.0",
-    "typescript": "5.8.3",
-    "vitest": "4.1.4"
+    "rimraf": "catalog:",
+    "sst": "catalog:",
+    "tsup": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
   "exports": {
     ".": "./src/index.ts"
@@ -32,5 +33,5 @@
     "typecheck": "tsgo --noEmit"
   },
   "sideEffects": false,
-  "version": "*"
+  "version": "0.0.0"
 }

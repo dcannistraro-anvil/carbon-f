@@ -16,6 +16,7 @@ import {
   PopoverContent,
   PopoverTrigger,
   toast,
+  useMode,
   VStack
 } from "@carbon/react";
 import data from "@emoji-mart/data";
@@ -50,6 +51,8 @@ const Suggestion = () => {
   const [emoji, setEmoji] = useState(defaultEmoji);
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
   const [anonymous, setAnonymous] = useState(true);
+  const mode = useMode();
+  const pickerTheme = mode;
   const [attachment, setAttachment] = useState<{
     name: string;
     path: string;
@@ -169,7 +172,7 @@ const Suggestion = () => {
                   </button>
                 </PopoverTrigger>
                 <PopoverContent
-                  className="w-auto p-0 border-0 bg-white"
+                  className="w-auto p-0 border-0"
                   align="end"
                   sideOffset={8}
                 >
@@ -177,7 +180,7 @@ const Suggestion = () => {
                     <Picker
                       data={data}
                       onEmojiSelect={onEmojiSelect}
-                      theme="light"
+                      theme={pickerTheme}
                       previewPosition="none"
                       skinTonePosition="none"
                       navPosition="bottom"

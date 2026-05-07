@@ -7,9 +7,9 @@ import {
   Status,
   Tooltip,
   TooltipContent,
-  TooltipTrigger
+  TooltipTrigger,
+  useMode
 } from "@carbon/react";
-import { useMode } from "@carbon/remix";
 import { getColor } from "@carbon/utils";
 import type { ReactNode } from "react";
 import { AiOutlinePartition } from "react-icons/ai";

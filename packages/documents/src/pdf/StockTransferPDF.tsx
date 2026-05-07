@@ -1,6 +1,6 @@
 import bwipjs from "@bwip-js/node";
-import { getAppUrl } from "@carbon/auth";
 import type { Database } from "@carbon/database";
+import { getAppUrl } from "@carbon/env";
 import { formatDate } from "@carbon/utils";
 import { Image, Text, View } from "@react-pdf/renderer";
 import { createTw } from "react-pdf-tailwind";

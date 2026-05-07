@@ -1,5 +1,10 @@
-import { Button, cn, Menubar, SplitButton } from "@carbon/react";
-import { useOptimisticLocation } from "@carbon/remix";
+import {
+  Button,
+  cn,
+  Menubar,
+  SplitButton,
+  useOptimisticLocation
+} from "@carbon/react";
 import { useLingui } from "@lingui/react/macro";
 import { LuCircle } from "react-icons/lu";
 import {

@@ -6,9 +6,9 @@ import {
   cn,
   ModelViewer,
   Spinner,
-  toast
+  toast,
+  useMode
 } from "@carbon/react";
-import { useMode } from "@carbon/remix";
 import {
   convertKbToString,
   getFileSizeLimit,

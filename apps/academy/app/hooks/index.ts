@@ -2,7 +2,7 @@ import {
   useOptimisticLocation,
   useRouteData,
   useUrlParams
-} from "@carbon/remix";
+} from "@carbon/react";
 
 import { useProgress } from "./useProgress";
 import { useUser } from "./useUser";

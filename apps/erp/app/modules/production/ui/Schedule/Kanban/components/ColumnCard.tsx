@@ -6,9 +6,9 @@ import {
   ScrollBar,
   Tooltip,
   TooltipContent,
-  TooltipTrigger
+  TooltipTrigger,
+  useUrlParams
 } from "@carbon/react";
-import { useUrlParams } from "@carbon/remix";
 import { formatDurationMilliseconds } from "@carbon/utils";
 import { useDndContext } from "@dnd-kit/core";
 import { SortableContext, useSortable } from "@dnd-kit/sortable";

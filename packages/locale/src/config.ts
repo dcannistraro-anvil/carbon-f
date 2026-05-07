@@ -1,4 +1,4 @@
-import { getBrowserEnv } from "@carbon/auth";
+import { getBrowserEnv } from "@carbon/env";
 
 export const supportedLanguages = [
   "en",

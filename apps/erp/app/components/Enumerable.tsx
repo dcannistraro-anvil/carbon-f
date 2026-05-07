@@ -1,6 +1,5 @@
 import type { BadgeProps } from "@carbon/react";
-import { Badge } from "@carbon/react";
-import { useMode } from "@carbon/remix";
+import { Badge, useMode } from "@carbon/react";
 import type { Color } from "@carbon/utils";
 import { getColor, getColorByValue } from "@carbon/utils";
 

@@ -3,13 +3,15 @@
   "type": "module",
   "dependencies": {
     "@novu/node": "2.6.6",
-    "cookie": "1.1.1",
-    "nanoid": "5.1.7"
+    "cookie": "catalog:",
+    "nanoid": "catalog:"
   },
   "devDependencies": {
-    "@carbon/config": "*",
-    "@carbon/database": "*",
-    "typescript": "5.8.3"
+    "@carbon/config": "workspace:*",
+    "@carbon/database": "workspace:*",
+    "@types/node": "20.19.39",
+    "sst": "catalog:",
+    "typescript": "catalog:"
   },
   "exports": {
     ".": "./src/index.ts"
@@ -22,5 +24,5 @@
     "typecheck": "tsgo --noEmit"
   },
   "sideEffects": false,
-  "version": "*"
+  "version": "0.0.0"
 }

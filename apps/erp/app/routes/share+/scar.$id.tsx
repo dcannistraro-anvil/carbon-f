@@ -15,10 +15,10 @@ import {
   IconButton,
   useDebounce,
   useDisclosure,
+  useMode,
   VStack
 } from "@carbon/react";
 import { Editor } from "@carbon/react/Editor";
-import { useMode } from "@carbon/remix";
 import { useLingui } from "@lingui/react/macro";
 import { useCallback, useRef, useState } from "react";
 import { LuChevronRight } from "react-icons/lu";

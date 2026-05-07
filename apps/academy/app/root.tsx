@@ -15,15 +15,16 @@ import { validator } from "@carbon/form";
 import {
   Button,
   cn,
+  getPreferenceHeaders,
   Heading,
   IconButton,
   OperatingSystemContextProvider,
   Progress,
   Toaster,
   TooltipProvider,
-  useDisclosure
+  useDisclosure,
+  useMode
 } from "@carbon/react";
-import { getPreferenceHeaders, useMode } from "@carbon/remix";
 import { modeValidator } from "@carbon/utils";
 import { I18nProvider } from "@react-aria/i18n";
 import { Analytics } from "@vercel/analytics/react";

@@ -1,4 +1,4 @@
-import { useRouteData } from "@carbon/remix";
+import { useRouteData } from "@carbon/react";
 import { useFetchers } from "react-router";
 import { themeValidator } from "~/modules/settings";
 import { path } from "~/utils/path";

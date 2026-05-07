@@ -72,27 +72,19 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: "20"
+          cache: pnpm
 
       - name: Install compatible Pulumi version
         run: |
           curl -fsSL https://get.pulumi.com | sh -s -- --version 3.212.0
           echo "$HOME/.pulumi/bin" >> $GITHUB_PATH
 
-      - name: Cache npm dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
-
       - name: Install dependencies
-        run: |
-          npm install
-          npm install --prefix ci
+        run: pnpm install --frozen-lockfile
 
       - name: Run deployment
-        run: npm run -w ci ci:deploy
+        run: pnpm --filter ci ci:deploy

@@ -1,5 +1,4 @@
-import { useMount } from "@carbon/react";
-import { useOptimisticLocation, useUrlParams } from "@carbon/remix";
+import { useMount, useOptimisticLocation, useUrlParams } from "@carbon/react";
 import { generateId } from "ai";
 import { useCallback } from "react";
 import { path } from "~/utils/path";

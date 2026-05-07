@@ -11,8 +11,14 @@ import {
   destroyAuthSession,
   requireAuthSession
 } from "@carbon/auth/session.server";
-import { SidebarProvider, TooltipProvider, useMount } from "@carbon/react";
-import { ItarPopup, useKeyboardWedge, useNProgress } from "@carbon/remix";
+import {
+  ItarPopup,
+  SidebarProvider,
+  TooltipProvider,
+  useKeyboardWedge,
+  useMount,
+  useNProgress
+} from "@carbon/react";
 import { getStripeCustomerByCompanyId } from "@carbon/stripe/stripe.server";
 import { Edition } from "@carbon/utils";
 import posthog from "posthog-js";
