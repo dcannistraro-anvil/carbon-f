@@ -237,7 +237,7 @@ export async function deactivateUser(
   let result: Result;
 
   if (userToCompany.error) {
-    // maybe they are invited but not added to the company yet
+    // No userToCompany row — either pending invite, or already deactivated.
     const user = await serviceRole
       .from("user")
       .select("*")
@@ -252,16 +252,18 @@ export async function deactivateUser(
       .select("*")
       .eq("email", user.data?.email)
       .eq("companyId", companyId)
-      .single();
-    if (invite.error) {
-      return error(invite.error, "Failed to get invite");
+      .maybeSingle();
+
+    if (!invite.data) {
+      // No userToCompany and no invite — already fully deactivated.
+      return success("User already deactivated");
     }
 
-    if (invite.data?.role === "customer") {
+    if (invite.data.role === "customer") {
       result = await deactivateCustomer(serviceRole, userId, companyId);
-    } else if (invite.data?.role === "employee") {
+    } else if (invite.data.role === "employee") {
       result = await deactivateEmployee(serviceRole, userId, companyId);
-    } else if (invite.data?.role === "supplier") {
+    } else if (invite.data.role === "supplier") {
       result = await deactivateSupplier(serviceRole, userId, companyId);
     } else {
       throw new Error("Invalid user role");
@@ -281,6 +283,24 @@ export async function deactivateUser(
   // Clear stale permission cache
   if (result && result.success) {
     await redis.del(getPermissionCacheKey(userId));
+  }
+
+  // Mark any invite for this user/company as revoked so the link cannot be
+  // redeemed and the UI no longer surfaces resend/revoke actions on it.
+  if (result && result.success) {
+    const userRecord = await serviceRole
+      .from("user")
+      .select("email")
+      .eq("id", userId)
+      .single();
+    if (!userRecord.error && userRecord.data?.email) {
+      await serviceRole
+        .from("invite")
+        .update({ revokedAt: new Date().toISOString() })
+        .eq("email", userRecord.data.email)
+        .eq("companyId", companyId)
+        .is("revokedAt", null);
+    }
   }
 
   // Update Stripe subscription quantity after successful deactivation
