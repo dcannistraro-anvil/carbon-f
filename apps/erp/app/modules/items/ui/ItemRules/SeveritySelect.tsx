@@ -26,13 +26,13 @@ export default function SeveritySelect({ name, label }: SeveritySelectProps) {
       value: "error",
       title: t`Error`,
       description: t`Blocks save until resolved`,
-      icon: <LuOctagonAlert className="text-destructive" />
+      icon: <LuOctagonAlert />
     },
     {
       value: "warn",
       title: t`Warning`,
       description: t`Allows acknowledge & continue`,
-      icon: <LuTriangleAlert className="text-amber-500" />
+      icon: <LuTriangleAlert />
     }
   ];
 

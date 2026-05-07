@@ -6440,7 +6440,7 @@ msgstr "Наследовать от материалов"
 msgid "Insert rows"
 msgstr "Вставить строки"
 
-#: apps/erp/app/modules/items/ui/ItemRules/MessageWithTokens.tsx:167
+#: apps/erp/app/modules/items/ui/ItemRules/MessageWithTokens.tsx:330
 msgid "Insert token"
 msgstr ""
 
@@ -7841,7 +7841,6 @@ msgid "Members"
 msgstr "Участники"
 
 #: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:163
-#: apps/erp/app/modules/items/ui/ItemRules/MessageWithTokens.tsx:160
 msgid "Message"
 msgstr ""
 
@@ -12413,7 +12412,7 @@ msgstr "Показывать миниатюры деталей на предло
 msgid "Show sync options"
 msgstr "Показать параметры синхронизации"
 
-#: apps/erp/app/modules/items/ui/ItemRules/MessageWithTokens.tsx:161
+#: apps/erp/app/modules/items/ui/ItemRules/MessageWithTokens.tsx:279
 msgid "Shown to the user when this rule fails."
 msgstr ""
 

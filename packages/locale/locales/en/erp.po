@@ -6440,7 +6440,7 @@ msgstr "Inherit From Materials"
 msgid "Insert rows"
 msgstr "Insert rows"
 
-#: apps/erp/app/modules/items/ui/ItemRules/MessageWithTokens.tsx:167
+#: apps/erp/app/modules/items/ui/ItemRules/MessageWithTokens.tsx:330
 msgid "Insert token"
 msgstr "Insert token"
 
@@ -7841,7 +7841,6 @@ msgid "Members"
 msgstr "Members"
 
 #: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:163
-#: apps/erp/app/modules/items/ui/ItemRules/MessageWithTokens.tsx:160
 msgid "Message"
 msgstr "Message"
 
@@ -12413,7 +12412,7 @@ msgstr "Show part thumbnails on quotes, sales orders, sales invoices, and shipme
 msgid "Show sync options"
 msgstr "Show sync options"
 
-#: apps/erp/app/modules/items/ui/ItemRules/MessageWithTokens.tsx:161
+#: apps/erp/app/modules/items/ui/ItemRules/MessageWithTokens.tsx:279
 msgid "Shown to the user when this rule fails."
 msgstr "Shown to the user when this rule fails."
 

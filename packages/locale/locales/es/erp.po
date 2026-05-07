@@ -6440,7 +6440,7 @@ msgstr "Heredar de Materiales"
 msgid "Insert rows"
 msgstr "Insertar filas"
 
-#: apps/erp/app/modules/items/ui/ItemRules/MessageWithTokens.tsx:167
+#: apps/erp/app/modules/items/ui/ItemRules/MessageWithTokens.tsx:330
 msgid "Insert token"
 msgstr ""
 
@@ -7841,7 +7841,6 @@ msgid "Members"
 msgstr "Miembros"
 
 #: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:163
-#: apps/erp/app/modules/items/ui/ItemRules/MessageWithTokens.tsx:160
 msgid "Message"
 msgstr ""
 
@@ -12413,7 +12412,7 @@ msgstr "Mostrar miniaturas de piezas en cotizaciones, órdenes de venta, factura
 msgid "Show sync options"
 msgstr "Mostrar opciones de sincronización"
 
-#: apps/erp/app/modules/items/ui/ItemRules/MessageWithTokens.tsx:161
+#: apps/erp/app/modules/items/ui/ItemRules/MessageWithTokens.tsx:279
 msgid "Shown to the user when this rule fails."
 msgstr ""
 
