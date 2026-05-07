@@ -414,7 +414,7 @@ const BillOfMaterial = ({
                     duration: 0.95
                   }}
                 >
-                  <LuSettings2 className="stroke-1 mt-3.5 h-5 w-5 text-foreground/80  hover:stroke-primary/70 " />
+                  <LuSettings2 className="stroke-1 h-5 w-5 text-foreground/80 hover:stroke-primary/70" />
                 </motion.span>
               )}
             </motion.button>

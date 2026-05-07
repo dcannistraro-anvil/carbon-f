@@ -2,9 +2,9 @@ import { assertIsPost, error } from "@carbon/auth";
 import { requirePermissions } from "@carbon/auth/auth.server";
 import { getCarbonServiceRole } from "@carbon/auth/client.server";
 import { flash } from "@carbon/auth/session.server";
-import { validator } from "@carbon/form";
+import { validationError, validator } from "@carbon/form";
 import type { ActionFunctionArgs } from "react-router";
-import { data, redirect } from "react-router";
+import { redirect } from "react-router";
 import { issueValidator } from "~/services/models";
 import { path, requestReferrer } from "~/utils/path";
 
@@ -15,8 +15,11 @@ export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const validation = await validator(issueValidator).validate(formData);
 
+  // `validationError` is the shape `<ValidatedForm>` recognises — without it
+  // a failed submission returns an opaque `{error}` blob the modal silently
+  // discards, which is exactly the "Issue button does nothing" symptom.
   if (validation.error) {
-    return data({ error: validation.error }, { status: 400 });
+    return validationError(validation.error);
   }
 
   const { jobOperationId, materialId, itemId, quantity, adjustmentType } =
