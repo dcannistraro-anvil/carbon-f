@@ -6980,7 +6980,7 @@ msgstr "Los PDF del viajero de trabajo incluyen instrucciones de trabajo."
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrdersTable.tsx:203
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrdersTable.tsx:293
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderSummary.tsx:489
-#: apps/erp/app/routes/x+/job+/$jobId.complete.tsx:14
+#: apps/erp/app/routes/x+/job+/$jobId.complete.tsx:15
 #: apps/erp/app/routes/x+/job+/$jobId.tsx:36
 #: apps/erp/app/routes/x+/job+/new.tsx:28
 #: apps/erp/app/routes/x+/part+/$itemId.tsx:249

@@ -7,6 +7,7 @@ import { msg } from "@lingui/core/macro";
 import type { ActionFunctionArgs } from "react-router";
 import { redirect } from "react-router";
 import { jobCompleteValidator } from "~/modules/production";
+import { getEdgeFunctionErrorMessage } from "~/utils/error";
 import type { Handle } from "~/utils/handle";
 import { path, requestReferrer } from "~/utils/path";
 
@@ -128,12 +129,13 @@ export async function action({ request, params }: ActionFunctionArgs) {
       });
 
       if (issue.error) {
+        const message = await getEdgeFunctionErrorMessage(
+          issue.error,
+          "Failed to receive leftovers to inventory"
+        );
         throw redirect(
           requestReferrer(request) ?? path.to.job(jobId),
-          await flash(
-            request,
-            error(issue.error, "Failed to receive leftovers to inventory")
-          )
+          await flash(request, error(issue.error, message))
         );
       }
     }
@@ -153,9 +155,13 @@ export async function action({ request, params }: ActionFunctionArgs) {
     });
 
     if (issue.error) {
+      const message = await getEdgeFunctionErrorMessage(
+        issue.error,
+        "Failed to complete job"
+      );
       throw redirect(
         requestReferrer(request) ?? path.to.job(jobId),
-        await flash(request, error(issue.error, "Failed to complete job"))
+        await flash(request, error(issue.error, message))
       );
     }
   }

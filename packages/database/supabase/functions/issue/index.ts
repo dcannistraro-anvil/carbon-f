@@ -967,11 +967,21 @@ serve(async (req: Request) => {
             .execute();
 
           if (jobMakeMethod.requiresBatchTracking) {
+            // A single jobMakeMethod can have multiple trackedEntity rows
+            // sharing attributes->>'Job Make Method' once a split has occurred:
+            // the split flow (see line ~2604) copies the parent's full
+            // `attributes` blob onto the child. The parent gets marked
+            // Consumed and tagged with `Split Entity ID`. Filter Consumed
+            // and pick the newest live row to mirror the serial branch
+            // below, which already does `.neq("status", "Consumed")`.
             const trackedEntity = await client
               .from("trackedEntity")
               .select("*")
               .eq("attributes->>Job Make Method", jobMakeMethod.id!)
-              .single();
+              .neq("status", "Consumed")
+              .order("createdAt", { ascending: false })
+              .limit(1)
+              .maybeSingle();
 
             if (!trackedEntity.data) {
               throw new Error("Tracked entity not found");
