@@ -6,6 +6,7 @@
 
 import { requirePermissions } from "@carbon/auth/auth.server";
 import type { Database } from "@carbon/database";
+import { companyHasPlan } from "@carbon/ee/plan.server";
 import {
   type CompiledRule,
   type Condition,
@@ -13,7 +14,6 @@ import {
   compileWithCache,
   evaluateRules,
   getFieldDef,
-  Plan,
   type RuleContext,
   type Severity,
   type TransactionSurface,
@@ -24,7 +24,6 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type { LoaderFunctionArgs } from "react-router";
 import { getStorageTypesList } from "~/modules/inventory";
 import { getLocationsList } from "~/modules/resources";
-import { companyHasPlan } from "~/utils/planGate.server";
 import {
   getActiveRulesForItems,
   getItemPostingGroupsList,
@@ -38,14 +37,11 @@ type Client = SupabaseClient<Database>;
 // Plan gate
 // ---------------------------------------------------------------------------
 
-/**
- * Item rules require a paid plan (Business). Self-hosted (non-Cloud) and
- * bypass-listed companies always pass — `companyHasPlan` handles both.
- */
 export const isItemRulesEnabledForCompany = (
   client: Client,
   companyId: string
-): Promise<boolean> => companyHasPlan(client, companyId, [Plan.Business]);
+): Promise<boolean> =>
+  companyHasPlan(client, companyId, { feature: "ITEM_RULES" });
 
 // ---------------------------------------------------------------------------
 // Block decision

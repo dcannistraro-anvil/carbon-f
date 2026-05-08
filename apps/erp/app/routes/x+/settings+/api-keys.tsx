@@ -53,7 +53,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export default function ApiKeysRoute() {
   const { apiKeys, count } = useLoaderData<typeof loader>();
-  const { isGated } = usePlanGate();
+  const { isGated } = usePlanGate({ feature: "API_KEYS" });
 
   if (isGated) {
     return <ApiKeysUpgradeOverlay />;

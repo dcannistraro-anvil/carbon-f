@@ -61,7 +61,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export default function ItemRulesRoute() {
   const { rules, count } = useLoaderData<typeof loader>();
-  const { isGated } = usePlanGate();
+  const { isGated } = usePlanGate({ feature: "ITEM_RULES" });
 
   if (isGated) {
     return <ItemRulesUpgradeOverlay />;

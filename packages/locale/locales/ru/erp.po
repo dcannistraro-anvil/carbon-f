@@ -336,7 +336,7 @@ msgstr "Активировать рабочий центр"
 #: apps/erp/app/modules/items/ui/Consumables/ConsumablesTable.tsx:244
 #: apps/erp/app/modules/items/ui/Item/ItemForm.tsx:183
 #: apps/erp/app/modules/items/ui/Item/MakeMethodVersionStatus.tsx:24
-#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:196
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:245
 #: apps/erp/app/modules/items/ui/ItemRules/ItemRuleForm.tsx:123
 #: apps/erp/app/modules/items/ui/ItemRules/ItemRulesTable.tsx:82
 #: apps/erp/app/modules/items/ui/Materials/MaterialProperties.tsx:681
@@ -482,8 +482,8 @@ msgstr "Добавить подрядчика"
 msgid "Add Entry"
 msgstr "Добавить запись"
 
-#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:126
-#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:273
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:175
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:322
 msgid "Add from library…"
 msgstr ""
 
@@ -585,7 +585,7 @@ msgstr "Добавить требование"
 msgid "Add Risk"
 msgstr "Добавить риск"
 
-#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:131
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:180
 msgid "Add rule"
 msgstr ""
 
@@ -991,7 +991,7 @@ msgid "Are you sure you want to delete the account: {0}{1}? This cannot be undon
 msgstr ""
 
 #. placeholder {0}: apiKey.name
-#: apps/erp/app/routes/x+/settings+/api-keys.delete.$id.tsx:64
+#: apps/erp/app/routes/x+/settings+/api-keys.delete.$id.tsx:65
 msgid "Are you sure you want to delete the API key: {0}? This cannot be undone."
 msgstr "Вы уверены, что хотите удалить API ключ: {0}? Это действие невозможно отменить."
 
@@ -1187,7 +1187,7 @@ msgid "Are you sure you want to delete the view \"{0}\"?"
 msgstr "Вы уверены, что хотите удалить представление \"{0}\"?"
 
 #. placeholder {0}: webhook.name
-#: apps/erp/app/routes/x+/settings+/webhooks.delete.$id.tsx:84
+#: apps/erp/app/routes/x+/settings+/webhooks.delete.$id.tsx:85
 msgid "Are you sure you want to delete the webhook: {0}? This cannot be undone."
 msgstr "Вы уверены, что хотите удалить webhook: {0}? Это действие невозможно отменить."
 
@@ -1429,7 +1429,7 @@ msgid "Attributes are inherited from the procedure."
 msgstr "Атрибуты наследуются из процедуры."
 
 #: apps/erp/app/modules/settings/ui/AuditLog/AuditLogTable.tsx:296
-#: apps/erp/app/routes/x+/settings+/audit-logs.tsx:27
+#: apps/erp/app/routes/x+/settings+/audit-logs.tsx:26
 msgid "Audit Log"
 msgstr "Журнал аудита"
 
@@ -1451,7 +1451,7 @@ msgstr "Аудит логирования не включен"
 
 #: apps/erp/app/modules/settings/ui/AuditLog/AuditLogUpgradeOverlay.tsx:87
 #: apps/erp/app/modules/settings/ui/useSettingsSubmodules.tsx:147
-#: apps/erp/app/routes/x+/settings+/audit-logs.tsx:167
+#: apps/erp/app/routes/x+/settings+/audit-logs.tsx:165
 msgid "Audit Logs"
 msgstr "Журналы аудита"
 
@@ -1649,7 +1649,7 @@ msgstr "BOM успешно синхронизирован"
 msgid "Breadcrumb"
 msgstr "Навигационная цепочка"
 
-#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:295
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:344
 msgid "Browse library"
 msgstr ""
 
@@ -2264,7 +2264,7 @@ msgstr "Видимость и порядок столбцов"
 msgid "Columns"
 msgstr "Столбцы"
 
-#: apps/erp/app/modules/settings/ui/Integrations/IntegrationCard.tsx:86
+#: apps/erp/app/modules/settings/ui/Integrations/IntegrationCard.tsx:90
 msgid "Coming soon"
 msgstr "Скоро"
 
@@ -2499,7 +2499,7 @@ msgstr "Подтвердить импорт"
 msgid "Confirm Password"
 msgstr "Подтвердить пароль"
 
-#: apps/erp/app/modules/settings/ui/Integrations/IntegrationsList.tsx:121
+#: apps/erp/app/modules/settings/ui/Integrations/IntegrationsList.tsx:139
 msgid "Connect Carbon to your accounting, project, and CAD tools and much more."
 msgstr ""
 
@@ -2955,8 +2955,8 @@ msgstr "Создать задания"
 msgid "Create Kanban"
 msgstr "Создать Kanban"
 
-#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:282
-#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:300
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:331
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:349
 msgid "Create new rule"
 msgstr ""
 
@@ -4197,8 +4197,8 @@ msgstr "Подробности"
 #: apps/erp/app/modules/resources/ui/Training/TrainingAssignmentForm.tsx:375
 #: apps/erp/app/modules/sales/ui/Customer/CustomerSidebar/useCustomerSidebar.tsx:33
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteBillOfProcess.tsx:546
-#: apps/erp/app/modules/settings/ui/Integrations/IntegrationCard.tsx:108
-#: apps/erp/app/modules/settings/ui/Integrations/IntegrationCard.tsx:112
+#: apps/erp/app/modules/settings/ui/Integrations/IntegrationCard.tsx:120
+#: apps/erp/app/modules/settings/ui/Integrations/IntegrationCard.tsx:124
 msgid "Details"
 msgstr "Детали"
 
@@ -5036,8 +5036,13 @@ msgstr "Дата окончания"
 msgid "End Time"
 msgstr "Время окончания"
 
-#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:111
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:112
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:160
 msgid "Enforce constraints on receipts, shipments, transfers and job operations for this item."
+msgstr ""
+
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:128
+msgid "Enforce per-item validation across receipts, shipments, transfers and adjustments."
 msgstr ""
 
 #: apps/erp/app/modules/items/ui/ItemRules/ItemRulesUpgradeOverlay.tsx:82
@@ -5097,7 +5102,7 @@ msgstr "Сущность имеет статус {status}"
 msgid "ERP, MES, QMS"
 msgstr "ERP, MES, QMS"
 
-#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:182
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:231
 #: apps/erp/app/modules/items/ui/ItemRules/ItemRulesTable.tsx:63
 #: apps/erp/app/modules/items/ui/ItemRules/SeveritySelect.tsx:27
 #: apps/erp/app/routes/_public+/callback.tsx:159
@@ -6341,7 +6346,7 @@ msgstr "в выбранном периоде"
 #: apps/erp/app/components/Configurator/ConfigurationEditor/ConfigurationEditor.ee.tsx:338
 #: apps/erp/app/components/Contact.tsx:63
 #: apps/erp/app/modules/items/ui/Consumables/ConsumablesTable.tsx:245
-#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:200
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:249
 #: apps/erp/app/modules/items/ui/ItemRules/ItemRulesTable.tsx:86
 #: apps/erp/app/modules/items/ui/Materials/MaterialsTable.tsx:382
 #: apps/erp/app/modules/items/ui/Parts/PartsTable.tsx:287
@@ -6486,12 +6491,12 @@ msgstr "Проверки"
 msgid "Inspector"
 msgstr "Инспектор"
 
-#: apps/erp/app/modules/settings/ui/Integrations/IntegrationCard.tsx:139
+#: apps/erp/app/modules/settings/ui/Integrations/IntegrationCard.tsx:149
 #: apps/erp/app/modules/settings/ui/Integrations/IntegrationForm.tsx:715
 msgid "Install"
 msgstr "Установить"
 
-#: apps/erp/app/modules/settings/ui/Integrations/IntegrationCard.tsx:81
+#: apps/erp/app/modules/settings/ui/Integrations/IntegrationCard.tsx:85
 msgid "Installed"
 msgstr "Установлено"
 
@@ -6509,7 +6514,7 @@ msgstr "Инструкции наследуются из процедуры."
 msgid "Integration not found"
 msgstr "Интеграция не найдена"
 
-#: apps/erp/app/modules/settings/ui/Integrations/IntegrationsList.tsx:118
+#: apps/erp/app/modules/settings/ui/Integrations/IntegrationsList.tsx:136
 #: apps/erp/app/modules/settings/ui/useSettingsSubmodules.tsx:159
 msgid "Integrations"
 msgstr "Интеграции"
@@ -7849,7 +7854,7 @@ msgstr "Стандарт измерения"
 msgid "Members"
 msgstr "Участники"
 
-#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:163
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:212
 msgid "Message"
 msgstr ""
 
@@ -8169,7 +8174,7 @@ msgstr "Мой сохраненный вид"
 #: apps/erp/app/modules/items/ui/Item/ItemDocuments.tsx:107
 #: apps/erp/app/modules/items/ui/ItemPostingGroups/ItemPostingGroupForm.tsx:96
 #: apps/erp/app/modules/items/ui/ItemPostingGroups/ItemPostingGroupsTable.tsx:32
-#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:151
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:200
 #: apps/erp/app/modules/items/ui/ItemRules/ItemRuleForm.tsx:120
 #: apps/erp/app/modules/items/ui/ItemRules/ItemRulesTable.tsx:47
 #: apps/erp/app/modules/items/ui/MaterialDimensions/MaterialDimensionForm.tsx:96
@@ -8875,7 +8880,7 @@ msgstr "Нет результатов"
 msgid "No results found"
 msgstr "Результатов не найдено"
 
-#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:254
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:303
 msgid "No rules assigned"
 msgstr ""
 
@@ -9663,7 +9668,7 @@ msgstr ""
 msgid "Pick a date or leave blank to clear it."
 msgstr "Выберите дату или оставьте пустым, чтобы очистить."
 
-#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:257
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:306
 msgid "Pick an existing rule from the library or create a new one to start enforcing constraints on this item."
 msgstr ""
 
@@ -11259,7 +11264,8 @@ msgstr "Тип правила"
 msgid "Rule Violation"
 msgstr ""
 
-#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:101
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:109
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:150
 #: apps/erp/app/modules/items/ui/useItemsSubmodules.tsx:107
 msgid "Rules"
 msgstr ""
@@ -11688,7 +11694,7 @@ msgstr "Причины брака"
 #: apps/erp/app/modules/items/ui/Item/ItemPlanningChart.tsx:554
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteExplorer.tsx:467
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderExplorer.tsx:369
-#: apps/erp/app/modules/settings/ui/Integrations/IntegrationsList.tsx:74
+#: apps/erp/app/modules/settings/ui/Integrations/IntegrationsList.tsx:85
 msgid "Search"
 msgstr "Поиск"
 
@@ -12158,7 +12164,7 @@ msgstr "Единица установки"
 msgid "Severities"
 msgstr "Серьезности"
 
-#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:154
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:203
 #: apps/erp/app/modules/items/ui/ItemRules/ItemRulesTable.tsx:59
 #: apps/erp/app/modules/items/ui/ItemRules/SeveritySelect.tsx:42
 #: apps/erp/app/modules/quality/ui/RiskRegister/RiskRegisterForm.tsx:181
@@ -12711,7 +12717,7 @@ msgstr "Статистическая приемка не прошла, поэт�
 #: apps/erp/app/modules/inventory/ui/WarehouseTransfers/WarehouseTransfersTable.tsx:70
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoicesTable.tsx:135
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoicesTable.tsx:129
-#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:160
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:209
 #: apps/erp/app/modules/items/ui/ItemRules/ItemRulesTable.tsx:78
 #: apps/erp/app/modules/people/ui/Timecards/TimecardsTable.tsx:142
 #: apps/erp/app/modules/production/ui/Jobs/JobsTable.tsx:315
@@ -13196,7 +13202,7 @@ msgstr "Предложение и спрос"
 msgid "Supports {0} files"
 msgstr "Поддерживает {0} файлы"
 
-#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:157
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:206
 #: apps/erp/app/modules/items/ui/ItemRules/ItemRulesTable.tsx:73
 msgid "Surfaces"
 msgstr ""
@@ -14028,7 +14034,7 @@ msgstr "Необработанные сущности останутся в ст
 msgid "Unapproved Supplier"
 msgstr "Неодобренный поставщик"
 
-#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:217
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:266
 msgid "Unassign rule"
 msgstr ""
 
@@ -14040,7 +14046,7 @@ msgstr ""
 msgid "Unassigned"
 msgstr "Не назначено"
 
-#: apps/erp/app/modules/settings/ui/Integrations/IntegrationCard.tsx:128
+#: apps/erp/app/modules/settings/ui/Integrations/IntegrationCard.tsx:140
 msgid "Uninstall"
 msgstr "Удалить"
 
@@ -14301,6 +14307,10 @@ msgstr "Обновлено"
 msgid "Updated successfully"
 msgstr "Успешно обновлено"
 
+#: apps/erp/app/modules/settings/ui/Integrations/IntegrationCard.tsx:108
+msgid "Upgrade"
+msgstr ""
+
 #: apps/erp/app/components/UpgradeOverlay/UpgradeOverlay.tsx:150
 msgid "Upgrade to Business"
 msgstr "Перейти на Business"
@@ -14308,6 +14318,10 @@ msgstr "Перейти на Business"
 #: apps/erp/app/components/AuditLog/AuditLogDrawer.tsx:149
 msgid "Upgrade to unlock audit history"
 msgstr "Обновитесь, чтобы разблокировать историю аудита"
+
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:125
+msgid "Upgrade to unlock item rules"
+msgstr ""
 
 #: apps/erp/app/components/ItemThumnailUpload.tsx:189
 #: apps/erp/app/modules/account/ui/Profile/ProfilePhotoForm.tsx:145
@@ -14526,7 +14540,7 @@ msgstr "Просмотр активных заданий"
 msgid "View Active Quotes"
 msgstr "Просмотреть активные предложения"
 
-#: apps/erp/app/routes/x+/settings+/audit-logs.tsx:172
+#: apps/erp/app/routes/x+/settings+/audit-logs.tsx:170
 msgid "View All"
 msgstr "Просмотреть все"
 
@@ -14761,7 +14775,7 @@ msgstr "Предупреждать, когда лицо, проверяющее 
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentVoidModal.tsx:61
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceVoidModal.tsx:61
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoiceVoidModal.tsx:62
-#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:186
+#: apps/erp/app/modules/items/ui/ItemRules/ItemRuleAssignments.tsx:235
 #: apps/erp/app/modules/items/ui/ItemRules/SeveritySelect.tsx:33
 msgid "Warning"
 msgstr "Предупреждение"

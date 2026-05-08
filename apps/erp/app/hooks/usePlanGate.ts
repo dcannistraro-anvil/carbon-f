@@ -1,22 +1,17 @@
+import {
+  type GateSpec,
+  planMeetsRequirement,
+  resolveRequirement
+} from "@carbon/ee/plan";
 import { usePlan } from "@carbon/react";
 import { useFlags } from "~/hooks/useFlags";
-import {
-  DEFAULT_ALLOWED_PLANS,
-  type PlanRequirement,
-  planMeetsRequirement
-} from "~/utils/planGate";
 
-type UsePlanGateOptions = {
-  plan?: PlanRequirement;
-};
-
-export function usePlanGate({
-  plan = DEFAULT_ALLOWED_PLANS
-}: UsePlanGateOptions = {}) {
+export function usePlanGate(spec: GateSpec) {
   const currentPlan = usePlan();
   const { isCloud } = useFlags();
 
-  const isGated = isCloud && !planMeetsRequirement(currentPlan, plan);
+  const requirement = resolveRequirement(spec);
+  const isGated = isCloud && !planMeetsRequirement(currentPlan, requirement);
 
-  return { isGated, plan: currentPlan, allowedPlans: plan };
+  return { isGated, plan: currentPlan, allowedPlans: requirement };
 }

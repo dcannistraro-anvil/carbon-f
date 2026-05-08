@@ -13,6 +13,8 @@
     "./notifications": "./src/notifications/index.ts",
     "./onshape": "./src/onshape/lib/index.ts",
     "./paperless-parts": "./src/paperless-parts/lib/index.ts",
+    "./plan": "./src/plan.ts",
+    "./plan.server": "./src/plan.server.ts",
     "./slack.server": "./src/slack.server.ts",
     "./slack/messages": "./src/slack/lib/messages.ts",
     "./hooks.server": "./src/hooks.server.ts",

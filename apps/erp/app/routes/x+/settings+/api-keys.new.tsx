@@ -1,6 +1,7 @@
 import { assertIsPost, error } from "@carbon/auth";
 import { hashApiKey, requirePermissions } from "@carbon/auth/auth.server";
 import { flash } from "@carbon/auth/session.server";
+import { requirePlan } from "@carbon/ee/plan.server";
 import { validationError, validator } from "@carbon/form";
 import { nanoid } from "nanoid";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
@@ -8,7 +9,6 @@ import { data, useNavigate } from "react-router";
 import { useRouteData } from "~/hooks";
 import { ApiKeyForm, apiKeyValidator, upsertApiKey } from "~/modules/settings";
 import { path } from "~/utils/path";
-import { requirePlan } from "~/utils/planGate.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   await requirePermissions(request, {
@@ -28,6 +28,7 @@ export async function action({ request }: ActionFunctionArgs) {
     request,
     client,
     companyId,
+    feature: "API_KEYS",
     redirectTo: path.to.apiKeys
   });
 

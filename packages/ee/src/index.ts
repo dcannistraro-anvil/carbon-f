@@ -42,6 +42,8 @@ export const integrations = [
   Zapier
 ];
 
+export type IntegrationID = (typeof integrations)[number]["id"];
+
 export { Jira } from "./jira/config";
 export { Logo as OnshapeLogo, Onshape } from "./onshape/config";
 // TODO: export as @carbon/ee/paperless
@@ -56,6 +58,6 @@ export { Xero } from "./xero/config";
  * @param id - The unique identifier of the integration
  * @returns The integration configuration if found, undefined otherwise
  */
-export const getIntegrationConfigById = (id: string) => {
+export const getIntegrationConfigById = (id: IntegrationID) => {
   return integrations.find((integration) => integration.id === id);
 };

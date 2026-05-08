@@ -1,6 +1,7 @@
 import { assertIsPost, error, success } from "@carbon/auth";
 import { requirePermissions } from "@carbon/auth/auth.server";
 import { flash } from "@carbon/auth/session.server";
+import { requirePlan } from "@carbon/ee/plan.server";
 import { validationError, validator } from "@carbon/form";
 import type {
   ActionFunctionArgs,
@@ -12,7 +13,6 @@ import { itemRuleValidator, upsertItemRule } from "~/modules/items";
 import ItemRuleForm from "~/modules/items/ui/ItemRules/ItemRuleForm";
 import { setCustomFields } from "~/utils/form";
 import { getParams, path } from "~/utils/path";
-import { requirePlan } from "~/utils/planGate.server";
 import { getCompanyId, itemRulesQuery } from "~/utils/react-query";
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -30,6 +30,8 @@ export async function action({ request }: ActionFunctionArgs) {
     request,
     client,
     companyId,
+    feature: "ITEM_RULES",
+    feature: "ITEM_RULES",
     redirectTo: path.to.itemRules
   });
 

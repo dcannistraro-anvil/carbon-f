@@ -9,6 +9,8 @@ import {
   type XeroProvider
 } from "@carbon/ee/accounting";
 import { getIntegrationServerHooks } from "@carbon/ee/hooks.server";
+import { isIntegrationWhitelisted } from "@carbon/ee/plan";
+import { requirePlan } from "@carbon/ee/plan.server";
 import { validationError, validator } from "@carbon/form";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import { redirect, useLoaderData, useNavigate } from "react-router";
@@ -18,7 +20,6 @@ import {
   upsertCompanyIntegration
 } from "~/modules/settings/settings.server";
 import { path } from "~/utils/path";
-import { requirePlan } from "~/utils/planGate.server";
 
 /**
  * Transforms flat owner settings (customerOwner, vendorOwner, etc.) into
@@ -219,15 +220,18 @@ export async function action({ request, params }: ActionFunctionArgs) {
     update: "settings"
   });
 
-  await requirePlan({
-    request,
-    client,
-    companyId,
-    redirectTo: path.to.integrations
-  });
-
   const { id: integrationId } = params;
   if (!integrationId) throw new Error("Integration ID not found");
+
+  if (!isIntegrationWhitelisted(integrationId)) {
+    await requirePlan({
+      request,
+      client,
+      companyId,
+      feature: "INTEGRATIONS",
+      redirectTo: path.to.integrations
+    });
+  }
 
   const integration = availableIntegrations.find((i) => i.id === integrationId);
 
