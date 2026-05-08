@@ -15,7 +15,7 @@ msgstr ""
 
 #. placeholder {0}: attribute.name
 #. placeholder {1}: activeStep + 1
-#: apps/mes/app/components/JobOperation/components/Step.tsx:435
+#: apps/mes/app/components/JobOperation/components/Step.tsx:436
 msgid "{0} - Set {1}"
 msgstr "{0} — Набор {1}"
 
@@ -177,8 +177,8 @@ msgstr "Выполняя вход, вы соглашаетесь с <0>Усло�
 #: apps/mes/app/components/Feedback.tsx:139
 #: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:268
 #: apps/mes/app/components/JobOperation/components/SerialSelectorModal.tsx:139
-#: apps/mes/app/components/JobOperation/components/Step.tsx:557
-#: apps/mes/app/components/JobOperation/components/Step.tsx:605
+#: apps/mes/app/components/JobOperation/components/Step.tsx:558
+#: apps/mes/app/components/JobOperation/components/Step.tsx:606
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:658
 #: apps/mes/app/components/Suggestion.tsx:202
 #: apps/mes/app/routes/x+/timecard.tsx:413
@@ -283,7 +283,7 @@ msgstr "Столбцы"
 msgid "Company"
 msgstr "Компания"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:188
+#: apps/mes/app/components/JobOperation/components/Step.tsx:189
 msgid "Complete"
 msgstr "Завершить"
 
@@ -331,7 +331,7 @@ msgstr "Срок"
 msgid "Default Storage Unit"
 msgstr "Хранилище по умолчанию"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:614
+#: apps/mes/app/components/JobOperation/components/Step.tsx:615
 #: apps/mes/app/routes/x+/timecard.tsx:462
 #: apps/mes/app/routes/x+/timecard.tsx:522
 msgid "Delete"
@@ -460,7 +460,7 @@ msgid "Failed to fetch storageUnits"
 msgstr "Не удалось получить единицы хранения"
 
 #. placeholder {0}: fileUpload.name
-#: apps/mes/app/components/JobOperation/components/Step.tsx:386
+#: apps/mes/app/components/JobOperation/components/Step.tsx:387
 msgid "Failed to upload file: {0}"
 msgstr "Не удалось загрузить файл: {0}"
 
@@ -681,15 +681,15 @@ msgstr "Дополнительные действия"
 msgid "Move column: {0}"
 msgstr "Переместить столбец: {0}"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:115
+#: apps/mes/app/components/JobOperation/components/Step.tsx:116
 msgid "Must be < {maxValue} {unitOfMeasureCode}"
 msgstr "Должно быть < {maxValue} {unitOfMeasureCode}"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:113
+#: apps/mes/app/components/JobOperation/components/Step.tsx:114
 msgid "Must be > {minValue} {unitOfMeasureCode}"
 msgstr "Должно быть > {minValue} {unitOfMeasureCode}"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:111
+#: apps/mes/app/components/JobOperation/components/Step.tsx:112
 msgid "Must be between {minValue} and {maxValue} {unitOfMeasureCode}"
 msgstr "Должно быть между {minValue} и {maxValue} {unitOfMeasureCode}"
 
@@ -869,7 +869,7 @@ msgstr "Параметры"
 msgid "Part"
 msgstr "Деталь"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:542
+#: apps/mes/app/components/JobOperation/components/Step.tsx:543
 msgid "Passed Inspection"
 msgstr "Контроль пройден"
 
@@ -952,8 +952,8 @@ msgstr "Количество должно быть больше 0"
 msgid "Recent"
 msgstr "Недавние"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:205
-#: apps/mes/app/components/JobOperation/components/Step.tsx:568
+#: apps/mes/app/components/JobOperation/components/Step.tsx:206
+#: apps/mes/app/components/JobOperation/components/Step.tsx:569
 msgid "Record"
 msgstr "Записать"
 
@@ -963,7 +963,7 @@ msgstr "Записать"
 msgid "Record {0}"
 msgstr "Запись {0}"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:512
+#: apps/mes/app/components/JobOperation/components/Step.tsx:513
 msgid "Remove"
 msgstr "Удалить"
 
@@ -1286,7 +1286,7 @@ msgstr "Невыданные серийные/партионные матери�
 msgid "Unknown"
 msgstr "Неизвестно"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:154
+#: apps/mes/app/components/JobOperation/components/Step.tsx:155
 msgid "Update"
 msgstr "Обновить"
 
@@ -1295,12 +1295,12 @@ msgid "Updated successfully"
 msgstr "Успешно обновлено"
 
 #. placeholder {0}: fileUpload.name
-#: apps/mes/app/components/JobOperation/components/Step.tsx:388
+#: apps/mes/app/components/JobOperation/components/Step.tsx:389
 msgid "Uploaded: {0}"
 msgstr "Загружено: {0}"
 
 #. placeholder {0}: fileUpload.name
-#: apps/mes/app/components/JobOperation/components/Step.tsx:374
+#: apps/mes/app/components/JobOperation/components/Step.tsx:375
 msgid "Uploading {0}"
 msgstr "Загрузка {0}"
 
