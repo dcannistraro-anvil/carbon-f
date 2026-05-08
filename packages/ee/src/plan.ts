@@ -44,7 +44,6 @@ export function planMeetsRequirement(
   current: Plan,
   requirement: Plan[]
 ): boolean {
-  if (current === Plan.Unknown) return true;
   if (requirement.length === 0) return true;
   return requirement.includes(current);
 }
