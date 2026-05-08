@@ -688,6 +688,9 @@ importers:
       '@react-types/datepicker':
         specifier: 3.13.5
         version: 3.13.5(react@18.3.1)
+      '@react-types/shared':
+        specifier: 3.33.1
+        version: 3.33.1(react@18.3.1)
       '@supabase/functions-js':
         specifier: 'catalog:'
         version: 2.1.5
@@ -751,6 +754,9 @@ importers:
       d3-array:
         specifier: 3.2.4
         version: 3.2.4
+      d3-force:
+        specifier: 3.0.0
+        version: 3.0.0
       dompurify:
         specifier: 'catalog:'
         version: 3.4.0
@@ -944,6 +950,9 @@ importers:
       '@types/d3':
         specifier: 7.4.3
         version: 7.4.3
+      '@types/d3-force':
+        specifier: 3.0.10
+        version: 3.0.10
       '@types/lodash':
         specifier: 4.17.24
         version: 4.17.24
