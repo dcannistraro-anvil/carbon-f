@@ -6,11 +6,11 @@ import type { IntegrationID } from "./index";
  * (`usePlanGate`) and server (`plan.server.ts`) read from here.
  */
 export const FEATURE_PLANS = {
-  API_KEYS: [Plan.Starter, Plan.Business, Plan.Partner],
-  WEBHOOKS: [Plan.Starter, Plan.Business, Plan.Partner],
-  INTEGRATIONS: [Plan.Starter, Plan.Business, Plan.Partner],
-  ITEM_RULES: [Plan.Business, Plan.Partner],
-  AUDIT_LOG: [Plan.Business, Plan.Partner]
+  API_KEYS: [Plan.Starter, Plan.Business],
+  WEBHOOKS: [Plan.Starter, Plan.Business],
+  INTEGRATIONS: [Plan.Starter, Plan.Business],
+  ITEM_RULES: [Plan.Business],
+  AUDIT_LOG: [Plan.Business]
 } as const satisfies Record<string, Plan[]>;
 
 export type Feature = keyof typeof FEATURE_PLANS;
