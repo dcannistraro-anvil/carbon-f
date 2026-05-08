@@ -1,7 +1,7 @@
 import { CarbonEdition, error, STRIPE_BYPASS_COMPANY_IDS } from "@carbon/auth";
 import { flash } from "@carbon/auth/session.server";
 import type { Database } from "@carbon/database";
-import { Edition, Plan } from "@carbon/utils";
+import { Edition, normalizePlanId, type Plan } from "@carbon/utils";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { redirect } from "react-router";
 import {
@@ -28,7 +28,7 @@ async function getCompanyPlan(
     .eq("id", companyId)
     .single();
 
-  return (data?.planId as Plan | undefined) ?? Plan.Unknown;
+  return normalizePlanId(data?.planId);
 }
 
 /** Self-hosted and bypass-listed companies always pass. */

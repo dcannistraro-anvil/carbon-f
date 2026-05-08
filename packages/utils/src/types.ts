@@ -20,6 +20,14 @@ export enum Plan {
   Unknown = "UNKNOWN"
 }
 
+// DB stores partner tiers as `PARTNER-300/400/500` etc. Collapse them onto
+// `Plan.Partner` so plan-gate checks (`requirement.includes(plan)`) match.
+export function normalizePlanId(planId: string | null | undefined): Plan {
+  if (!planId) return Plan.Unknown;
+  if (planId.startsWith("PARTNER")) return Plan.Partner;
+  return planId as Plan;
+}
+
 export type PickPartial<T, K extends keyof T> = Omit<T, K> &
   Partial<Pick<T, K>>;
 

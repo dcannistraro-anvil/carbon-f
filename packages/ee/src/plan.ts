@@ -39,7 +39,6 @@ export function resolveRequirement(spec: GateSpec): Plan[] {
   return Array.isArray(spec.plan) ? spec.plan : [spec.plan];
 }
 
-/** `Plan.Unknown` always passes — represents loading state. */
 export function planMeetsRequirement(
   current: Plan,
   requirement: Plan[]
