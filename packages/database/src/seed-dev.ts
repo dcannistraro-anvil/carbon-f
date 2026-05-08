@@ -55,6 +55,7 @@ function inferFirstNameFromEmail(email: string): string {
 
 // Parse CLI arguments
 const { values } = parseArgs({
+  args: process.argv.slice(2).filter((a) => a !== "--"),
   options: {
     email: {
       type: "string",
