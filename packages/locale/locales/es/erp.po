@@ -1269,7 +1269,7 @@ msgstr "¿Estás seguro de que deseas eliminar permanentemente el proceso del pr
 msgid "Are you sure you want to post this receipt?"
 msgstr "¿Estás seguro de que deseas publicar este recibo?"
 
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:163
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:247
 msgid "Are you sure you want to post this shipment?"
 msgstr "¿Estás seguro de que deseas publicar este envío?"
 
@@ -1552,7 +1552,7 @@ msgstr "Lote"
 msgid "Batch items require a sales order"
 msgstr "Los artículos por lote requieren una orden de venta"
 
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:820
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:821
 msgid "Batch number"
 msgstr "Número de lote"
 
@@ -1785,7 +1785,7 @@ msgstr "No se puede desactivar el único intervalo activo. Agregue otro interval
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbanForm.tsx:332
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptPostModal.tsx:198
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptVoidModal.tsx:85
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:194
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:327
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentVoidModal.tsx:85
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferCompleteModal.tsx:165
 #: apps/erp/app/modules/inventory/ui/StorageTypes/StorageTypeForm.tsx:104
@@ -1959,6 +1959,10 @@ msgstr "No se puede mover al depósito de piezas sin ID de artículo"
 msgid "Cannot place order - no supplier associated with this item"
 msgstr "No se puede realizar el pedido - no hay proveedor asociado a este artículo"
 
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:281
+msgid "Cannot post — shipment contains expired tracked entities."
+msgstr ""
+
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:366
 msgid "Cannot send RFQ"
 msgstr "No se puede enviar RFQ"
@@ -1969,7 +1973,7 @@ msgid "Cannot upload to parts bucket without item ID"
 msgstr "No se puede cargar en el depósito de piezas sin ID de artículo"
 
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptPostModal.tsx:67
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:67
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:92
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferCompleteModal.tsx:65
 msgid "Carbon client is not available"
 msgstr "El cliente de Carbon no está disponible"
@@ -3997,7 +4001,7 @@ msgstr "Eliminar Turno"
 msgid "Delete Shipment"
 msgstr "Eliminar Envío"
 
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:374
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:375
 msgid "Delete shipment line"
 msgstr "Eliminar línea de envío"
 
@@ -5333,6 +5337,11 @@ msgstr "Expirado"
 #: apps/erp/app/modules/production/ui/Jobs/JobMaterialsTable.tsx:203
 msgid "Expired batch"
 msgstr "Lote expirado"
+
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:278
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:304
+msgid "Expired Batches"
+msgstr ""
 
 #: apps/erp/app/modules/settings/ui/ApiKeys/ApiKeysTable.tsx:131
 #: apps/erp/app/routes/share+/quote.$id.tsx:239
@@ -7231,7 +7240,7 @@ msgid "Line Item Comparison"
 msgstr "Comparación de Artículos de Línea"
 
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:350
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:354
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:355
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferLines.tsx:185
 msgid "Line options"
 msgstr "Opciones de línea"
@@ -7954,7 +7963,7 @@ msgid "Minutes/Piece"
 msgstr "Minutos/Pieza"
 
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptPostModal.tsx:175
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:171
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:255
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferCompleteModal.tsx:142
 msgid "Missing Information"
 msgstr "Información Faltante"
@@ -9803,7 +9812,7 @@ msgstr "Registrar Factura"
 msgid "Post Receipt"
 msgstr "Registrar Recepción"
 
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:160
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:244
 msgid "Post Shipment"
 msgstr "Publicar Envío"
 
@@ -12257,7 +12266,7 @@ msgstr "ID de envío"
 msgid "Shipment Line"
 msgstr "Línea de Envío"
 
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:225
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:226
 msgid "Shipment Lines"
 msgstr "Líneas de envío"
 
@@ -12591,7 +12600,7 @@ msgstr "Cantidad a dividir"
 msgid "Split receipt line"
 msgstr "Dividir línea de recepción"
 
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:366
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:367
 msgid "Split shipment line"
 msgstr "Dividir línea de envío"
 

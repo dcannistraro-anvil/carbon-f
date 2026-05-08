@@ -44,6 +44,7 @@ import {
   LuCircleAlert,
   LuEllipsisVertical,
   LuGroup,
+  LuInfo,
   LuQrCode,
   LuSplit,
   LuTrash
@@ -838,31 +839,30 @@ function BatchForm({
                 )}
               </InputRightElement>
             </InputGroup>
-            {values.number &&
-              batchNumbers?.data &&
-              (() => {
-                const batchNumber = resolveTrackedEntity(
-                  values.number,
-                  batchNumbers.data
-                );
-                if (batchNumber) {
-                  // @ts-expect-error TS2339 - TODO: fix type
-                  if ((line.shippedQuantity || 0) < batchNumber.quantity) {
-                    return (
-                      <span className="text-xs text-muted-foreground">
-                        Shipped quantity is less than batch quantity. A new
-                        batch will be created for the remaining quantity when
-                        posted.
-                      </span>
-                    );
-                  }
-                }
-                return null;
-              })()}
             {error && <span className="text-xs text-destructive">{error}</span>}
           </div>
         </div>
       </div>
+      {values.number &&
+        batchNumbers?.data &&
+        (() => {
+          const batchNumber = resolveTrackedEntity(
+            values.number,
+            batchNumbers.data
+          );
+          if (!batchNumber) return null;
+          // @ts-expect-error TS2339 - TODO: fix type
+          if ((line.shippedQuantity || 0) >= batchNumber.quantity) return null;
+          return (
+            <div className="flex items-center gap-2 rounded-md border border-border bg-muted/40 px-2.5 py-1.5 text-xs text-muted-foreground">
+              <LuInfo className="h-3.5 w-3.5 flex-shrink-0" />
+              <span>
+                Shipped quantity is less than batch quantity. A new batch will
+                be created for the remaining quantity when posted.
+              </span>
+            </div>
+          );
+        })()}
     </div>
   );
 }

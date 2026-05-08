@@ -1,17 +1,17 @@
 import { serve } from "https://deno.land/std@0.175.0/http/server.ts";
 import { format } from "https://deno.land/std@0.205.0/datetime/mod.ts";
+import { nanoid } from "https://deno.land/x/nanoid@v3.0.0/mod.ts";
 import { z } from "https://deno.land/x/zod@v3.21.4/mod.ts";
 import { DB, getConnectionPool, getDatabaseClient } from "../lib/database.ts";
+import { isInternalUser } from "../lib/flags.ts";
 import { corsHeaders } from "../lib/headers.ts";
 import { getSupabaseServiceRole } from "../lib/supabase.ts";
 import type { Database, Json } from "../lib/types.ts";
 import { TrackedEntityAttributes, credit, debit, journalReference } from "../lib/utils.ts";
-import { isInternalUser } from "../lib/flags.ts";
+import { calculateCOGS } from "../shared/calculate-cogs.ts";
 import { getCurrentAccountingPeriod } from "../shared/get-accounting-period.ts";
 import { getNextSequence } from "../shared/get-next-sequence.ts";
 import { getDefaultPostingGroup } from "../shared/get-posting-group.ts";
-import { calculateCOGS } from "../shared/calculate-cogs.ts";
-import { nanoid } from "https://deno.land/x/nanoid@v3.0.0/mod.ts";
 
 const pool = getConnectionPool(1);
 const db = getDatabaseClient<DB>(pool);
@@ -589,6 +589,18 @@ serve(async (req: Request) => {
                 return acc;
               }, {}) ?? {};
 
+            // Resolve accounting period BEFORE opening the Kysely transaction.
+            // getCurrentAccountingPeriod uses the Supabase REST client; calling
+            // it mid-transaction parks the pg connection in idle-in-transaction
+            // (ClientRead) while the REST hop runs, and any hang there leaves
+            // an orphan that exhausts the pool (size 1) for every subsequent
+            // post-shipment invocation.
+            const accountingPeriodId = await getCurrentAccountingPeriod(
+              client,
+              companyId,
+              db
+            );
+
             await db.transaction().execute(async (trx) => {
               for await (const [salesOrderLineId, update] of Object.entries(
                 salesOrderLineUpdates
@@ -987,12 +999,6 @@ serve(async (req: Request) => {
                     })
                     .execute();
                 }
-
-                const accountingPeriodId = await getCurrentAccountingPeriod(
-                  client,
-                  companyId,
-                  db
-                );
 
                 const journalEntryId = await getNextSequence(
                   trx,

@@ -1269,7 +1269,7 @@ msgstr "您确定要永久删除供应商流程吗？"
 msgid "Are you sure you want to post this receipt?"
 msgstr "你确定要过账此收据吗？"
 
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:163
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:247
 msgid "Are you sure you want to post this shipment?"
 msgstr "你确定要过账此发货单吗？"
 
@@ -1552,7 +1552,7 @@ msgstr "批次"
 msgid "Batch items require a sales order"
 msgstr "批次项目需要销售订单"
 
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:820
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:821
 msgid "Batch number"
 msgstr "批号"
 
@@ -1785,7 +1785,7 @@ msgstr "无法禁用唯一的活跃价格段。请添加另一个价格段或改
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbanForm.tsx:332
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptPostModal.tsx:198
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptVoidModal.tsx:85
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:194
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:327
 #: apps/erp/app/modules/inventory/ui/Shipments/ShipmentVoidModal.tsx:85
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferCompleteModal.tsx:165
 #: apps/erp/app/modules/inventory/ui/StorageTypes/StorageTypeForm.tsx:104
@@ -1959,6 +1959,10 @@ msgstr "无法在没有项目ID的情况下移动到零件桶"
 msgid "Cannot place order - no supplier associated with this item"
 msgstr "无法下单 - 此项目没有关联的供应商"
 
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:281
+msgid "Cannot post — shipment contains expired tracked entities."
+msgstr ""
+
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:366
 msgid "Cannot send RFQ"
 msgstr "无法发送询价单"
@@ -1969,7 +1973,7 @@ msgid "Cannot upload to parts bucket without item ID"
 msgstr "无法在没有项目ID的情况下上传到零件存储桶"
 
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptPostModal.tsx:67
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:67
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:92
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferCompleteModal.tsx:65
 msgid "Carbon client is not available"
 msgstr "Carbon 客户端不可用"
@@ -3997,7 +4001,7 @@ msgstr "删除班次"
 msgid "Delete Shipment"
 msgstr "删除发货单"
 
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:374
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:375
 msgid "Delete shipment line"
 msgstr "删除发货行"
 
@@ -5333,6 +5337,11 @@ msgstr "已过期"
 #: apps/erp/app/modules/production/ui/Jobs/JobMaterialsTable.tsx:203
 msgid "Expired batch"
 msgstr "过期批次"
+
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:278
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:304
+msgid "Expired Batches"
+msgstr ""
 
 #: apps/erp/app/modules/settings/ui/ApiKeys/ApiKeysTable.tsx:131
 #: apps/erp/app/routes/share+/quote.$id.tsx:239
@@ -7231,7 +7240,7 @@ msgid "Line Item Comparison"
 msgstr "行项目比较"
 
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:350
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:354
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:355
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferLines.tsx:185
 msgid "Line options"
 msgstr "行选项"
@@ -7954,7 +7963,7 @@ msgid "Minutes/Piece"
 msgstr "分钟/件"
 
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptPostModal.tsx:175
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:171
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:255
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferCompleteModal.tsx:142
 msgid "Missing Information"
 msgstr "缺少信息"
@@ -9803,7 +9812,7 @@ msgstr "过账发票"
 msgid "Post Receipt"
 msgstr "过账收据"
 
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:160
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentPostModal.tsx:244
 msgid "Post Shipment"
 msgstr "发布货运"
 
@@ -12257,7 +12266,7 @@ msgstr "发货单ID"
 msgid "Shipment Line"
 msgstr "发货单行"
 
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:225
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:226
 msgid "Shipment Lines"
 msgstr "发货单行"
 
@@ -12591,7 +12600,7 @@ msgstr "分割数量"
 msgid "Split receipt line"
 msgstr "拆分收据行"
 
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:366
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:367
 msgid "Split shipment line"
 msgstr "拆分发货行"
 
