@@ -53,6 +53,7 @@
     "react": "catalog:",
     "react-icons": "catalog:",
     "react-pdf": "catalog:",
+    "react-router": "catalog:",
     "sst": "catalog:",
     "supabase": "catalog:",
     "tsup": "catalog:",

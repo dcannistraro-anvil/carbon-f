@@ -54,9 +54,10 @@ export function useAnyVisible({
       },
       { threshold }
     );
-    targets.forEach((t) => obs.observe(t));
+    targets.forEach((t) => {
+      obs.observe(t);
+    });
     return () => obs.disconnect();
-    // biome-ignore lint/correctness/useExhaustiveDependencies: caller-controlled `deps` re-queries DOM
   }, [enabled, selector, threshold, containerRef, ...deps]);
 
   return anyVisible;

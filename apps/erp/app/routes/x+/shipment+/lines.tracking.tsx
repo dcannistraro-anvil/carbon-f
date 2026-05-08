@@ -113,7 +113,7 @@ export async function action({ request }: ActionFunctionArgs) {
           ...((stale.attributes ?? {}) as Record<string, any>)
         };
         delete cleaned["Shipment Line"];
-        delete cleaned["Shipment"];
+        delete cleaned.Shipment;
         delete cleaned["Shipment Line Index"];
         return serviceRole
           .from("trackedEntity")

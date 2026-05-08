@@ -31,7 +31,6 @@ export async function action({ request }: ActionFunctionArgs) {
     client,
     companyId,
     feature: "ITEM_RULES",
-    feature: "ITEM_RULES",
     redirectTo: path.to.itemRules
   });
 
