@@ -5,6 +5,7 @@ import type {
   ActivityOutput,
   TrackedEntity
 } from "~/modules/inventory";
+import { path } from "~/utils/path";
 import { NODE_SIZE } from "./constants";
 
 export type EntityNodeData = {
@@ -343,15 +344,15 @@ export function sourceLinkHref(
   if (!doc || !id) return null;
   switch (doc) {
     case "Job":
-      return `/x/job/${id}`;
+      return path.to.job(id);
     case "Receipt":
-      return `/x/inventory/receipts/${id}`;
+      return path.to.receipt(id);
     case "Shipment":
-      return `/x/inventory/shipments/${id}`;
+      return path.to.shipment(id);
     case "Purchase Order":
-      return `/x/purchase-order/${id}`;
+      return path.to.purchaseOrder(id);
     case "Sales Order":
-      return `/x/sales/orders/${id}`;
+      return path.to.salesOrder(id);
     default:
       return null;
   }
