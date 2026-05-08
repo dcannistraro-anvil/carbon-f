@@ -577,7 +577,7 @@ function BatchForm({
   }>(() => {
     if (tracking) {
       return {
-        number: tracking.readableId || tracking.id || "",
+        number: tracking.readableId || "",
         properties: Object.entries(
           (tracking.attributes ?? {}) as TrackedEntityAttributes
         )
@@ -738,6 +738,7 @@ function BatchForm({
       const attributes = batchNumber.attributes as TrackedEntityAttributes;
       if (
         attributes["Shipment Line"] &&
+        attributes["Shipment Line"] !== line.id &&
         // biome-ignore lint/complexity/useLiteralKeys: suppressed due to migration
         attributes["Shipment"] === shipment?.id
       ) {

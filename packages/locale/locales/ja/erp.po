@@ -1552,7 +1552,7 @@ msgstr "バッチ"
 msgid "Batch items require a sales order"
 msgstr "バッチ品目は販売注文が必要です"
 
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:819
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:820
 msgid "Batch number"
 msgstr "バッチ番号"
 
@@ -10372,7 +10372,7 @@ msgstr "数量"
 #: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:408
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbanForm.tsx:215
 #: apps/erp/app/modules/inventory/ui/Receipts/ReceiptLines.tsx:1156
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:1161
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:1162
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferLineForm.tsx:168
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferWizard.tsx:685
 #: apps/erp/app/modules/inventory/ui/Traceability/TrackedEntitiesTable.tsx:111
@@ -12832,7 +12832,7 @@ msgstr "ストレージタイプ"
 #: apps/erp/app/modules/inventory/ui/Inventory/InventoryStorageUnits.tsx:356
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbanForm.tsx:284
 #: apps/erp/app/modules/inventory/ui/Kanbans/KanbansTable.tsx:430
-#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:1198
+#: apps/erp/app/modules/inventory/ui/Shipments/ShipmentLines.tsx:1199
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferWizard.tsx:378
 #: apps/erp/app/modules/inventory/ui/StockTransfers/StockTransferWizard.tsx:710
 #: apps/erp/app/modules/inventory/ui/StorageUnits/StorageUnitsTable.tsx:335
