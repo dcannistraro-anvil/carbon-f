@@ -1,6 +1,6 @@
 import type { ValidationErrorResponseData } from "@carbon/form";
 import type { FileObject } from "@supabase/storage-js";
-import type { ReactElement } from "react";
+import type { ReactElement, ReactNode } from "react";
 import type { IconType } from "react-icons";
 import type { useSettings } from "~/hooks";
 
@@ -59,6 +59,7 @@ export type Route<T = {}> = T & {
   name: string;
   to: string;
   icon?: any;
+  tag?: ReactNode;
   setting?: keyof ReturnType<typeof useSettings>;
   views?: {
     id: string;

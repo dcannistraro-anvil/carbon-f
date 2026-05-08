@@ -608,6 +608,17 @@ export async function updateJobTravelerWorkInstructions(
     .eq("id", companyId);
 }
 
+export async function updateAccountingEnabledSetting(
+  client: SupabaseClient<Database>,
+  companyId: string,
+  accountingEnabled: boolean
+) {
+  return client
+    .from("companySettings")
+    .update(sanitize({ accountingEnabled }))
+    .eq("id", companyId);
+}
+
 export async function updateTimeCardSetting(
   client: SupabaseClient<Database>,
   companyId: string,

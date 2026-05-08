@@ -37,7 +37,7 @@ export default function AuditLogUpgradeOverlay() {
             </CardHeader>
             <CardContent>
               <HStack className="justify-between items-center">
-                <VStack className="items-start gap-1">
+                <VStack className="items-start" spacing={1}>
                   <span className="font-medium">Audit logging is disabled</span>
                   <span className="text-sm text-muted-foreground">
                     Enable to start tracking changes to your data.

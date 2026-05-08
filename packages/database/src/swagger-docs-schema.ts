@@ -66967,6 +66967,9 @@ export default {
             $ref: "#/parameters/rowFilter.companySettings.inventoryShelfLife"
           },
           {
+            $ref: "#/parameters/rowFilter.companySettings.accountingEnabled"
+          },
+          {
             $ref: "#/parameters/select"
           },
           {
@@ -67140,6 +67143,9 @@ export default {
             $ref: "#/parameters/rowFilter.companySettings.inventoryShelfLife"
           },
           {
+            $ref: "#/parameters/rowFilter.companySettings.accountingEnabled"
+          },
+          {
             $ref: "#/parameters/preferReturn"
           }
         ],
@@ -67265,6 +67271,9 @@ export default {
           },
           {
             $ref: "#/parameters/rowFilter.companySettings.inventoryShelfLife"
+          },
+          {
+            $ref: "#/parameters/rowFilter.companySettings.accountingEnabled"
           },
           {
             $ref: "#/parameters/body.companySettings"
@@ -109338,7 +109347,8 @@ export default {
         "updateLeadTimesOnReceipt",
         "enforceInspectionFourEyes",
         "samplingStandard",
-        "inventoryShelfLife"
+        "inventoryShelfLife",
+        "accountingEnabled"
       ],
       properties: {
         id: {
@@ -109552,6 +109562,11 @@ export default {
         },
         inventoryShelfLife: {
           format: "jsonb"
+        },
+        accountingEnabled: {
+          default: false,
+          format: "boolean",
+          type: "boolean"
         }
       },
       type: "object"
@@ -146274,6 +146289,12 @@ export default {
     },
     "rowFilter.companySettings.inventoryShelfLife": {
       name: "inventoryShelfLife",
+      required: false,
+      in: "query",
+      type: "string"
+    },
+    "rowFilter.companySettings.accountingEnabled": {
+      name: "accountingEnabled",
       required: false,
       in: "query",
       type: "string"

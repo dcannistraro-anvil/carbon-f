@@ -14,7 +14,7 @@ import {
 import { getSupabaseServiceRole } from "../lib/supabase.ts";
 import { Database } from "../lib/types.ts";
 import { TrackedEntityAttributes, credit, debit, journalReference } from "../lib/utils.ts";
-import { isInternalUser } from "../lib/flags.ts";
+
 import { getCurrentAccountingPeriod } from "../shared/get-accounting-period.ts";
 import { getNextSequence } from "../shared/get-next-sequence.ts";
 import { getDefaultPostingGroup } from "../shared/get-posting-group.ts";
@@ -109,7 +109,7 @@ async function issueJobOperationMaterials(
     quantity,
     companyId,
     userId,
-    isInternal,
+    accountingEnabled,
     accountDefaults,
     dimensionMap,
     client,
@@ -119,7 +119,7 @@ async function issueJobOperationMaterials(
     quantity: number;
     companyId: string;
     userId: string;
-    isInternal: boolean;
+    accountingEnabled: boolean;
     accountDefaults: any;
     dimensionMap: Map<string, string>;
     client: any;
@@ -306,7 +306,7 @@ async function issueJobOperationMaterials(
     }
   }
 
-  if (isInternal && accountDefaults?.data && itemLedgerInserts.length > 0) {
+  if (accountingEnabled && accountDefaults?.data && itemLedgerInserts.length > 0) {
     const journalLineInserts: {
       accountId: string;
       description: string;
@@ -897,8 +897,12 @@ serve(async (req: Request) => {
           companyId
         );
 
-        const [isInternal, companyRecord] = await Promise.all([
-          isInternalUser(client, userId),
+        const [accountingSettings, companyRecord] = await Promise.all([
+          client
+            .from("companySettings")
+            .select("accountingEnabled")
+            .eq("id", companyId)
+            .single(),
           client
             .from("company")
             .select("companyGroupId")
@@ -906,15 +910,16 @@ serve(async (req: Request) => {
             .single(),
         ]);
         if (companyRecord.error) throw new Error("Failed to fetch company");
+        const accountingEnabled = accountingSettings.data?.accountingEnabled ?? false;
 
-        const accountDefaults = isInternal
+        const accountDefaults = accountingEnabled
           ? await getDefaultPostingGroup(client, companyId)
           : null;
-        if (isInternal && (accountDefaults?.error || !accountDefaults?.data)) {
+        if (accountingEnabled && (accountDefaults?.error || !accountDefaults?.data)) {
           throw new Error("Error getting account defaults");
         }
 
-        const dimensions = isInternal
+        const dimensions = accountingEnabled
           ? await client
               .from("dimension")
               .select("id, entityType")
@@ -1071,7 +1076,7 @@ serve(async (req: Request) => {
           }
 
           // WIP discharge: DR FG Inventory / CR WIP
-          if (isInternal && accountDefaults?.data) {
+          if (accountingEnabled && accountDefaults?.data) {
             // Post any unposted production events as labor/machine absorption JEs
             const unpostedEvents = await trx
               .selectFrom("productionEvent")
@@ -1394,20 +1399,25 @@ serve(async (req: Request) => {
           companyId
         );
 
-        const [isInternal, companyRecord] = await Promise.all([
-          isInternalUser(client, userId),
+        const [accountingSettings, companyRecord] = await Promise.all([
+          client
+            .from("companySettings")
+            .select("accountingEnabled")
+            .eq("id", companyId)
+            .single(),
           client.from("company").select("companyGroupId").eq("id", companyId).single(),
         ]);
         if (companyRecord.error) throw new Error("Failed to fetch company");
+        const accountingEnabled = accountingSettings.data?.accountingEnabled ?? false;
 
-        const accountDefaults = isInternal
+        const accountDefaults = accountingEnabled
           ? await getDefaultPostingGroup(client, companyId)
           : null;
-        if (isInternal && (accountDefaults?.error || !accountDefaults?.data)) {
+        if (accountingEnabled && (accountDefaults?.error || !accountDefaults?.data)) {
           throw new Error("Error getting account defaults");
         }
 
-        const dimensions = isInternal
+        const dimensions = accountingEnabled
           ? await client
               .from("dimension")
               .select("id, entityType")
@@ -1429,7 +1439,7 @@ serve(async (req: Request) => {
             quantity,
             companyId,
             userId,
-            isInternal,
+            accountingEnabled,
             accountDefaults: accountDefaults?.data ? accountDefaults : null,
             dimensionMap,
             client,
@@ -1464,20 +1474,25 @@ serve(async (req: Request) => {
           throw new Error("Job operation not found");
         }
 
-        const [isInternalBatch, companyRecordBatch] = await Promise.all([
-          isInternalUser(client, userId),
+        const [accountingSettingsBatch, companyRecordBatch] = await Promise.all([
+          client
+            .from("companySettings")
+            .select("accountingEnabled")
+            .eq("id", companyId)
+            .single(),
           client.from("company").select("companyGroupId").eq("id", companyId).single(),
         ]);
         if (companyRecordBatch.error) throw new Error("Failed to fetch company");
+        const accountingEnabledBatch = accountingSettingsBatch.data?.accountingEnabled ?? false;
 
-        const accountDefaultsBatch = isInternalBatch
+        const accountDefaultsBatch = accountingEnabledBatch
           ? await getDefaultPostingGroup(client, companyId)
           : null;
-        if (isInternalBatch && (accountDefaultsBatch?.error || !accountDefaultsBatch?.data)) {
+        if (accountingEnabledBatch && (accountDefaultsBatch?.error || !accountDefaultsBatch?.data)) {
           throw new Error("Error getting account defaults");
         }
 
-        const dimensionsBatch = isInternalBatch
+        const dimensionsBatch = accountingEnabledBatch
           ? await client
               .from("dimension")
               .select("id, entityType")
@@ -1566,7 +1581,7 @@ serve(async (req: Request) => {
             quantity: row.quantity,
             companyId,
             userId,
-            isInternal: isInternalBatch,
+            accountingEnabled: accountingEnabledBatch,
             accountDefaults: accountDefaultsBatch?.data ? accountDefaultsBatch : null,
             dimensionMap: dimensionMapBatch,
             client,
@@ -1617,20 +1632,25 @@ serve(async (req: Request) => {
             (trackedEntity.attributes as TrackedEntityAttributes)
         );
 
-        const [isInternalSerial, companyRecordSerial] = await Promise.all([
-          isInternalUser(client, userId),
+        const [accountingSettingsSerial, companyRecordSerial] = await Promise.all([
+          client
+            .from("companySettings")
+            .select("accountingEnabled")
+            .eq("id", companyId)
+            .single(),
           client.from("company").select("companyGroupId").eq("id", companyId).single(),
         ]);
         if (companyRecordSerial.error) throw new Error("Failed to fetch company");
+        const accountingEnabledSerial = accountingSettingsSerial.data?.accountingEnabled ?? false;
 
-        const accountDefaultsSerial = isInternalSerial
+        const accountDefaultsSerial = accountingEnabledSerial
           ? await getDefaultPostingGroup(client, companyId)
           : null;
-        if (isInternalSerial && (accountDefaultsSerial?.error || !accountDefaultsSerial?.data)) {
+        if (accountingEnabledSerial && (accountDefaultsSerial?.error || !accountDefaultsSerial?.data)) {
           throw new Error("Error getting account defaults");
         }
 
-        const dimensionsSerial = isInternalSerial
+        const dimensionsSerial = accountingEnabledSerial
           ? await client
               .from("dimension")
               .select("id, entityType")
@@ -1743,7 +1763,7 @@ serve(async (req: Request) => {
             quantity: row.quantity,
             companyId,
             userId,
-            isInternal: isInternalSerial,
+            accountingEnabled: accountingEnabledSerial,
             accountDefaults: accountDefaultsSerial?.data ? accountDefaultsSerial : null,
             dimensionMap: dimensionMapSerial,
             client,
@@ -1779,20 +1799,25 @@ serve(async (req: Request) => {
           companyId
         );
 
-        const [isInternal, companyRecord] = await Promise.all([
-          isInternalUser(client, userId),
+        const [accountingSettings, companyRecord] = await Promise.all([
+          client
+            .from("companySettings")
+            .select("accountingEnabled")
+            .eq("id", companyId)
+            .single(),
           client.from("company").select("companyGroupId").eq("id", companyId).single(),
         ]);
         if (companyRecord.error) throw new Error("Failed to fetch company");
+        const accountingEnabled = accountingSettings.data?.accountingEnabled ?? false;
 
-        const accountDefaults = isInternal
+        const accountDefaults = accountingEnabled
           ? await getDefaultPostingGroup(client, companyId)
           : null;
-        if (isInternal && (accountDefaults?.error || !accountDefaults?.data)) {
+        if (accountingEnabled && (accountDefaults?.error || !accountDefaults?.data)) {
           throw new Error("Error getting account defaults");
         }
 
-        const dimensions = isInternal
+        const dimensions = accountingEnabled
           ? await client
               .from("dimension")
               .select("id, entityType")
@@ -1998,7 +2023,7 @@ serve(async (req: Request) => {
             }
           }
 
-          if (isInternal && accountDefaults?.data && itemLedgerInserts.length > 0) {
+          if (accountingEnabled && accountDefaults?.data && itemLedgerInserts.length > 0) {
             const jobOperation = await trx
               .selectFrom("jobOperation")
               .where("id", "=", id)
@@ -2066,20 +2091,25 @@ serve(async (req: Request) => {
           throw new Error("Job material not found");
         }
 
-        const [isInternalScrap, companyRecordScrap] = await Promise.all([
-          isInternalUser(client, userId),
+        const [accountingSettingsScrap, companyRecordScrap] = await Promise.all([
+          client
+            .from("companySettings")
+            .select("accountingEnabled")
+            .eq("id", companyId)
+            .single(),
           client.from("company").select("companyGroupId").eq("id", companyId).single(),
         ]);
         if (companyRecordScrap.error) throw new Error("Failed to fetch company");
+        const accountingEnabledScrap = accountingSettingsScrap.data?.accountingEnabled ?? false;
 
-        const accountDefaultsScrap = isInternalScrap
+        const accountDefaultsScrap = accountingEnabledScrap
           ? await getDefaultPostingGroup(client, companyId)
           : null;
-        if (isInternalScrap && (accountDefaultsScrap?.error || !accountDefaultsScrap?.data)) {
+        if (accountingEnabledScrap && (accountDefaultsScrap?.error || !accountDefaultsScrap?.data)) {
           throw new Error("Error getting account defaults");
         }
 
-        const dimensionsScrap = isInternalScrap
+        const dimensionsScrap = accountingEnabledScrap
           ? await client
               .from("dimension")
               .select("id, entityType")
@@ -2189,7 +2219,7 @@ serve(async (req: Request) => {
               })
               .execute();
 
-            if (isInternalScrap && accountDefaultsScrap?.data) {
+            if (accountingEnabledScrap && accountDefaultsScrap?.data) {
               await createMaterialWipEntries(trx, {
                 consumptionLedgers: [{ itemId: entity.sourceDocumentId!, quantity: -quantity }],
                 jobId: job?.id!,
@@ -2264,20 +2294,25 @@ serve(async (req: Request) => {
           companyId
         );
 
-        const [isInternalTracked, companyRecordTracked] = await Promise.all([
-          isInternalUser(client, userId),
+        const [accountingSettingsTracked, companyRecordTracked] = await Promise.all([
+          client
+            .from("companySettings")
+            .select("accountingEnabled")
+            .eq("id", companyId)
+            .single(),
           client.from("company").select("companyGroupId").eq("id", companyId).single(),
         ]);
         if (companyRecordTracked.error) throw new Error("Failed to fetch company");
+        const accountingEnabledTracked = accountingSettingsTracked.data?.accountingEnabled ?? false;
 
-        const accountDefaultsTracked = isInternalTracked
+        const accountDefaultsTracked = accountingEnabledTracked
           ? await getDefaultPostingGroup(client, companyId)
           : null;
-        if (isInternalTracked && (accountDefaultsTracked?.error || !accountDefaultsTracked?.data)) {
+        if (accountingEnabledTracked && (accountDefaultsTracked?.error || !accountDefaultsTracked?.data)) {
           throw new Error("Error getting account defaults");
         }
 
-        const dimensionsTracked = isInternalTracked
+        const dimensionsTracked = accountingEnabledTracked
           ? await client
               .from("dimension")
               .select("id, entityType")
@@ -2782,7 +2817,7 @@ serve(async (req: Request) => {
             }
           }
 
-          if (isInternalTracked && accountDefaultsTracked?.data && itemLedgerInserts.length > 0) {
+          if (accountingEnabledTracked && accountDefaultsTracked?.data && itemLedgerInserts.length > 0) {
             const consumptionEntries = itemLedgerInserts
               .filter((l) => l.entryType === "Consumption")
               .map((l) => ({ itemId: l.itemId as string, quantity: Number(l.quantity) }));
@@ -2869,20 +2904,25 @@ serve(async (req: Request) => {
           companyId
         );
 
-        const [isInternalUnconsume, companyRecordUnconsume] = await Promise.all([
-          isInternalUser(clientUnconsume, userId),
+        const [accountingSettingsUnconsume, companyRecordUnconsume] = await Promise.all([
+          clientUnconsume
+            .from("companySettings")
+            .select("accountingEnabled")
+            .eq("id", companyId)
+            .single(),
           clientUnconsume.from("company").select("companyGroupId").eq("id", companyId).single(),
         ]);
         if (companyRecordUnconsume.error) throw new Error("Failed to fetch company");
+        const accountingEnabledUnconsume = accountingSettingsUnconsume.data?.accountingEnabled ?? false;
 
-        const accountDefaultsUnconsume = isInternalUnconsume
+        const accountDefaultsUnconsume = accountingEnabledUnconsume
           ? await getDefaultPostingGroup(clientUnconsume, companyId)
           : null;
-        if (isInternalUnconsume && (accountDefaultsUnconsume?.error || !accountDefaultsUnconsume?.data)) {
+        if (accountingEnabledUnconsume && (accountDefaultsUnconsume?.error || !accountDefaultsUnconsume?.data)) {
           throw new Error("Error getting account defaults");
         }
 
-        const dimensionsUnconsume = isInternalUnconsume
+        const dimensionsUnconsume = accountingEnabledUnconsume
           ? await clientUnconsume
               .from("dimension")
               .select("id, entityType")
@@ -3070,7 +3110,7 @@ serve(async (req: Request) => {
               );
             }
 
-            if (isInternalUnconsume && accountDefaultsUnconsume?.data) {
+            if (accountingEnabledUnconsume && accountDefaultsUnconsume?.data) {
               const returnEntries = itemLedgerInserts.map((l) => ({
                 itemId: l.itemId as string,
                 quantity: Number(l.quantity),

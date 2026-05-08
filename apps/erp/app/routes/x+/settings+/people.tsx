@@ -178,7 +178,7 @@ export default function PeopleSettingsRoute() {
           </CardHeader>
           <CardContent>
             <HStack className="justify-between items-center">
-              <VStack className="items-start gap-1">
+              <VStack className="items-start" spacing={1}>
                 <span className="font-medium">
                   {(companySettings as any).consoleEnabled ? (
                     <Trans>Console mode is enabled</Trans>
@@ -222,7 +222,7 @@ export default function PeopleSettingsRoute() {
           </CardHeader>
           <CardContent>
             <HStack className="justify-between items-center">
-              <VStack className="items-start gap-1">
+              <VStack className="items-start" spacing={1}>
                 <span className="font-medium">
                   {companySettings.timeCardEnabled ? (
                     <Trans>Timecards are enabled</Trans>

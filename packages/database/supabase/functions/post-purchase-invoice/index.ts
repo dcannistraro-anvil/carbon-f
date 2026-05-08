@@ -6,7 +6,6 @@ import { DB, getConnectionPool, getDatabaseClient } from "../lib/database.ts";
 import { corsHeaders } from "../lib/headers.ts";
 import { getSupabaseServiceRole } from "../lib/supabase.ts";
 import type { Database } from "../lib/types.ts";
-import { isInternalUser } from "../lib/flags.ts";
 import { credit, debit, journalReference } from "../lib/utils.ts";
 import { getCurrentAccountingPeriod } from "../shared/get-accounting-period.ts";
 import { getNextSequence } from "../shared/get-next-sequence.ts";
@@ -48,7 +47,12 @@ serve(async (req: Request) => {
       companyId
     );
 
-    const isInternal = await isInternalUser(client, userId);
+    const accountingEnabled = await client
+      .from("companySettings")
+      .select("accountingEnabled")
+      .eq("id", companyId)
+      .single()
+      .then((r) => r.data?.accountingEnabled ?? false);
 
     if (type === "void") {
       const invoice = await client
@@ -243,7 +247,7 @@ serve(async (req: Request) => {
       const reversingJournalLines: Omit<
         Database["public"]["Tables"]["journalLine"]["Insert"],
         "journalId"
-      >[] = isInternal
+      >[] = accountingEnabled
         ? originalJournalLines.data.map((entry) => ({
             accountId: entry.accountId,
             accrual: entry.accrual,
@@ -296,7 +300,7 @@ serve(async (req: Request) => {
           companyId,
         }));
 
-      const accountingPeriodIdVoid = isInternal
+      const accountingPeriodIdVoid = accountingEnabled
         ? await getCurrentAccountingPeriod(client, companyId, db)
         : null;
 
@@ -633,10 +637,10 @@ serve(async (req: Request) => {
     }, {});
 
     // Get account defaults (once for all lines)
-    const accountDefaults = isInternal
+    const accountDefaults = accountingEnabled
       ? await getDefaultPostingGroup(client, companyId)
       : null;
-    if (isInternal && (accountDefaults?.error || !accountDefaults?.data)) {
+    if (accountingEnabled && (accountDefaults?.error || !accountDefaults?.data)) {
       throw new Error("Error getting account defaults");
     }
 
@@ -742,7 +746,7 @@ serve(async (req: Request) => {
               });
 
               // create the GL entries for a direct invoice (no PO)
-              if (isInternal && accountDefaults?.data) {
+              if (accountingEnabled && accountDefaults?.data) {
                 journalLineReference = nanoid();
 
                 let debitAccount: string;
@@ -874,7 +878,7 @@ serve(async (req: Request) => {
 
               const jlStartIdxReverse = journalLineInserts.length;
 
-              if (quantityToReverse > 0 && isInternal && accountDefaults?.data) {
+              if (quantityToReverse > 0 && accountingEnabled && accountDefaults?.data) {
                 // Calculate receipt cost from existing journal lines for PPV
                 let receiptCostForReversedQty = 0;
                 let quantityCounted = 0;
@@ -985,7 +989,7 @@ serve(async (req: Request) => {
                 }
               }
 
-              if (invoiceLineQuantityInInventoryUnit > quantityToReverse && isInternal && accountDefaults?.data) {
+              if (invoiceLineQuantityInInventoryUnit > quantityToReverse && accountingEnabled && accountDefaults?.data) {
                 const quantityToAccrue =
                   invoiceLineQuantityInInventoryUnit - quantityToReverse;
                 const accrualCost =
@@ -1054,7 +1058,7 @@ serve(async (req: Request) => {
         case "Comment":
           break;
         case "G/L Account": {
-          if (isInternal && accountDefaults?.data) {
+          if (accountingEnabled && accountDefaults?.data) {
             const account = await client
               .from("account")
               .select("id, name, isGroup")
@@ -1117,7 +1121,7 @@ serve(async (req: Request) => {
       }
     }
 
-    const accountingPeriodId = isInternal
+    const accountingPeriodId = accountingEnabled
       ? await getCurrentAccountingPeriod(client, companyId, db)
       : null;
 
@@ -1247,7 +1251,7 @@ serve(async (req: Request) => {
           .execute();
       }
 
-      if (isInternal && journalLineInserts.length > 0) {
+      if (accountingEnabled && journalLineInserts.length > 0) {
         const journalEntryId = await getNextSequence(
           trx,
           "journalEntry",

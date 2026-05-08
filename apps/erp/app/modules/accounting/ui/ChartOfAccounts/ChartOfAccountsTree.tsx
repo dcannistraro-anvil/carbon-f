@@ -21,7 +21,7 @@ import {
 import { useNavigate } from "react-router";
 import type { FlatTree, FlatTreeItem } from "~/components/TreeView";
 import { LevelLine, TreeView, useTree } from "~/components/TreeView";
-import { useFlags, useRealtime } from "~/hooks";
+import { useRealtime, useSettings } from "~/hooks";
 import type { Chart } from "../../types";
 
 type ChartOfAccountsTreeProps = {
@@ -75,7 +75,8 @@ function formatCurrency(value: number): string {
 
 const ChartOfAccountsTree = memo(({ data }: ChartOfAccountsTreeProps) => {
   useRealtime("journal");
-  const { isInternal } = useFlags();
+  const settings = useSettings();
+  const accountingEnabled = (settings as any).accountingEnabled ?? false;
   const parentRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
@@ -99,7 +100,9 @@ const ChartOfAccountsTree = memo(({ data }: ChartOfAccountsTreeProps) => {
     <ScrollArea className="h-[calc(100dvh-var(--header-height)-61px)] w-full">
       <div className="sticky top-0 z-10 flex h-11 items-center pr-4 text-sm font-medium text-foreground/80 border-b border-border bg-card">
         <div className="flex-1 px-4">Account</div>
-        {isInternal && <span className="w-32 text-right px-4">Balance</span>}
+        {accountingEnabled && (
+          <span className="w-32 text-right px-4">Balance</span>
+        )}
       </div>
       <TreeView<Chart>
         tree={tree}
@@ -182,7 +185,7 @@ const ChartOfAccountsTree = memo(({ data }: ChartOfAccountsTreeProps) => {
               </div>
 
               {/* Balance */}
-              {isInternal && (
+              {accountingEnabled && (
                 <span className="w-32 text-right tabular-nums shrink-0 text-muted-foreground">
                   {formatCurrency(account.balance ?? 0)}
                 </span>

@@ -12,7 +12,6 @@ import {
   journalReference,
   TrackedEntityAttributes,
 } from "../lib/utils.ts";
-import { isInternalUser } from "../lib/flags.ts";
 import { getCurrentAccountingPeriod } from "../shared/get-accounting-period.ts";
 import { getNextSequence } from "../shared/get-next-sequence.ts";
 import { getDefaultPostingGroup } from "../shared/get-posting-group.ts";
@@ -57,16 +56,21 @@ serve(async (req: Request) => {
       companyId
     );
 
-    const [companyRecord, isInternal] = await Promise.all([
+    const [companyRecord, accountingSettings] = await Promise.all([
       client
         .from("company")
         .select("companyGroupId")
         .eq("id", companyId)
         .single(),
-      isInternalUser(client, userId),
+      client
+        .from("companySettings")
+        .select("accountingEnabled")
+        .eq("id", companyId)
+        .single(),
     ]);
     if (companyRecord.error) throw new Error("Failed to fetch company");
     const companyGroupId = companyRecord.data.companyGroupId;
+    const accountingEnabled = accountingSettings.data?.accountingEnabled ?? false;
 
     const [receipt, receiptLines, receiptLineTracking, dimensions] =
       await Promise.all([
@@ -210,7 +214,7 @@ serve(async (req: Request) => {
       const reversingJournalLines: Omit<
         Database["public"]["Tables"]["journalLine"]["Insert"],
         "journalId"
-      >[] = isInternal
+      >[] = accountingEnabled
         ? originalJournalLines.data.map((entry) => ({
             accountId: entry.accountId,
             accrual: entry.accrual,
@@ -735,10 +739,10 @@ serve(async (req: Request) => {
         }, {});
 
         // Get account defaults (once for all lines) - only needed for journal entries
-        const accountDefaults = isInternal
+        const accountDefaults = accountingEnabled
           ? await getDefaultPostingGroup(client, companyId)
           : null;
-        if (isInternal && (accountDefaults?.error || !accountDefaults?.data)) {
+        if (accountingEnabled && (accountDefaults?.error || !accountDefaults?.data)) {
           throw new Error("Error getting account defaults");
         }
 
@@ -746,7 +750,7 @@ serve(async (req: Request) => {
         const invoiceFirstQtyByPoLine = new Map<string, number>();
         const accrualUnitCostByPoLine = new Map<string, number>();
 
-        if (isInternal) {
+        if (accountingEnabled) {
           for (const pol of purchaseOrderLines.data) {
             const invoicedInInventoryUnit =
               (pol.quantityInvoiced ?? 0) * (pol.conversionFactor ?? 1);
@@ -826,7 +830,7 @@ serve(async (req: Request) => {
           const isNegativeReceipt = receivedQuantity < 0;
           const absReceivedQuantity = Math.abs(receivedQuantity);
 
-          if (isInternal && accountDefaults?.data && absReceivedQuantity > 0) {
+          if (accountingEnabled && accountDefaults?.data && absReceivedQuantity > 0) {
             const lineCost = absReceivedQuantity * receiptLine.unitPrice;
 
             // Add proportional shipping cost based on line value percentage
@@ -1073,7 +1077,7 @@ serve(async (req: Request) => {
           }
 
           // Track dimensions for this receipt line's journal lines
-          if (isInternal) {
+          if (accountingEnabled) {
             const jlCount = journalLineInserts.length - jlStartIdx;
             const lineItemPostingGroupId =
               itemCosts.data.find(
@@ -1089,7 +1093,7 @@ serve(async (req: Request) => {
           }
         }
 
-        const accountingPeriodId = isInternal
+        const accountingPeriodId = accountingEnabled
           ? await getCurrentAccountingPeriod(client, companyId, db)
           : null;
 
@@ -1164,7 +1168,7 @@ serve(async (req: Request) => {
             .where("id", "=", receipt.data.sourceDocumentId)
             .execute();
 
-          if (isInternal && journalLineInserts.length > 0) {
+          if (accountingEnabled && journalLineInserts.length > 0) {
             const journalEntryId = await getNextSequence(
               trx,
               "journalEntry",
@@ -1384,10 +1388,10 @@ serve(async (req: Request) => {
         > = {};
 
         // Get account defaults (once for all lines) - only needed for journal entries
-        const accountDefaults = isInternal
+        const accountDefaults = accountingEnabled
           ? await getDefaultPostingGroup(client, companyId)
           : null;
-        if (isInternal && (accountDefaults?.error || !accountDefaults?.data)) {
+        if (accountingEnabled && (accountDefaults?.error || !accountDefaults?.data)) {
           throw new Error("Error getting account defaults");
         }
 
@@ -1439,7 +1443,7 @@ serve(async (req: Request) => {
           });
 
           // Create journal entries for inventory movement if there's value
-          if (isInternal && accountDefaults?.data && totalValue > 0) {
+          if (accountingEnabled && accountDefaults?.data && totalValue > 0) {
             const journalLineReference = nanoid();
 
             journalLineInserts.push({
@@ -1470,7 +1474,7 @@ serve(async (req: Request) => {
           }
 
           // Track dimensions for this receipt line's journal lines
-          if (isInternal) {
+          if (accountingEnabled) {
             const jlCount = journalLineInserts.length - jlStartIdx;
             for (let i = 0; i < jlCount; i++) {
               journalLineDimensionsMeta.push({
@@ -1511,7 +1515,7 @@ serve(async (req: Request) => {
           newStatus = "To Receive";
         }
 
-        const accountingPeriodId = isInternal
+        const accountingPeriodId = accountingEnabled
           ? await getCurrentAccountingPeriod(client, companyId, db)
           : null;
 
@@ -1538,7 +1542,7 @@ serve(async (req: Request) => {
             .execute();
 
           // Create journal entries if there are any
-          if (isInternal && journalLineInserts.length > 0) {
+          if (accountingEnabled && journalLineInserts.length > 0) {
             const transferJournalEntryId = await getNextSequence(
               trx,
               "journalEntry",

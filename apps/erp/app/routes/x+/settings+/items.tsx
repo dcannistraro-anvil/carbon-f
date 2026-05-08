@@ -142,7 +142,7 @@ export default function ItemsSettingsRoute() {
           </CardHeader>
           <CardContent>
             <HStack className="justify-between items-center">
-              <VStack className="items-start gap-1">
+              <VStack className="items-start" spacing={1}>
                 <span className="font-medium">
                   {companySettings.materialGeneratedIds ? (
                     <Trans>Generated IDs are enabled</Trans>
@@ -181,7 +181,7 @@ export default function ItemsSettingsRoute() {
           </CardHeader>
           <CardContent>
             <HStack className="justify-between items-center">
-              <VStack className="items-start gap-1">
+              <VStack className="items-start" spacing={1}>
                 <span className="font-medium">
                   {(companySettings as any).useMetric ? (
                     <Trans>Metric units are enabled</Trans>

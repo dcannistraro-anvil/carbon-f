@@ -3,7 +3,6 @@ import { format } from "https://deno.land/std@0.205.0/datetime/mod.ts";
 import { nanoid } from "https://deno.land/x/nanoid@v3.0.0/mod.ts";
 import { z } from "https://deno.land/x/zod@v3.21.4/mod.ts";
 import { DB, getConnectionPool, getDatabaseClient } from "../lib/database.ts";
-import { isInternalUser } from "../lib/flags.ts";
 import { corsHeaders } from "../lib/headers.ts";
 import { getSupabaseServiceRole } from "../lib/supabase.ts";
 import type { Database, Json } from "../lib/types.ts";
@@ -145,25 +144,30 @@ serve(async (req: Request) => {
               .single();
             if (customer.error) throw new Error("Failed to fetch customer");
 
-            const [companyRecord, isInternal] = await Promise.all([
+            const [companyRecord, accountingSettings] = await Promise.all([
               client
                 .from("company")
                 .select("companyGroupId")
                 .eq("id", companyId)
                 .single(),
-              isInternalUser(client, userId),
+              client
+                .from("companySettings")
+                .select("accountingEnabled")
+                .eq("id", companyId)
+                .single(),
             ]);
             if (companyRecord.error) throw new Error("Failed to fetch company");
             const companyGroupId = companyRecord.data.companyGroupId;
+            const accountingEnabled = accountingSettings.data?.accountingEnabled ?? false;
 
-            const accountDefaults = isInternal
+            const accountDefaults = accountingEnabled
               ? await getDefaultPostingGroup(client, companyId)
               : null;
-            if (isInternal && (accountDefaults?.error || !accountDefaults?.data)) {
+            if (accountingEnabled && (accountDefaults?.error || !accountDefaults?.data)) {
               throw new Error("Error getting account defaults");
             }
 
-            const dimensions = isInternal
+            const dimensions = accountingEnabled
               ? await client
                   .from("dimension")
                   .select("id, entityType")
@@ -401,7 +405,7 @@ serve(async (req: Request) => {
 
               // COGS journal entries for this shipment line
               if (
-                isInternal &&
+                accountingEnabled &&
                 accountDefaults?.data &&
                 shipmentLine.itemId &&
                 shippedQuantity > 0 &&
@@ -936,7 +940,7 @@ serve(async (req: Request) => {
               }
 
               // Calculate COGS and create journal entries
-              if (isInternal && journalLineInserts.length > 0) {
+              if (accountingEnabled && journalLineInserts.length > 0) {
                 const itemShipmentQuantities = new Map<
                   string,
                   { totalQuantity: number; lineIndices: number[] }

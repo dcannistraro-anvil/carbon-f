@@ -2821,6 +2821,7 @@ export type Database = {
       }
       companySettings: {
         Row: {
+          accountingEnabled: boolean
           accountsPayableAddress: boolean | null
           accountsPayableEmail: string | null
           accountsReceivableAddress: boolean | null
@@ -2861,6 +2862,7 @@ export type Database = {
           useMetric: boolean
         }
         Insert: {
+          accountingEnabled?: boolean
           accountsPayableAddress?: boolean | null
           accountsPayableEmail?: string | null
           accountsReceivableAddress?: boolean | null
@@ -2901,6 +2903,7 @@ export type Database = {
           useMetric?: boolean
         }
         Update: {
+          accountingEnabled?: boolean
           accountsPayableAddress?: boolean | null
           accountsPayableEmail?: string | null
           accountsReceivableAddress?: boolean | null
@@ -36083,48 +36086,6 @@ export type Database = {
           },
         ]
       }
-      searchIndex_d7tp3mb9o0m059r81vf0: {
-        Row: {
-          createdAt: string
-          description: string | null
-          entityId: string
-          entityType: string
-          id: number
-          link: string
-          metadata: Json | null
-          searchVector: unknown
-          tags: string[] | null
-          title: string
-          updatedAt: string | null
-        }
-        Insert: {
-          createdAt?: string
-          description?: string | null
-          entityId: string
-          entityType: string
-          id?: number
-          link: string
-          metadata?: Json | null
-          searchVector?: unknown
-          tags?: string[] | null
-          title: string
-          updatedAt?: string | null
-        }
-        Update: {
-          createdAt?: string
-          description?: string | null
-          entityId?: string
-          entityType?: string
-          id?: number
-          link?: string
-          metadata?: Json | null
-          searchVector?: unknown
-          tags?: string[] | null
-          title?: string
-          updatedAt?: string | null
-        }
-        Relationships: []
-      }
       searchIndexRegistry: {
         Row: {
           companyId: string
@@ -52640,14 +52601,14 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "address_countryCode_fkey"
-            columns: ["customerCountryCode"]
+            columns: ["supplierCountryCode"]
             isOneToOne: false
             referencedRelation: "country"
             referencedColumns: ["alpha2"]
           },
           {
             foreignKeyName: "address_countryCode_fkey"
-            columns: ["supplierCountryCode"]
+            columns: ["customerCountryCode"]
             isOneToOne: false
             referencedRelation: "country"
             referencedColumns: ["alpha2"]
@@ -60449,6 +60410,7 @@ export type Database = {
           reorderPoint: number
           reorderQuantity: number
           replenishmentSystem: Database["public"]["Enums"]["itemReplenishmentSystem"]
+          storageTypeIds: string[]
           thumbnailPath: string
           type: Database["public"]["Enums"]["itemType"]
           unitOfMeasureCode: string
@@ -62542,7 +62504,8 @@ export type Database = {
         | "receipt"
         | "shipment"
         | "stockTransfer"
-        | "jobOperation"
+        | "warehouseTransfer"
+        | "inventoryAdjustment"
       warehouseTransferStatus:
         | "Draft"
         | "To Ship and Receive"
@@ -63837,7 +63800,8 @@ export const Constants = {
         "receipt",
         "shipment",
         "stockTransfer",
-        "jobOperation",
+        "warehouseTransfer",
+        "inventoryAdjustment",
       ],
       warehouseTransferStatus: [
         "Draft",
