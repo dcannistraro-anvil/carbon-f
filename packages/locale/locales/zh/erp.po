@@ -253,16 +253,16 @@ msgstr "账户类型"
 #: apps/erp/app/modules/items/ui/Tools/useToolNavigation.tsx:50
 #: apps/erp/app/modules/settings/ui/useSettingsSubmodules.tsx:83
 #: apps/erp/app/routes/x+/accounting+/_layout.tsx:24
-#: apps/erp/app/routes/x+/settings+/accounting.tsx:32
-#: apps/erp/app/routes/x+/settings+/accounting.tsx:109
+#: apps/erp/app/routes/x+/settings+/accounting.tsx:33
+#: apps/erp/app/routes/x+/settings+/accounting.tsx:111
 msgid "Accounting"
 msgstr "会计"
 
-#: apps/erp/app/routes/x+/settings+/accounting.tsx:131
+#: apps/erp/app/routes/x+/settings+/accounting.tsx:134
 msgid "Accounting is disabled"
 msgstr "会计已禁用"
 
-#: apps/erp/app/routes/x+/settings+/accounting.tsx:129
+#: apps/erp/app/routes/x+/settings+/accounting.tsx:132
 msgid "Accounting is enabled"
 msgstr "会计已启用"
 
@@ -737,7 +737,7 @@ msgstr "所有工作中心"
 msgid "Allows acknowledge & continue"
 msgstr "允许确认并继续"
 
-#: apps/erp/app/routes/x+/settings+/accounting.tsx:149
+#: apps/erp/app/routes/x+/settings+/accounting.tsx:138
 msgid "Alpha"
 msgstr "Alpha"
 
@@ -1591,8 +1591,8 @@ msgstr "批量大小"
 msgid "Batch Tracking"
 msgstr "批次追踪"
 
-#: apps/erp/app/routes/x+/settings+/people.tsx:201
-#: apps/erp/app/routes/x+/settings+/people.tsx:242
+#: apps/erp/app/routes/x+/settings+/people.tsx:191
+#: apps/erp/app/routes/x+/settings+/people.tsx:236
 msgid "Beta"
 msgstr "测试版"
 
@@ -2534,15 +2534,15 @@ msgstr "连接到"
 msgid "Console Mode"
 msgstr "控制台模式"
 
-#: apps/erp/app/routes/x+/settings+/people.tsx:268
+#: apps/erp/app/routes/x+/settings+/people.tsx:270
 msgid "Console mode has been enabled. Use this PIN to identify yourself at MES terminals."
 msgstr "控制台模式已启用。使用此 PIN 在 MES 终端上识别自己。"
 
-#: apps/erp/app/routes/x+/settings+/people.tsx:186
+#: apps/erp/app/routes/x+/settings+/people.tsx:187
 msgid "Console mode is disabled"
 msgstr "控制台模式已禁用"
 
-#: apps/erp/app/routes/x+/settings+/people.tsx:184
+#: apps/erp/app/routes/x+/settings+/people.tsx:185
 msgid "Console mode is enabled"
 msgstr "控制台模式已启用"
 
@@ -3301,7 +3301,7 @@ msgstr "自定义字段"
 #: apps/erp/app/modules/items/ui/Item/CustomerParts/CustomerParts.tsx:41
 #: apps/erp/app/modules/production/ui/Jobs/JobForm.tsx:356
 #: apps/erp/app/modules/production/ui/Jobs/JobsTable.tsx:271
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderDeliveryForm.tsx:160
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderDeliveryForm.tsx:163
 #: apps/erp/app/modules/quality/ui/Issue/IssueAssociations.tsx:356
 #: apps/erp/app/modules/sales/ui/Customer/CustomerForm.tsx:61
 #: apps/erp/app/modules/sales/ui/CustomerPortals/CustomerPortalForm.tsx:91
@@ -3313,7 +3313,7 @@ msgstr "自定义字段"
 #: apps/erp/app/modules/sales/ui/Quotes/QuotesTable.tsx:97
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteToOrderDrawer.tsx:939
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderForm.tsx:171
-#: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderShipmentForm.tsx:159
+#: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderShipmentForm.tsx:162
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrdersTable.tsx:141
 #: apps/erp/app/modules/sales/ui/SalesRFQ/SalesRFQForm.tsx:156
 #: apps/erp/app/modules/sales/ui/SalesRFQ/SalesRFQsTable.tsx:73
@@ -4333,7 +4333,7 @@ msgstr "文档"
 msgid "Don't Cancel"
 msgstr "不要取消"
 
-#: apps/erp/app/routes/x+/settings+/people.tsx:290
+#: apps/erp/app/routes/x+/settings+/people.tsx:292
 msgid "Done"
 msgstr "完成"
 
@@ -4386,9 +4386,9 @@ msgstr "将采购订单 PDF 拖放到此处，或点击选择文件"
 msgid "Drag handle"
 msgstr "拖动手柄"
 
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderDeliveryForm.tsx:153
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderDeliveryForm.tsx:154
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrdersTable.tsx:265
-#: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderShipmentForm.tsx:152
+#: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderShipmentForm.tsx:153
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrdersTable.tsx:461
 msgid "Drop Shipment"
 msgstr "直运"
@@ -4980,7 +4980,7 @@ msgstr "在设置中启用审计日志以开始跟踪数据的更改。"
 msgid "Enable digital quotes for your company. This will allow you to send digital quotes to your customers, and allow them to accept them online."
 msgstr "为您的公司启用数字报价。这将允许您向客户发送数字报价，并允许他们在线接受。"
 
-#: apps/erp/app/routes/x+/settings+/accounting.tsx:118
+#: apps/erp/app/routes/x+/settings+/accounting.tsx:120
 msgid "Enable full accrual accounting with journal entries, financial reports, and general ledger posting."
 msgstr "启用完整的权责发生制会计，包括日记账分录、财务报告和总账过账。"
 
@@ -5000,15 +5000,15 @@ msgstr "为MES终端启用共享工作站模式。操作员在执行工作前通
 msgid "Enable this rule to automatically require approval for matching documents"
 msgstr "启用此规则以自动要求匹配文档的批准"
 
-#: apps/erp/app/routes/x+/settings+/people.tsx:220
+#: apps/erp/app/routes/x+/settings+/people.tsx:221
 msgid "Enable timecard tracking for work shifts."
 msgstr "启用工作班次的时间卡跟踪。"
 
-#: apps/erp/app/routes/x+/settings+/people.tsx:197
+#: apps/erp/app/routes/x+/settings+/people.tsx:202
 msgid "Enable to allow shared workstation mode."
 msgstr "启用以允许共享工作站模式。"
 
-#: apps/erp/app/routes/x+/settings+/accounting.tsx:142
+#: apps/erp/app/routes/x+/settings+/accounting.tsx:148
 msgid "Enable to automatically post transactions to the general ledger."
 msgstr "启用以自动将交易过账到总分类账。"
 
@@ -5032,7 +5032,7 @@ msgstr "启用以在销售 PDF 上显示零件缩略图。"
 msgid "Enable to start tracking changes to your data."
 msgstr "启用以开始跟踪您的数据变化。"
 
-#: apps/erp/app/routes/x+/settings+/people.tsx:238
+#: apps/erp/app/routes/x+/settings+/people.tsx:244
 msgid "Enable to start tracking work shifts."
 msgstr "启用以开始跟踪工作班次。"
 
@@ -6136,7 +6136,7 @@ msgstr "量规类型"
 msgid "Gauges"
 msgstr "量规"
 
-#: apps/erp/app/routes/x+/settings+/accounting.tsx:115
+#: apps/erp/app/routes/x+/settings+/accounting.tsx:117
 msgid "General Ledger"
 msgstr "总分类账"
 
@@ -6642,7 +6642,7 @@ msgstr "邀请"
 msgid "Invoice"
 msgstr "发票"
 
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderPaymentForm.tsx:87
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderPaymentForm.tsx:86
 #: apps/erp/app/modules/purchasing/ui/Supplier/SupplierPaymentForm.tsx:65
 #: apps/erp/app/modules/sales/ui/Customer/CustomerPaymentForm.tsx:65
 #: apps/erp/app/modules/sales/ui/Quotes/QuotePaymentForm.tsx:79
@@ -6674,7 +6674,7 @@ msgstr "发票客户位置"
 msgid "Invoice ID"
 msgstr "发票ID"
 
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderPaymentForm.tsx:82
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderPaymentForm.tsx:81
 #: apps/erp/app/modules/purchasing/ui/Supplier/SupplierPaymentForm.tsx:60
 #: apps/erp/app/modules/sales/ui/Customer/CustomerPaymentForm.tsx:60
 #: apps/erp/app/modules/sales/ui/Quotes/QuotePaymentForm.tsx:74
@@ -6690,7 +6690,7 @@ msgstr "发票号码"
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceForm.tsx:211
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceProperties.tsx:242
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoicesTable.tsx:110
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderPaymentForm.tsx:77
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderPaymentForm.tsx:76
 #: apps/erp/app/modules/purchasing/ui/Supplier/SupplierPaymentForm.tsx:55
 msgid "Invoice Supplier"
 msgstr "发票供应商"
@@ -7007,7 +7007,7 @@ msgstr "工作单据PDF包含工作说明。"
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrdersTable.tsx:203
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrdersTable.tsx:293
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderSummary.tsx:489
-#: apps/erp/app/routes/x+/job+/$jobId.complete.tsx:15
+#: apps/erp/app/routes/x+/job+/$jobId.complete.tsx:13
 #: apps/erp/app/routes/x+/job+/$jobId.tsx:36
 #: apps/erp/app/routes/x+/job+/new.tsx:28
 #: apps/erp/app/routes/x+/part+/$itemId.tsx:249
@@ -7393,7 +7393,7 @@ msgstr "加载中..."
 #: apps/erp/app/modules/production/ui/Jobs/JobHeader.tsx:1094
 #: apps/erp/app/modules/production/ui/Jobs/JobsTable.tsx:509
 #: apps/erp/app/modules/production/ui/Projection/DemandProjectionForm.tsx:116
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderDeliveryForm.tsx:165
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderDeliveryForm.tsx:168
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQsTable.tsx:172
 #: apps/erp/app/modules/purchasing/ui/Supplier/SupplierContactForm.tsx:107
 #: apps/erp/app/modules/quality/ui/Gauge/GaugeForm.tsx:436
@@ -7413,7 +7413,7 @@ msgstr "加载中..."
 #: apps/erp/app/modules/sales/ui/Customer/CustomerLocationForm.tsx:81
 #: apps/erp/app/modules/sales/ui/Quotes/QuotesTable.tsx:209
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderLineJobs.tsx:221
-#: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderShipmentForm.tsx:164
+#: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderShipmentForm.tsx:167
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrdersTable.tsx:424
 #: apps/erp/app/modules/sales/ui/SalesRFQ/SalesRFQsTable.tsx:168
 #: apps/erp/app/modules/users/ui/Employees/CreateEmployeeModal.tsx:83
@@ -9277,7 +9277,7 @@ msgstr "操作员必须选择不同的批次/序列号。"
 msgid "Operators"
 msgstr "操作员"
 
-#: apps/erp/app/routes/x+/settings+/people.tsx:192
+#: apps/erp/app/routes/x+/settings+/people.tsx:197
 msgid "Operators can use shared workstations with PIN authentication."
 msgstr "操作员可以使用带有PIN身份验证的共享工作站。"
 
@@ -9560,7 +9560,7 @@ msgstr "路径"
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceHeader.tsx:351
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceHeader.tsx:364
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoiceHeader.tsx:360
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderPaymentForm.tsx:69
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderPaymentForm.tsx:68
 #: apps/erp/app/modules/purchasing/ui/Supplier/SupplierSidebar/useSupplierSidebar.tsx:54
 #: apps/erp/app/modules/sales/ui/Customer/CustomerSidebar/useCustomerSidebar.tsx:55
 #: apps/erp/app/modules/sales/ui/Quotes/QuotePaymentForm.tsx:61
@@ -9568,10 +9568,6 @@ msgstr "路径"
 #: apps/erp/app/routes/x+/settings+/billing.tsx:38
 msgid "Payment"
 msgstr "付款"
-
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderPaymentForm.tsx:93
-msgid "Payment Complete"
-msgstr "付款完成"
 
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoicesTable.tsx:214
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoicesTable.tsx:208
@@ -9596,7 +9592,7 @@ msgstr "付款条款"
 #: apps/erp/app/modules/accounting/ui/useAccountingSubmodules.tsx:115
 #: apps/erp/app/modules/invoicing/ui/PurchaseInvoice/PurchaseInvoiceForm.tsx:250
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoiceForm.tsx:246
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderPaymentForm.tsx:91
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderPaymentForm.tsx:90
 #: apps/erp/app/modules/purchasing/ui/Supplier/SupplierPaymentForm.tsx:47
 #: apps/erp/app/modules/sales/ui/Customer/CustomerPaymentForm.tsx:47
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteToOrderDrawer.tsx:874
@@ -10815,7 +10811,7 @@ msgstr "已发布"
 msgid "Remaining after split stays on the original row."
 msgstr "分割后的剩余部分保留在原始行上。"
 
-#: apps/erp/app/routes/x+/settings+/people.tsx:280
+#: apps/erp/app/routes/x+/settings+/people.tsx:282
 msgid "Remember this PIN. You will need it to exit console mode on MES terminals."
 msgstr "记住此PIN。您需要它来退出MES终端上的控制台模式。"
 
@@ -11507,10 +11503,10 @@ msgstr "星期六"
 #: apps/erp/app/modules/production/ui/Procedures/ProcedureExplorer.tsx:878
 #: apps/erp/app/modules/production/ui/Procedures/ProcedureExplorer.tsx:947
 #: apps/erp/app/modules/production/ui/ScrapReasons/ScrapReasonForm.tsx:97
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderDeliveryForm.tsx:175
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderDeliveryForm.tsx:178
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderForm.tsx:209
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderLineForm.tsx:867
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderPaymentForm.tsx:99
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderPaymentForm.tsx:97
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQForm.tsx:101
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQLineForm.tsx:289
 #: apps/erp/app/modules/purchasing/ui/Supplier/SupplierContactForm.tsx:117
@@ -11565,7 +11561,7 @@ msgstr "星期六"
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderForm.tsx:284
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderLineForm.tsx:687
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderPaymentForm.tsx:91
-#: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderShipmentForm.tsx:174
+#: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderShipmentForm.tsx:177
 #: apps/erp/app/modules/sales/ui/SalesRFQ/SalesRFQForm.tsx:202
 #: apps/erp/app/modules/sales/ui/SalesRFQ/SalesRFQHeader.tsx:362
 #: apps/erp/app/modules/sales/ui/SalesRFQ/SalesRFQLineForm.tsx:340
@@ -13629,15 +13625,15 @@ msgstr "时间卡"
 #: apps/erp/app/modules/people/ui/usePeopleSubmodules.tsx:29
 #: apps/erp/app/routes/x+/people+/timecard.tsx:16
 #: apps/erp/app/routes/x+/person+/$personId.timecard.tsx:433
-#: apps/erp/app/routes/x+/settings+/people.tsx:217
+#: apps/erp/app/routes/x+/settings+/people.tsx:218
 msgid "Timecards"
 msgstr "时间卡"
 
-#: apps/erp/app/routes/x+/settings+/people.tsx:230
+#: apps/erp/app/routes/x+/settings+/people.tsx:232
 msgid "Timecards are disabled"
 msgstr "时间卡已禁用"
 
-#: apps/erp/app/routes/x+/settings+/people.tsx:228
+#: apps/erp/app/routes/x+/settings+/people.tsx:230
 msgid "Timecards are enabled"
 msgstr "时间卡已启用"
 
@@ -13933,7 +13929,7 @@ msgstr "培训分配"
 msgid "Trainings"
 msgstr "培训"
 
-#: apps/erp/app/routes/x+/settings+/accounting.tsx:137
+#: apps/erp/app/routes/x+/settings+/accounting.tsx:143
 msgid "Transactions will create journal entries and update the general ledger."
 msgstr "交易将创建日记账分录并更新总账。"
 
@@ -15024,7 +15020,7 @@ msgstr "工作说明未包含"
 msgid "Work Phone"
 msgstr "工作电话"
 
-#: apps/erp/app/routes/x+/settings+/people.tsx:236
+#: apps/erp/app/routes/x+/settings+/people.tsx:242
 msgid "Work shift tracking is active."
 msgstr "工作班次跟踪处于活跃状态。"
 
@@ -15104,7 +15100,7 @@ msgstr "你收到了这批货"
 msgid "You've been clocked in for {hoursElapsed} hours. Did you forget to clock out?"
 msgstr "您已打卡 {hoursElapsed} 小时。您忘记打卡下班了吗？"
 
-#: apps/erp/app/routes/x+/settings+/people.tsx:262
+#: apps/erp/app/routes/x+/settings+/people.tsx:264
 msgid "Your Console PIN"
 msgstr "您的控制台PIN"
 

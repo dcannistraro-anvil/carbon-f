@@ -147,11 +147,14 @@ const SalesOrderShipmentForm = forwardRef<
             <DatePicker name="shipmentDate" label={t`Shipment Date`} />
 
             <Input name="trackingNumber" label={t`Tracking Number`} />
-            <Boolean
-              name="dropShipment"
-              label={t`Drop Shipment`}
-              onChange={setDropShip}
-            />
+            <div className="col-span-3">
+              <Boolean
+                name="dropShipment"
+                label={t`Drop Shipment`}
+                bordered
+                onChange={setDropShip}
+              />
+            </div>
             {dropShip && (
               <>
                 <Customer

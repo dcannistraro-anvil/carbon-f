@@ -179,28 +179,29 @@ export default function PeopleSettingsRoute() {
           <CardContent>
             <HStack className="justify-between items-center">
               <VStack className="items-start" spacing={1}>
-                <span className="font-medium">
-                  {(companySettings as any).consoleEnabled ? (
-                    <Trans>Console mode is enabled</Trans>
-                  ) : (
-                    <Trans>Console mode is disabled</Trans>
-                  )}
-                </span>
                 <HStack className="items-center gap-2">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="font-medium">
                     {(companySettings as any).consoleEnabled ? (
-                      <Trans>
-                        Operators can use shared workstations with PIN
-                        authentication.
-                      </Trans>
+                      <Trans>Console mode is enabled</Trans>
                     ) : (
-                      <Trans>Enable to allow shared workstation mode.</Trans>
+                      <Trans>Console mode is disabled</Trans>
                     )}
                   </span>
                   <Badge variant="yellow">
                     <Trans>Beta</Trans>
                   </Badge>
                 </HStack>
+
+                <span className="text-sm text-muted-foreground">
+                  {(companySettings as any).consoleEnabled ? (
+                    <Trans>
+                      Operators can use shared workstations with PIN
+                      authentication.
+                    </Trans>
+                  ) : (
+                    <Trans>Enable to allow shared workstation mode.</Trans>
+                  )}
+                </span>
               </VStack>
               <Switch
                 checked={(companySettings as any).consoleEnabled ?? false}
@@ -223,25 +224,26 @@ export default function PeopleSettingsRoute() {
           <CardContent>
             <HStack className="justify-between items-center">
               <VStack className="items-start" spacing={1}>
-                <span className="font-medium">
-                  {companySettings.timeCardEnabled ? (
-                    <Trans>Timecards are enabled</Trans>
-                  ) : (
-                    <Trans>Timecards are disabled</Trans>
-                  )}
-                </span>
                 <HStack className="items-center gap-2">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="font-medium">
                     {companySettings.timeCardEnabled ? (
-                      <Trans>Work shift tracking is active.</Trans>
+                      <Trans>Timecards are enabled</Trans>
                     ) : (
-                      <Trans>Enable to start tracking work shifts.</Trans>
+                      <Trans>Timecards are disabled</Trans>
                     )}
                   </span>
                   <Badge variant="yellow">
                     <Trans>Beta</Trans>
                   </Badge>
                 </HStack>
+
+                <span className="text-sm text-muted-foreground">
+                  {companySettings.timeCardEnabled ? (
+                    <Trans>Work shift tracking is active.</Trans>
+                  ) : (
+                    <Trans>Enable to start tracking work shifts.</Trans>
+                  )}
+                </span>
               </VStack>
               <Switch
                 checked={companySettings.timeCardEnabled ?? false}

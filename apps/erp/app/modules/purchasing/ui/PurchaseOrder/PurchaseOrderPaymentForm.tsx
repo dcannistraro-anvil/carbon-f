@@ -11,7 +11,6 @@ import { useState } from "react";
 import { useFetcher, useParams } from "react-router";
 import type { z } from "zod";
 import {
-  Boolean,
   CustomFormFields,
   Hidden,
   PaymentTerm,
@@ -90,7 +89,6 @@ const PurchaseOrderPaymentForm = ({
 
             <PaymentTerm name="paymentTermId" label={t`Payment Terms`} />
 
-            <Boolean name="paymentComplete" label={t`Payment Complete`} />
             <CustomFormFields table="purchaseOrderPayment" />
           </div>
         </CardContent>

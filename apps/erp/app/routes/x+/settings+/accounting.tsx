@@ -21,6 +21,7 @@ import { useCallback, useEffect } from "react";
 
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import { redirect, useFetcher, useLoaderData } from "react-router";
+import { useFlags } from "~/hooks";
 import {
   getCompanySettings,
   updateAccountingEnabledSetting
@@ -76,6 +77,7 @@ export async function action({ request }: ActionFunctionArgs) {
 export default function AccountingSettingsRoute() {
   const { companySettings } = useLoaderData<typeof loader>();
   const fetcher = useFetcher<typeof action>();
+  const { isInternal } = useFlags();
 
   // const isToggling = fetcher.state !== "idle";
 
@@ -124,36 +126,36 @@ export default function AccountingSettingsRoute() {
           <CardContent>
             <HStack className="justify-between items-center">
               <VStack className="items-start" spacing={1}>
-                <span className="font-medium">
-                  {(companySettings as any).accountingEnabled ? (
-                    <Trans>Accounting is enabled</Trans>
-                  ) : (
-                    <Trans>Accounting is disabled</Trans>
-                  )}
-                </span>
                 <HStack className="items-center gap-2">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="font-medium">
                     {(companySettings as any).accountingEnabled ? (
-                      <Trans>
-                        Transactions will create journal entries and update the
-                        general ledger.
-                      </Trans>
+                      <Trans>Accounting is enabled</Trans>
                     ) : (
-                      <Trans>
-                        Enable to automatically post transactions to the general
-                        ledger.
-                      </Trans>
+                      <Trans>Accounting is disabled</Trans>
                     )}
                   </span>
                   <Badge variant="red">
                     <Trans>Alpha</Trans>
                   </Badge>
                 </HStack>
+                <span className="text-sm text-muted-foreground">
+                  {(companySettings as any).accountingEnabled ? (
+                    <Trans>
+                      Transactions will create journal entries and update the
+                      general ledger.
+                    </Trans>
+                  ) : (
+                    <Trans>
+                      Enable to automatically post transactions to the general
+                      ledger.
+                    </Trans>
+                  )}
+                </span>
               </VStack>
               <Switch
                 checked={(companySettings as any).accountingEnabled ?? false}
                 onCheckedChange={handleAccountingToggle}
-                disabled
+                disabled={!isInternal}
                 // disabled={isToggling}
               />
             </HStack>

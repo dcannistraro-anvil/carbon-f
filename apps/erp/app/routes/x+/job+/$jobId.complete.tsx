@@ -1,13 +1,11 @@
 import { assertIsPost, error, success } from "@carbon/auth";
 import { requirePermissions } from "@carbon/auth/auth.server";
-import { getCarbonServiceRole } from "@carbon/auth/client.server";
 import { flash } from "@carbon/auth/session.server";
 import { validationError, validator } from "@carbon/form";
 import { msg } from "@lingui/core/macro";
 import type { ActionFunctionArgs } from "react-router";
 import { redirect } from "react-router";
 import { jobCompleteValidator } from "~/modules/production";
-import { getEdgeFunctionErrorMessage } from "~/utils/error";
 import type { Handle } from "~/utils/handle";
 import { path, requestReferrer } from "~/utils/path";
 
@@ -115,53 +113,40 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
     // If we need to receive leftovers to inventory
     if (quantityToReceiveToInventory > 0) {
-      const serviceRole = await getCarbonServiceRole();
-      const issue = await serviceRole.functions.invoke("issue", {
-        body: {
-          jobId,
-          type: "jobCompleteInventory",
-          companyId,
-          userId,
-          quantityComplete: quantityToReceiveToInventory,
-          storageUnitId,
-          locationId
-        }
+      const rpc = await client.rpc("complete_job_to_inventory", {
+        p_job_id: jobId,
+        p_quantity_complete: quantityToReceiveToInventory,
+        p_storage_unit_id: storageUnitId ?? undefined,
+        p_location_id: locationId ?? undefined,
+        p_company_id: companyId,
+        p_user_id: userId
       });
 
-      if (issue.error) {
-        const message = await getEdgeFunctionErrorMessage(
-          issue.error,
-          "Failed to receive leftovers to inventory"
-        );
+      if (rpc.error) {
         throw redirect(
           requestReferrer(request) ?? path.to.job(jobId),
-          await flash(request, error(issue.error, message))
+          await flash(
+            request,
+            error(rpc.error, "Failed to receive leftovers to inventory")
+          )
         );
       }
     }
   } else {
     // Make-to-stock: receive all completed to inventory
-    const serviceRole = await getCarbonServiceRole();
-    const issue = await serviceRole.functions.invoke("issue", {
-      body: {
-        jobId,
-        type: "jobCompleteInventory",
-        companyId,
-        userId,
-        quantityComplete,
-        storageUnitId,
-        locationId
-      }
+    const rpc = await client.rpc("complete_job_to_inventory", {
+      p_job_id: jobId,
+      p_quantity_complete: quantityComplete,
+      p_storage_unit_id: storageUnitId ?? undefined,
+      p_location_id: locationId ?? undefined,
+      p_company_id: companyId,
+      p_user_id: userId
     });
 
-    if (issue.error) {
-      const message = await getEdgeFunctionErrorMessage(
-        issue.error,
-        "Failed to complete job"
-      );
+    if (rpc.error) {
       throw redirect(
         requestReferrer(request) ?? path.to.job(jobId),
-        await flash(request, error(issue.error, message))
+        await flash(request, error(rpc.error, "Failed to complete job"))
       );
     }
   }
