@@ -38,8 +38,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
     locationId,
     storageUnitId,
     leftoverAction,
-    leftoverShipQuantity,
-    leftoverReceiveQuantity
+    leftoverShipQuantity
   } = validation.data;
 
   const makeToOrder = !!salesOrderId || !!salesOrderLineId;
@@ -61,110 +60,52 @@ export async function action({ request, params }: ActionFunctionArgs) {
   const leftoverQuantity = Math.max(0, quantityComplete - originalQuantity);
   const hasLeftover = leftoverQuantity > 0;
 
-  // Calculate what to ship vs receive based on leftover action
-  let quantityToShip = originalQuantity; // Default: ship original quantity
-  let quantityToReceiveToInventory = 0;
+  let quantityToShip = originalQuantity;
 
   if (hasLeftover && leftoverAction) {
     switch (leftoverAction) {
       case "ship":
-        // Ship all completed (including leftovers) to customer
         quantityToShip = quantityComplete;
         break;
-      case "receive":
-        // Ship original quantity, receive leftovers to inventory
-        quantityToShip = originalQuantity;
-        quantityToReceiveToInventory = leftoverQuantity;
-        break;
       case "split":
-        // Ship original + specified amount, receive rest to inventory
         quantityToShip = originalQuantity + (leftoverShipQuantity ?? 0);
-        quantityToReceiveToInventory = leftoverReceiveQuantity ?? 0;
-        break;
-      case "discard":
-        // Ship original quantity, discard leftovers (no action)
-        quantityToShip = originalQuantity;
         break;
     }
   }
 
+  const rpc = await client.rpc("complete_job_to_inventory", {
+    p_job_id: jobId,
+    p_quantity_complete: quantityComplete,
+    p_storage_unit_id: storageUnitId ?? undefined,
+    p_location_id: locationId ?? undefined,
+    p_company_id: companyId,
+    p_user_id: userId
+  });
+
+  if (rpc.error) {
+    throw redirect(
+      requestReferrer(request) ?? path.to.job(jobId),
+      await flash(request, error(rpc.error, "Failed to complete job"))
+    );
+  }
+
   if (makeToOrder) {
-    const makeToOrderUpdate = await client
+    const quantityShippedUpdate = await client
       .from("job")
       .update({
-        status: "Completed" as const,
-        completedDate: new Date().toISOString(),
-        quantityComplete,
         quantityShipped: quantityToShip,
         updatedAt: new Date().toISOString(),
         updatedBy: userId
       })
       .eq("id", jobId);
 
-    if (makeToOrderUpdate.error) {
+    if (quantityShippedUpdate.error) {
       throw redirect(
         requestReferrer(request) ?? path.to.job(jobId),
         await flash(
           request,
-          error(makeToOrderUpdate.error, "Failed to complete job")
+          error(quantityShippedUpdate.error, "Failed to update job")
         )
-      );
-    }
-
-    // Backflush unissued materials
-    const backflush = await client.rpc("backflush_job_materials", {
-      p_job_id: jobId,
-      p_quantity_complete: quantityComplete,
-      p_company_id: companyId,
-      p_user_id: userId
-    });
-
-    if (backflush.error) {
-      throw redirect(
-        requestReferrer(request) ?? path.to.job(jobId),
-        await flash(
-          request,
-          error(backflush.error, "Failed to backflush materials")
-        )
-      );
-    }
-
-    // If we need to receive leftovers to inventory
-    if (quantityToReceiveToInventory > 0) {
-      const rpc = await client.rpc("complete_job_to_inventory", {
-        p_job_id: jobId,
-        p_quantity_complete: quantityToReceiveToInventory,
-        p_storage_unit_id: storageUnitId ?? undefined,
-        p_location_id: locationId ?? undefined,
-        p_company_id: companyId,
-        p_user_id: userId
-      });
-
-      if (rpc.error) {
-        throw redirect(
-          requestReferrer(request) ?? path.to.job(jobId),
-          await flash(
-            request,
-            error(rpc.error, "Failed to receive leftovers to inventory")
-          )
-        );
-      }
-    }
-  } else {
-    // Make-to-stock: receive all completed to inventory
-    const rpc = await client.rpc("complete_job_to_inventory", {
-      p_job_id: jobId,
-      p_quantity_complete: quantityComplete,
-      p_storage_unit_id: storageUnitId ?? undefined,
-      p_location_id: locationId ?? undefined,
-      p_company_id: companyId,
-      p_user_id: userId
-    });
-
-    if (rpc.error) {
-      throw redirect(
-        requestReferrer(request) ?? path.to.job(jobId),
-        await flash(request, error(rpc.error, "Failed to complete job"))
       );
     }
   }

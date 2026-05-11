@@ -319,7 +319,6 @@ serve(async (req: Request) => {
                     quantityShipped: newQuantityShipped,
                   };
                 }
-                continue;
               }
 
               const itemTrackingType =
@@ -1749,8 +1748,6 @@ serve(async (req: Request) => {
                   quantityComplete: newQuantityComplete,
                   quantityShipped: newQuantityShipped,
                 };
-
-                continue;
               }
 
               const itemTrackingType =

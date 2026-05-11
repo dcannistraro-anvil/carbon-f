@@ -56,3 +56,4 @@ packages/database/supabase/seed.sql
 # Worktree-isolated dev environment
 .carbon-worktree
 .superpowers
+llm/tasks
