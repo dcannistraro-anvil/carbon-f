@@ -18,6 +18,7 @@ RUN pnpm run build:erp
 
 FROM node:22-slim
 WORKDIR /repo
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 RUN corepack enable
 ENV NODE_ENV=production
 ENV PORT=3000
