@@ -439,7 +439,7 @@ msgstr "Rzeczywisty początek"
 msgid "Add"
 msgstr "Dodaj"
 
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:681
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:684
 msgid "Add & Issue"
 msgstr "Dodaj i wydaj"
 
@@ -612,7 +612,7 @@ msgstr "Dodaj wysyłkę"
 msgid "Add Shipping"
 msgstr "Dodaj wysyłkę"
 
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:316
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:318
 msgid "Add Spare Part"
 msgstr "Dodaj część zamienną"
 
@@ -1836,7 +1836,7 @@ msgstr "Nie można wyłączyć jedynego aktywnego przedziału. Dodaj inny przedz
 #: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:563
 #: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:619
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderApprovalModal.tsx:129
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderFinalizeModal.tsx:116
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderFinalizeModal.tsx:117
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:553
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/FinalizeRFQModal.tsx:153
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:284
@@ -1877,7 +1877,7 @@ msgstr "Nie można wyłączyć jedynego aktywnego przedziału. Dodaj inny przedz
 #: apps/erp/app/modules/resources/ui/Contractors/ContractorForm.tsx:113
 #: apps/erp/app/modules/resources/ui/FailureModes/FailureModeForm.tsx:122
 #: apps/erp/app/modules/resources/ui/Locations/LocationForm.tsx:113
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:672
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:675
 #: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceDispatchExplorer.tsx:459
 #: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceDispatchExplorer.tsx:530
 #: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceDispatchProperties.tsx:657
@@ -2060,7 +2060,7 @@ msgstr "Nazwa kategorii"
 
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoicePostModal.tsx:172
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderApprovalModal.tsx:122
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderFinalizeModal.tsx:109
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderFinalizeModal.tsx:110
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteSendModal.tsx:170
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteFinalizeModal.tsx:215
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteToOrderDrawer.tsx:1074
@@ -5976,7 +5976,7 @@ msgstr "Filtr"
 msgid "Filtering"
 msgstr "Filtrowanie"
 
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderFinalizeModal.tsx:119
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderFinalizeModal.tsx:120
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:289
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:221
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:255
@@ -7359,7 +7359,7 @@ msgstr "Załaduj szablony"
 msgid "Loader"
 msgstr "Ładowarka"
 
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:347
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:350
 msgid "Loading item details..."
 msgstr "Ładowanie szczegółów przedmiotu..."
 
@@ -9783,7 +9783,7 @@ msgstr "Proszę zapisać operację przed dodaniem kroków."
 msgid "Please save the operation before adding tools."
 msgstr "Proszę zapisać operację przed dodaniem narzędzi."
 
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:207
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:208
 msgid "Please select an item"
 msgstr "Proszę wybrać element"
 
@@ -10446,7 +10446,7 @@ msgstr "Ilości"
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteToOrderDrawer.tsx:318
 #: apps/erp/app/modules/quality/ui/Issue/AssociatedItemsList.tsx:356
 #: apps/erp/app/modules/quality/ui/Issue/IssueAssociations.tsx:344
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:358
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:361
 #: apps/erp/app/modules/sales/ui/Pricing/PriceOverrideForm.tsx:351
 #: apps/erp/app/modules/sales/ui/Pricing/PriceOverridesTable.tsx:371
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteBillOfMaterial.tsx:859
@@ -10472,7 +10472,7 @@ msgstr "Ilość ukończona"
 msgid "Quantity is derived from completed serials/batches in MES and cannot be edited."
 msgstr "Ilość pochodzi z ukończonych numerów seryjnych/partii w MES i nie może być edytowana."
 
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:269
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:270
 msgid "Quantity must be greater than 0"
 msgstr "Ilość musi być większa niż 0"
 
@@ -11619,8 +11619,8 @@ msgid "Save View"
 msgstr "Zapisz Widok"
 
 #: apps/erp/app/modules/quality/ui/InboundInspections/ScanInspectionSample.tsx:125
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:378
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:498
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:381
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:501
 msgid "Scan"
 msgstr "Skanuj"
 
@@ -11818,8 +11818,8 @@ msgstr "Sekundy/Sztuka"
 #: apps/erp/app/modules/purchasing/ui/Planning/PurchasingPlanningOrderDrawer.tsx:396
 #: apps/erp/app/modules/quality/ui/InboundInspections/ScanInspectionSample.tsx:129
 #: apps/erp/app/modules/quality/ui/InboundInspections/ScanInspectionSample.tsx:204
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:382
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:502
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:385
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:505
 #: packages/react/src/Combobox.tsx:148
 #: packages/react/src/CreateableCombobox.tsx:157
 #: packages/react/src/MultiSelect.tsx:178
@@ -11876,7 +11876,7 @@ msgstr "Wybierz osobę przydzieloną"
 msgid "Select an issue type"
 msgstr "Wybierz typ problemu"
 
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:319
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:321
 msgid "Select an item and specify the quantity to issue"
 msgstr "Wybierz element i określ ilość do wydania"
 
@@ -14129,7 +14129,7 @@ msgstr "Koszt jednostkowy"
 #: apps/erp/app/modules/production/ui/Procedures/ProcedureExplorer.tsx:829
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderLineForm.tsx:571
 #: apps/erp/app/modules/quality/ui/Documents/QualityDocumentExplorer.tsx:606
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:365
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:368
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteBillOfProcess.tsx:1075
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteBillOfProcess.tsx:1342
 msgid "Unit of Measure"

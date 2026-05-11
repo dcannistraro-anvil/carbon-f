@@ -17,6 +17,7 @@ import {
   ModalContent,
   ModalDescription,
   ModalFooter,
+  ModalHeader,
   ModalTitle,
   NumberDecrementStepper,
   NumberField,
@@ -312,12 +313,14 @@ export function MaintenanceAddPartModal({
   return (
     <Modal open onOpenChange={onClose}>
       <ModalContent>
-        <ModalTitle>
-          <Trans>Add Spare Part</Trans>
-        </ModalTitle>
-        <ModalDescription>
-          <Trans>Select an item and specify the quantity to issue</Trans>
-        </ModalDescription>
+        <ModalHeader>
+          <ModalTitle>
+            <Trans>Add Spare Part</Trans>
+          </ModalTitle>
+          <ModalDescription>
+            <Trans>Select an item and specify the quantity to issue</Trans>
+          </ModalDescription>
+        </ModalHeader>
         <ValidatedForm
           method="post"
           action={path.to.addAndIssueMaintenanceDispatchItem(dispatchId)}
@@ -330,7 +333,7 @@ export function MaintenanceAddPartModal({
           }}
         >
           <ModalBody>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col">
               <Hidden name="itemId" value={selectedItemId} />
               <Hidden name="unitOfMeasureCode" value={unitOfMeasureCode} />
               {/* Item Selection */}
