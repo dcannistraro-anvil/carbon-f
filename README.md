@@ -174,6 +174,8 @@ The dev stack (Postgres, GoTrue, Kong, Storage, Inngest, Inbucket, Studio, Realt
 
 ### Local dev CLI (`crbn`)
 
+[![](https://cdn.loom.com/sessions/thumbnails/690e6a4ec1c24216b56a22aa2667ba51-ee9275cabb59a0aa-full-play.gif#t=0.1)](https://www.loom.com/embed/690e6a4ec1c24216b56a22aa2667ba51)
+
 `crbn` is a small CLI at `packages/dev/bin/crbn` that wraps two things:
 
 - **Git worktrees** — every feature branch can live in its own checkout dir, so you can switch branches without stashing.
