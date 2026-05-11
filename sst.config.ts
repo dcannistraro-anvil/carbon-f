@@ -17,6 +17,8 @@ export default $config({
       forceUpgrade: "v2",
     });
     const erp = cluster.addService("CarbonERPService", {
+      cpu: "2 vCPU",
+      memory: "4 GB",
       image: `${process.env.AWS_ACCOUNT_ID}.dkr.ecr.${process.env.AWS_REGION}.amazonaws.com/carbon/erp:${process.env.IMAGE_TAG}`,
       loadBalancer: {
         domain: {
@@ -113,6 +115,8 @@ export default $config({
     });
 
     const mes = cluster.addService("CarbonMESService", {
+      cpu: "2 vCPU",
+      memory: "4 GB",
       image: `${process.env.AWS_ACCOUNT_ID}.dkr.ecr.${process.env.AWS_REGION}.amazonaws.com/carbon/mes:${process.env.IMAGE_TAG}`,
       loadBalancer: {
         domain: {
