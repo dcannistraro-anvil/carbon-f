@@ -1266,7 +1266,7 @@ export const registerPurchasingTools: RegisterTools = (server, ctx) => {
       annotations: WRITE_ANNOTATIONS,
     },
     withErrorHandling(async (params) => {
-      const result = await upsertPurchaseOrder(ctx.client, { ...params.purchaseOrder, companyId: ctx.companyId, createdBy: ctx.userId, updatedBy: ctx.userId }, params.receiptRequestedDate);
+      const result = await upsertPurchaseOrder(ctx.client, { ...params.purchaseOrder, companyId: ctx.companyId, companyGroupId: ctx.companyGroupId, createdBy: ctx.userId, updatedBy: ctx.userId }, params.receiptRequestedDate);
       return toMcpResult(result);
     }, "Failed: purchasing_upsertPurchaseOrder"),
   );
@@ -1356,7 +1356,7 @@ export const registerPurchasingTools: RegisterTools = (server, ctx) => {
       annotations: WRITE_ANNOTATIONS,
     },
     withErrorHandling(async (params) => {
-      const result = await upsertSupplierQuote(ctx.client, { ...params.supplierQuote, companyId: ctx.companyId, createdBy: ctx.userId, updatedBy: ctx.userId });
+      const result = await upsertSupplierQuote(ctx.client, { ...params.supplierQuote, companyId: ctx.companyId, companyGroupId: ctx.companyGroupId, createdBy: ctx.userId, updatedBy: ctx.userId });
       return toMcpResult(result);
     }, "Failed: purchasing_upsertSupplierQuote"),
   );

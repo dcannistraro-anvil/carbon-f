@@ -52,7 +52,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
 export async function action({ request, params }: ActionFunctionArgs) {
   assertIsPost(request);
-  const { client, userId } = await requirePermissions(request, {
+  const { client, companyGroupId, userId } = await requirePermissions(request, {
     update: "purchasing"
   });
 
@@ -84,6 +84,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
     id,
     supplierQuoteId,
     ...d,
+    companyGroupId,
     customFields: setCustomFields(formData),
     updatedBy: userId
   });

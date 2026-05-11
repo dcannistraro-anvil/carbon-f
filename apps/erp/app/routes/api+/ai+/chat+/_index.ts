@@ -5,7 +5,8 @@ import { orchestrationAgent } from "./agents/orchestration-agent";
 import { createChatContext } from "./agents/shared/context";
 
 export async function action({ request }: ActionFunctionArgs) {
-  const { client, userId, companyId } = await requirePermissions(request, {});
+  const { client, userId, companyId, companyGroupId } =
+    await requirePermissions(request, {});
 
   const payload = await request.json();
 
@@ -26,6 +27,7 @@ export async function action({ request }: ActionFunctionArgs) {
   const context = createChatContext({
     userId,
     companyId,
+    companyGroupId,
     client,
     fullName,
     companyName,

@@ -30,11 +30,13 @@ import { path } from "~/utils/path";
 async function handleKanban({
   client,
   companyId,
+  companyGroupId,
   userId,
   id
 }: {
   client: SupabaseClient<Database>;
   companyId: string;
+  companyGroupId: string;
   userId: string;
   id: string;
 }): Promise<{ data: string; error: null } | { data: null; error: string }> {
@@ -262,6 +264,7 @@ async function handleKanban({
         status: "Draft",
         purchaseOrderType: "Purchase",
         companyId,
+        companyGroupId,
         createdBy: userId
       });
 
@@ -361,12 +364,13 @@ async function handleKanban({
 }
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
-  const { client, companyId, userId } = await requirePermissions(request, {});
+  const { client, companyId, companyGroupId, userId } =
+    await requirePermissions(request, {});
 
   const { id } = params;
   if (!id) throw notFound("id not found");
 
-  return await handleKanban({ client, companyId, userId, id });
+  return await handleKanban({ client, companyId, companyGroupId, userId, id });
 }
 
 export default function KanbanRedirectRoute() {

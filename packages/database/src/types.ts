@@ -36086,48 +36086,6 @@ export type Database = {
           },
         ]
       }
-      searchIndex_WBammHTt6NdE6hCgdhZbWC: {
-        Row: {
-          createdAt: string
-          description: string | null
-          entityId: string
-          entityType: string
-          id: number
-          link: string
-          metadata: Json | null
-          searchVector: unknown
-          tags: string[] | null
-          title: string
-          updatedAt: string | null
-        }
-        Insert: {
-          createdAt?: string
-          description?: string | null
-          entityId: string
-          entityType: string
-          id?: number
-          link: string
-          metadata?: Json | null
-          searchVector?: unknown
-          tags?: string[] | null
-          title: string
-          updatedAt?: string | null
-        }
-        Update: {
-          createdAt?: string
-          description?: string | null
-          entityId?: string
-          entityType?: string
-          id?: number
-          link?: string
-          metadata?: Json | null
-          searchVector?: unknown
-          tags?: string[] | null
-          title?: string
-          updatedAt?: string | null
-        }
-        Relationships: []
-      }
       searchIndexRegistry: {
         Row: {
           companyId: string
@@ -59904,6 +59862,15 @@ export type Database = {
             }
             Returns: undefined
           }
+      backflush_job_materials: {
+        Args: {
+          p_company_id: string
+          p_job_id: string
+          p_quantity_complete: number
+          p_user_id: string
+        }
+        Returns: undefined
+      }
       calculate_quantity_to_order: {
         Args: {
           p_demand_accumulation_period: number

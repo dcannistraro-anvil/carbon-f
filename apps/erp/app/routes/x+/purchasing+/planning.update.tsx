@@ -19,11 +19,12 @@ const itemsValidator = z
   .array();
 
 export async function action({ request }: ActionFunctionArgs) {
-  const { client, companyId, userId } = await requirePermissions(request, {
-    create: "purchasing",
-    role: "employee",
-    bypassRls: true
-  });
+  const { client, companyId, companyGroupId, userId } =
+    await requirePermissions(request, {
+      create: "purchasing",
+      role: "employee",
+      bypassRls: true
+    });
 
   const { items, action, locationId } = await request.json();
 
@@ -268,7 +269,7 @@ export async function action({ request }: ActionFunctionArgs) {
             if (supplier.currencyCode !== baseCurrencyCode) {
               const currency = await getCurrencyByCode(
                 client,
-                companyId,
+                companyGroupId,
                 supplier.currencyCode ?? baseCurrencyCode
               );
 
@@ -294,6 +295,7 @@ export async function action({ request }: ActionFunctionArgs) {
                 currencyCode: supplier.currencyCode ?? baseCurrencyCode,
                 exchangeRate: exchangeRate,
                 companyId,
+                companyGroupId,
                 createdBy: userId
               },
               undefined

@@ -23,9 +23,12 @@ import {
 import { getBase64ImageFromSupabase } from "~/modules/shared";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
-  const { client, companyId } = await requirePermissions(request, {
-    view: "sales"
-  });
+  const { client, companyId, companyGroupId } = await requirePermissions(
+    request,
+    {
+      view: "sales"
+    }
+  );
 
   const { id } = params;
   if (!id) throw new Error("Could not find id");
@@ -125,7 +128,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   if (quote.data?.currencyCode) {
     const currency = await getCurrencyByCode(
       client,
-      companyId,
+      companyGroupId,
       quote.data.currencyCode
     );
     if (currency.data?.exchangeRate) {

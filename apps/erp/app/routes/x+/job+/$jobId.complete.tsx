@@ -111,6 +111,24 @@ export async function action({ request, params }: ActionFunctionArgs) {
       );
     }
 
+    // Backflush unissued materials
+    const backflush = await client.rpc("backflush_job_materials", {
+      p_job_id: jobId,
+      p_quantity_complete: quantityComplete,
+      p_company_id: companyId,
+      p_user_id: userId
+    });
+
+    if (backflush.error) {
+      throw redirect(
+        requestReferrer(request) ?? path.to.job(jobId),
+        await flash(
+          request,
+          error(backflush.error, "Failed to backflush materials")
+        )
+      );
+    }
+
     // If we need to receive leftovers to inventory
     if (quantityToReceiveToInventory > 0) {
       const rpc = await client.rpc("complete_job_to_inventory", {

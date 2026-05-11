@@ -5,7 +5,7 @@ import { isQuoteLocked } from "~/modules/sales";
 import { requireUnlockedBulk } from "~/utils/lockedGuard.server";
 
 export async function action({ request }: ActionFunctionArgs) {
-  const { client, companyId, userId } = await requirePermissions(request, {
+  const { client, companyGroupId, userId } = await requirePermissions(request, {
     update: "sales"
   });
 
@@ -69,7 +69,7 @@ export async function action({ request }: ActionFunctionArgs) {
     case "currencyCode":
       const currency = await getCurrencyByCode(
         client,
-        companyId,
+        companyGroupId,
         value as string
       );
       if (currency.data) {

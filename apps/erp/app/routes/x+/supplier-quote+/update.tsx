@@ -6,7 +6,7 @@ import { isSupplierQuoteLocked } from "~/modules/purchasing";
 import { requireUnlockedBulk } from "~/utils/lockedGuard.server";
 
 export async function action({ request }: ActionFunctionArgs) {
-  const { client, companyId, userId } = await requirePermissions(request, {
+  const { client, companyGroupId, userId } = await requirePermissions(request, {
     update: "purchasing"
   });
 
@@ -70,7 +70,7 @@ export async function action({ request }: ActionFunctionArgs) {
     case "currencyCode":
       const currency = await getCurrencyByCode(
         client,
-        companyId,
+        companyGroupId,
         value as string
       );
       if (currency.data) {

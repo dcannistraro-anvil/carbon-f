@@ -2235,7 +2235,7 @@ export const registerSalesTools: RegisterTools = (server, ctx) => {
       annotations: WRITE_ANNOTATIONS,
     },
     withErrorHandling(async (params) => {
-      const result = await upsertQuote(ctx.client, { ...params.quote, companyId: ctx.companyId, createdBy: ctx.userId, updatedBy: ctx.userId });
+      const result = await upsertQuote(ctx.client, { ...params.quote, companyId: ctx.companyId, companyGroupId: ctx.companyGroupId, createdBy: ctx.userId, updatedBy: ctx.userId });
       return toMcpResult(result);
     }, "Failed: sales_upsertQuote"),
   );
@@ -2533,7 +2533,7 @@ export const registerSalesTools: RegisterTools = (server, ctx) => {
       annotations: WRITE_ANNOTATIONS,
     },
     withErrorHandling(async (params) => {
-      const result = await upsertSalesOrder(ctx.client, { ...params.salesOrder, companyId: ctx.companyId, createdBy: ctx.userId, updatedBy: ctx.userId });
+      const result = await upsertSalesOrder(ctx.client, { ...params.salesOrder, companyId: ctx.companyId, companyGroupId: ctx.companyGroupId, createdBy: ctx.userId, updatedBy: ctx.userId });
       return toMcpResult(result);
     }, "Failed: sales_upsertSalesOrder"),
   );

@@ -48,10 +48,13 @@ export const handle: Handle = {
 };
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
-  const { client, companyId } = await requirePermissions(request, {
-    view: "sales",
-    bypassRls: true
-  });
+  const { client, companyId, companyGroupId } = await requirePermissions(
+    request,
+    {
+      view: "sales",
+      bypassRls: true
+    }
+  );
 
   const { quoteId } = params;
   if (!quoteId) throw new Error("Could not find quoteId");
@@ -118,7 +121,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   if (quote.data?.currencyCode) {
     const presentationCurrency = await getCurrencyByCode(
       client,
-      companyId,
+      companyGroupId,
       quote.data.currencyCode
     );
     if (presentationCurrency.data?.exchangeRate) {

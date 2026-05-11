@@ -413,7 +413,7 @@ export const registerInvoicingTools: RegisterTools = (server, ctx) => {
       annotations: WRITE_ANNOTATIONS,
     },
     withErrorHandling(async (params) => {
-      const result = await upsertPurchaseInvoice(ctx.client, { ...params.purchaseInvoice, companyId: ctx.companyId, createdBy: ctx.userId, updatedBy: ctx.userId });
+      const result = await upsertPurchaseInvoice(ctx.client, { ...params.purchaseInvoice, companyId: ctx.companyId, companyGroupId: ctx.companyGroupId, createdBy: ctx.userId, updatedBy: ctx.userId });
       return toMcpResult(result);
     }, "Failed: invoicing_upsertPurchaseInvoice"),
   );
@@ -458,7 +458,7 @@ export const registerInvoicingTools: RegisterTools = (server, ctx) => {
       annotations: WRITE_ANNOTATIONS,
     },
     withErrorHandling(async (params) => {
-      const result = await upsertSalesInvoice(ctx.client, { ...params.salesInvoice, companyId: ctx.companyId, createdBy: ctx.userId, updatedBy: ctx.userId });
+      const result = await upsertSalesInvoice(ctx.client, { ...params.salesInvoice, companyId: ctx.companyId, companyGroupId: ctx.companyGroupId, createdBy: ctx.userId, updatedBy: ctx.userId });
       return toMcpResult(result);
     }, "Failed: invoicing_upsertSalesInvoice"),
   );

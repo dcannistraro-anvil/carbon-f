@@ -384,6 +384,7 @@ export async function upsertPurchaseInvoice(
     | (Omit<z.infer<typeof purchaseInvoiceValidator>, "id" | "invoiceId"> & {
         invoiceId: string;
         companyId: string;
+        companyGroupId: string;
         createdBy: string;
         customFields?: Json;
       })
@@ -433,7 +434,7 @@ export async function upsertPurchaseInvoice(
   if (purchaseInvoice.currencyCode) {
     const currency = await getCurrencyByCode(
       client,
-      purchaseInvoice.companyId,
+      purchaseInvoice.companyGroupId,
       purchaseInvoice.currencyCode
     );
     if (currency.data) {
@@ -448,11 +449,14 @@ export async function upsertPurchaseInvoice(
   const locationId =
     purchaseInvoice.locationId ?? purchaser?.data?.locationId ?? null;
 
+  const { companyGroupId: _companyGroupId, ...purchaseInvoiceData } =
+    purchaseInvoice;
+
   const invoice = await client
     .from("purchaseInvoice")
     .insert([
       {
-        ...purchaseInvoice,
+        ...purchaseInvoiceData,
         invoiceSupplierId: invoiceSupplierId ?? purchaseInvoice.supplierId,
         supplierInteractionId: supplierInteraction.data?.id,
         currencyCode: purchaseInvoice.currencyCode ?? "USD",
@@ -550,6 +554,7 @@ export async function upsertSalesInvoice(
     | (Omit<z.infer<typeof salesInvoiceValidator>, "id" | "invoiceId"> & {
         invoiceId: string;
         companyId: string;
+        companyGroupId: string;
         createdBy: string;
         customFields?: Json;
       })
@@ -599,7 +604,7 @@ export async function upsertSalesInvoice(
   if (salesInvoice.currencyCode) {
     const currency = await getCurrencyByCode(
       client,
-      salesInvoice.companyId,
+      salesInvoice.companyGroupId,
       salesInvoice.currencyCode
     );
     if (currency.data) {
@@ -614,11 +619,13 @@ export async function upsertSalesInvoice(
   const locationId =
     salesInvoice.locationId ?? salesPerson?.data?.locationId ?? null;
 
+  const { companyGroupId: _companyGroupId, ...salesInvoiceData } = salesInvoice;
+
   const invoice = await client
     .from("salesInvoice")
     .insert([
       {
-        ...salesInvoice,
+        ...salesInvoiceData,
         invoiceCustomerId: invoiceCustomerId ?? salesInvoice.customerId,
         opportunityId: opportunity.data?.id,
         currencyCode: salesInvoice.currencyCode ?? "USD",

@@ -94,7 +94,7 @@ export const createPurchaseOrderTool = tool({
     if (supplier.data?.currencyCode) {
       const currency = await getCurrencyByCode(
         context.client,
-        context.companyId,
+        context.companyGroupId,
         supplier.data?.currencyCode ?? ""
       );
       if (currency.data) {

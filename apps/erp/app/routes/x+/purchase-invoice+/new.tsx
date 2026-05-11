@@ -67,9 +67,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export async function action({ request }: ActionFunctionArgs) {
   assertIsPost(request);
-  const { client, companyId, userId } = await requirePermissions(request, {
-    create: "invoicing"
-  });
+  const { client, companyId, companyGroupId, userId } =
+    await requirePermissions(request, {
+      create: "invoicing"
+    });
 
   const formData = await request.formData();
   const validation = await validator(purchaseInvoiceValidator).validate(
@@ -109,6 +110,7 @@ export async function action({ request }: ActionFunctionArgs) {
     ...d,
     invoiceId,
     companyId,
+    companyGroupId,
     createdBy: userId,
     customFields: setCustomFields(formData)
   });

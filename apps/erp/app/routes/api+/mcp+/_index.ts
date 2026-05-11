@@ -21,10 +21,11 @@ export async function action({ request }: ActionFunctionArgs) {
     console.log("[MCP] Added carbon-key header from Bearer token");
   }
 
-  const { client, companyId, userId } = await requirePermissions(request, {});
+  const { client, companyId, companyGroupId, userId } =
+    await requirePermissions(request, {});
   console.log("[MCP] Auth successful:", { companyId, userId });
 
-  const server = createMcpServer({ client, companyId, userId });
+  const server = createMcpServer({ client, companyId, companyGroupId, userId });
   const transport = new WebStandardStreamableHTTPServerTransport({
     sessionIdGenerator: undefined,
     enableJsonResponse: true

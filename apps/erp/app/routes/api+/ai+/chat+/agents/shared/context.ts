@@ -5,6 +5,7 @@ export interface ChatContext {
   client: SupabaseClient<Database>;
   userId: string;
   companyId: string;
+  companyGroupId: string;
   fullName: string;
   companyName: string;
   baseCurrency: string;
@@ -21,6 +22,7 @@ export interface ChatContext {
 export function createChatContext(params: {
   userId: string;
   companyId: string;
+  companyGroupId: string;
   client: SupabaseClient<Database>;
   fullName: string;
   companyName: string;
@@ -34,6 +36,7 @@ export function createChatContext(params: {
   return {
     userId: params.userId,
     companyId: params.companyId,
+    companyGroupId: params.companyGroupId,
     client: params.client,
     fullName: params.fullName,
     companyName: params.companyName,

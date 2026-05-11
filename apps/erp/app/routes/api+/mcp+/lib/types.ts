@@ -5,6 +5,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 export interface McpContext {
   client: SupabaseClient<Database>;
   companyId: string;
+  companyGroupId: string;
   userId: string;
 }
 

@@ -1,120 +1,18 @@
-# Refactor: Configurable Upgrade Overlay System
+# MTO Material Backflush
 
-## Context
+## Plan
 
-3 near-duplicate overlay components exist (ApiKeysUpgradeOverlay,
-WebhooksUpgradeOverlay, AuditLogUpgradeOverlay) plus an inline
-upgrade-restricted block inside `AuditLogDrawer.tsx`. Server gate is
-`requireBusinessPlan` (currently buggy: `return true;` short-circuits all
-logic). `audit-logs.tsx` action duplicates the gate inline. Client-side
-gate pattern `isCloud && plan === Plan.Starter` is repeated across 6+
-files.
+- [x] Write design spec
+- [x] Step 1: Create `backflush_job_materials` function in a new migration
+- [x] Step 2: Refactor `complete_job_to_inventory` to call `backflush_job_materials`
+- [x] Step 3: Update `sync_finish_job_operation` to call `backflush_job_materials` for MTO
+- [x] Step 4: Update ERP route `$jobId.complete.tsx` to call `backflush_job_materials` for MTO
+- [x] Step 5: Verify — read all changed files and confirm correctness
 
-Goal: shared, composable upgrade-overlay system + generic plan-gate
-hook + generic server-side `requirePlan`.
+## Notes
 
-## Design (compound components, avoid boolean props)
-
-### `UpgradeOverlay` — compound component
-
-```tsx
-<UpgradeOverlay>
-  <UpgradeOverlay.Preview>
-    <ApiKeysTable data={mockApiKeys} count={mockApiKeys.length} />
-  </UpgradeOverlay.Preview>
-  <UpgradeOverlay.Card>
-    <UpgradeOverlay.Icon><LuKeyRound /></UpgradeOverlay.Icon>
-    <UpgradeOverlay.Title>API Keys</UpgradeOverlay.Title>
-    <UpgradeOverlay.Description>...</UpgradeOverlay.Description>
-    <UpgradeOverlay.Actions>
-      <UpgradeOverlay.UpgradeButton />
-    </UpgradeOverlay.Actions>
-  </UpgradeOverlay.Card>
-</UpgradeOverlay>
-```
-
-Inline variant for non-overlay contexts (e.g. drawer panel — no preview,
-no absolute positioning, no card chrome):
-
-```tsx
-<UpgradeOverlay.Inline>
-  <UpgradeOverlay.Icon>...</UpgradeOverlay.Icon>
-  <UpgradeOverlay.Title>...</UpgradeOverlay.Title>
-  <UpgradeOverlay.Description>...</UpgradeOverlay.Description>
-  <UpgradeOverlay.Actions>...</UpgradeOverlay.Actions>
-</UpgradeOverlay.Inline>
-```
-
-Layout pieces (`UpgradeOverlay`, `Preview`, `Card`, `Inline`) provide
-positioning. Content pieces (`Icon`, `Title`, `Description`, `Actions`,
-`UpgradeButton`) are reusable across both layouts. No boolean variant
-props — composition decides shape.
-
-### `usePlanGate` hook
-
-```tsx
-const { isGated } = usePlanGate({ requiredPlan: Plan.Business });
-if (isGated) return <UpgradeOverlay>...</UpgradeOverlay>;
-```
-
-Default `requiredPlan = Plan.Business`. Internally uses `usePlan()` +
-`useFlags()`. Returns `{ isGated, plan, requiredPlan }`.
-
-### Server `requirePlan`
-
-```ts
-await requirePlan({
-  request,
-  client,
-  companyId,
-  redirectTo: path.to.auditLog,
-  requiredPlan: Plan.Business,
-  message: "Upgrade to enable audit logging",
-});
-```
-
-Replaces `requireBusinessPlan`. Adds `Edition.Cloud` check (currently
-missing — non-cloud installs should never gate). Removes the `return
-true;` bug.
-
-## Files
-
-### New
-
-- [ ] `apps/erp/app/components/UpgradeOverlay/UpgradeOverlay.tsx`
-- [ ] `apps/erp/app/components/UpgradeOverlay/index.ts`
-- [ ] `apps/erp/app/hooks/usePlanGate.ts`
-- [ ] `apps/erp/app/utils/planGate.ts` — shared `planMeetsRequirement`
-
-### Modify
-
-- [ ] `apps/erp/app/utils/planGate.server.ts` — replace
-      `requireBusinessPlan` with generic `requirePlan`. Add Cloud check.
-      Remove dead code.
-- [ ] `apps/erp/app/modules/settings/ui/ApiKeys/ApiKeysUpgradeOverlay.tsx`
-      — re-implement as composition over `<UpgradeOverlay>`.
-- [ ] `apps/erp/app/modules/settings/ui/Webhooks/WebhooksUpgradeOverlay.tsx`
-- [ ] `apps/erp/app/modules/settings/ui/AuditLog/AuditLogUpgradeOverlay.tsx`
-- [ ] `apps/erp/app/components/AuditLog/AuditLogDrawer.tsx` — replace
-      inline `planRestricted` block with `<UpgradeOverlay.Inline>`.
-- [ ] Routes calling `requireBusinessPlan` — change to `requirePlan`:
-  - `api-keys.$id.tsx`, `api-keys.delete.$id.tsx`, `api-keys.new.tsx`
-  - `webhooks.$id.tsx`, `webhooks.delete.$id.tsx`, `webhooks.new.tsx`
-  - `integrations.$id.tsx`, `integrations.deactivate.$id.tsx`
-- [ ] `audit-logs.tsx` — replace inline action plan check with
-      `requirePlan`. Replace `isStarterTeaser` with `usePlanGate`.
-- [ ] `api-keys.tsx`, `webhooks.tsx` — fix `if (true)` bug → use
-      `usePlanGate` and check `isGated`.
-- [ ] `useAuditLog.tsx`, `IntegrationCard.tsx` — replace ad-hoc
-      `isCloud && plan === Plan.Starter` with `usePlanGate`.
-
-## Verification
-
-- `npm run typecheck` passes.
-- `npm run lingui:compile` passes.
-- Spot-check routes (api-keys, webhooks, audit-logs) on Starter +
-  Business cloud users.
-
-## Review
-
-(filled in after implementation)
+- Spec: `docs/superpowers/specs/2026-05-11-mto-backflush-design.md`
+- Migration file: `packages/database/supabase/migrations/20260508120000_complete-job-to-inventory.sql`
+- ERP route: `apps/erp/app/routes/x+/job+/$jobId.complete.tsx`
+- The backflush logic to extract is lines 193-593 of the migration
+- Prorate formula: `target = estimatedQuantity * (p_quantity_complete / job.quantity)`, `to_backflush = GREATEST(target - quantityIssued, 0)`

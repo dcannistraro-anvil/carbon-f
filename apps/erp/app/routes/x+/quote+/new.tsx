@@ -23,10 +23,11 @@ export const handle: Handle = {
 
 export async function action({ request }: ActionFunctionArgs) {
   assertIsPost(request);
-  const { client, companyId, userId } = await requirePermissions(request, {
-    create: "sales",
-    bypassRls: true
-  });
+  const { client, companyId, companyGroupId, userId } =
+    await requirePermissions(request, {
+      create: "sales",
+      bypassRls: true
+    });
 
   const formData = await request.formData();
   const validation = await validator(quoteValidator).validate(formData);
@@ -58,6 +59,7 @@ export async function action({ request }: ActionFunctionArgs) {
     ...validation.data,
     quoteId,
     companyId,
+    companyGroupId,
     createdBy: userId,
     customFields: setCustomFields(formData)
   });
