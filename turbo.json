@@ -47,12 +47,6 @@
       "dependsOn": ["^build"],
       "cache": false
     },
-    "db:start": {
-      "outputs": []
-    },
-    "db:kill": {
-      "outputs": []
-    },
     "db:types": {
       "outputs": [],
       "cache": true
@@ -64,22 +58,9 @@
       "outputs": [],
       "cache": false
     },
-    "db:push": {
-      "outputs": []
-    },
-    "db:pull": {
-      "outputs": []
-    },
     "db:seed": {
       "outputs": [],
       "cache": false
-    },
-    "db:migrate:force": {
-      "outputs": []
-    },
-    "setup": {
-      "cache": false,
-      "outputs": []
     },
     "typegen": {
       "cache": false,

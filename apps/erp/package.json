@@ -165,13 +165,13 @@
   "scripts": {
     "build": "react-router build",
     "clean": "rimraf .cache .turbo node_modules dist build",
-    "dev": "react-router dev",
+    "dev": "portless --script dev:app run --force",
+    "dev:app": "react-router dev --port $PORT --host $HOST",
     "dev:novu": "pnpm dlx novu@latest dev --port 3000",
     "sync:novu": "pnpm dlx novu@latest sync ",
     "lint": "biome lint --write ",
     "start": "NODE_ENV=production react-router-serve ./build/server/index.js",
     "typecheck": "tsgo --noEmit",
-    "types": "tsgo --noEmit",
     "typegen": "react-router typegen"
   },
   "sideEffects": false

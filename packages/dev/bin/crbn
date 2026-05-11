@@ -1,0 +1,384 @@
+#!/usr/bin/env bash
+# Carbon dev CLI router. Bash for `checkout` (needs eval'd cd in parent
+# shell); the rest delegates to `tsx packages/dev/src/main.ts` (citty).
+#
+# Setup once:  ./setup.sh
+# Then:        crbn <command>
+
+set -euo pipefail
+
+# ---------------------------------------------------------------------------
+# Output helpers (colors when stderr is a TTY).
+# All listings/errors go to stderr so they never get eval'd by the `crbn()`
+# shell function from setup.sh, which only consumes stdout.
+# ---------------------------------------------------------------------------
+
+if [[ -t 2 ]] && command -v tput >/dev/null 2>&1 && [[ "$(tput colors 2>/dev/null || echo 0)" -ge 8 ]]; then
+  C_BOLD=$(tput bold);   C_DIM=$(tput dim);    C_RESET=$(tput sgr0)
+  C_GREEN=$(tput setaf 2); C_YELLOW=$(tput setaf 3)
+  C_CYAN=$(tput setaf 6);  C_RED=$(tput setaf 1)
+else
+  C_BOLD=""; C_DIM=""; C_RESET=""
+  C_GREEN=""; C_YELLOW=""; C_CYAN=""; C_RED=""
+fi
+
+ok()    { printf '%s✓%s %s\n' "$C_GREEN"  "$C_RESET" "$*" >&2; }
+info()  { printf '%s•%s %s\n' "$C_CYAN"   "$C_RESET" "$*" >&2; }
+warn()  { printf '%s!%s %s\n' "$C_YELLOW" "$C_RESET" "$*" >&2; }
+fail()  { printf '%s✗%s %s\n' "$C_RED"    "$C_RESET" "$*" >&2; }
+hdr()   { printf '\n%s%s%s\n' "$C_BOLD" "$*" "$C_RESET" >&2; }
+
+# ---------------------------------------------------------------------------
+# Repo discovery
+# ---------------------------------------------------------------------------
+
+repo_root() {
+  # Each linked worktree has its own --show-toplevel. We want the *main*
+  # checkout (where packages/dev lives), which is `--git-common-dir`'s parent.
+  local common_dir
+  common_dir=$(git rev-parse --git-common-dir 2>/dev/null) || {
+    echo "crbn: not inside a git repository" >&2
+    return 1
+  }
+  if [[ "$common_dir" != /* ]]; then
+    common_dir="$PWD/$common_dir"
+  fi
+  dirname "$common_dir"
+}
+
+slugify_branch() {
+  # Mirrors packages/dev/src/lib/slug.ts:slugify — lowercase, replace
+  # non-[a-z0-9-] runs with `-`, trim/collapse `-`.
+  printf '%s' "$1" \
+    | tr '[:upper:]' '[:lower:]' \
+    | sed -E 's/[^a-z0-9-]+/-/g; s/^-+|-+$//g; s/-+/-/g'
+}
+
+delegate_ts() {
+  # Run citty entry through tsx. Prefer the locally-installed binary in the
+  # main checkout (single process under the shell — keeps Ctrl+C / SIGTERM
+  # semantics clean for the `crbn up` → graceful-`down` teardown flow).
+  # Falls back to `pnpx tsx` for fresh checkouts where node_modules isn't
+  # populated yet (e.g. immediately after `crbn checkout`).
+  local root
+  root="$(repo_root)"
+  if [[ -x "$root/node_modules/.bin/tsx" ]]; then
+    exec "$root/node_modules/.bin/tsx" "$root/packages/dev/src/main.ts" "$@"
+  fi
+  exec pnpx tsx "$root/packages/dev/src/main.ts" "$@"
+}
+
+# ---------------------------------------------------------------------------
+# checkout <name> [-b] [--path PATH] [--base REF] [--up]
+#
+# Unified verb: jumps into an existing worktree, or creates one when needed.
+# Mirrors `git checkout` semantics:
+#
+#   crbn checkout <name>        Existing branch → worktree (create if missing,
+#                               cd into it). Falls back to `origin/<name>`
+#                               (auto-fetches) when no local branch exists.
+#                               No match → error.
+#
+#   crbn checkout -b <name>     Branch must NOT exist. Creates new branch
+#                               from --base (default HEAD) + worktree.
+#
+# All progress logs go to stderr; the only stdout is `cd '<path>'` for the
+# shell function in setup.sh to eval. Pass --up to chain `crbn up` after
+# creation (bypasses the eval-wrapper; user's cwd doesn't change but the
+# stack starts in the new worktree).
+# ---------------------------------------------------------------------------
+
+checkout_usage() {
+  cat >&2 <<'USAGE'
+Usage: crbn checkout <name> [--path PATH] [--up]
+       crbn checkout -b <name> [--base REF] [--path PATH] [--up]
+       crbn checkout <pr-number> [--up]
+
+  Without -b: resolve <name> as an existing branch (local first, then
+  origin/<name> with auto-fetch). If a worktree on that branch exists,
+  cd into it. Otherwise create one + cd.
+
+  With -b: create a new branch <name> from --base (default HEAD), add a
+  worktree, cd in. Fails if the branch already exists.
+
+  PR shortcut: a purely-numeric <name> is treated as a GitHub PR number.
+  Fetches `pull/<num>/head` from origin, materializes a local branch
+  `pr-<num>` + worktree. Works for fork PRs too. If `gh` is on PATH it's
+  used for a nicer banner; not required.
+
+  --path PATH    Override the default worktree directory.
+  --base REF     (with -b) base ref for the new branch. Default: HEAD.
+  --up           After creation, exec `crbn up` in the new worktree.
+USAGE
+}
+
+# Find an existing worktree's path by branch. Empty stdout if not found.
+worktree_path_for_branch() {
+  local query="$1" current_path="" branch="" line=""
+  while IFS= read -r line; do
+    if [[ "$line" == worktree\ * ]]; then
+      current_path="${line#worktree }"
+    elif [[ "$line" == branch\ refs/heads/* ]]; then
+      branch="${line#branch refs/heads/}"
+      if [[ "$branch" == "$query" ]]; then
+        printf '%s\n' "$current_path"
+        return 0
+      fi
+    fi
+  done < <(git worktree list --porcelain)
+}
+
+cmd_checkout() {
+  local name="" custom_path="" base_ref="HEAD" do_up=0 create_new=0
+  while (( $# )); do
+    case "$1" in
+      -b)        create_new=1; shift ;;
+      --path)    custom_path="${2:-}"; shift 2 ;;
+      --path=*)  custom_path="${1#*=}"; shift ;;
+      --base)    base_ref="${2:-}"; shift 2 ;;
+      --base=*)  base_ref="${1#*=}"; shift ;;
+      --up)      do_up=1; shift ;;
+      -h|--help) checkout_usage; exit 0 ;;
+      --)        shift; break ;;
+      -*)        fail "unknown flag $1"; exit 2 ;;
+      *)
+        if [[ -z "$name" ]]; then
+          name="$1"
+        else
+          fail "extra arg $1"
+          exit 2
+        fi
+        shift
+        ;;
+    esac
+  done
+  if [[ -z "$name" ]]; then
+    fail "branch required"
+    checkout_usage
+    exit 2
+  fi
+
+  # PR shortcut: bare numeric arg → fetch GitHub PR head ref + worktree it.
+  if [[ "$name" =~ ^[0-9]+$ ]] && (( create_new == 0 )); then
+    if [[ -n "$custom_path" || "$base_ref" != "HEAD" ]]; then
+      warn "--path/--base ignored for PR checkout"
+    fi
+    _checkout_pr "$name" "$do_up"
+    return $?
+  fi
+
+  local root parent base target
+  root="$(repo_root)"
+  parent="$(dirname "$root")"
+  base="$(basename "$root")"
+  base="${base%%-[a-z0-9-]*}"  # strip prior `-<slug>` suffix
+  if [[ -n "$custom_path" ]]; then
+    target="$custom_path"
+    [[ "$target" = /* ]] || target="$PWD/$target"
+  else
+    target="$parent/${base}-$(slugify_branch "$name")"
+  fi
+
+  local local_exists=0 origin_exists=0 existing_worktree=""
+  if git -C "$root" show-ref --verify --quiet "refs/heads/$name"; then
+    local_exists=1
+  fi
+  existing_worktree="$(worktree_path_for_branch "$name")"
+
+  if (( create_new )); then
+    # -b path: branch must not exist.
+    if (( local_exists )); then
+      fail "branch '$name' already exists locally — drop -b to use it"
+      exit 1
+    fi
+    if [[ -e "$target" ]]; then
+      fail "target path already exists: $target"
+      exit 1
+    fi
+    info "creating branch '$name' from ${C_BOLD}${base_ref}${C_RESET}"
+    git -C "$root" worktree add -b "$name" "$target" "$base_ref" >&2
+    ok "worktree at $target"
+    do_post_create "$target"
+    printf "cd %q\n" "$target"
+    maybe_up "$target" "$do_up"
+    return 0
+  fi
+
+  # No -b: fast-path if the branch already has a worktree.
+  if [[ -n "$existing_worktree" ]]; then
+    info "worktree exists at ${C_DIM}${existing_worktree}${C_RESET}"
+    printf "cd %q\n" "$existing_worktree"
+    maybe_up "$existing_worktree" "$do_up"
+    return 0
+  fi
+
+  # Need to materialize a worktree. Resolve the ref locally or via origin.
+  local resolved=""
+  if (( local_exists )); then
+    resolved="$name"
+  else
+    info "fetching ${C_BOLD}origin/${name}${C_RESET}"
+    if git -C "$root" fetch origin "$name" --quiet 2>/dev/null \
+       && git -C "$root" show-ref --verify --quiet "refs/remotes/origin/$name"; then
+      git -C "$root" branch --track "$name" "origin/$name" >&2
+      resolved="$name"
+      origin_exists=1
+    else
+      fail "branch '$name' not found locally or on origin (use -b to create)"
+      exit 1
+    fi
+  fi
+  : "$origin_exists"  # tracked for clarity; not used after this
+
+  if [[ -e "$target" ]]; then
+    fail "target path already exists: $target"
+    exit 1
+  fi
+
+  info "git worktree add ${C_DIM}${target}${C_RESET}"
+  git -C "$root" worktree add "$target" "$resolved" >&2
+  ok "worktree at $target"
+  do_post_create "$target"
+  printf "cd %q\n" "$target"
+  maybe_up "$target" "$do_up"
+}
+
+# Fetch a GitHub PR head into a local `pr-<num>` branch and worktree it.
+# Same stdout contract as cmd_checkout (only `cd '<path>'` goes to stdout).
+_checkout_pr() {
+  local num="$1" do_up="$2"
+  local root parent base target branch
+  root="$(repo_root)"
+  parent="$(dirname "$root")"
+  base="$(basename "$root")"
+  base="${base%%-[a-z0-9-]*}"
+  branch="pr-${num}"
+  target="$parent/${base}-${branch}"
+
+  # Fast-path: worktree already exists for this PR.
+  local existing
+  existing="$(worktree_path_for_branch "$branch")"
+  if [[ -n "$existing" ]]; then
+    info "worktree for PR #${num} exists at ${C_DIM}${existing}${C_RESET}"
+    printf "cd %q\n" "$existing"
+    maybe_up "$existing" "$do_up"
+    return 0
+  fi
+
+  # Optional banner via gh (purely cosmetic — pure-git path works without it).
+  local metadata="" title="" head_ref=""
+  if command -v gh >/dev/null 2>&1; then
+    if metadata=$(gh pr view "$num" --json headRefName,title \
+                    -q '.headRefName + "\t" + .title' 2>/dev/null); then
+      head_ref="${metadata%%$'\t'*}"
+      title="${metadata#*$'\t'}"
+      info "PR #${num} — ${C_BOLD}${title}${C_RESET} (${C_DIM}${head_ref}${C_RESET})"
+    fi
+  fi
+  if [[ -z "$metadata" ]]; then
+    info "fetching PR #${num} from ${C_BOLD}origin${C_RESET}"
+  fi
+
+  # If the local branch already exists, reuse it instead of re-fetching.
+  # Keeps `pr-<num>` stable across re-runs and avoids accidental overwrites
+  # of in-progress local edits on top of the PR ref.
+  if git -C "$root" show-ref --verify --quiet "refs/heads/${branch}"; then
+    info "local branch '${branch}' exists — skipping fetch"
+  else
+    if ! git -C "$root" fetch origin "pull/${num}/head:${branch}" --quiet; then
+      fail "could not fetch PR #${num} from origin (is the number correct? is the PR open on this repo?)"
+      exit 1
+    fi
+  fi
+
+  if [[ -e "$target" ]]; then
+    fail "target path already exists: $target"
+    exit 1
+  fi
+
+  info "git worktree add ${C_DIM}${target}${C_RESET}"
+  git -C "$root" worktree add "$target" "$branch" >&2
+  ok "worktree at $target"
+  do_post_create "$target"
+  printf "cd %q\n" "$target"
+  maybe_up "$target" "$do_up"
+}
+
+# crbn copy inside the new worktree (so it reads package.json#crbn.copy from
+# the main checkout via --git-common-dir). All output goes to stderr to keep
+# stdout reserved for the eval'd `cd` line.
+do_post_create() {
+  local target="$1"
+  if ! ( cd "$target" && delegate_ts copy >&2 ); then
+    warn "copy step failed (worktree was still created)"
+  fi
+}
+
+# Replace process with `crbn up` cd'd into the new worktree. Caller's shell
+# stays at original cwd; on Ctrl+C they're back where they started.
+maybe_up() {
+  local target="$1" enabled="$2"
+  if (( enabled )); then
+    info "starting stack in $target"
+    cd "$target"
+    delegate_ts up
+  fi
+}
+
+# ---------------------------------------------------------------------------
+# Top-level help
+# ---------------------------------------------------------------------------
+
+print_help() {
+  cat <<'USAGE'
+crbn — Carbon dev CLI
+
+  Worktrees:
+    crbn checkout <branch>          Switch into worktree for <branch>.
+                                    Creates one if missing (auto-fetches
+                                    from origin if not local).
+    crbn checkout -b <branch>       Create new branch + worktree from
+                                    --base (default HEAD).
+    crbn checkout <pr-number>       Fetch the PR head from GitHub into a
+                                    new `pr-<num>` branch + worktree.
+    crbn new                        Interactive: pick branch + base ref,
+                                    create worktree, optionally copy .env.
+    crbn list                       Show all worktrees with stack status.
+    crbn remove                     Pick a worktree to delete (with stack
+                                    teardown).
+    crbn copy                       Sync files (package.json#crbn.copy)
+                                    from main checkout into cwd.
+
+  Stack:
+    crbn up                         Boot compose stack + apps.
+    crbn down                       Stop stack (volumes preserved).
+    crbn reset                      Wipe volumes + redis, then `up`.
+    crbn status                     Port assignment + container health.
+
+USAGE
+}
+
+# ---------------------------------------------------------------------------
+# Dispatch
+# ---------------------------------------------------------------------------
+
+cmd="${1:-}"
+[[ $# -gt 0 ]] && shift || true
+
+case "$cmd" in
+  ""|help|-h|--help)
+    print_help
+    ;;
+  checkout)
+    cmd_checkout "$@"
+    ;;
+  copy|up|down|reset|status|new|list|remove|complete)
+    delegate_ts "$cmd" "$@"
+    ;;
+  *)
+    echo "crbn: unknown command '$cmd'" >&2
+    echo >&2
+    print_help >&2
+    exit 2
+    ;;
+esac

@@ -1,0 +1,60 @@
+import { copyFileSync, existsSync } from "node:fs";
+import { basename, dirname, join, relative, resolve } from "node:path";
+import { intro, outro, tasks } from "@clack/prompts";
+import pc from "picocolors";
+import { addWorktree, currentBranch } from "../lib/git.js";
+import { getWorktreeRoot, slugify } from "../lib/slug.js";
+import {
+  promptBaseRef,
+  promptBranch,
+  promptCopyEnv,
+  promptDirName
+} from "../ui/prompts.js";
+
+export async function newWorktree() {
+  intro("Carbon · new worktree");
+
+  const here = await getWorktreeRoot();
+  const parentDir = dirname(here);
+  const repoBaseName = basename(here).replace(/-[a-z0-9-]+$/i, "");
+
+  const branch = await promptBranch();
+
+  const defaultDir = `${repoBaseName}-${slugify(branch)}`;
+  const dirName = await promptDirName(parentDir, defaultDir);
+  const targetPath = resolve(parentDir, dirName);
+
+  const cur = await currentBranch(here);
+  const baseRef = await promptBaseRef(cur || null);
+
+  const copyEnv = await promptCopyEnv();
+
+  await tasks([
+    {
+      title: `git worktree add ${dirName}`,
+      task: async (msg) => {
+        msg(`branching from ${baseRef}`);
+        const r = await addWorktree({ path: targetPath, branch, baseRef });
+        if (!r.ok) throw new Error(r.error);
+        return `worktree at ${relative(here, targetPath)}`;
+      }
+    },
+    ...(copyEnv
+      ? [
+          {
+            title: "Copy .env",
+            task: async () => {
+              const src = join(here, ".env");
+              if (!existsSync(src)) return "no .env in source — skipped";
+              copyFileSync(src, join(targetPath, ".env"));
+              return ".env copied";
+            }
+          }
+        ]
+      : [])
+  ]);
+
+  outro(
+    `worktree ready — ${pc.cyan(`crbn checkout ${branch} --up`)} to boot it`
+  );
+}

@@ -203,11 +203,12 @@ export async function createJournalEntry(
 #### Local Testing
 
 ```bash
-# Start Supabase local development
-npm run db:start
+# Boot the per-worktree dev stack (includes edge-runtime)
+pnpm dev   # or `crbn up`
 
-# Test your function
-curl -X POST 'http://localhost:54321/functions/v1/<function-name>' \
+# Find the live API port (PORT_API in .env.local, or shown by `crbn status`)
+# Test your function via the dynamic port:
+curl -X POST "http://localhost:${PORT_API:?run crbn status}/functions/v1/<function-name>" \
   -H 'Authorization: Bearer <token>' \
   -H 'Content-Type: application/json' \
   -H 'x-company-id: <company-id>' \

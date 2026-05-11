@@ -57,7 +57,7 @@ export default defineConfig(({ isSsrBuild, mode }) => {
     },
     server: {
       port: 3000,
-      allowedHosts: [".ngrok-free.app", ".ngrok-free.dev"],
+      allowedHosts: [".ngrok-free.app", ".ngrok-free.dev", ".dev", ".localhost"],
       watch: {
         awaitWriteFinish: { stabilityThreshold: 250 },
       },
