@@ -1,6 +1,7 @@
 import { error, notFound, success } from "@carbon/auth";
 import { requirePermissions } from "@carbon/auth/auth.server";
 import { flash } from "@carbon/auth/session.server";
+import { requirePlan } from "@carbon/ee/plan.server";
 import type {
   ActionFunctionArgs,
   ClientActionFunctionArgs,
@@ -10,7 +11,6 @@ import { redirect, useLoaderData, useNavigate, useParams } from "react-router";
 import { ConfirmDelete } from "~/components/Modals";
 import { deleteItemRule, getItemRule } from "~/modules/items";
 import { path } from "~/utils/path";
-import { requirePlan } from "~/utils/planGate.server";
 import { getCompanyId } from "~/utils/react-query";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
@@ -38,6 +38,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
     request,
     client,
     companyId,
+    feature: "ITEM_RULES",
     redirectTo: path.to.itemRules
   });
 

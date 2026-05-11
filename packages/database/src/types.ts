@@ -2821,6 +2821,7 @@ export type Database = {
       }
       companySettings: {
         Row: {
+          accountingEnabled: boolean
           accountsPayableAddress: boolean | null
           accountsPayableEmail: string | null
           accountsReceivableAddress: boolean | null
@@ -2861,6 +2862,7 @@ export type Database = {
           useMetric: boolean
         }
         Insert: {
+          accountingEnabled?: boolean
           accountsPayableAddress?: boolean | null
           accountsPayableEmail?: string | null
           accountsReceivableAddress?: boolean | null
@@ -2901,6 +2903,7 @@ export type Database = {
           useMetric?: boolean
         }
         Update: {
+          accountingEnabled?: boolean
           accountsPayableAddress?: boolean | null
           accountsPayableEmail?: string | null
           accountsReceivableAddress?: boolean | null
@@ -36083,7 +36086,7 @@ export type Database = {
           },
         ]
       }
-      searchIndex_d7tp3mb9o0m059r81vf0: {
+      searchIndex_WBammHTt6NdE6hCgdhZbWC: {
         Row: {
           createdAt: string
           description: string | null
@@ -52640,14 +52643,14 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "address_countryCode_fkey"
-            columns: ["customerCountryCode"]
+            columns: ["supplierCountryCode"]
             isOneToOne: false
             referencedRelation: "country"
             referencedColumns: ["alpha2"]
           },
           {
             foreignKeyName: "address_countryCode_fkey"
-            columns: ["supplierCountryCode"]
+            columns: ["customerCountryCode"]
             isOneToOne: false
             referencedRelation: "country"
             referencedColumns: ["alpha2"]
@@ -59925,6 +59928,17 @@ export type Database = {
         Args: { operation_id: string }
         Returns: boolean
       }
+      complete_job_to_inventory: {
+        Args: {
+          p_company_id?: string
+          p_job_id: string
+          p_location_id?: string
+          p_quantity_complete: number
+          p_storage_unit_id?: string
+          p_user_id?: string
+        }
+        Returns: undefined
+      }
       create_audit_log_table: {
         Args: { p_company_id: string }
         Returns: undefined
@@ -60449,6 +60463,7 @@ export type Database = {
           reorderPoint: number
           reorderQuantity: number
           replenishmentSystem: Database["public"]["Enums"]["itemReplenishmentSystem"]
+          storageTypeIds: string[]
           thumbnailPath: string
           type: Database["public"]["Enums"]["itemType"]
           unitOfMeasureCode: string
@@ -62542,7 +62557,8 @@ export type Database = {
         | "receipt"
         | "shipment"
         | "stockTransfer"
-        | "jobOperation"
+        | "warehouseTransfer"
+        | "inventoryAdjustment"
       warehouseTransferStatus:
         | "Draft"
         | "To Ship and Receive"
@@ -63837,7 +63853,8 @@ export const Constants = {
         "receipt",
         "shipment",
         "stockTransfer",
-        "jobOperation",
+        "warehouseTransfer",
+        "inventoryAdjustment",
       ],
       warehouseTransferStatus: [
         "Draft",

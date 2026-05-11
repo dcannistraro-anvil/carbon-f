@@ -218,7 +218,7 @@ export default function ProductionSettingsRoute() {
           </CardHeader>
           <CardContent>
             <HStack className="justify-between items-center">
-              <VStack className="items-start gap-1">
+              <VStack className="items-start" spacing={1}>
                 <span className="font-medium">
                   {companySettings.jobTravelerIncludeWorkInstructions ? (
                     <Trans>Work instructions are included</Trans>

@@ -15,7 +15,7 @@ msgstr ""
 
 #. placeholder {0}: attribute.name
 #. placeholder {1}: activeStep + 1
-#: apps/mes/app/components/JobOperation/components/Step.tsx:435
+#: apps/mes/app/components/JobOperation/components/Step.tsx:436
 msgid "{0} - Set {1}"
 msgstr "{0} - Conjunto {1}"
 
@@ -177,8 +177,8 @@ msgstr "Ao entrar, você concorda com os <0>Termos de Serviço</0> e a <1>Polít
 #: apps/mes/app/components/Feedback.tsx:139
 #: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:268
 #: apps/mes/app/components/JobOperation/components/SerialSelectorModal.tsx:139
-#: apps/mes/app/components/JobOperation/components/Step.tsx:557
-#: apps/mes/app/components/JobOperation/components/Step.tsx:605
+#: apps/mes/app/components/JobOperation/components/Step.tsx:558
+#: apps/mes/app/components/JobOperation/components/Step.tsx:606
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:658
 #: apps/mes/app/components/Suggestion.tsx:202
 #: apps/mes/app/routes/x+/timecard.tsx:413
@@ -283,7 +283,7 @@ msgstr "Colunas"
 msgid "Company"
 msgstr "Empresa"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:188
+#: apps/mes/app/components/JobOperation/components/Step.tsx:189
 msgid "Complete"
 msgstr "Concluir"
 
@@ -331,7 +331,7 @@ msgstr "Prazo"
 msgid "Default Storage Unit"
 msgstr "Unidade de Armazenamento Padrão"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:614
+#: apps/mes/app/components/JobOperation/components/Step.tsx:615
 #: apps/mes/app/routes/x+/timecard.tsx:462
 #: apps/mes/app/routes/x+/timecard.tsx:522
 msgid "Delete"
@@ -460,7 +460,7 @@ msgid "Failed to fetch storageUnits"
 msgstr "Falha ao buscar unidades de armazenamento"
 
 #. placeholder {0}: fileUpload.name
-#: apps/mes/app/components/JobOperation/components/Step.tsx:386
+#: apps/mes/app/components/JobOperation/components/Step.tsx:387
 msgid "Failed to upload file: {0}"
 msgstr "Falha ao enviar arquivo: {0}"
 
@@ -681,15 +681,15 @@ msgstr "Mais opções"
 msgid "Move column: {0}"
 msgstr "Mover coluna: {0}"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:115
+#: apps/mes/app/components/JobOperation/components/Step.tsx:116
 msgid "Must be < {maxValue} {unitOfMeasureCode}"
 msgstr "Deve ser < {maxValue} {unitOfMeasureCode}"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:113
+#: apps/mes/app/components/JobOperation/components/Step.tsx:114
 msgid "Must be > {minValue} {unitOfMeasureCode}"
 msgstr "Deve ser > {minValue} {unitOfMeasureCode}"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:111
+#: apps/mes/app/components/JobOperation/components/Step.tsx:112
 msgid "Must be between {minValue} and {maxValue} {unitOfMeasureCode}"
 msgstr "Deve estar entre {minValue} e {maxValue} {unitOfMeasureCode}"
 
@@ -869,7 +869,7 @@ msgstr "Parâmetros"
 msgid "Part"
 msgstr "Peça"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:542
+#: apps/mes/app/components/JobOperation/components/Step.tsx:543
 msgid "Passed Inspection"
 msgstr "Aprovado na Inspeção"
 
@@ -952,8 +952,8 @@ msgstr "Quantidade deve ser maior que 0"
 msgid "Recent"
 msgstr "Recente"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:205
-#: apps/mes/app/components/JobOperation/components/Step.tsx:568
+#: apps/mes/app/components/JobOperation/components/Step.tsx:206
+#: apps/mes/app/components/JobOperation/components/Step.tsx:569
 msgid "Record"
 msgstr "Registrar"
 
@@ -963,7 +963,7 @@ msgstr "Registrar"
 msgid "Record {0}"
 msgstr "Registro {0}"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:512
+#: apps/mes/app/components/JobOperation/components/Step.tsx:513
 msgid "Remove"
 msgstr "Remover"
 
@@ -1286,7 +1286,7 @@ msgstr "Materiais de série/lote não emitidos"
 msgid "Unknown"
 msgstr "Desconhecido"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:154
+#: apps/mes/app/components/JobOperation/components/Step.tsx:155
 msgid "Update"
 msgstr "Atualizar"
 
@@ -1295,12 +1295,12 @@ msgid "Updated successfully"
 msgstr "Atualizado com sucesso"
 
 #. placeholder {0}: fileUpload.name
-#: apps/mes/app/components/JobOperation/components/Step.tsx:388
+#: apps/mes/app/components/JobOperation/components/Step.tsx:389
 msgid "Uploaded: {0}"
 msgstr "Enviado: {0}"
 
 #. placeholder {0}: fileUpload.name
-#: apps/mes/app/components/JobOperation/components/Step.tsx:374
+#: apps/mes/app/components/JobOperation/components/Step.tsx:375
 msgid "Uploading {0}"
 msgstr "Enviando {0}"
 

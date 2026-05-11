@@ -14,7 +14,7 @@ import {
 import { getSupabaseServiceRole } from "../lib/supabase.ts";
 import { Database } from "../lib/types.ts";
 import { TrackedEntityAttributes, credit, debit, journalReference } from "../lib/utils.ts";
-import { isInternalUser } from "../lib/flags.ts";
+
 import { getCurrentAccountingPeriod } from "../shared/get-accounting-period.ts";
 import { getNextSequence } from "../shared/get-next-sequence.ts";
 import { getDefaultPostingGroup } from "../shared/get-posting-group.ts";
@@ -109,7 +109,7 @@ async function issueJobOperationMaterials(
     quantity,
     companyId,
     userId,
-    isInternal,
+    accountingEnabled,
     accountDefaults,
     dimensionMap,
     client,
@@ -119,7 +119,7 @@ async function issueJobOperationMaterials(
     quantity: number;
     companyId: string;
     userId: string;
-    isInternal: boolean;
+    accountingEnabled: boolean;
     accountDefaults: any;
     dimensionMap: Map<string, string>;
     client: any;
@@ -306,7 +306,7 @@ async function issueJobOperationMaterials(
     }
   }
 
-  if (isInternal && accountDefaults?.data && itemLedgerInserts.length > 0) {
+  if (accountingEnabled && accountDefaults?.data && itemLedgerInserts.length > 0) {
     const journalLineInserts: {
       accountId: string;
       description: string;
@@ -719,15 +719,6 @@ const payloadValidator = z.discriminatedUnion("type", [
     userId: z.string(),
   }),
   z.object({
-    type: z.literal("jobCompleteInventory"),
-    jobId: z.string(),
-    quantityComplete: z.number(),
-    storageUnitId: z.string().optional(),
-    locationId: z.string().optional(),
-    companyId: z.string(),
-    userId: z.string(),
-  }),
-  z.object({
     type: z.literal("jobCompleteMakeToOrder"),
     jobId: z.string(),
     quantityComplete: z.number(),
@@ -881,500 +872,6 @@ serve(async (req: Request) => {
       [];
 
     switch (validatedPayload.type) {
-      case "jobCompleteInventory": {
-        const {
-          jobId,
-          quantityComplete,
-          storageUnitId,
-          locationId,
-          companyId,
-          userId,
-        } = validatedPayload;
-
-        const client = await getSupabaseServiceRole(
-          req.headers.get("Authorization"),
-          req.headers.get("carbon-key") ?? "",
-          companyId
-        );
-
-        const [isInternal, companyRecord] = await Promise.all([
-          isInternalUser(client, userId),
-          client
-            .from("company")
-            .select("companyGroupId")
-            .eq("id", companyId)
-            .single(),
-        ]);
-        if (companyRecord.error) throw new Error("Failed to fetch company");
-
-        const accountDefaults = isInternal
-          ? await getDefaultPostingGroup(client, companyId)
-          : null;
-        if (isInternal && (accountDefaults?.error || !accountDefaults?.data)) {
-          throw new Error("Error getting account defaults");
-        }
-
-        const dimensions = isInternal
-          ? await client
-              .from("dimension")
-              .select("id, entityType")
-              .eq("companyGroupId", companyRecord.data.companyGroupId)
-              .eq("active", true)
-              .in("entityType", ["ItemPostingGroup", "Location", "CostCenter", "Employee"])
-          : null;
-
-        const dimensionMap = new Map<string, string>();
-        if (dimensions?.data) {
-          for (const dim of dimensions.data) {
-            if (dim.entityType) dimensionMap.set(dim.entityType, dim.id);
-          }
-        }
-
-        await db.transaction().execute(async (trx) => {
-          const job = await trx
-            .selectFrom("job")
-            .where("id", "=", jobId)
-            .select(["itemId", "quantityReceivedToInventory", "jobId"])
-            .executeTakeFirstOrThrow();
-
-          const jobMakeMethod = await trx
-            .selectFrom("jobMakeMethod")
-            .where("jobId", "=", jobId)
-            .where("parentMaterialId", "is", null)
-            .selectAll()
-            .executeTakeFirstOrThrow();
-
-          const item = await trx
-            .selectFrom("item")
-            .where("id", "=", job?.itemId!)
-            .select(["readableIdWithRevision"])
-            .executeTakeFirstOrThrow();
-
-          const quantityReceivedToInventory =
-            quantityComplete - (job?.quantityReceivedToInventory ?? 0);
-
-          await trx
-            .updateTable("job")
-            .set({
-              status: "Completed" as const,
-              completedDate: new Date().toISOString(),
-              quantityComplete,
-              quantityReceivedToInventory,
-              updatedAt: new Date().toISOString(),
-              updatedBy: userId,
-            })
-            .where("id", "=", jobId)
-            .execute();
-
-          if (jobMakeMethod.requiresBatchTracking) {
-            const trackedEntity = await client
-              .from("trackedEntity")
-              .select("*")
-              .eq("attributes->>Job Make Method", jobMakeMethod.id!)
-              .single();
-
-            if (!trackedEntity.data) {
-              throw new Error("Tracked entity not found");
-            }
-
-            itemLedgerInserts.push({
-              entryType: "Assembly Output",
-              documentType: "Job Receipt",
-              documentId: jobId,
-              companyId,
-              itemId: job?.itemId!,
-              quantity: quantityReceivedToInventory,
-              locationId,
-              storageUnitId,
-              trackedEntityId: trackedEntity.data.id,
-              createdBy: userId,
-            });
-          } else if (jobMakeMethod.requiresSerialTracking) {
-            const trackedEntities = await client
-              .from("trackedEntity")
-              .select("*")
-              .eq("attributes->>Job Make Method", jobMakeMethod.id!)
-              .neq("status", "Consumed");
-
-            if (!trackedEntities.data) {
-              throw new Error("Tracked entities not found");
-            }
-
-            // TODO: we probably need some user input for determining which entities go into inventory
-            trackedEntities.data.forEach((trackedEntity) => {
-              itemLedgerInserts.push({
-                entryType: "Assembly Output",
-                documentType: "Job Receipt",
-                documentId: jobId,
-                companyId,
-                itemId: job?.itemId!,
-                quantity: 1,
-                locationId,
-                storageUnitId,
-                trackedEntityId: trackedEntity.id,
-                createdBy: userId,
-              });
-            });
-
-            await trx
-              .updateTable("trackedEntity")
-              .set({
-                status: "Available",
-              })
-              .where(
-                "id",
-                "in",
-                trackedEntities.data.map((trackedEntity) => trackedEntity.id)
-              )
-              .execute();
-          } else {
-            itemLedgerInserts.push({
-              entryType: "Assembly Output",
-              documentType: "Job Receipt",
-              documentId: jobId,
-              companyId,
-              itemId: job?.itemId!,
-              quantity: quantityReceivedToInventory,
-              locationId,
-              storageUnitId,
-              createdBy: userId,
-            });
-          }
-
-          if (itemLedgerInserts.length > 0) {
-            await trx
-              .insertInto("itemLedger")
-              .values(itemLedgerInserts)
-              .execute();
-
-            // Update pickMethod defaultStorageUnitId if needed for each inserted ledger
-            for (const ledger of itemLedgerInserts) {
-              await updatePickMethodDefaultStorageUnitIfNeeded(
-                trx,
-                ledger.itemId,
-                ledger.locationId,
-                ledger.storageUnitId,
-                companyId,
-                userId
-              );
-            }
-          }
-
-          // WIP discharge: DR FG Inventory / CR WIP
-          if (isInternal && accountDefaults?.data) {
-            // Post any unposted production events as labor/machine absorption JEs
-            const unpostedEvents = await trx
-              .selectFrom("productionEvent")
-              .innerJoin("jobOperation", "jobOperation.id", "productionEvent.jobOperationId")
-              .innerJoin("workCenter", "workCenter.id", "productionEvent.workCenterId")
-              .select([
-                "productionEvent.id as id",
-                "productionEvent.duration as duration",
-                "productionEvent.type as type",
-                "productionEvent.employeeId as employeeId",
-                "workCenter.laborRate as laborRate",
-                "workCenter.machineRate as machineRate",
-              ])
-              .where("jobOperation.jobId", "=", jobId)
-              .where("productionEvent.endTime", "is not", null)
-              .where("productionEvent.postedToGL", "=", false)
-              .where("productionEvent.duration", ">", 0)
-              .execute();
-
-            for (const event of unpostedEvents) {
-              const durationHours = Number(event.duration) / 3600;
-              const rate = event.type === "Machine"
-                ? Number(event.machineRate ?? 0)
-                : Number(event.laborRate ?? 0);
-              const laborCost = durationHours * rate;
-
-              if (laborCost > 0 && accountDefaults.data.laborAbsorptionAccount) {
-                const laborJournalLineReference = nanoid();
-                const laborAccountingPeriodId = await getCurrentAccountingPeriod(client, companyId, db);
-                const laborJournalEntryId = await getNextSequence(trx, "journalEntry", companyId);
-
-                const laborJournalResult = await trx
-                  .insertInto("journal")
-                  .values({
-                    journalEntryId: laborJournalEntryId,
-                    accountingPeriodId: laborAccountingPeriodId,
-                    description: `${event.type} Time — Job ${job.jobId}`,
-                    postingDate: new Date().toISOString().slice(0, 10),
-                    companyId,
-                    sourceType: "Production Event",
-                    status: "Posted",
-                    postedAt: new Date().toISOString(),
-                    postedBy: userId,
-                    createdBy: userId,
-                  })
-                  .returning(["id"])
-                  .executeTakeFirstOrThrow();
-
-                const laborJournalLineResults = await trx
-                  .insertInto("journalLine")
-                  .values([
-                    {
-                      journalId: laborJournalResult.id,
-                      accountId: accountDefaults.data.workInProgressAccount,
-                      description: "WIP Account",
-                      amount: debit("asset", laborCost),
-                      quantity: 1,
-                      documentType: "Production Event",
-                      documentId: jobId,
-                      documentLineReference: journalReference.to.job(jobId),
-                      journalLineReference: laborJournalLineReference,
-                      companyId,
-                    },
-                    {
-                      journalId: laborJournalResult.id,
-                      accountId: accountDefaults.data.laborAbsorptionAccount,
-                      description: "Labor/Machine Absorption",
-                      amount: credit("expense", laborCost),
-                      quantity: 1,
-                      documentType: "Production Event",
-                      documentId: jobId,
-                      documentLineReference: journalReference.to.job(jobId),
-                      journalLineReference: laborJournalLineReference,
-                      companyId,
-                    },
-                  ])
-                  .returning(["id"])
-                  .execute();
-
-                if (dimensionMap.size > 0 && event.employeeId) {
-                  const laborDimensionInserts: {
-                    journalLineId: string;
-                    dimensionId: string;
-                    valueId: string;
-                    companyId: string;
-                  }[] = [];
-
-                  laborJournalLineResults.forEach((jl) => {
-                    if (dimensionMap.has("Employee")) {
-                      laborDimensionInserts.push({
-                        journalLineId: jl.id,
-                        dimensionId: dimensionMap.get("Employee")!,
-                        valueId: event.employeeId!,
-                        companyId,
-                      });
-                    }
-                  });
-
-                  if (laborDimensionInserts.length > 0) {
-                    await trx
-                      .insertInto("journalLineDimension")
-                      .values(laborDimensionInserts)
-                      .execute();
-                  }
-                }
-              }
-
-              await trx
-                .updateTable("productionEvent")
-                .set({ postedToGL: true })
-                .where("id", "=", event.id)
-                .execute();
-            }
-
-            // Calculate accumulated WIP cost for this job
-            const wipEntries = await trx
-              .selectFrom("journalLine")
-              .innerJoin("journal", "journal.id", "journalLine.journalId")
-              .select((eb) => eb.fn.sum("journalLine.amount").as("totalWip"))
-              .where("journalLine.accountId", "=", accountDefaults.data!.workInProgressAccount)
-              .where("journalLine.documentId", "=", jobId)
-              .where("journal.companyId", "=", companyId)
-              .executeTakeFirst();
-
-            const accumulatedWipCost = Math.abs(Number(wipEntries?.totalWip ?? 0));
-
-            if (accumulatedWipCost > 0) {
-              const today = new Date().toISOString().slice(0, 10);
-              const journalLineReference = nanoid();
-
-              const journalLineInserts = [
-                {
-                  accountId: accountDefaults.data.inventoryAccount,
-                  description: "Finished Goods Inventory",
-                  amount: debit("asset", accumulatedWipCost),
-                  quantity: quantityReceivedToInventory,
-                  documentType: "Job Receipt",
-                  documentId: jobId,
-                  documentLineReference: journalReference.to.job(jobId),
-                  journalLineReference,
-                  companyId,
-                },
-                {
-                  accountId: accountDefaults.data.workInProgressAccount,
-                  description: "WIP Account",
-                  amount: credit("asset", accumulatedWipCost),
-                  quantity: quantityReceivedToInventory,
-                  documentType: "Job Receipt",
-                  documentId: jobId,
-                  documentLineReference: journalReference.to.job(jobId),
-                  journalLineReference,
-                  companyId,
-                },
-              ];
-
-              const accountingPeriodId = await getCurrentAccountingPeriod(
-                client,
-                companyId,
-                db
-              );
-
-              const journalEntryId = await getNextSequence(
-                trx,
-                "journalEntry",
-                companyId
-              );
-
-              const journalResult = await trx
-                .insertInto("journal")
-                .values({
-                  journalEntryId,
-                  accountingPeriodId,
-                  description: `Job Completion ${job.jobId}`,
-                  postingDate: today,
-                  companyId,
-                  sourceType: "Job Receipt",
-                  status: "Posted",
-                  postedAt: new Date().toISOString(),
-                  postedBy: userId,
-                  createdBy: userId,
-                })
-                .returning(["id"])
-                .executeTakeFirstOrThrow();
-
-              const journalLineResults = await trx
-                .insertInto("journalLine")
-                .values(
-                  journalLineInserts.map((line) => ({
-                    ...line,
-                    journalId: journalResult.id,
-                  }))
-                )
-                .returning(["id"])
-                .execute();
-
-              // Write costLedger entry for finished good
-              await trx
-                .insertInto("costLedger")
-                .values({
-                  itemLedgerType: "Output",
-                  costLedgerType: "Direct Cost",
-                  adjustment: false,
-                  documentType: "Job Receipt",
-                  documentId: jobId,
-                  itemId: job.itemId!,
-                  quantity: quantityReceivedToInventory,
-                  cost: accumulatedWipCost,
-                  remainingQuantity: quantityReceivedToInventory,
-                  companyId,
-                })
-                .execute();
-
-              const finishedItemCost = await trx
-                .selectFrom("itemCost")
-                .selectAll()
-                .where("itemId", "=", job.itemId!)
-                .where("companyId", "=", companyId)
-                .executeTakeFirst();
-
-              const newPerUnitCost = accumulatedWipCost / quantityReceivedToInventory;
-
-              if (finishedItemCost?.costingMethod === "Average") {
-                const existingOnHand = await trx
-                  .selectFrom("itemLedger")
-                  .select((eb) => eb.fn.sum("quantity").as("quantity"))
-                  .where("itemId", "=", job.itemId!)
-                  .where("companyId", "=", companyId)
-                  .executeTakeFirst();
-
-                // existingQty includes the just-inserted receipt, so subtract it
-                const totalQtyOnHand = Number(existingOnHand?.quantity ?? 0);
-                const priorQty = totalQtyOnHand - quantityReceivedToInventory;
-                const priorValue =
-                  priorQty * Number(finishedItemCost.unitCost ?? 0);
-
-                if (totalQtyOnHand > 0) {
-                  const newUnitCost = (priorValue + accumulatedWipCost) / totalQtyOnHand;
-                  await trx
-                    .updateTable("itemCost")
-                    .set({ unitCost: newUnitCost })
-                    .where("itemId", "=", job.itemId!)
-                    .where("companyId", "=", companyId)
-                    .execute();
-                }
-              } else if (
-                finishedItemCost?.costingMethod === "FIFO" ||
-                finishedItemCost?.costingMethod === "LIFO"
-              ) {
-                await trx
-                  .updateTable("itemCost")
-                  .set({ unitCost: newPerUnitCost })
-                  .where("itemId", "=", job.itemId!)
-                  .where("companyId", "=", companyId)
-                  .execute();
-              }
-
-              // Insert dimensions
-              if (dimensionMap.size > 0) {
-                const finishedGoodItemCost = await trx
-                  .selectFrom("itemCost")
-                  .where("itemId", "=", job.itemId!)
-                  .where("companyId", "=", companyId)
-                  .select("itemPostingGroupId")
-                  .executeTakeFirst();
-
-                const jobRecord = await trx
-                  .selectFrom("job")
-                  .where("id", "=", jobId)
-                  .select(["locationId"])
-                  .executeTakeFirst();
-
-                const dimensionInserts: {
-                  journalLineId: string;
-                  dimensionId: string;
-                  valueId: string;
-                  companyId: string;
-                }[] = [];
-
-                journalLineResults.forEach((jl) => {
-                  if (
-                    finishedGoodItemCost?.itemPostingGroupId &&
-                    dimensionMap.has("ItemPostingGroup")
-                  ) {
-                    dimensionInserts.push({
-                      journalLineId: jl.id,
-                      dimensionId: dimensionMap.get("ItemPostingGroup")!,
-                      valueId: finishedGoodItemCost.itemPostingGroupId,
-                      companyId,
-                    });
-                  }
-                  if (jobRecord?.locationId && dimensionMap.has("Location")) {
-                    dimensionInserts.push({
-                      journalLineId: jl.id,
-                      dimensionId: dimensionMap.get("Location")!,
-                      valueId: jobRecord.locationId,
-                      companyId,
-                    });
-                  }
-                });
-
-                if (dimensionInserts.length > 0) {
-                  await trx
-                    .insertInto("journalLineDimension")
-                    .values(dimensionInserts)
-                    .execute();
-                }
-              }
-            }
-          }
-        });
-
-        break;
-      }
       case "jobOperation": {
         const { id, companyId, quantity, userId } = validatedPayload;
 
@@ -1384,20 +881,25 @@ serve(async (req: Request) => {
           companyId
         );
 
-        const [isInternal, companyRecord] = await Promise.all([
-          isInternalUser(client, userId),
+        const [accountingSettings, companyRecord] = await Promise.all([
+          client
+            .from("companySettings")
+            .select("accountingEnabled")
+            .eq("id", companyId)
+            .single(),
           client.from("company").select("companyGroupId").eq("id", companyId).single(),
         ]);
         if (companyRecord.error) throw new Error("Failed to fetch company");
+        const accountingEnabled = accountingSettings.data?.accountingEnabled ?? false;
 
-        const accountDefaults = isInternal
+        const accountDefaults = accountingEnabled
           ? await getDefaultPostingGroup(client, companyId)
           : null;
-        if (isInternal && (accountDefaults?.error || !accountDefaults?.data)) {
+        if (accountingEnabled && (accountDefaults?.error || !accountDefaults?.data)) {
           throw new Error("Error getting account defaults");
         }
 
-        const dimensions = isInternal
+        const dimensions = accountingEnabled
           ? await client
               .from("dimension")
               .select("id, entityType")
@@ -1419,7 +921,7 @@ serve(async (req: Request) => {
             quantity,
             companyId,
             userId,
-            isInternal,
+            accountingEnabled,
             accountDefaults: accountDefaults?.data ? accountDefaults : null,
             dimensionMap,
             client,
@@ -1454,20 +956,25 @@ serve(async (req: Request) => {
           throw new Error("Job operation not found");
         }
 
-        const [isInternalBatch, companyRecordBatch] = await Promise.all([
-          isInternalUser(client, userId),
+        const [accountingSettingsBatch, companyRecordBatch] = await Promise.all([
+          client
+            .from("companySettings")
+            .select("accountingEnabled")
+            .eq("id", companyId)
+            .single(),
           client.from("company").select("companyGroupId").eq("id", companyId).single(),
         ]);
         if (companyRecordBatch.error) throw new Error("Failed to fetch company");
+        const accountingEnabledBatch = accountingSettingsBatch.data?.accountingEnabled ?? false;
 
-        const accountDefaultsBatch = isInternalBatch
+        const accountDefaultsBatch = accountingEnabledBatch
           ? await getDefaultPostingGroup(client, companyId)
           : null;
-        if (isInternalBatch && (accountDefaultsBatch?.error || !accountDefaultsBatch?.data)) {
+        if (accountingEnabledBatch && (accountDefaultsBatch?.error || !accountDefaultsBatch?.data)) {
           throw new Error("Error getting account defaults");
         }
 
-        const dimensionsBatch = isInternalBatch
+        const dimensionsBatch = accountingEnabledBatch
           ? await client
               .from("dimension")
               .select("id, entityType")
@@ -1556,7 +1063,7 @@ serve(async (req: Request) => {
             quantity: row.quantity,
             companyId,
             userId,
-            isInternal: isInternalBatch,
+            accountingEnabled: accountingEnabledBatch,
             accountDefaults: accountDefaultsBatch?.data ? accountDefaultsBatch : null,
             dimensionMap: dimensionMapBatch,
             client,
@@ -1607,20 +1114,25 @@ serve(async (req: Request) => {
             (trackedEntity.attributes as TrackedEntityAttributes)
         );
 
-        const [isInternalSerial, companyRecordSerial] = await Promise.all([
-          isInternalUser(client, userId),
+        const [accountingSettingsSerial, companyRecordSerial] = await Promise.all([
+          client
+            .from("companySettings")
+            .select("accountingEnabled")
+            .eq("id", companyId)
+            .single(),
           client.from("company").select("companyGroupId").eq("id", companyId).single(),
         ]);
         if (companyRecordSerial.error) throw new Error("Failed to fetch company");
+        const accountingEnabledSerial = accountingSettingsSerial.data?.accountingEnabled ?? false;
 
-        const accountDefaultsSerial = isInternalSerial
+        const accountDefaultsSerial = accountingEnabledSerial
           ? await getDefaultPostingGroup(client, companyId)
           : null;
-        if (isInternalSerial && (accountDefaultsSerial?.error || !accountDefaultsSerial?.data)) {
+        if (accountingEnabledSerial && (accountDefaultsSerial?.error || !accountDefaultsSerial?.data)) {
           throw new Error("Error getting account defaults");
         }
 
-        const dimensionsSerial = isInternalSerial
+        const dimensionsSerial = accountingEnabledSerial
           ? await client
               .from("dimension")
               .select("id, entityType")
@@ -1733,7 +1245,7 @@ serve(async (req: Request) => {
             quantity: row.quantity,
             companyId,
             userId,
-            isInternal: isInternalSerial,
+            accountingEnabled: accountingEnabledSerial,
             accountDefaults: accountDefaultsSerial?.data ? accountDefaultsSerial : null,
             dimensionMap: dimensionMapSerial,
             client,
@@ -1769,20 +1281,25 @@ serve(async (req: Request) => {
           companyId
         );
 
-        const [isInternal, companyRecord] = await Promise.all([
-          isInternalUser(client, userId),
+        const [accountingSettings, companyRecord] = await Promise.all([
+          client
+            .from("companySettings")
+            .select("accountingEnabled")
+            .eq("id", companyId)
+            .single(),
           client.from("company").select("companyGroupId").eq("id", companyId).single(),
         ]);
         if (companyRecord.error) throw new Error("Failed to fetch company");
+        const accountingEnabled = accountingSettings.data?.accountingEnabled ?? false;
 
-        const accountDefaults = isInternal
+        const accountDefaults = accountingEnabled
           ? await getDefaultPostingGroup(client, companyId)
           : null;
-        if (isInternal && (accountDefaults?.error || !accountDefaults?.data)) {
+        if (accountingEnabled && (accountDefaults?.error || !accountDefaults?.data)) {
           throw new Error("Error getting account defaults");
         }
 
-        const dimensions = isInternal
+        const dimensions = accountingEnabled
           ? await client
               .from("dimension")
               .select("id, entityType")
@@ -1988,7 +1505,7 @@ serve(async (req: Request) => {
             }
           }
 
-          if (isInternal && accountDefaults?.data && itemLedgerInserts.length > 0) {
+          if (accountingEnabled && accountDefaults?.data && itemLedgerInserts.length > 0) {
             const jobOperation = await trx
               .selectFrom("jobOperation")
               .where("id", "=", id)
@@ -2056,20 +1573,25 @@ serve(async (req: Request) => {
           throw new Error("Job material not found");
         }
 
-        const [isInternalScrap, companyRecordScrap] = await Promise.all([
-          isInternalUser(client, userId),
+        const [accountingSettingsScrap, companyRecordScrap] = await Promise.all([
+          client
+            .from("companySettings")
+            .select("accountingEnabled")
+            .eq("id", companyId)
+            .single(),
           client.from("company").select("companyGroupId").eq("id", companyId).single(),
         ]);
         if (companyRecordScrap.error) throw new Error("Failed to fetch company");
+        const accountingEnabledScrap = accountingSettingsScrap.data?.accountingEnabled ?? false;
 
-        const accountDefaultsScrap = isInternalScrap
+        const accountDefaultsScrap = accountingEnabledScrap
           ? await getDefaultPostingGroup(client, companyId)
           : null;
-        if (isInternalScrap && (accountDefaultsScrap?.error || !accountDefaultsScrap?.data)) {
+        if (accountingEnabledScrap && (accountDefaultsScrap?.error || !accountDefaultsScrap?.data)) {
           throw new Error("Error getting account defaults");
         }
 
-        const dimensionsScrap = isInternalScrap
+        const dimensionsScrap = accountingEnabledScrap
           ? await client
               .from("dimension")
               .select("id, entityType")
@@ -2179,7 +1701,7 @@ serve(async (req: Request) => {
               })
               .execute();
 
-            if (isInternalScrap && accountDefaultsScrap?.data) {
+            if (accountingEnabledScrap && accountDefaultsScrap?.data) {
               await createMaterialWipEntries(trx, {
                 consumptionLedgers: [{ itemId: entity.sourceDocumentId!, quantity: -quantity }],
                 jobId: job?.id!,
@@ -2254,20 +1776,25 @@ serve(async (req: Request) => {
           companyId
         );
 
-        const [isInternalTracked, companyRecordTracked] = await Promise.all([
-          isInternalUser(client, userId),
+        const [accountingSettingsTracked, companyRecordTracked] = await Promise.all([
+          client
+            .from("companySettings")
+            .select("accountingEnabled")
+            .eq("id", companyId)
+            .single(),
           client.from("company").select("companyGroupId").eq("id", companyId).single(),
         ]);
         if (companyRecordTracked.error) throw new Error("Failed to fetch company");
+        const accountingEnabledTracked = accountingSettingsTracked.data?.accountingEnabled ?? false;
 
-        const accountDefaultsTracked = isInternalTracked
+        const accountDefaultsTracked = accountingEnabledTracked
           ? await getDefaultPostingGroup(client, companyId)
           : null;
-        if (isInternalTracked && (accountDefaultsTracked?.error || !accountDefaultsTracked?.data)) {
+        if (accountingEnabledTracked && (accountDefaultsTracked?.error || !accountDefaultsTracked?.data)) {
           throw new Error("Error getting account defaults");
         }
 
-        const dimensionsTracked = isInternalTracked
+        const dimensionsTracked = accountingEnabledTracked
           ? await client
               .from("dimension")
               .select("id, entityType")
@@ -2772,7 +2299,7 @@ serve(async (req: Request) => {
             }
           }
 
-          if (isInternalTracked && accountDefaultsTracked?.data && itemLedgerInserts.length > 0) {
+          if (accountingEnabledTracked && accountDefaultsTracked?.data && itemLedgerInserts.length > 0) {
             const consumptionEntries = itemLedgerInserts
               .filter((l) => l.entryType === "Consumption")
               .map((l) => ({ itemId: l.itemId as string, quantity: Number(l.quantity) }));
@@ -2859,20 +2386,25 @@ serve(async (req: Request) => {
           companyId
         );
 
-        const [isInternalUnconsume, companyRecordUnconsume] = await Promise.all([
-          isInternalUser(clientUnconsume, userId),
+        const [accountingSettingsUnconsume, companyRecordUnconsume] = await Promise.all([
+          clientUnconsume
+            .from("companySettings")
+            .select("accountingEnabled")
+            .eq("id", companyId)
+            .single(),
           clientUnconsume.from("company").select("companyGroupId").eq("id", companyId).single(),
         ]);
         if (companyRecordUnconsume.error) throw new Error("Failed to fetch company");
+        const accountingEnabledUnconsume = accountingSettingsUnconsume.data?.accountingEnabled ?? false;
 
-        const accountDefaultsUnconsume = isInternalUnconsume
+        const accountDefaultsUnconsume = accountingEnabledUnconsume
           ? await getDefaultPostingGroup(clientUnconsume, companyId)
           : null;
-        if (isInternalUnconsume && (accountDefaultsUnconsume?.error || !accountDefaultsUnconsume?.data)) {
+        if (accountingEnabledUnconsume && (accountDefaultsUnconsume?.error || !accountDefaultsUnconsume?.data)) {
           throw new Error("Error getting account defaults");
         }
 
-        const dimensionsUnconsume = isInternalUnconsume
+        const dimensionsUnconsume = accountingEnabledUnconsume
           ? await clientUnconsume
               .from("dimension")
               .select("id, entityType")
@@ -3060,7 +2592,7 @@ serve(async (req: Request) => {
               );
             }
 
-            if (isInternalUnconsume && accountDefaultsUnconsume?.data) {
+            if (accountingEnabledUnconsume && accountDefaultsUnconsume?.data) {
               const returnEntries = itemLedgerInserts.map((l) => ({
                 itemId: l.itemId as string,
                 quantity: Number(l.quantity),

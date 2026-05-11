@@ -1,7 +1,7 @@
-import { Plan } from "@carbon/utils";
+import { normalizePlanId, type Plan } from "@carbon/utils";
 import { useRouteData } from "./useRouteData";
 
-export function usePlan() {
-  const routeData = useRouteData<{ plan?: Plan }>("/x");
-  return routeData?.plan ?? Plan.Unknown;
+export function usePlan(): Plan {
+  const routeData = useRouteData<{ plan?: string | null }>("/x");
+  return normalizePlanId(routeData?.plan);
 }

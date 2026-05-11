@@ -10,8 +10,8 @@ import {
   isAuditLogEnabled,
   syncAuditSubscriptions
 } from "@carbon/database/audit";
+import { requirePlan } from "@carbon/ee/plan.server";
 import { Button, Heading, ScrollArea, VStack } from "@carbon/react";
-import { Plan } from "@carbon/utils";
 import { msg } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
 import { LuHistory } from "react-icons/lu";
@@ -21,7 +21,6 @@ import { usePlanGate } from "~/hooks/usePlanGate";
 import { AuditLogSettings, AuditLogUpgradeOverlay } from "~/modules/settings";
 import type { Handle } from "~/utils/handle";
 import { path } from "~/utils/path";
-import { requirePlan } from "~/utils/planGate.server";
 
 export const handle: Handle = {
   breadcrumb: msg`Audit Log`,
@@ -81,6 +80,7 @@ export async function action({ request }: ActionFunctionArgs) {
         request,
         client,
         companyId,
+        feature: "AUDIT_LOG",
         redirectTo: path.to.auditLog,
         message: "Upgrade to Business to enable audit logging"
       });
@@ -148,9 +148,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
 export default function AuditLogRoute() {
   const { enabled, archives } = useLoaderData<typeof loader>();
-  const { isGated } = usePlanGate({
-    plan: [Plan.Business]
-  });
+  const { isGated } = usePlanGate({ feature: "AUDIT_LOG" });
 
   if (isGated) {
     return <AuditLogUpgradeOverlay />;

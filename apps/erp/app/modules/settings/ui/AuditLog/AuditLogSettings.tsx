@@ -70,7 +70,7 @@ const AuditLogSettings = memo(
           </CardHeader>
           <CardContent>
             <HStack className="justify-between items-center">
-              <VStack className="items-start gap-1">
+              <VStack className="items-start" spacing={1}>
                 <span className="font-medium">
                   {enabled ? (
                     <Trans>Audit logging is enabled</Trans>

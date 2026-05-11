@@ -11,6 +11,7 @@ import {
   LuHistory,
   LuImage,
   LuKey,
+  LuLandmark,
   LuLayoutDashboard,
   LuNetwork,
   LuSheet,
@@ -78,6 +79,12 @@ export default function useSettingsSubmodules() {
       {
         name: t`Modules`,
         routes: [
+          {
+            name: t`Accounting`,
+            to: path.to.accountingSettings,
+            role: "employee",
+            icon: <LuLandmark />
+          },
           {
             name: t`Inventory`,
             to: path.to.inventorySettings,

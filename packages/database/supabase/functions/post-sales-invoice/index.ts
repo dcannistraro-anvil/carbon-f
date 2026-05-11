@@ -6,7 +6,7 @@ import { DB, getConnectionPool, getDatabaseClient } from "../lib/database.ts";
 import { corsHeaders } from "../lib/headers.ts";
 import { getSupabaseServiceRole } from "../lib/supabase.ts";
 import type { Database } from "../lib/types.ts";
-import { isInternalUser } from "../lib/flags.ts";
+
 import { credit, debit, journalReference } from "../lib/utils.ts";
 import { getCurrentAccountingPeriod } from "../shared/get-accounting-period.ts";
 import { getNextSequence } from "../shared/get-next-sequence.ts";
@@ -49,16 +49,21 @@ serve(async (req: Request) => {
       companyId
     );
 
-    const [companyRecord, isInternal] = await Promise.all([
+    const [companyRecord, accountingSettings] = await Promise.all([
       client
         .from("company")
         .select("companyGroupId")
         .eq("id", companyId)
         .single(),
-      isInternalUser(client, userId),
+      client
+        .from("companySettings")
+        .select("accountingEnabled")
+        .eq("id", companyId)
+        .single(),
     ]);
     if (companyRecord.error) throw new Error("Failed to fetch company");
     const companyGroupId = companyRecord.data.companyGroupId;
+    const accountingEnabled = accountingSettings.data?.accountingEnabled ?? false;
 
     const [salesInvoice, salesInvoiceLines, salesInvoiceShipment] =
       await Promise.all([
@@ -232,14 +237,14 @@ serve(async (req: Request) => {
         }, {});
 
         // Get account defaults (once for all lines)
-        const accountDefaults = isInternal
+        const accountDefaults = accountingEnabled
           ? await getDefaultPostingGroup(client, companyId)
           : null;
-        if (isInternal && (accountDefaults?.error || !accountDefaults?.data)) {
+        if (accountingEnabled && (accountDefaults?.error || !accountDefaults?.data)) {
           throw new Error("Error getting account defaults");
         }
 
-        const dimensions = isInternal
+        const dimensions = accountingEnabled
           ? await client
               .from("dimension")
               .select("id, entityType")
@@ -357,7 +362,7 @@ serve(async (req: Request) => {
 
                   // create the normal GL entries for a part
 
-                  if (isInternal && accountDefaults?.data) {
+                  if (accountingEnabled && accountDefaults?.data) {
                     const lineItemPostingGroupId =
                       itemCosts.data.find(
                         (cost) => cost.itemId === invoiceLine.itemId
@@ -451,7 +456,7 @@ serve(async (req: Request) => {
                   }
                 } // if the line is associated with a sales order line, COGS was posted at shipment — keep only AR + Revenue
                 else {
-                  if (isInternal && accountDefaults?.data) {
+                  if (accountingEnabled && accountDefaults?.data) {
                     // Create the normal GL entries for the invoice
                     journalLineReference = nanoid();
 
@@ -526,7 +531,7 @@ serve(async (req: Request) => {
           }
         }
 
-        const accountingPeriodId = isInternal
+        const accountingPeriodId = accountingEnabled
           ? await getCurrentAccountingPeriod(client, companyId, db)
           : null;
 
@@ -712,7 +717,7 @@ serve(async (req: Request) => {
           }
 
           let journalLineResults: { id: string }[] = [];
-          if (isInternal) {
+          if (accountingEnabled) {
             const journalEntryId = await getNextSequence(
               trx,
               "journalEntry",
@@ -823,7 +828,7 @@ serve(async (req: Request) => {
           }
 
           // Create intercompany transaction record if IC
-          if (isInternal && isIntercompany && intercompanyPartnerId) {
+          if (accountingEnabled && isIntercompany && intercompanyPartnerId) {
             const icJournalLineId = journalLineResults.length > 0
               ? journalLineResults[0].id
               : null;
@@ -927,7 +932,7 @@ serve(async (req: Request) => {
         }, {});
 
         // Create reversing journal entries
-        const reversingJournalEntries = isInternal
+        const reversingJournalEntries = accountingEnabled
           ? journalEntries.map((entry) => ({
               accountId: entry.accountId,
               description: `VOID: ${entry.description}`,
@@ -973,7 +978,7 @@ serve(async (req: Request) => {
           });
         }
 
-        const accountingPeriodId = isInternal
+        const accountingPeriodId = accountingEnabled
           ? await getCurrentAccountingPeriod(client, companyId, db)
           : null;
 
@@ -1048,7 +1053,7 @@ serve(async (req: Request) => {
               .execute();
           }
 
-          if (isInternal) {
+          if (accountingEnabled) {
             const voidJournalEntryId = await getNextSequence(
               trx,
               "journalEntry",

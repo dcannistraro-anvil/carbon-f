@@ -14,13 +14,12 @@ import {
   LuSheet,
   LuTrendingUp
 } from "react-icons/lu";
-import { usePermissions, useRouteData } from "~/hooks";
-import { useFlags } from "~/hooks/useFlags";
+import { usePermissions, useRouteData, useSettings } from "~/hooks";
 import type { AuthenticatedRouteGroup, Role } from "~/types";
 import { path } from "~/utils/path";
 
 const multiCompanyRoutes = new Set<string>([path.to.intercompany]);
-const internalOnlyRoutes = new Set<string>([
+const accountingOnlyRoutes = new Set<string>([
   path.to.balanceSheet,
   path.to.incomeStatement,
   path.to.trialBalance,
@@ -124,7 +123,8 @@ export default function useAccountingSubmodules() {
     [t]
   );
 
-  const { isInternal } = useFlags();
+  const settings = useSettings();
+  const accountingEnabled = (settings as any).accountingEnabled ?? false;
   const permissions = usePermissions();
   const routeData = useRouteData<{ hasMultipleCompanies: boolean }>(
     path.to.accounting
@@ -134,7 +134,7 @@ export default function useAccountingSubmodules() {
   const isRouteVisible = (route: { to: string; role?: string }) => {
     if (route.role && !permissions.is(route.role as Role)) return false;
     if (!hasMultipleCompanies && multiCompanyRoutes.has(route.to)) return false;
-    if (!isInternal && internalOnlyRoutes.has(route.to)) return false;
+    if (!accountingEnabled && accountingOnlyRoutes.has(route.to)) return false;
     return true;
   };
 

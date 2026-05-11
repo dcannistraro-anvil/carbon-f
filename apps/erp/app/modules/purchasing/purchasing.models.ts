@@ -249,8 +249,7 @@ export const purchaseOrderPaymentValidator = z.object({
   invoiceSupplierId: zfd.text(z.string().optional()),
   invoiceSupplierLocationId: zfd.text(z.string().optional()),
   invoiceSupplierContactId: zfd.text(z.string().optional()),
-  paymentTermId: zfd.text(z.string().optional()),
-  paymentComplete: zfd.checkbox()
+  paymentTermId: zfd.text(z.string().optional())
 });
 
 export const purchaseOrderFinalizeValidator = z

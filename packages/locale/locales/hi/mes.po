@@ -15,7 +15,7 @@ msgstr ""
 
 #. placeholder {0}: attribute.name
 #. placeholder {1}: activeStep + 1
-#: apps/mes/app/components/JobOperation/components/Step.tsx:435
+#: apps/mes/app/components/JobOperation/components/Step.tsx:436
 msgid "{0} - Set {1}"
 msgstr "{0} - सेट {1}"
 
@@ -177,8 +177,8 @@ msgstr "साइन इन करके, आप <0>सेवा की शर�
 #: apps/mes/app/components/Feedback.tsx:139
 #: apps/mes/app/components/JobOperation/components/QuantityModal.tsx:268
 #: apps/mes/app/components/JobOperation/components/SerialSelectorModal.tsx:139
-#: apps/mes/app/components/JobOperation/components/Step.tsx:557
-#: apps/mes/app/components/JobOperation/components/Step.tsx:605
+#: apps/mes/app/components/JobOperation/components/Step.tsx:558
+#: apps/mes/app/components/JobOperation/components/Step.tsx:606
 #: apps/mes/app/components/MaintenanceDispatch/MaintenanceAddPartModal.tsx:658
 #: apps/mes/app/components/Suggestion.tsx:202
 #: apps/mes/app/routes/x+/timecard.tsx:413
@@ -283,7 +283,7 @@ msgstr "कॉलम"
 msgid "Company"
 msgstr "कंपनी"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:188
+#: apps/mes/app/components/JobOperation/components/Step.tsx:189
 msgid "Complete"
 msgstr "पूर्ण करें"
 
@@ -331,7 +331,7 @@ msgstr "समय सीमा"
 msgid "Default Storage Unit"
 msgstr "डिफ़ॉल्ट स्टोरेज यूनिट"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:614
+#: apps/mes/app/components/JobOperation/components/Step.tsx:615
 #: apps/mes/app/routes/x+/timecard.tsx:462
 #: apps/mes/app/routes/x+/timecard.tsx:522
 msgid "Delete"
@@ -460,7 +460,7 @@ msgid "Failed to fetch storageUnits"
 msgstr "storageUnits को प्राप्त करने में विफल"
 
 #. placeholder {0}: fileUpload.name
-#: apps/mes/app/components/JobOperation/components/Step.tsx:386
+#: apps/mes/app/components/JobOperation/components/Step.tsx:387
 msgid "Failed to upload file: {0}"
 msgstr "फ़ाइल अपलोड करने में विफल: {0}"
 
@@ -681,15 +681,15 @@ msgstr "अधिक विकल्प"
 msgid "Move column: {0}"
 msgstr "कॉलम को स्थानांतरित करें: {0}"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:115
+#: apps/mes/app/components/JobOperation/components/Step.tsx:116
 msgid "Must be < {maxValue} {unitOfMeasureCode}"
 msgstr "{maxValue} {unitOfMeasureCode} से कम होना चाहिए"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:113
+#: apps/mes/app/components/JobOperation/components/Step.tsx:114
 msgid "Must be > {minValue} {unitOfMeasureCode}"
 msgstr "{minValue} से अधिक होना चाहिए {unitOfMeasureCode}"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:111
+#: apps/mes/app/components/JobOperation/components/Step.tsx:112
 msgid "Must be between {minValue} and {maxValue} {unitOfMeasureCode}"
 msgstr "{minValue} और {maxValue} के बीच होना चाहिए {unitOfMeasureCode}"
 
@@ -869,7 +869,7 @@ msgstr "पैरामीटर"
 msgid "Part"
 msgstr "भाग"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:542
+#: apps/mes/app/components/JobOperation/components/Step.tsx:543
 msgid "Passed Inspection"
 msgstr "निरीक्षण पास किया"
 
@@ -952,8 +952,8 @@ msgstr "मात्रा 0 से अधिक होनी चाहिए"
 msgid "Recent"
 msgstr "हाल ही में"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:205
-#: apps/mes/app/components/JobOperation/components/Step.tsx:568
+#: apps/mes/app/components/JobOperation/components/Step.tsx:206
+#: apps/mes/app/components/JobOperation/components/Step.tsx:569
 msgid "Record"
 msgstr "रिकॉर्ड"
 
@@ -963,7 +963,7 @@ msgstr "रिकॉर्ड"
 msgid "Record {0}"
 msgstr "रिकॉर्ड {0}"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:512
+#: apps/mes/app/components/JobOperation/components/Step.tsx:513
 msgid "Remove"
 msgstr "हटाएं"
 
@@ -1286,7 +1286,7 @@ msgstr "अजारी सीरीज़/बैच सामग्री"
 msgid "Unknown"
 msgstr "अज्ञात"
 
-#: apps/mes/app/components/JobOperation/components/Step.tsx:154
+#: apps/mes/app/components/JobOperation/components/Step.tsx:155
 msgid "Update"
 msgstr "अपडेट करें"
 
@@ -1295,12 +1295,12 @@ msgid "Updated successfully"
 msgstr "सफलतापूर्वक अपडेट किया गया"
 
 #. placeholder {0}: fileUpload.name
-#: apps/mes/app/components/JobOperation/components/Step.tsx:388
+#: apps/mes/app/components/JobOperation/components/Step.tsx:389
 msgid "Uploaded: {0}"
 msgstr "अपलोड किया गया: {0}"
 
 #. placeholder {0}: fileUpload.name
-#: apps/mes/app/components/JobOperation/components/Step.tsx:374
+#: apps/mes/app/components/JobOperation/components/Step.tsx:375
 msgid "Uploading {0}"
 msgstr "अपलोड किया जा रहा है {0}"
 

@@ -87,6 +87,42 @@ export async function action({ request }: ActionFunctionArgs) {
     };
   }
 
+  // Clear stale shipment attrs from previously-assigned tracked entities for this line.
+  // Batch: any prior entity on this line. Serial: only the entity at this index.
+  let staleQuery = serviceRole
+    .from("trackedEntity")
+    .select("id, attributes")
+    .eq("companyId", companyId)
+    .eq("attributes ->> Shipment Line", shipmentLineId)
+    .neq("id", trackedEntityId);
+
+  if (trackingType === "serial") {
+    const index = Number(formData.get("index"));
+    staleQuery = staleQuery.eq(
+      "attributes ->> Shipment Line Index",
+      String(index)
+    );
+  }
+
+  const staleResponse = await staleQuery;
+
+  if (staleResponse.data && staleResponse.data.length > 0) {
+    await Promise.all(
+      staleResponse.data.map((stale) => {
+        const cleaned = {
+          ...((stale.attributes ?? {}) as Record<string, any>)
+        };
+        delete cleaned["Shipment Line"];
+        delete cleaned.Shipment;
+        delete cleaned["Shipment Line Index"];
+        return serviceRole
+          .from("trackedEntity")
+          .update({ attributes: cleaned })
+          .eq("id", stale.id);
+      })
+    );
+  }
+
   // Update the trackedEntity record using service role to bypass RLS
   const updateResponse = await serviceRole
     .from("trackedEntity")

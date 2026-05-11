@@ -66967,6 +66967,9 @@ export default {
             $ref: "#/parameters/rowFilter.companySettings.inventoryShelfLife"
           },
           {
+            $ref: "#/parameters/rowFilter.companySettings.accountingEnabled"
+          },
+          {
             $ref: "#/parameters/select"
           },
           {
@@ -67140,6 +67143,9 @@ export default {
             $ref: "#/parameters/rowFilter.companySettings.inventoryShelfLife"
           },
           {
+            $ref: "#/parameters/rowFilter.companySettings.accountingEnabled"
+          },
+          {
             $ref: "#/parameters/preferReturn"
           }
         ],
@@ -67265,6 +67271,9 @@ export default {
           },
           {
             $ref: "#/parameters/rowFilter.companySettings.inventoryShelfLife"
+          },
+          {
+            $ref: "#/parameters/rowFilter.companySettings.accountingEnabled"
           },
           {
             $ref: "#/parameters/body.companySettings"
@@ -71059,6 +71068,61 @@ export default {
           }
         },
         tags: ["(rpc) sync_update_supplier_type_group_name"]
+      }
+    },
+    "/rpc/complete_job_to_inventory": {
+      post: {
+        parameters: [
+          {
+            in: "body",
+            name: "args",
+            required: true,
+            schema: {
+              properties: {
+                p_company_id: {
+                  format: "text",
+                  type: "string"
+                },
+                p_job_id: {
+                  format: "text",
+                  type: "string"
+                },
+                p_location_id: {
+                  format: "text",
+                  type: "string"
+                },
+                p_quantity_complete: {
+                  format: "numeric",
+                  type: "number"
+                },
+                p_storage_unit_id: {
+                  format: "text",
+                  type: "string"
+                },
+                p_user_id: {
+                  format: "text",
+                  type: "string"
+                }
+              },
+              required: ["p_job_id", "p_quantity_complete"],
+              type: "object"
+            }
+          },
+          {
+            $ref: "#/parameters/preferParams"
+          }
+        ],
+        produces: [
+          "application/json",
+          "application/vnd.pgrst.object+json;nulls=stripped",
+          "application/vnd.pgrst.object+json"
+        ],
+        responses: {
+          "200": {
+            description: "OK"
+          }
+        },
+        tags: ["(rpc) complete_job_to_inventory"]
       }
     },
     "/rpc/get_sales_order_lines_by_customer_id": {
@@ -109338,7 +109402,8 @@ export default {
         "updateLeadTimesOnReceipt",
         "enforceInspectionFourEyes",
         "samplingStandard",
-        "inventoryShelfLife"
+        "inventoryShelfLife",
+        "accountingEnabled"
       ],
       properties: {
         id: {
@@ -109552,6 +109617,11 @@ export default {
         },
         inventoryShelfLife: {
           format: "jsonb"
+        },
+        accountingEnabled: {
+          default: false,
+          format: "boolean",
+          type: "boolean"
         }
       },
       type: "object"
@@ -146274,6 +146344,12 @@ export default {
     },
     "rowFilter.companySettings.inventoryShelfLife": {
       name: "inventoryShelfLife",
+      required: false,
+      in: "query",
+      type: "string"
+    },
+    "rowFilter.companySettings.accountingEnabled": {
+      name: "accountingEnabled",
       required: false,
       in: "query",
       type: "string"

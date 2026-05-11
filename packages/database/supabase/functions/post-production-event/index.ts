@@ -5,7 +5,7 @@ import z from "npm:zod@^3.24.1";
 import { DB, getConnectionPool, getDatabaseClient } from "../lib/database.ts";
 import { corsHeaders } from "../lib/headers.ts";
 import { getSupabaseServiceRole } from "../lib/supabase.ts";
-import { isInternalUser } from "../lib/flags.ts";
+
 import { credit, debit, journalReference } from "../lib/utils.ts";
 import { getCurrentAccountingPeriod } from "../shared/get-accounting-period.ts";
 import { getNextSequence } from "../shared/get-next-sequence.ts";
@@ -38,8 +38,12 @@ serve(async (req: Request) => {
       companyId
     );
 
-    const [isInternal, companyRecord] = await Promise.all([
-      isInternalUser(client, userId),
+    const [accountingSettings, companyRecord] = await Promise.all([
+      client
+        .from("companySettings")
+        .select("accountingEnabled")
+        .eq("id", companyId)
+        .single(),
       client
         .from("company")
         .select("companyGroupId")
@@ -47,7 +51,9 @@ serve(async (req: Request) => {
         .single(),
     ]);
 
-    if (!isInternal) {
+    const accountingEnabled = accountingSettings.data?.accountingEnabled ?? false;
+
+    if (!accountingEnabled) {
       return new Response(JSON.stringify({ success: true }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });

@@ -43,9 +43,10 @@ const withServerOnly = () => {
  * });
  * ```
  */
-export function defineIntegration<T extends IntegrationOptions>(
-  options: T
-): Integration<T> {
+export function defineIntegration<
+  const ID extends string,
+  T extends IntegrationOptions & { id: ID }
+>(options: T): Integration<T> {
   // Validate required fields at definition time
   if (!options.id) {
     throw new Error(`Integration must have an 'id' defined`);

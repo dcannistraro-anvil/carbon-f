@@ -711,7 +711,7 @@ export default function PurchasingSettingsRoute() {
           </CardHeader>
           <CardContent>
             <HStack className="justify-between items-center">
-              <VStack className="items-start gap-1">
+              <VStack className="items-start" spacing={1}>
                 <span className="font-medium">
                   {companySettings.includeThumbnailsOnPurchasingPdfs ? (
                     <Trans>Thumbnails are included</Trans>
