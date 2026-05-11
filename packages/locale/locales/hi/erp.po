@@ -439,7 +439,7 @@ msgstr "वास्तविक शुरुआत"
 msgid "Add"
 msgstr "जोड़ें"
 
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:681
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:684
 msgid "Add & Issue"
 msgstr "जोड़ें और जारी करें"
 
@@ -612,7 +612,7 @@ msgstr "शिपमेंट जोड़ें"
 msgid "Add Shipping"
 msgstr "शिपिंग जोड़ें"
 
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:316
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:318
 msgid "Add Spare Part"
 msgstr "स्पेयर पार्ट जोड़ें"
 
@@ -1836,7 +1836,7 @@ msgstr "केवल सक्रिय ब्रेक को अक्षम �
 #: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:563
 #: apps/erp/app/modules/production/ui/Jobs/JobMakeMethodTools.tsx:619
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderApprovalModal.tsx:129
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderFinalizeModal.tsx:116
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderFinalizeModal.tsx:117
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:553
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/FinalizeRFQModal.tsx:153
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:284
@@ -1877,7 +1877,7 @@ msgstr "केवल सक्रिय ब्रेक को अक्षम �
 #: apps/erp/app/modules/resources/ui/Contractors/ContractorForm.tsx:113
 #: apps/erp/app/modules/resources/ui/FailureModes/FailureModeForm.tsx:122
 #: apps/erp/app/modules/resources/ui/Locations/LocationForm.tsx:113
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:672
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:675
 #: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceDispatchExplorer.tsx:459
 #: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceDispatchExplorer.tsx:530
 #: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceDispatchProperties.tsx:657
@@ -2060,7 +2060,7 @@ msgstr "श्रेणी का नाम"
 
 #: apps/erp/app/modules/invoicing/ui/SalesInvoice/SalesInvoicePostModal.tsx:172
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderApprovalModal.tsx:122
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderFinalizeModal.tsx:109
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderFinalizeModal.tsx:110
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteSendModal.tsx:170
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteFinalizeModal.tsx:215
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteToOrderDrawer.tsx:1074
@@ -5976,7 +5976,7 @@ msgstr "फ़िल्टर"
 msgid "Filtering"
 msgstr "फ़िल्टरिंग"
 
-#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderFinalizeModal.tsx:119
+#: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderFinalizeModal.tsx:120
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderHeader.tsx:289
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:221
 #: apps/erp/app/modules/purchasing/ui/PurchasingRfq/PurchasingRFQHeader.tsx:255
@@ -7359,7 +7359,7 @@ msgstr "टेम्पलेट लोड करें"
 msgid "Loader"
 msgstr "लोडर"
 
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:347
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:350
 msgid "Loading item details..."
 msgstr "आइटम विवरण लोड हो रहे हैं..."
 
@@ -9783,7 +9783,7 @@ msgstr "कृपया चरण जोड़ने से पहले ऑप�
 msgid "Please save the operation before adding tools."
 msgstr "कृपया उपकरण जोड़ने से पहले ऑपरेशन को सहेजें।"
 
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:207
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:208
 msgid "Please select an item"
 msgstr "कृपया एक आइटम चुनें"
 
@@ -10446,7 +10446,7 @@ msgstr "मात्रा"
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteToOrderDrawer.tsx:318
 #: apps/erp/app/modules/quality/ui/Issue/AssociatedItemsList.tsx:356
 #: apps/erp/app/modules/quality/ui/Issue/IssueAssociations.tsx:344
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:358
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:361
 #: apps/erp/app/modules/sales/ui/Pricing/PriceOverrideForm.tsx:351
 #: apps/erp/app/modules/sales/ui/Pricing/PriceOverridesTable.tsx:371
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteBillOfMaterial.tsx:859
@@ -10472,7 +10472,7 @@ msgstr "पूर्ण मात्रा"
 msgid "Quantity is derived from completed serials/batches in MES and cannot be edited."
 msgstr "मात्रा MES में पूर्ण सीरीज़/बैच से प्राप्त है और संपादित नहीं की जा सकती।"
 
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:269
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:270
 msgid "Quantity must be greater than 0"
 msgstr "मात्रा 0 से अधिक होनी चाहिए"
 
@@ -11619,8 +11619,8 @@ msgid "Save View"
 msgstr "दृश्य सहेजें"
 
 #: apps/erp/app/modules/quality/ui/InboundInspections/ScanInspectionSample.tsx:125
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:378
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:498
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:381
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:501
 msgid "Scan"
 msgstr "स्कैन करें"
 
@@ -11818,8 +11818,8 @@ msgstr "सेकंड/पीस"
 #: apps/erp/app/modules/purchasing/ui/Planning/PurchasingPlanningOrderDrawer.tsx:396
 #: apps/erp/app/modules/quality/ui/InboundInspections/ScanInspectionSample.tsx:129
 #: apps/erp/app/modules/quality/ui/InboundInspections/ScanInspectionSample.tsx:204
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:382
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:502
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:385
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:505
 #: packages/react/src/Combobox.tsx:148
 #: packages/react/src/CreateableCombobox.tsx:157
 #: packages/react/src/MultiSelect.tsx:178
@@ -11876,7 +11876,7 @@ msgstr "एक असाइनी चुनें"
 msgid "Select an issue type"
 msgstr "एक समस्या प्रकार चुनें"
 
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:319
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:321
 msgid "Select an item and specify the quantity to issue"
 msgstr "एक आइटम चुनें और जारी करने के लिए मात्रा निर्दिष्ट करें"
 
@@ -14129,7 +14129,7 @@ msgstr "इकाई लागत"
 #: apps/erp/app/modules/production/ui/Procedures/ProcedureExplorer.tsx:829
 #: apps/erp/app/modules/purchasing/ui/PurchaseOrder/PurchaseOrderLineForm.tsx:571
 #: apps/erp/app/modules/quality/ui/Documents/QualityDocumentExplorer.tsx:606
-#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:365
+#: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceAddPartModal.tsx:368
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteBillOfProcess.tsx:1075
 #: apps/erp/app/modules/sales/ui/Quotes/QuoteBillOfProcess.tsx:1342
 msgid "Unit of Measure"

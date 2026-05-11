@@ -103,6 +103,7 @@ const PurchaseOrderFinalizeModal = ({
               {notificationType === "Email" && (
                 <>
                   <SupplierContact
+                    isOptional={false}
                     name="supplierContact"
                     supplier={purchaseOrder?.supplierId ?? undefined}
                   />
