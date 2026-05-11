@@ -4,6 +4,10 @@ packages:
   - examples/*
   - packages/*
 
+minimumReleaseAge: 4320
+minimumReleaseAgeExclude:
+  - '@carbon/*'
+
 catalog:
   '@ai-sdk/openai': 2.0.102
   '@dnd-kit/core': 6.3.1
