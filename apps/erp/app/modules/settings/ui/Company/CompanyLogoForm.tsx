@@ -9,56 +9,64 @@ import {
   VStack
 } from "@carbon/react";
 import { Trans, useLingui } from "@lingui/react/macro";
+import { nanoid } from "nanoid";
 import type { ChangeEvent } from "react";
 import { useSubmit } from "react-router";
 import type { Company } from "~/modules/settings";
 import { path } from "~/utils/path";
 
+const STORAGE_URL_PREFIX = `${SUPABASE_URL}/storage/v1/object/public/public/`;
+
+const toStoragePath = (urlOrPath: string | null): string | null => {
+  if (!urlOrPath) return null;
+  return urlOrPath.startsWith(STORAGE_URL_PREFIX)
+    ? urlOrPath.slice(STORAGE_URL_PREFIX.length)
+    : urlOrPath;
+};
+
+export type LogoTarget =
+  | "logoLight"
+  | "logoDark"
+  | "logoLightIcon"
+  | "logoDarkIcon"
+  | "logoWatermark";
+
+const ROLE_BY_TARGET: Record<LogoTarget, string> = {
+  logoLight: "light",
+  logoDark: "dark",
+  logoLightIcon: "light-icon",
+  logoDarkIcon: "dark-icon",
+  logoWatermark: "watermark"
+};
+
 interface CompanyLogoFormProps {
   company: Company;
-  mode: "dark" | "light";
-  icon?: boolean;
+  target: LogoTarget;
 }
 
 export const maxSizeMB = 10;
 
-const CompanyLogoForm = ({
-  company,
-  mode,
-  icon = false
-}: CompanyLogoFormProps) => {
+const CompanyLogoForm = ({ company, target }: CompanyLogoFormProps) => {
   const { t } = useLingui();
   const { carbon } = useCarbon();
   const submit = useSubmit();
 
-  const getLogoPath = () => {
-    const prefix = `${company.id}/logo`;
-    const modeSuffix = mode === "dark" ? "-dark" : "-light";
-    const iconSuffix = icon ? "-icon" : "";
-    const fullPath = `${prefix}${modeSuffix}${iconSuffix}.png`;
+  const isIcon = target === "logoLightIcon" || target === "logoDarkIcon";
+  const isDark = target === "logoDark" || target === "logoDarkIcon";
+  const shouldResize = target !== "logoWatermark";
 
-    return fullPath;
+  const getLogoPath = (file: File) => {
+    return `${company.id}/logos/${ROLE_BY_TARGET[target]}/${nanoid()}/${
+      file.name
+    }`;
   };
 
-  const getCurrentLogoPath = () => {
-    const logos = {
-      dark: company.logoDark,
-      light: company.logoLight,
-      "dark-icon": company.logoDarkIcon,
-      "light-icon": company.logoLightIcon
-    };
-
-    const key = `${mode}${icon ? "-icon" : ""}` as keyof typeof logos;
-    return logos[key] || null;
-  };
-
-  const currentLogoPath = getCurrentLogoPath();
+  const currentLogoPath = company[target] ?? null;
 
   const uploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && carbon) {
       let logo = e.target.files[0];
 
-      // Validate file type
       const supportedTypes = [
         "image/jpeg",
         "image/png",
@@ -72,8 +80,6 @@ const CompanyLogoForm = ({
         return;
       }
 
-      // Validate file size (10 MB limit)
-
       const maxSizeBytes = maxSizeMB * 1024 * 1024;
       if (logo.size > maxSizeBytes) {
         toast.error(
@@ -84,46 +90,49 @@ const CompanyLogoForm = ({
         return;
       }
 
-      const formData = new FormData();
-      formData.append("file", logo);
-      formData.append("height", "128");
-      formData.append("contained", "true");
+      if (shouldResize) {
+        const formData = new FormData();
+        formData.append("file", logo);
+        formData.append("height", "128");
+        formData.append("contained", "true");
 
-      try {
-        const response = await fetch(
-          `${SUPABASE_URL}/functions/v1/image-resizer`,
-          {
-            method: "POST",
-            body: formData
-          }
-        );
-
-        if (!response.ok) {
-          const errorText = await response
-            .text()
-            .catch(() => response.statusText);
-          throw new Error(
-            `Image resize failed: ${response.status} ${
-              errorText || "Unknown error"
-            }`
+        try {
+          const response = await fetch(
+            `${SUPABASE_URL}/functions/v1/image-resizer`,
+            {
+              method: "POST",
+              body: formData
+            }
           );
+
+          if (!response.ok) {
+            const errorText = await response
+              .text()
+              .catch(() => response.statusText);
+            throw new Error(
+              `Image resize failed: ${response.status} ${
+                errorText || "Unknown error"
+              }`
+            );
+          }
+
+          const blob = await response.blob();
+          const resizedFile = new File([blob], "logo.png", {
+            type: "image/png"
+          });
+
+          logo = resizedFile;
+        } catch (error) {
+          const errorMessage =
+            error instanceof Error ? error.message : "Unknown error";
+          console.error("Image resize error:", error);
+          toast.error(t`Failed to resize image: ${errorMessage}`);
+          return;
         }
-
-        const blob = await response.blob();
-        const resizedFile = new File([blob], "logo.png", {
-          type: "image/png"
-        });
-
-        logo = resizedFile;
-      } catch (error) {
-        const errorMessage =
-          error instanceof Error ? error.message : "Unknown error";
-        console.error("Image resize error:", error);
-        toast.error(t`Failed to resize image: ${errorMessage}`);
-        return;
       }
 
-      const logoPath = getLogoPath();
+      const previousStoragePath = toStoragePath(currentLogoPath);
+      const logoPath = getLogoPath(logo);
 
       const imageUpload = await carbon.storage
         .from("public")
@@ -140,6 +149,17 @@ const CompanyLogoForm = ({
       }
 
       if (imageUpload.data?.path) {
+        if (
+          previousStoragePath &&
+          previousStoragePath !== imageUpload.data.path
+        ) {
+          await carbon.storage
+            .from("public")
+            .remove([previousStoragePath])
+            .catch((cleanupError) => {
+              console.warn("Old logo cleanup failed:", cleanupError);
+            });
+        }
         toast.success(t`Logo uploaded successfully`);
         submitLogoUrl(imageUpload.data.path);
       }
@@ -148,9 +168,11 @@ const CompanyLogoForm = ({
 
   const deleteImage = async () => {
     if (carbon && currentLogoPath) {
+      const storagePath = toStoragePath(currentLogoPath);
+      if (!storagePath) return;
       const imageDelete = await carbon.storage
         .from("public")
-        .remove([currentLogoPath]);
+        .remove([storagePath]);
 
       if (imageDelete.error) {
         const errorMessage = imageDelete.error.message || "Unknown error";
@@ -166,9 +188,7 @@ const CompanyLogoForm = ({
 
   const submitLogoUrl = (logoUrl: string | null) => {
     const formData = new FormData();
-
-    formData.append("mode", mode);
-    formData.append("icon", String(icon));
+    formData.append("target", target);
     if (logoUrl) formData.append("path", logoUrl);
     submit(formData, {
       method: "post",
@@ -176,25 +196,21 @@ const CompanyLogoForm = ({
     });
   };
 
-  const getLogoTitle = () => {
-    const modeText = mode === "dark" ? "Dark Mode" : "Light Mode";
-    const typeText = icon ? "Icon" : "Logo";
-    return `${company.name} ${modeText} ${typeText}`;
-  };
+  const altText = `${company.name} Logo`;
 
-  return icon ? (
+  return isIcon ? (
     <VStack className="items-center py-4" spacing={4}>
       <div
         className={cn(
-          "flex items-center justify-center h-[156px] w-[156px] rounded-lg",
-          mode === "dark" ? "bg-black text-white" : "bg-zinc-200/90 text-black"
+          "flex items-center justify-center h-[156px] w-[156px] rounded-lg overflow-hidden",
+          isDark ? "bg-black text-white" : "bg-zinc-200/90 text-black"
         )}
       >
         {currentLogoPath ? (
           <img
-            alt={getLogoTitle()}
+            alt={altText}
             src={currentLogoPath}
-            className="w-auto mx-auto rounded-lg"
+            className="max-h-full max-w-full object-contain rounded-lg"
           />
         ) : (
           <Avatar name={company?.name ?? undefined} size="2xl" />
@@ -217,19 +233,15 @@ const CompanyLogoForm = ({
     <VStack className="items-center py-4" spacing={4}>
       <div
         className={cn(
-          "flex items-center justify-center w-full h-[156px] rounded-lg border border-input",
-          mode === "dark"
-            ? "bg-black/90 text-white"
-            : "bg-zinc-200/90 text-black"
+          "flex items-center justify-center w-full h-[156px] rounded-lg border border-input overflow-hidden",
+          isDark ? "bg-black/90 text-white" : "bg-zinc-200/90 text-black"
         )}
       >
         {currentLogoPath ? (
           <img
-            alt={getLogoTitle()}
-            width="auto"
-            height="128"
+            alt={altText}
             src={currentLogoPath}
-            className="rounded-lg"
+            className="max-h-full max-w-full object-contain rounded-lg"
           />
         ) : (
           <p className="font-mono uppercase text-sm">

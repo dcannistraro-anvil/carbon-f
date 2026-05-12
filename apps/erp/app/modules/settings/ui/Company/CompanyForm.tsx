@@ -1,5 +1,6 @@
 import { ValidatedForm } from "@carbon/form";
 import { VStack } from "@carbon/react";
+import { isEoriCountry } from "@carbon/utils";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { z } from "zod";
 import { Currency, Hidden, Input, PhoneInput, Submit } from "~/components/Form";
@@ -28,6 +29,9 @@ const CompanyForm = ({ company }: CompanyFormProps) => {
             <Input name="name" label={t`Company Name`} />
             <Input name="taxId" label={t`Tax ID`} />
             <Input name="vatNumber" label={t`VAT Number`} />
+            {isEoriCountry(company.countryCode) && (
+              <Input name="eori" label={t`EORI`} />
+            )}
             <AddressAutocomplete variant="grid" />
             <Currency
               name="baseCurrencyCode"

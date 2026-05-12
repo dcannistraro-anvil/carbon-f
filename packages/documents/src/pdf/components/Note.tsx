@@ -12,7 +12,7 @@ const convertTiptapJSON = (
   switch (node.type) {
     case "doc":
       return (
-        <View style={{ fontSize: 9 }}>
+        <View style={{ fontSize: 9, width: "100%" }}>
           {args?.title && (
             <View style={styles.thead}>
               <Text>{args?.title}</Text>
@@ -29,7 +29,9 @@ const convertTiptapJSON = (
           style={{
             fontSize: 13,
             fontWeight: "bold",
-            marginBottom: 10
+            marginBottom: 10,
+            width: "100%",
+            overflowWrap: "break-word"
           }}
         >
           {node?.content?.map((child) => convertTiptapJSON(child))}
@@ -38,7 +40,15 @@ const convertTiptapJSON = (
 
     case "paragraph":
       return (
-        <Text key="paragraph" style={{ marginBottom: 10, fontSize: 9 }}>
+        <Text
+          key="paragraph"
+          style={{
+            marginBottom: 10,
+            fontSize: 9,
+            width: "100%",
+            overflowWrap: "break-word"
+          }}
+        >
           {node.content?.map((child) => convertTiptapJSON(child)) || ""}
         </Text>
       );
@@ -78,7 +88,7 @@ const convertTiptapJSON = (
           style={{ flexDirection: "row", marginBottom: 5 }}
         >
           <Text style={{ marginRight: 5, fontSize: 9 }}> {indicator} </Text>
-          <View>
+          <View style={{ flex: 1, minWidth: 0 }}>
             {node?.content?.map((child, index) => convertTiptapJSON(child))}
           </View>
         </View>
@@ -100,7 +110,7 @@ const convertTiptapJSON = (
           style={{ flexDirection: "row", marginBottom: 5 }}
         >
           <Text style={{ marginRight: 5, fontSize: 9 }}>•</Text>
-          <View>
+          <View style={{ flex: 1, minWidth: 0 }}>
             {node?.content?.map((child, index) => convertTiptapJSON(child))}
           </View>
         </View>
@@ -124,7 +134,11 @@ const Note = ({ title, content }: { title?: string; content: JSONContent }) => {
   if (!Array.isArray(content.content) || content.content.length === 0)
     return null;
 
-  return <View>{convertTiptapJSON(content, { title })}</View>;
+  return (
+    <View style={{ width: "100%" }}>
+      {convertTiptapJSON(content, { title })}
+    </View>
+  );
 };
 
 export default Note;

@@ -1532,7 +1532,7 @@ msgid "Balance Sheet"
 msgstr "Bilan"
 
 #: apps/erp/app/components/Layout/Topbar/Breadcrumbs.tsx:288
-#: apps/erp/app/modules/settings/ui/Company/CompanyForm.tsx:34
+#: apps/erp/app/modules/settings/ui/Company/CompanyForm.tsx:38
 #: apps/erp/app/routes/onboarding+/company.tsx:227
 msgid "Base Currency"
 msgstr "Devise de base"
@@ -1541,7 +1541,7 @@ msgstr "Devise de base"
 msgid "Base Price"
 msgstr "Prix de base"
 
-#: apps/erp/app/routes/x+/settings+/company.tsx:96
+#: apps/erp/app/routes/x+/settings+/company.tsx:97
 msgid "Basic Information"
 msgstr "Informations de base"
 
@@ -2070,8 +2070,8 @@ msgstr "CC"
 
 #: apps/erp/app/modules/account/ui/Profile/ProfilePhotoForm.tsx:145
 #: apps/erp/app/modules/sales/ui/Pricing/PriceTracePopover.tsx:98
-#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:206
-#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:242
+#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:222
+#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:254
 #: apps/erp/app/routes/share+/quote.$id.tsx:1393
 msgid "Change"
 msgstr "Modifier"
@@ -2304,12 +2304,12 @@ msgstr "Entreprises"
 #: apps/erp/app/modules/settings/ui/useSettingsSubmodules.tsx:43
 #: apps/erp/app/modules/settings/ui/useSettingsSubmodules.tsx:46
 #: apps/erp/app/routes/x+/settings+/company.tsx:30
-#: apps/erp/app/routes/x+/settings+/company.tsx:91
+#: apps/erp/app/routes/x+/settings+/company.tsx:92
 msgid "Company"
 msgstr "Entreprise"
 
 #: apps/erp/app/components/Layout/Topbar/Breadcrumbs.tsx:284
-#: apps/erp/app/modules/settings/ui/Company/CompanyForm.tsx:28
+#: apps/erp/app/modules/settings/ui/Company/CompanyForm.tsx:29
 #: apps/erp/app/routes/onboarding+/company.tsx:224
 msgid "Company Name"
 msgstr "Nom de l'entreprise"
@@ -4900,7 +4900,7 @@ msgstr "Modifier le centre de travail"
 #: apps/erp/app/modules/purchasing/ui/SupplierQuote/SupplierQuoteSendModal.tsx:135
 #: apps/erp/app/modules/sales/ui/Customer/CustomerContactForm.tsx:98
 #: apps/erp/app/modules/sales/ui/SalesOrder/SalesOrderHeader.tsx:142
-#: apps/erp/app/modules/settings/ui/Company/CompanyForm.tsx:39
+#: apps/erp/app/modules/settings/ui/Company/CompanyForm.tsx:43
 #: apps/erp/app/modules/users/ui/Customers/CreateCustomerModal.tsx:90
 #: apps/erp/app/modules/users/ui/Customers/CustomerAccountsTable.tsx:142
 #: apps/erp/app/modules/users/ui/Employees/CreateEmployeeModal.tsx:72
@@ -5119,6 +5119,10 @@ msgstr "Entité"
 #: apps/erp/app/routes/x+/stock-transfer+/$id.scan.$lineId.tsx:249
 msgid "Entity is {status}"
 msgstr "L'entité est {status}"
+
+#: apps/erp/app/modules/settings/ui/Company/CompanyForm.tsx:33
+msgid "EORI"
+msgstr ""
 
 #: apps/erp/app/routes/onboarding+/plan.tsx:35
 #: apps/erp/app/routes/onboarding+/plan.tsx:60
@@ -5727,7 +5731,7 @@ msgstr "Impossible de charger les détails de la pièce fournisseur"
 msgid "Failed to load tracked entities"
 msgstr "Impossible de charger les entités suivies"
 
-#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:158
+#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:180
 msgid "Failed to remove image: {errorMessage}"
 msgstr "Échec de la suppression de l'image : {errorMessage}"
 
@@ -5747,7 +5751,7 @@ msgstr "Échec de la suppression de la miniature"
 msgid "Failed to resize image"
 msgstr "Échec du redimensionnement de l'image"
 
-#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:122
+#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:129
 msgid "Failed to resize image: {errorMessage}"
 msgstr "Échec du redimensionnement de l'image : {errorMessage}"
 
@@ -5843,7 +5847,7 @@ msgstr "Échec du téléchargement du fichier : {0}"
 msgid "Failed to upload image"
 msgstr "Échec du téléchargement de l'image"
 
-#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:138
+#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:147
 msgid "Failed to upload logo: {errorMessage}"
 msgstr "Échec du téléchargement du logo : {errorMessage}"
 
@@ -5881,7 +5885,7 @@ msgstr "Favori"
 msgid "Fax"
 msgstr "Télécopie"
 
-#: apps/erp/app/modules/settings/ui/Company/CompanyForm.tsx:38
+#: apps/erp/app/modules/settings/ui/Company/CompanyForm.tsx:42
 msgid "Fax Number"
 msgstr "Numéro de fax"
 
@@ -5924,7 +5928,7 @@ msgid "File is already in the selected bucket"
 msgstr "Le fichier est déjà dans le compartiment sélectionné"
 
 #. placeholder {0}: ( logo.size / 1024 / 1024 ).toFixed(2)
-#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:80
+#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:86
 msgid "File size exceeds {maxSizeMB}MB limit. Current size: {0}MB"
 msgstr "La taille du fichier dépasse la limite de {maxSizeMB}MB. Taille actuelle : {0}MB"
 
@@ -5948,7 +5952,7 @@ msgstr "La taille du fichier est trop grande (max. {0})"
 msgid "File type not supported"
 msgstr "Type de fichier non supporté"
 
-#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:70
+#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:78
 msgid "File type not supported. Please use JPG, PNG, WebP, or GIF."
 msgstr "Type de fichier non supporté. Veuillez utiliser JPG, PNG, WebP ou GIF."
 
@@ -7449,16 +7453,16 @@ msgstr "Se connecter"
 msgid "Login or create a new account"
 msgstr "Connectez-vous ou créez un nouveau compte"
 
-#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:162
+#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:184
 msgid "Logo removed successfully"
 msgstr "Logo supprimé avec succès"
 
-#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:143
+#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:163
 msgid "Logo uploaded successfully"
 msgstr "Logo téléchargé avec succès"
 
 #: apps/erp/app/modules/settings/ui/useSettingsSubmodules.tsx:72
-#: apps/erp/app/routes/x+/settings+/logos.tsx:32
+#: apps/erp/app/routes/x+/settings+/logos.tsx:33
 #: apps/erp/app/routes/x+/settings+/logos.tsx:83
 msgid "Logos"
 msgstr "Logos"
@@ -8806,7 +8810,7 @@ msgstr "Aucune image"
 msgid "No issue types configured"
 msgstr "Aucun type de problème configuré"
 
-#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:236
+#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:248
 msgid "No logo uploaded"
 msgstr "Aucun logo téléchargé"
 
@@ -9607,6 +9611,10 @@ msgstr "Conditions de paiement"
 msgid "PDF"
 msgstr "PDF"
 
+#: apps/erp/app/routes/x+/settings+/logos.tsx:147
+msgid "PDF Watermark"
+msgstr ""
+
 #: apps/erp/app/routes/x+/settings+/purchasing.tsx:706
 #: apps/erp/app/routes/x+/settings+/sales.tsx:633
 msgid "PDFs"
@@ -9663,7 +9671,7 @@ msgstr "Autorisations"
 msgid "Phone"
 msgstr "Téléphone"
 
-#: apps/erp/app/modules/settings/ui/Company/CompanyForm.tsx:37
+#: apps/erp/app/modules/settings/ui/Company/CompanyForm.tsx:41
 msgid "Phone Number"
 msgstr "Numéro de téléphone"
 
@@ -10822,8 +10830,8 @@ msgstr "Mémorisez ce code PIN. Vous en aurez besoin pour quitter le mode consol
 #: apps/erp/app/modules/items/ui/Parts/PartForm.tsx:368
 #: apps/erp/app/modules/items/ui/Tools/ToolForm.tsx:358
 #: apps/erp/app/modules/quality/ui/Calibrations/GaugeCalibrationRecordForm.tsx:357
-#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:211
-#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:247
+#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:227
+#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:259
 #: apps/erp/app/routes/share+/quote.$id.tsx:927
 msgid "Remove"
 msgstr "Supprimer"
@@ -11566,7 +11574,7 @@ msgstr "Samedi"
 #: apps/erp/app/modules/sales/ui/SalesRFQ/SalesRFQHeader.tsx:362
 #: apps/erp/app/modules/sales/ui/SalesRFQ/SalesRFQLineForm.tsx:340
 #: apps/erp/app/modules/settings/ui/ApiKeys/ApiKeysForm.tsx:136
-#: apps/erp/app/modules/settings/ui/Company/CompanyForm.tsx:43
+#: apps/erp/app/modules/settings/ui/Company/CompanyForm.tsx:47
 #: apps/erp/app/modules/settings/ui/CustomFields/CustomFieldForm.tsx:143
 #: apps/erp/app/modules/settings/ui/Sequences/SequenceForm.tsx:116
 #: apps/erp/app/modules/settings/ui/Webhooks/WebhookForm.tsx:136
@@ -12449,6 +12457,10 @@ msgstr "Afficher les vignettes des pièces sur les devis, les commandes de vente
 #: apps/erp/app/components/OnshapeSync.tsx:247
 msgid "Show sync options"
 msgstr "Afficher les options de synchronisation"
+
+#: apps/erp/app/routes/x+/settings+/logos.tsx:150
+msgid "Shown as a faint background behind every page of generated PDFs"
+msgstr ""
 
 #: apps/erp/app/modules/items/ui/ItemRules/MessageWithTokens.tsx:279
 msgid "Shown to the user when this rule fails."
@@ -13367,7 +13379,7 @@ msgstr "Taxe et frais supplémentaires"
 msgid "Tax Amount"
 msgstr "Montant de la taxe"
 
-#: apps/erp/app/modules/settings/ui/Company/CompanyForm.tsx:29
+#: apps/erp/app/modules/settings/ui/Company/CompanyForm.tsx:30
 msgid "Tax ID"
 msgstr "Numéro d'identification fiscale"
 
@@ -13514,7 +13526,7 @@ msgstr "Ces adresses e-mail seront automatiquement mises en copie sur tous les e
 msgid "These jobs have operations assigned to this work center:"
 msgstr "Ces travaux ont des opérations assignées à ce centre de travail :"
 
-#: apps/erp/app/routes/x+/settings+/company.tsx:99
+#: apps/erp/app/routes/x+/settings+/company.tsx:100
 msgid "This information will be used on document headers"
 msgstr "Ces informations seront utilisées dans les en-têtes de document"
 
@@ -14354,8 +14366,8 @@ msgstr "Passer à la version supérieure pour déverrouiller les règles d'artic
 #: apps/erp/app/modules/account/ui/Profile/ProfilePhotoForm.tsx:145
 #: apps/erp/app/modules/documents/ui/Documents/DocumentCreateForm.tsx:70
 #: apps/erp/app/modules/resources/ui/Maintenance/MaintenanceDispatchNotes.tsx:300
-#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:206
-#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:242
+#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:222
+#: apps/erp/app/modules/settings/ui/Company/CompanyLogoForm.tsx:254
 msgid "Upload"
 msgstr "Télécharger"
 
@@ -14513,7 +14525,7 @@ msgstr "Validation du travail en cours..."
 msgid "Value"
 msgstr "Valeur"
 
-#: apps/erp/app/modules/settings/ui/Company/CompanyForm.tsx:30
+#: apps/erp/app/modules/settings/ui/Company/CompanyForm.tsx:31
 msgid "VAT Number"
 msgstr "Numéro de TVA"
 
@@ -14862,7 +14874,7 @@ msgstr "Documentation des Webhooks"
 #: apps/erp/app/modules/purchasing/ui/Supplier/SuppliersTable.tsx:186
 #: apps/erp/app/modules/sales/ui/Customer/CustomerForm.tsx:155
 #: apps/erp/app/modules/sales/ui/Customers/CustomersTable.tsx:192
-#: apps/erp/app/modules/settings/ui/Company/CompanyForm.tsx:40
+#: apps/erp/app/modules/settings/ui/Company/CompanyForm.tsx:44
 #: apps/erp/app/routes/onboarding+/company.tsx:226
 msgid "Website"
 msgstr "Site web"

@@ -1,6 +1,6 @@
 import type { Database } from "@carbon/database";
 import type { JSONContent } from "@carbon/react";
-import { formatDate } from "@carbon/utils";
+import { formatCityStatePostalCode, formatDate } from "@carbon/utils";
 import { Image, Text, View } from "@react-pdf/renderer";
 import { createTw } from "react-pdf-tailwind";
 import type { AccountsPayableBillingAddress, PDF } from "../types";
@@ -10,18 +10,8 @@ import {
   getLineTotal,
   getTotal
 } from "../utils/purchase-order";
-import {
-  formatTaxPercent,
-  getCurrencyFormatter,
-  getRegistrationFooter
-} from "../utils/shared";
-import {
-  Header,
-  Note,
-  PartyDetails,
-  ShipBillDetails,
-  Template
-} from "./components";
+import { formatTaxPercent, getCurrencyFormatter } from "../utils/shared";
+import { Header, Note, PartyDetails, Template } from "./components";
 
 interface PurchaseOrderPDFProps extends PDF {
   purchaseOrder: Database["public"]["Views"]["purchaseOrders"]["Row"];
@@ -112,6 +102,28 @@ const PurchaseOrderPDF = ({
     (term) => term.id === purchaseOrder?.paymentTermId
   );
 
+  const watermarkSrc = company.logoWatermark;
+
+  const shipAddress = dropShipment
+    ? {
+        name: customerName,
+        addressLine1: customerAddressLine1,
+        addressLine2: customerAddressLine2,
+        city: customerCity,
+        stateProvince: customerStateProvince,
+        postalCode: customerPostalCode,
+        countryCode: customerCountryCode
+      }
+    : {
+        name: deliveryName,
+        addressLine1: deliveryAddressLine1,
+        addressLine2: deliveryAddressLine2,
+        city: deliveryCity,
+        stateProvince: deliveryStateProvince,
+        postalCode: deliveryPostalCode,
+        countryCode: deliveryCountryCode
+      };
+
   let rowIndex = 0;
 
   return (
@@ -122,13 +134,25 @@ const PurchaseOrderPDF = ({
         keywords: meta?.keywords ?? "purchase order",
         subject: meta?.subject ?? "Purchase Order"
       }}
-      footerLabel={getRegistrationFooter(
-        company.name,
-        company.countryCode,
-        company.taxId
-      )}
       footerDocumentId={purchaseOrder?.purchaseOrderId}
     >
+      {watermarkSrc && (
+        <View
+          fixed
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            alignItems: "center",
+            marginTop: 100,
+            opacity: 0.07
+          }}
+        >
+          <Image src={watermarkSrc} style={{ width: "50%" }} />
+        </View>
+      )}
       <Header
         company={company}
         title="Purchase Order"
@@ -151,7 +175,6 @@ const PurchaseOrderPDF = ({
           countryCode: supplierCountryCode,
           taxId: purchaseOrderLocations.supplierTaxId,
           vatNumber: purchaseOrderLocations.supplierVatNumber,
-          eori: purchaseOrderLocations.supplierEori,
           contactName: purchaseOrderLocations.supplierContactName,
           contactEmail: purchaseOrderLocations.supplierContactEmail
         }}
@@ -159,67 +182,55 @@ const PurchaseOrderPDF = ({
         createdByFullName={purchaseOrder.createdByFullName}
         createdByEmail={purchaseOrder.createdByEmail}
         createdByPhone={purchaseOrder.createdByPhone ?? null}
-        accountsPayableEmail={companySettings?.accountsPayableEmail}
+        accountsPayableEmail={accountsPayableBillingAddress?.email}
       />
 
-      <ShipBillDetails
-        shipTo={
-          dropShipment
-            ? {
-                name: customerName,
-                addressLine1: customerAddressLine1,
-                addressLine2: customerAddressLine2,
-                city: customerCity,
-                stateProvince: customerStateProvince,
-                postalCode: customerPostalCode,
-                countryCode: customerCountryCode
-              }
-            : {
-                name: deliveryName,
-                addressLine1: deliveryAddressLine1,
-                addressLine2: deliveryAddressLine2,
-                city: deliveryCity,
-                stateProvince: deliveryStateProvince,
-                postalCode: deliveryPostalCode,
-                countryCode: deliveryCountryCode
-              }
-        }
-        billTo={
-          accountsPayableBillingAddress
-            ? {
-                name: accountsPayableBillingAddress.name,
-                addressLine1: accountsPayableBillingAddress.addressLine1,
-                addressLine2: accountsPayableBillingAddress.addressLine2,
-                city: accountsPayableBillingAddress.city,
-                stateProvince: accountsPayableBillingAddress.state,
-                postalCode: accountsPayableBillingAddress.postalCode,
-                countryCode: accountsPayableBillingAddress.countryCode
-              }
-            : {
-                name: company.name,
-                addressLine1: company.addressLine1,
-                addressLine2: company.addressLine2,
-                city: company.city,
-                stateProvince: company.stateProvince,
-                postalCode: company.postalCode,
-                countryCode: company.countryCode
-              }
-        }
-      />
-
-      {/* Order Details & Notes */}
+      {/* Ship To + Order Details */}
       <View style={tw("border border-gray-200 mb-4")}>
         <View style={tw("flex flex-row")}>
           <View style={tw("w-1/2 p-3 border-r border-gray-200")}>
             <Text
               style={tw("text-[9px] font-bold text-gray-600 mb-1 uppercase")}
             >
+              Ship To
+            </Text>
+            <View style={tw("text-[10px] text-gray-800")}>
+              {shipAddress.name && (
+                <Text style={tw("font-bold")}>{shipAddress.name}</Text>
+              )}
+              {shipAddress.addressLine1 && (
+                <Text>{shipAddress.addressLine1}</Text>
+              )}
+              {shipAddress.addressLine2 && (
+                <Text>{shipAddress.addressLine2}</Text>
+              )}
+              {(shipAddress.city ||
+                shipAddress.stateProvince ||
+                shipAddress.postalCode ||
+                shipAddress.countryCode) && (
+                <Text>
+                  {[
+                    formatCityStatePostalCode(
+                      shipAddress.city,
+                      shipAddress.stateProvince,
+                      shipAddress.postalCode
+                    ),
+                    shipAddress.countryCode
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                </Text>
+              )}
+            </View>
+          </View>
+          <View style={tw("w-1/2 p-3")}>
+            <Text
+              style={tw("text-[9px] font-bold text-gray-600 mb-1 uppercase")}
+            >
               Order Details
             </Text>
             <View style={tw("text-[10px] text-gray-800")}>
-              <Text>
-                Date: {formatDate(purchaseOrder?.orderDate, undefined, locale)}
-              </Text>
+              <Text>Currency: {currencyCode}</Text>
               {purchaseOrder?.supplierReference && (
                 <Text>Reference: {purchaseOrder.supplierReference}</Text>
               )}
@@ -254,21 +265,23 @@ const PurchaseOrderPDF = ({
               )}
             </View>
           </View>
-          <View style={tw("w-1/2 p-3")}>
-            <Text
-              style={tw("text-[9px] font-bold text-gray-600 mb-1 uppercase")}
-            >
-              Notes
-            </Text>
-            <View style={tw("text-[10px] text-gray-800")}>
-              {Object.keys(purchaseOrder?.externalNotes ?? {}).length > 0 ? (
-                <Note
-                  content={(purchaseOrder.externalNotes ?? {}) as JSONContent}
-                />
-              ) : (
-                <Text style={tw("text-gray-400")}>None</Text>
-              )}
-            </View>
+        </View>
+      </View>
+
+      {/* Notes (full width, always rendered for layout predictability) */}
+      <View style={tw("border border-gray-200 mb-4")}>
+        <View style={tw("p-3")}>
+          <Text style={tw("text-[9px] font-bold text-gray-600 mb-1 uppercase")}>
+            Notes
+          </Text>
+          <View style={tw("text-[10px] text-gray-800")}>
+            {Object.keys(purchaseOrder?.externalNotes ?? {}).length > 0 ? (
+              <Note
+                content={(purchaseOrder.externalNotes ?? {}) as JSONContent}
+              />
+            ) : (
+              <Text style={tw("text-gray-400")}>None</Text>
+            )}
           </View>
         </View>
       </View>
@@ -278,15 +291,18 @@ const PurchaseOrderPDF = ({
         {/* Header */}
         <View
           style={tw(
-            "flex flex-row bg-gray-800 py-3 px-3 text-white text-[10px] font-bold"
+            "flex flex-row bg-gray-800 py-3 px-3 text-white text-[10px] font-bold items-center"
           )}
         >
           <Text style={tw("w-[5%] text-center")}>#</Text>
-          <Text style={tw("w-[33%]")}>Description</Text>
-          <Text style={tw("w-[12%] text-center")}>Qty</Text>
-          <Text style={tw("w-[10%] text-center")}>UOM</Text>
-          <View style={tw("w-[15%] items-center")}>
-            <Text>Unit Price</Text>
+          <Text style={tw("w-[25%]")}>Description</Text>
+          <Text style={tw("w-[11%] text-center")}>Qty</Text>
+          <Text style={tw("w-[11%] text-center")}>UOM</Text>
+          <View style={tw("w-[11%] items-center")}>
+            <Text>Required By</Text>
+          </View>
+          <View style={tw("w-[12%] items-center")}>
+            <Text>UOM Price</Text>
             <Text style={[tw("text-[8px] font-normal"), { opacity: 0.7 }]}>
               {currencyCode}
             </Text>
@@ -313,30 +329,28 @@ const PurchaseOrderPDF = ({
           return (
             <View key={line.id} wrap={false}>
               <View
-                style={tw(
-                  `flex flex-col py-2 px-3 border-b border-gray-200 text-[10px] ${
-                    isEven ? "bg-white" : "bg-gray-50"
-                  }`
-                )}
+                style={[
+                  tw(
+                    "flex flex-col py-2 px-3 border-b border-gray-200 text-[10px]"
+                  ),
+                  {
+                    backgroundColor: isEven
+                      ? "transparent"
+                      : "rgba(249, 250, 251, 0.6)"
+                  }
+                ]}
               >
                 <View style={tw("flex flex-row")}>
                   <Text style={tw("w-[5%] text-center text-gray-400")}>
                     {line.purchaseOrderLineType === "Comment" ? "" : rowIndex}
                   </Text>
-                  <View style={tw("w-[33%] pr-2")}>
+                  <View style={tw("w-[25%] pr-2")}>
                     <Text style={tw("text-gray-900")}>
                       {getLineDescription(line)}
                     </Text>
                     <Text style={tw("text-[8px] text-gray-600 mt-0.5")}>
                       {getLineDescriptionDetails(line)}
                     </Text>
-                    {line.requiredDate &&
-                      line.purchaseOrderLineType !== "Comment" && (
-                        <Text style={tw("text-[8px] text-gray-600 mt-0.5")}>
-                          Required:{" "}
-                          {formatDate(line.requiredDate, undefined, locale)}
-                        </Text>
-                      )}
                     {purchaseOrder.purchaseOrderType === "Outside Processing" &&
                       line.jobOperationDescription && (
                         <Text style={tw("text-[8px] text-gray-600 mt-0.5")}>
@@ -355,17 +369,23 @@ const PurchaseOrderPDF = ({
                         </View>
                       )}
                   </View>
-                  <Text style={tw("w-[12%] text-center text-gray-600")}>
+                  <Text style={tw("w-[11%] text-center text-gray-600")}>
                     {line.purchaseOrderLineType === "Comment"
                       ? ""
                       : line.purchaseQuantity}
                   </Text>
-                  <Text style={tw("w-[10%] text-center text-gray-600")}>
+                  <Text style={tw("w-[11%] text-center text-gray-600")}>
                     {line.purchaseOrderLineType === "Comment"
                       ? ""
                       : line.purchaseUnitOfMeasureCode}
                   </Text>
-                  <Text style={tw("w-[15%] text-center text-gray-600")}>
+                  <Text style={tw("w-[11%] text-center text-gray-600")}>
+                    {line.purchaseOrderLineType === "Comment" ||
+                    !line.requiredDate
+                      ? ""
+                      : formatDate(line.requiredDate, undefined, locale)}
+                  </Text>
+                  <Text style={tw("w-[12%] text-center text-gray-600")}>
                     {line.purchaseOrderLineType === "Comment"
                       ? ""
                       : numberFormatter.format(line.supplierUnitPrice ?? 0)}
@@ -408,7 +428,12 @@ const PurchaseOrderPDF = ({
         {/* Summary */}
         <View>
           {/* Subtotal - before tax and shipping */}
-          <View style={tw("flex flex-row py-1.5 px-3 bg-gray-50 text-[10px]")}>
+          <View
+            style={[
+              tw("flex flex-row py-1.5 px-3 text-[10px]"),
+              { backgroundColor: "rgba(249, 250, 251, 0.6)" }
+            ]}
+          >
             <Text style={tw("w-[87%] text-right pr-3 text-gray-600")}>
               Subtotal
             </Text>
@@ -427,7 +452,10 @@ const PurchaseOrderPDF = ({
           {/* Shipping */}
           {shippingCost > 0 && (
             <View
-              style={tw("flex flex-row py-1.5 px-3 bg-gray-50 text-[10px]")}
+              style={[
+                tw("flex flex-row py-1.5 px-3 text-[10px]"),
+                { backgroundColor: "rgba(249, 250, 251, 0.6)" }
+              ]}
             >
               <Text style={tw("w-[87%] text-right pr-3 text-gray-600")}>
                 Shipping
@@ -441,7 +469,10 @@ const PurchaseOrderPDF = ({
           {/* Tax */}
           {taxAmount > 0 && (
             <View
-              style={tw("flex flex-row py-1.5 px-3 bg-gray-50 text-[10px]")}
+              style={[
+                tw("flex flex-row py-1.5 px-3 text-[10px]"),
+                { backgroundColor: "rgba(249, 250, 251, 0.6)" }
+              ]}
             >
               <Text style={tw("w-[87%] text-right pr-3 text-gray-600")}>
                 Tax
@@ -479,7 +510,11 @@ const PurchaseOrderPDF = ({
       </View>
 
       {/* Terms */}
-      <Note title="Standard Terms & Conditions" content={terms} />
+      {terms?.content && terms.content.length > 0 && (
+        <View break>
+          <Note title="Standard Terms & Conditions" content={terms} />
+        </View>
+      )}
     </Template>
   );
 };

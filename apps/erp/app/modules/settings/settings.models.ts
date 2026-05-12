@@ -71,7 +71,8 @@ const company = {
   fax: zfd.text(z.string().optional()),
   email: zfd.text(z.string().optional()),
   website: zfd.text(z.string().optional()),
-  vatNumber: zfd.text(z.string().optional())
+  vatNumber: zfd.text(z.string().optional()),
+  eori: zfd.text(z.string().optional())
 };
 
 export const companyValidator = z.object(company);

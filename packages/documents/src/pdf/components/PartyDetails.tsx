@@ -109,13 +109,14 @@ const PartyDetails = ({
                   .join(" ")}
               </Text>
             )}
-            {company.taxId && <Text>Tax ID: {company.taxId}</Text>}
-            {company.vatNumber && <Text>VAT Number: {company.vatNumber}</Text>}
-            {createdByFullName && <Text>Contact: {createdByFullName}</Text>}
-            {createdByEmail && <Text>Email: {createdByEmail}</Text>}
-            {createdByPhone && <Text>Phone: {createdByPhone}</Text>}
+            <Text>Tax ID: {company.taxId}</Text>
+            <Text>VAT Number: {company.vatNumber}</Text>
+            {company.eori && <Text>EORI: {company.eori}</Text>}
+            <Text>Contact: {createdByFullName}</Text>
+            <Text>Email: {createdByEmail}</Text>
+            <Text>Phone: {createdByPhone}</Text>
             {accountsPayableEmail && (
-              <Text>Accounts Payable: {accountsPayableEmail}</Text>
+              <Text>Send invoices to: {accountsPayableEmail}</Text>
             )}
             {accountsReceivableEmail && (
               <Text>Accounts Receivable: {accountsReceivableEmail}</Text>
@@ -155,17 +156,11 @@ const PartyDetails = ({
                   .join(" ")}
               </Text>
             )}
-            {counterParty.taxId && <Text>Tax ID: {counterParty.taxId}</Text>}
-            {counterParty.vatNumber && (
-              <Text>VAT No: {counterParty.vatNumber}</Text>
-            )}
+            <Text>Tax ID: {counterParty.taxId}</Text>
+            <Text>VAT No: {counterParty.vatNumber}</Text>
             {counterParty.eori && <Text>EORI: {counterParty.eori}</Text>}
-            {counterParty.contactName && (
-              <Text>Contact: {counterParty.contactName}</Text>
-            )}
-            {counterParty.contactEmail && (
-              <Text>Email: {counterParty.contactEmail}</Text>
-            )}
+            <Text>Contact: {counterParty.contactName}</Text>
+            <Text>Email: {counterParty.contactEmail}</Text>
           </View>
         </View>
       </View>

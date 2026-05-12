@@ -2219,6 +2219,7 @@ export type Database = {
           countryCode: string | null
           createdAt: string
           email: string | null
+          eori: string | null
           fax: string | null
           id: string
           isEliminationEntity: boolean
@@ -2226,6 +2227,7 @@ export type Database = {
           logoDarkIcon: string | null
           logoLight: string | null
           logoLightIcon: string | null
+          logoWatermark: string | null
           name: string
           parentCompanyId: string | null
           phone: string | null
@@ -2249,6 +2251,7 @@ export type Database = {
           countryCode?: string | null
           createdAt?: string
           email?: string | null
+          eori?: string | null
           fax?: string | null
           id?: string
           isEliminationEntity?: boolean
@@ -2256,6 +2259,7 @@ export type Database = {
           logoDarkIcon?: string | null
           logoLight?: string | null
           logoLightIcon?: string | null
+          logoWatermark?: string | null
           name: string
           parentCompanyId?: string | null
           phone?: string | null
@@ -2279,6 +2283,7 @@ export type Database = {
           countryCode?: string | null
           createdAt?: string
           email?: string | null
+          eori?: string | null
           fax?: string | null
           id?: string
           isEliminationEntity?: boolean
@@ -2286,6 +2291,7 @@ export type Database = {
           logoDarkIcon?: string | null
           logoLight?: string | null
           logoLightIcon?: string | null
+          logoWatermark?: string | null
           name?: string
           parentCompanyId?: string | null
           phone?: string | null
@@ -36086,6 +36092,48 @@ export type Database = {
           },
         ]
       }
+      searchIndex_9CZDcGFyZNHH9vEMuFVaDH: {
+        Row: {
+          createdAt: string
+          description: string | null
+          entityId: string
+          entityType: string
+          id: number
+          link: string
+          metadata: Json | null
+          searchVector: unknown
+          tags: string[] | null
+          title: string
+          updatedAt: string | null
+        }
+        Insert: {
+          createdAt?: string
+          description?: string | null
+          entityId: string
+          entityType: string
+          id?: number
+          link: string
+          metadata?: Json | null
+          searchVector?: unknown
+          tags?: string[] | null
+          title: string
+          updatedAt?: string | null
+        }
+        Update: {
+          createdAt?: string
+          description?: string | null
+          entityId?: string
+          entityType?: string
+          id?: number
+          link?: string
+          metadata?: Json | null
+          searchVector?: unknown
+          tags?: string[] | null
+          title?: string
+          updatedAt?: string | null
+        }
+        Relationships: []
+      }
       searchIndexRegistry: {
         Row: {
           companyId: string
@@ -46354,12 +46402,13 @@ export type Database = {
           baseCurrencyCode: string | null
           city: string | null
           companyGroupId: string | null
+          companyGroupName: string | null
           companyId: string | null
           countryCode: string | null
-          countryName: string | null
           createdAt: string | null
           email: string | null
           employeeType: string | null
+          eori: string | null
           fax: string | null
           id: string | null
           isEliminationEntity: boolean | null
@@ -46367,7 +46416,9 @@ export type Database = {
           logoDarkIcon: string | null
           logoLight: string | null
           logoLightIcon: string | null
+          logoWatermark: string | null
           name: string | null
+          ownerId: string | null
           parentCompanyId: string | null
           phone: string | null
           postalCode: string | null
@@ -46458,6 +46509,41 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "integrations"
             referencedColumns: ["companyId"]
+          },
+          {
+            foreignKeyName: "companyGroup_ownerId_fkey"
+            columns: ["ownerId"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "companyGroup_ownerId_fkey"
+            columns: ["ownerId"]
+            isOneToOne: false
+            referencedRelation: "employeesAcrossCompanies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "companyGroup_ownerId_fkey"
+            columns: ["ownerId"]
+            isOneToOne: false
+            referencedRelation: "employeeSummary"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "companyGroup_ownerId_fkey"
+            columns: ["ownerId"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "companyGroup_ownerId_fkey"
+            columns: ["ownerId"]
+            isOneToOne: false
+            referencedRelation: "userDefaults"
+            referencedColumns: ["userId"]
           },
           {
             foreignKeyName: "userToCompany_companyId_fkey"
@@ -56008,7 +56094,7 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "address_countryCode_fkey"
-            columns: ["shipmentCountryCode"]
+            columns: ["customerCountryCode"]
             isOneToOne: false
             referencedRelation: "country"
             referencedColumns: ["alpha2"]
@@ -56022,7 +56108,7 @@ export type Database = {
           },
           {
             foreignKeyName: "address_countryCode_fkey"
-            columns: ["customerCountryCode"]
+            columns: ["shipmentCountryCode"]
             isOneToOne: false
             referencedRelation: "country"
             referencedColumns: ["alpha2"]
@@ -56579,14 +56665,14 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "address_countryCode_fkey"
-            columns: ["paymentCountryCode"]
+            columns: ["customerCountryCode"]
             isOneToOne: false
             referencedRelation: "country"
             referencedColumns: ["alpha2"]
           },
           {
             foreignKeyName: "address_countryCode_fkey"
-            columns: ["customerCountryCode"]
+            columns: ["paymentCountryCode"]
             isOneToOne: false
             referencedRelation: "country"
             referencedColumns: ["alpha2"]
@@ -61764,10 +61850,20 @@ export type Database = {
         Args: { p_new: Json; p_old: Json; p_operation: string; p_table: string }
         Returns: undefined
       }
-      sync_finish_job_operation: {
-        Args: { p_new: Json; p_old: Json; p_operation: string; p_table: string }
-        Returns: undefined
-      }
+      sync_finish_job_operation:
+        | {
+            Args: { p_new: Json; p_old: Json; p_operation: string }
+            Returns: undefined
+          }
+        | {
+            Args: {
+              p_new: Json
+              p_old: Json
+              p_operation: string
+              p_table: string
+            }
+            Returns: undefined
+          }
       sync_insert_company_related_records: {
         Args: { p_new: Json; p_old: Json; p_operation: string; p_table: string }
         Returns: undefined

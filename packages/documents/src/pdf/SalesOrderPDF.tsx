@@ -11,7 +11,7 @@ import {
   getLineTotal,
   getTotal
 } from "../utils/sales-order";
-import { getCurrencyFormatter, getRegistrationFooter } from "../utils/shared";
+import { getCurrencyFormatter } from "../utils/shared";
 import {
   Header,
   Note,
@@ -105,6 +105,8 @@ const SalesOrderPDF = ({
     (method) => method.id === salesOrder?.shippingMethodId
   );
 
+  const watermarkSrc = company.logoWatermark;
+
   let rowIndex = 0;
 
   return (
@@ -115,13 +117,25 @@ const SalesOrderPDF = ({
         keywords: meta?.keywords ?? "sales order",
         subject: meta?.subject ?? "Sales Order"
       }}
-      footerLabel={getRegistrationFooter(
-        company.name,
-        company.countryCode,
-        company.taxId
-      )}
       footerDocumentId={salesOrder?.salesOrderId}
     >
+      {watermarkSrc && (
+        <View
+          fixed
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            alignItems: "center",
+            marginTop: 100,
+            opacity: 0.07
+          }}
+        >
+          <Image src={watermarkSrc} style={{ width: "50%" }} />
+        </View>
+      )}
       <Header
         company={company}
         title="Sales Order"
@@ -470,7 +484,11 @@ const SalesOrderPDF = ({
       </View>
 
       {/* Terms */}
-      <Note title="Standard Terms & Conditions" content={terms} />
+      {terms?.content && terms.content.length > 0 && (
+        <View break>
+          <Note title="Standard Terms & Conditions" content={terms} />
+        </View>
+      )}
     </Template>
   );
 };

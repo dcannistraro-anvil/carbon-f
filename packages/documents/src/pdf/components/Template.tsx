@@ -45,7 +45,7 @@ const Template = ({
   const styles = StyleSheet.create({
     body: {
       fontFamily: "Inter",
-      padding: "20px 40px 50px 40px",
+      padding: "10px 16px 36px 16px",
       color: "#000000",
       backgroundColor: "#FFFFFF"
     }

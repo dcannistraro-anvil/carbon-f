@@ -69,6 +69,7 @@ export default function Company() {
     name: company.name,
     taxId: company.taxId ?? undefined,
     vatNumber: company.vatNumber ?? undefined,
+    eori: company.eori ?? undefined,
     addressLine1: company.addressLine1 ?? "",
     addressLine2: company.addressLine2 ?? undefined,
     city: company.city ?? "",
