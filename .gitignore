@@ -57,3 +57,4 @@ packages/database/supabase/seed.sql
 .carbon-worktree
 .superpowers
 llm/tasks
+apps/*/portless.json

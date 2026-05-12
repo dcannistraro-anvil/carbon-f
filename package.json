@@ -38,7 +38,7 @@
     "ci:deploy": "pnpm --filter ci ci:deploy",
     "clean": "turbo run clean && rimraf ./node_modules && rimraf ./pnpm-lock.yaml",
     "db:function:new": "pnpm --filter @carbon/database db:function:new",
-    "db:migrate": "pnpm --filter @carbon/database db:migrate",
+    "db:migrate": "crbn migrate",
     "db:migrate:new": "pnpm --filter @carbon/database db:migrate:new",
     "db:seed": "turbo run db:seed --no-cache",
     "db:seed:dev": "pnpm --filter @carbon/database db:seed:dev --",

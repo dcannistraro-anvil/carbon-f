@@ -6,6 +6,7 @@ import {
   isCancel,
   log,
   multiselect,
+  note,
   select,
   text
 } from "@clack/prompts";
@@ -27,6 +28,10 @@ export async function pickApps(): Promise<AppId[]> {
   }
   if (!process.stdin.isTTY) return APP_CHOICES.map((c) => c.value);
 
+  note(
+    "When no apps are selected it will only run (postgres, kong, supabase, inngest, mail) without spawning ERP/MES dev servers.",
+    "Tip"
+  );
   const picked = await multiselect({
     message: "Which apps to run?",
     options: APP_CHOICES.map((c) => ({
@@ -35,7 +40,7 @@ export async function pickApps(): Promise<AppId[]> {
       hint: c.hint
     })),
     initialValues: APP_CHOICES.map((c) => c.value),
-    required: true
+    required: false
   });
   if (isCancel(picked)) abort();
   return picked as AppId[];

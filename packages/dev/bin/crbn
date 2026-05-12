@@ -354,6 +354,8 @@ crbn — Carbon dev CLI
     crbn down                       Stop stack (volumes preserved).
     crbn reset                      Wipe volumes + redis, then `up`.
     crbn status                     Port assignment + container health.
+    crbn migrate                    Apply DB migrations against the running
+                                    worktree stack (loads .env.local).
 
 USAGE
 }
@@ -372,7 +374,7 @@ case "$cmd" in
   checkout)
     cmd_checkout "$@"
     ;;
-  copy|up|down|reset|status|new|list|remove|complete)
+  copy|up|down|reset|status|migrate|new|list|remove|complete)
     delegate_ts "$cmd" "$@"
     ;;
   *)

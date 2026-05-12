@@ -46,17 +46,25 @@ import { summaryLines } from "../ui/summary.js";
 import { syncStaleCopyFiles } from "./copy.js";
 import { down } from "./down.js";
 
-export async function up(opts: { migrate?: boolean; regen?: boolean } = {}) {
+export async function up(
+  opts: { migrate?: boolean; regen?: boolean; apps?: boolean } = {}
+) {
   const shouldMigrate = opts.migrate ?? true;
   // Type/swagger regen depends on a freshly-migrated schema. If migrations
   // were skipped, schema is unchanged — skip regen too.
   const shouldRegen = shouldMigrate && (opts.regen ?? true);
+  // Services-only mode: boot compose stack + portless aliases (api/studio/
+  // mail/inngest URLs still useful), skip spawnApps + auto-`down` on Ctrl+C.
+  // Triggered by --no-apps OR by deselecting everything in the picker. User
+  // runs `crbn down` to tear it back down.
+  const appsRequested = opts.apps ?? true;
   intro("Carbon · dev up");
 
   await ensurePortlessInstalled();
   await ensureProxyPrivileges();
 
-  const selectedApps = await pickApps();
+  const selectedApps = appsRequested ? await pickApps() : [];
+  const shouldRunApps = selectedApps.length > 0;
 
   const root = await getWorktreeRoot();
   const slug = resolveSlug(root);
@@ -84,7 +92,8 @@ export async function up(opts: { migrate?: boolean; regen?: boolean } = {}) {
   let ports!: Awaited<ReturnType<typeof resolveSlot>>["ports"];
   let redisDb!: number;
   let jwt!: Awaited<ReturnType<typeof resolveSlot>>["jwt"];
-  let branchPrefix: string | null = null;
+  let branchPrefix = "";
+  let migrationsApplied = false;
 
   await tasks([
     {
@@ -100,13 +109,13 @@ export async function up(opts: { migrate?: boolean; regen?: boolean } = {}) {
         // portless.json stamped below.
         const branch = await currentBranch(root);
         const linked = await isLinkedWorktree();
-        branchPrefix = branchToPrefix(branch);
+        branchPrefix = branchToPrefix(branch, slug);
 
         writeEnv(root, renderEnv({ slug, ports, redisDb, jwt, branchPrefix }));
         syncAppPortlessConfigs({ worktreeRoot: root, branchPrefix, linked });
         loadDotenv({ path: join(root, ".env.local"), override: false });
         loadDotenv({ path: join(root, ".env"), override: false });
-        return `prefix "${branchPrefix ?? "(none)"}", redis db ${redisDb}`;
+        return `prefix "${branchPrefix}", redis db ${redisDb}`;
       }
     },
     {
@@ -150,8 +159,11 @@ export async function up(opts: { migrate?: boolean; regen?: boolean } = {}) {
           {
             title: "Apply database migrations",
             task: async () => {
-              await applyMigrations(root, ports.PORT_DB);
-              return "migrations applied";
+              const r = await applyMigrations(root, ports.PORT_DB);
+              migrationsApplied = r.applied;
+              return r.applied
+                ? "migrations applied"
+                : "schema already up to date";
             }
           }
         ]
@@ -166,6 +178,7 @@ export async function up(opts: { migrate?: boolean; regen?: boolean } = {}) {
           {
             title: "Regenerate types & swagger",
             task: async () => {
+              if (!migrationsApplied) return "skipped (no new migrations)";
               await execa("pnpm", ["db:types"], { cwd: root });
               await execa("pnpm", ["generate:swagger"], { cwd: root });
               return "types + swagger refreshed";
@@ -216,7 +229,16 @@ export async function up(opts: { migrate?: boolean; regen?: boolean } = {}) {
     log.info("stripe listener spawned (CARBON_EDITION=cloud)");
   }
 
-  box(summaryLines(ports, branchPrefix).join("\n"), `Carbon dev — ${slug}`);
+  box(
+    summaryLines(ports, branchPrefix, selectedApps).join("\n"),
+    `Carbon dev — ${slug}`
+  );
+
+  if (!shouldRunApps) {
+    outro("services up (run `crbn down` to stop)");
+    return;
+  }
+
   outro("apps starting (Ctrl+C to stop)");
 
   await spawnApps({ root, apps: selectedApps });

@@ -60,25 +60,32 @@ export async function waitForStorageTables(port: number) {
 
 // --include-all: supabase bootstrap inserts a sentinel into schema_migrations
 // that makes earlier-timestamp migrations look "out of order" without it.
-export async function applyMigrations(root: string, dbPort: number) {
-  await execStrict(
-    "supabase",
-    [
-      "migration",
-      "up",
-      "--include-all",
-      "--db-url",
-      `postgresql://postgres:postgres@localhost:${dbPort}/postgres`
-    ],
-    join(root, "packages/database")
-  );
-}
-
-async function execStrict(cmd: string, args: string[], cwd: string) {
-  const r = await execa(cmd, args, { cwd, reject: false, preferLocal: true });
+// Returns `applied: true` when at least one migration ran — callers gate
+// type/swagger regen on this so a re-run against an up-to-date DB stays cheap.
+export async function applyMigrations(
+  root: string,
+  dbPort: number
+): Promise<{ applied: boolean }> {
+  const args = [
+    "migration",
+    "up",
+    "--include-all",
+    "--db-url",
+    `postgresql://postgres:postgres@localhost:${dbPort}/postgres`
+  ];
+  const cwd = join(root, "packages/database");
+  const r = await execa("supabase", args, {
+    cwd,
+    reject: false,
+    preferLocal: true
+  });
   if (r.exitCode !== 0) {
     process.stderr.write(r.stderr?.toString() ?? "");
     process.stdout.write(r.stdout?.toString() ?? "");
-    throw new Error(`${cmd} ${args.join(" ")} failed (exit ${r.exitCode})`);
+    throw new Error(`supabase ${args.join(" ")} failed (exit ${r.exitCode})`);
   }
+  // supabase prints "Applying migration <ts>_<name>.sql..." per applied
+  // migration; absent that, the schema was already current.
+  const applied = /Applying migration/i.test(r.stdout ?? "");
+  return { applied };
 }

@@ -31,7 +31,7 @@ export async function down(opts: { silent?: boolean } = {}) {
       title: "Unregister portless aliases",
       task: async () => {
         const branch = await currentBranch(root);
-        const branchPrefix = branchToPrefix(branch);
+        const branchPrefix = branchToPrefix(branch, slug);
         await unregisterAliases(root, branchPrefix);
         return "aliases removed";
       }
@@ -64,7 +64,7 @@ async function runPlain(root: string, slug: string, project: string) {
 
   step("unregistering portless aliases");
   const branch = await currentBranch(root);
-  const branchPrefix = branchToPrefix(branch);
+  const branchPrefix = branchToPrefix(branch, slug);
   await unregisterAliases(root, branchPrefix);
   done("aliases removed");
 

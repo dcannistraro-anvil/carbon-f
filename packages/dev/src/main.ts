@@ -3,6 +3,7 @@ import { defineCommand, runMain } from "citty";
 import { copy } from "./commands/copy.js";
 import { down } from "./commands/down.js";
 import { listWorktrees } from "./commands/list.js";
+import { migrate } from "./commands/migrate.js";
 import { newWorktree } from "./commands/new.js";
 import { removeWorktreeCmd } from "./commands/remove.js";
 import { reset } from "./commands/reset.js";
@@ -28,12 +29,19 @@ const main = defineCommand({
           default: true,
           description:
             "Regenerate db types + swagger after migrations (use --no-regen to skip)"
+        },
+        apps: {
+          type: "boolean",
+          default: true,
+          description:
+            "Spawn ERP/MES dev servers (use --no-apps for services-only boot)"
         }
       },
       run: ({ args }) =>
         up({
           migrate: args.migrate !== false,
-          regen: args.regen !== false
+          regen: args.regen !== false,
+          apps: args.apps !== false
         })
     }),
     down: defineCommand({
@@ -47,6 +55,21 @@ const main = defineCommand({
     status: defineCommand({
       meta: { description: "Show port assignment + container health" },
       run: () => status()
+    }),
+    migrate: defineCommand({
+      meta: {
+        description:
+          "Apply database migrations against the worktree's stack (loads .env.local)"
+      },
+      args: {
+        regen: {
+          type: "boolean",
+          default: true,
+          description:
+            "Regenerate db types + swagger after migrations (use --no-regen to skip)"
+        }
+      },
+      run: ({ args }) => migrate({ regen: args.regen !== false })
     }),
     new: defineCommand({
       meta: { description: "Interactive: create a worktree on a fresh branch" },

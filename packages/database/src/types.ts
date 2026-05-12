@@ -60517,6 +60517,7 @@ export type Database = {
           reorderQuantity: number
           replenishmentSystem: Database["public"]["Enums"]["itemReplenishmentSystem"]
           storageTypeIds: string[]
+          storageUnitIds: string[]
           thumbnailPath: string
           type: Database["public"]["Enums"]["itemType"]
           unitOfMeasureCode: string
