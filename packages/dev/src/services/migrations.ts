@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import net from "node:net";
 import { join } from "node:path";
 import { setTimeout as sleep } from "node:timers/promises";
@@ -54,6 +55,56 @@ function tryConnect(host: string, port: number): Promise<boolean> {
     socket.once("error", () => done(false));
     socket.setTimeout(2000, () => done(false));
   });
+}
+
+// Block until postgres accepts queries (TCP-open ≠ ready — init scripts run
+// after the port opens). Standalone so callers can re-apply bootstrap SQL or
+// restart dependents between this gate and `waitForStorageTables`.
+export async function waitForPostgres(port: number, timeoutMs = 60_000) {
+  const url = `postgresql://postgres:postgres@localhost:${port}/postgres`;
+  const env = { ...process.env, PGSSLMODE: "disable" };
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    const r = await execa("psql", [url, "-tAc", "SELECT 1"], {
+      env,
+      reject: false
+    });
+    if (r.exitCode === 0 && r.stdout?.trim() === "1") return;
+    await sleep(1000);
+  }
+  throw new Error(`postgres did not accept queries within ${timeoutMs}ms`);
+}
+
+// Single-shot check used by the heal path to decide whether storage-api has
+// already bootstrapped its schema.
+export async function storageBucketsExists(port: number): Promise<boolean> {
+  const url = `postgresql://postgres:postgres@localhost:${port}/postgres`;
+  const r = await execa(
+    "psql",
+    [url, "-tAc", "SELECT to_regclass('storage.buckets')"],
+    { env: { ...process.env, PGSSLMODE: "disable" }, reject: false }
+  );
+  return r.exitCode === 0 && r.stdout?.trim() === "storage.buckets";
+}
+
+// Re-apply `packages/dev/docker/init.sql` over psql as the superuser.
+// `docker-entrypoint-initdb.d` only runs on a fresh pgdata volume — a worktree
+// with a pre-existing volume from before init.sql evolved keeps the old role
+// passwords forever, so storage-api / gotrue / postgrest auth-fail on every
+// boot. Re-applying is idempotent (`ALTER USER ... PASSWORD`, `CREATE SCHEMA
+// IF NOT EXISTS`).
+export async function applyBootstrapSql(root: string, port: number) {
+  const sql = readFileSync(join(root, "packages/dev/docker/init.sql"), "utf8");
+  const url = `postgresql://postgres:postgres@localhost:${port}/postgres`;
+  const r = await execa("psql", [url, "-v", "ON_ERROR_STOP=1"], {
+    input: sql,
+    env: { ...process.env, PGSSLMODE: "disable" },
+    reject: false
+  });
+  if (r.exitCode !== 0) {
+    process.stderr.write(r.stderr?.toString() ?? "");
+    throw new Error(`init.sql apply failed (exit ${r.exitCode})`);
+  }
 }
 
 // Block until postgres accepts queries, then until supabase storage-api

@@ -22,6 +22,30 @@ export async function bootStack(root: string, slug: string) {
   );
 }
 
+// `docker compose restart` a subset of services. Used by the storage-stuck
+// heal path: after re-applying init.sql we restart storage/gotrue/postgrest so
+// they reconnect with the freshly-rotated supabase role passwords.
+export async function restartServices(
+  root: string,
+  slug: string,
+  services: string[]
+) {
+  if (services.length === 0) return;
+  await execa(
+    "docker",
+    [
+      "compose",
+      "-f",
+      COMPOSE_DEV_FILE,
+      "-p",
+      projectName(slug),
+      "restart",
+      ...services
+    ],
+    { cwd: root, reject: false, stdio: "ignore" }
+  );
+}
+
 // Pull all images before `up -d` so `bootStack` doesn't block silently behind
 // a multi-GB download. `--progress=plain` emits parseable per-line status to
 // stderr (`<service> Pulling`, `<service> Pulled`); we stream the latest line

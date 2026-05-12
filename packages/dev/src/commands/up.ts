@@ -1,4 +1,5 @@
 import { join } from "node:path";
+import { setTimeout as sleep } from "node:timers/promises";
 import { box, intro, log, outro, progress, tasks } from "@clack/prompts";
 import { config as loadDotenv } from "dotenv";
 import { execa } from "execa";
@@ -28,10 +29,14 @@ import {
   listComposeServices,
   listContainers,
   pullStack,
+  restartServices,
   tailServiceLogs
 } from "../services/compose.js";
 import {
+  applyBootstrapSql,
   applyMigrations,
+  storageBucketsExists,
+  waitForPostgres,
   waitForStorageTables,
   waitForTcp
 } from "../services/migrations.js";
@@ -172,11 +177,15 @@ export async function up(
     }
   ]);
 
-  // Wait for services via clack progress bar: 3 TCP ports + 1 for the
-  // storage.buckets gate. `waitForStorageTables` updates the subtitle as it
-  // polls; the final advance fires only once the table actually appears.
+  // Wait for services via clack progress bar:
+  //   3× TCP ports → +1 supabase roles → +1 storage.buckets = 5 ticks.
+  // Heal path: if storage.buckets hasn't appeared within 30s of postgres
+  // becoming query-ready, re-apply init.sql + restart storage/gotrue/postgrest.
+  // This recovers worktrees whose pgdata volume predates the current init.sql
+  // (Docker only runs init scripts on a fresh data dir, so role passwords can
+  // drift and storage-api auth-fails forever).
   {
-    const bar = progress({ style: "heavy", max: 4 });
+    const bar = progress({ style: "heavy", max: 5 });
     bar.start("Waiting for services");
     try {
       await waitForTcp(
@@ -187,6 +196,27 @@ export async function up(
         ],
         { onProgress: (line) => bar.advance(1, line.slice(0, 80)) }
       );
+
+      bar.message("waiting for postgres to accept queries");
+      await waitForPostgres(ports.PORT_DB);
+
+      const earlyDeadline = Date.now() + 30_000;
+      let bucketsReady = false;
+      while (Date.now() < earlyDeadline) {
+        if (await storageBucketsExists(ports.PORT_DB)) {
+          bucketsReady = true;
+          break;
+        }
+        await sleep(1000);
+      }
+      if (!bucketsReady) {
+        bar.message("storage stuck — re-applying init.sql");
+        await applyBootstrapSql(root, ports.PORT_DB);
+        bar.message("restarting storage / gotrue / postgrest");
+        await restartServices(root, slug, ["storage", "gotrue", "postgrest"]);
+      }
+      bar.advance(1, "supabase roles ok");
+
       await waitForStorageTables(ports.PORT_DB, {
         onProgress: (line) => bar.message(line.slice(0, 80)),
         onTimeout: async () => {
