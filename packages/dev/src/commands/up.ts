@@ -22,7 +22,12 @@ import {
   spawnStripeListener,
   syncEnvSymlinks
 } from "../services/apps.js";
-import { bootSharedRedis, bootStack } from "../services/compose.js";
+import {
+  bootSharedRedis,
+  bootStack,
+  listContainers,
+  tailServiceLogs
+} from "../services/compose.js";
 import {
   applyMigrations,
   waitForStorageTables,
@@ -150,7 +155,26 @@ export async function up(
           `tcp:${ports.PORT_INNGEST}`
         ]);
         msg("storage tables");
-        await waitForStorageTables(ports.PORT_DB);
+        await waitForStorageTables(ports.PORT_DB, {
+          onTimeout: async () => {
+            const containers = await listContainers(root, slug);
+            const out: string[] = ["", "--- container state ---"];
+            for (const name of ["postgres", "storage"]) {
+              const c = containers.find((x) => x.Service === name);
+              out.push(
+                c
+                  ? `${name.padEnd(10)} state=${c.State} health=${c.Health ?? "n/a"}  ${c.Status}`
+                  : `${name.padEnd(10)} (not found)`
+              );
+            }
+            out.push("", "--- storage logs (last 50) ---");
+            out.push(await tailServiceLogs(root, slug, "storage", 50));
+            out.push("", "--- postgres logs (last 20) ---");
+            out.push(await tailServiceLogs(root, slug, "postgres", 20));
+            out.push("");
+            process.stderr.write(out.join("\n") + "\n");
+          }
+        });
         return "all services responding";
       }
     },

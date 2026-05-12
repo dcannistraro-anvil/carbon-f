@@ -90,6 +90,34 @@ export async function listContainers(
     .map((l) => JSON.parse(l) as Container);
 }
 
+// Tail logs for a single compose service. Returns merged stdout/stderr —
+// docker compose writes log content to stderr on some versions. Empty string
+// if the call fails; callers use this for best-effort diagnostics.
+export async function tailServiceLogs(
+  root: string,
+  slug: string,
+  service: string,
+  lines: number
+): Promise<string> {
+  const r = await execa(
+    "docker",
+    [
+      "compose",
+      "-f",
+      COMPOSE_DEV_FILE,
+      "-p",
+      projectName(slug),
+      "logs",
+      "--tail",
+      String(lines),
+      "--no-color",
+      service
+    ],
+    { cwd: root, reject: false }
+  );
+  return ((r.stdout ?? "") + (r.stderr ?? "")).trim();
+}
+
 export async function dockerProjectStates(): Promise<Map<string, string>> {
   const out = new Map<string, string>();
   const r = await execa(

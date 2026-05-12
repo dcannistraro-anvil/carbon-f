@@ -42,20 +42,47 @@ function tryConnect(host: string, port: number): Promise<boolean> {
   });
 }
 
-// Block until supabase storage-api bootstraps `storage.buckets`.
-export async function waitForStorageTables(port: number) {
+// Block until postgres accepts queries, then until supabase storage-api
+// bootstraps `storage.buckets`. Postgres opens its TCP port well before init
+// scripts finish — querying `SELECT 1` is the real readiness signal. Storage
+// only starts its bootstrap once postgres is healthy, so both gates share one
+// budget. `onTimeout` runs before the throw so callers can surface container
+// state / logs without leaking compose-project knowledge into this module.
+export async function waitForStorageTables(
+  port: number,
+  opts: { onTimeout?: () => Promise<void> } = {}
+) {
   const url = `postgresql://postgres:postgres@localhost:${port}/postgres`;
-  const deadline = Date.now() + 60_000;
+  const env = { ...process.env, PGSSLMODE: "disable" };
+  const deadline = Date.now() + 180_000;
+
+  while (Date.now() < deadline) {
+    const r = await execa("psql", [url, "-tAc", "SELECT 1"], {
+      env,
+      reject: false
+    });
+    if (r.exitCode === 0 && r.stdout?.trim() === "1") break;
+    await sleep(1000);
+  }
+
   while (Date.now() < deadline) {
     const r = await execa(
       "psql",
       [url, "-tAc", "SELECT to_regclass('storage.buckets')"],
-      { env: { ...process.env, PGSSLMODE: "disable" }, reject: false }
+      { env, reject: false }
     );
     if (r.exitCode === 0 && r.stdout?.trim() === "storage.buckets") return;
     await sleep(1000);
   }
-  throw new Error("storage.buckets did not appear within 60s");
+
+  if (opts.onTimeout) {
+    try {
+      await opts.onTimeout();
+    } catch {
+      // diagnostics are best-effort; original error below is what matters
+    }
+  }
+  throw new Error("storage.buckets did not appear within 180s");
 }
 
 // --include-all: supabase bootstrap inserts a sentinel into schema_migrations
