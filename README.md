@@ -181,6 +181,8 @@ The dev stack (Postgres, GoTrue, Kong, Storage, Inngest, Inbucket, Studio, Realt
 - **Git worktrees** — every feature branch can live in its own checkout dir, so you can switch branches without stashing.
 - **Per-worktree docker compose stack** — each worktree gets its own Postgres / Supabase services on dynamic ports, isolated under `carbon-<slug>` compose project. Routing is handled by [portless](https://github.com/portless-dev/portless) (a local HTTPS reverse proxy that serves `*.dev` hostnames on `:443` with locally-trusted certs — installed automatically on first `crbn up`).
 
+> **Windows users:** the dev CLI (`crbn`, `setup.sh`) is POSIX-only and expects **WSL or Git Bash**. Native cmd.exe / PowerShell shells are not supported. From a WSL/Git Bash prompt, the standard flow (`./setup.sh`, `pnpm dev`, `crbn checkout …`) works the same as on macOS/Linux.
+
 Run `setup.sh` once to put `crbn` on your `$PATH` and install the `crbn` shell function (so `crbn checkout` can change cwd):
 
 ```bash

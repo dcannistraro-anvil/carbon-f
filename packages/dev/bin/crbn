@@ -7,6 +7,18 @@
 
 set -euo pipefail
 
+# crbn is POSIX-only. On Windows, supported environments are WSL (reports
+# `Linux` from uname) and Git Bash (reports `MINGW*`/`MSYS*`). Bail early
+# with an actionable message anywhere else so users don't hit cryptic
+# downstream failures.
+case "$(uname -s)" in
+  MINGW*|MSYS*|CYGWIN*|Linux*|Darwin*) ;;
+  *)
+    printf '\033[1;31m✗\033[0m crbn requires WSL or Git Bash on Windows (current: %s)\n' "$(uname -s)" >&2
+    exit 1
+    ;;
+esac
+
 # ---------------------------------------------------------------------------
 # Output helpers (colors when stderr is a TTY).
 # All listings/errors go to stderr so they never get eval'd by the `crbn()`

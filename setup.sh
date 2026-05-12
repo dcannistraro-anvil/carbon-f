@@ -325,6 +325,14 @@ uninstall_proxy_daemon() {
 }
 
 install() {
+  case "$(uname -s)" in
+    MINGW*|MSYS*|CYGWIN*|Linux*|Darwin*) ;;
+    *)
+      fail "Unsupported environment: $(uname -s). crbn requires WSL or Git Bash on Windows; macOS/Linux otherwise."
+      exit 1
+      ;;
+  esac
+
   local repo rc
   repo="$(repo_root)"
   rc="$(detect_rc)"

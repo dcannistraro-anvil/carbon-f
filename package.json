@@ -44,7 +44,7 @@
     "db:seed:dev": "pnpm --filter @carbon/database db:seed:dev --",
     "db:types": "tsx scripts/generate-db-types.ts",
     "deploy": "turbo run deploy",
-    "dev": "./packages/dev/bin/crbn up",
+    "dev": "crbn up",
     "dev:academy": "turbo run dev --filter=./apps/academy --filter=./packages/",
     "dev:packages": "turbo run dev --filter=./packages/*",
     "dev:starter": "turbo run dev --filter=./apps/starter --filter=./packages/",
