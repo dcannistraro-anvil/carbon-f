@@ -30,8 +30,7 @@ const convertTiptapJSON = (
             fontSize: 13,
             fontWeight: "bold",
             marginBottom: 10,
-            width: "100%",
-            overflowWrap: "break-word"
+            width: "100%"
           }}
         >
           {node?.content?.map((child) => convertTiptapJSON(child))}
@@ -45,8 +44,7 @@ const convertTiptapJSON = (
           style={{
             marginBottom: 10,
             fontSize: 9,
-            width: "100%",
-            overflowWrap: "break-word"
+            width: "100%"
           }}
         >
           {node.content?.map((child) => convertTiptapJSON(child)) || ""}
