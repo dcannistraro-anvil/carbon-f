@@ -7,7 +7,13 @@ npx lint-staged
 if git diff --cached --name-only | grep -qE '\.(tsx?|jsx?)$|\.po$'; then
     echo "Compiling translations..."
     npm run lingui:check
-    
+
+    # Strip `#:` origin refs before committing — they shift on any upstream
+    # code edit and are the biggest PR-conflict source. They're kept in the
+    # working dir during the translate flow (linguito needs them for LLM
+    # context) and only stripped right before commit.
+    node scripts/strip-po-headers.mjs
+
     # Add compiled locale files to the commit
     git add packages/locale/locales/**/*.po
 fi

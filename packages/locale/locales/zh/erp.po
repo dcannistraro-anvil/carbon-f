@@ -2924,7 +2924,7 @@ msgid "Entity is {status}"
 msgstr "实体为 {status}"
 
 msgid "EORI"
-msgstr ""
+msgstr "EORI"
 
 msgid "ERP, MES, QMS"
 msgstr "ERP, MES, QMS"
@@ -5412,7 +5412,7 @@ msgid "PDF"
 msgstr "PDF"
 
 msgid "PDF Watermark"
-msgstr ""
+msgstr "PDF 水印"
 
 msgid "PDFs"
 msgstr "PDF"
@@ -6880,7 +6880,7 @@ msgid "Show sync options"
 msgstr "显示同步选项"
 
 msgid "Shown as a faint background behind every page of generated PDFs"
-msgstr ""
+msgstr "作为淡色背景显示在每个生成的PDF页面后面"
 
 msgid "Shown to the user when this rule fails."
 msgstr "当此规则失败时向用户显示。"

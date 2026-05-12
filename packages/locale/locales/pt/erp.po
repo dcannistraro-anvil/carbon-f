@@ -2924,7 +2924,7 @@ msgid "Entity is {status}"
 msgstr "Entidade é {status}"
 
 msgid "EORI"
-msgstr ""
+msgstr "EORI"
 
 msgid "ERP, MES, QMS"
 msgstr "ERP, MES, QMS"
@@ -5412,7 +5412,7 @@ msgid "PDF"
 msgstr "PDF"
 
 msgid "PDF Watermark"
-msgstr ""
+msgstr "Marca d'água do PDF"
 
 msgid "PDFs"
 msgstr "PDFs"
@@ -6880,7 +6880,7 @@ msgid "Show sync options"
 msgstr "Mostrar opções de sincronização"
 
 msgid "Shown as a faint background behind every page of generated PDFs"
-msgstr ""
+msgstr "Exibido como um fundo suave atrás de cada página dos PDFs gerados"
 
 msgid "Shown to the user when this rule fails."
 msgstr "Mostrado ao usuário quando esta regra falha."
