@@ -16,6 +16,7 @@ import { memo, useCallback, useMemo } from "react";
 import {
   LuBookMarked,
   LuBox,
+  LuBoxes,
   LuCalculator,
   LuCheck,
   LuCircleCheck,
@@ -45,6 +46,7 @@ import {
 } from "~/components";
 import { Enumerable } from "~/components/Enumerable";
 import { useLocations } from "~/components/Form/Location";
+import { useStorageUnits } from "~/components/Form/StorageUnit";
 import { useUnitOfMeasure } from "~/components/Form/UnitOfMeasure";
 import { useFilters } from "~/components/Table/components/Filter/useFilters";
 import { useUrlParams } from "~/hooks";
@@ -93,6 +95,7 @@ const InventoryTable = memo(
 
     const locations = useLocations();
     const unitOfMeasures = useUnitOfMeasure();
+    const { options: storageUnitOptions } = useStorageUnits(locationId);
 
     const filters = useFilters();
     const materialSubstanceId = filters.getFilter("materialSubstanceId")?.[0];
@@ -501,6 +504,36 @@ const InventoryTable = memo(
           }
         },
         {
+          accessorKey: "storageUnitIds",
+          header: t`Storage Unit`,
+          cell: ({ row }) => {
+            const ids =
+              (
+                row.original as InventoryItem & {
+                  storageUnitIds?: string[] | null;
+                }
+              ).storageUnitIds ?? [];
+            return (
+              <HStack spacing={0} className="gap-1">
+                {ids.map((id) => {
+                  const opt = storageUnitOptions.find((o) => o.value === id);
+                  const label = typeof opt?.label === "string" ? opt.label : id;
+                  return <Enumerable key={id} value={label} />;
+                })}
+              </HStack>
+            );
+          },
+          meta: {
+            filter: {
+              type: "fetcher",
+              endpoint: path.to.api.storageUnits(locationId),
+              isArray: true
+            },
+            pluralHeader: t`Storage Units`,
+            icon: <LuBoxes />
+          }
+        },
+        {
           accessorKey: "active",
           header: t`Active`,
           cell: (item) => <Checkbox isChecked={item.getValue<boolean>()} />,
@@ -519,6 +552,7 @@ const InventoryTable = memo(
       ];
     }, [
       forms,
+      locationId,
       materialFormId,
       materialSubstanceId,
       formatNumber,
@@ -526,6 +560,7 @@ const InventoryTable = memo(
       substances,
       tags,
       storageTypes,
+      storageUnitOptions,
       unitOfMeasures,
       t,
       translateReplenishment
@@ -539,7 +574,8 @@ const InventoryTable = memo(
       grade: false,
       dimension: false,
       materialType: false,
-      storageTypeIds: false
+      storageTypeIds: false,
+      storageUnitIds: false
     };
 
     const defaultColumnPinning = {
