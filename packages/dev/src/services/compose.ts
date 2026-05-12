@@ -22,6 +22,50 @@ export async function bootStack(root: string, slug: string) {
   );
 }
 
+// Pull all images before `up -d` so `bootStack` doesn't block silently behind
+// a multi-GB download. `--progress=plain` emits parseable per-line status to
+// stderr (`<service> Pulling`, `<service> Pulled`); we stream the latest line
+// via `onLine` so the caller can feed it into a spinner subtitle.
+export async function pullStack(
+  root: string,
+  slug: string,
+  onLine: (line: string) => void
+) {
+  const proc = execa(
+    "docker",
+    [
+      "compose",
+      "-f",
+      COMPOSE_DEV_FILE,
+      "-p",
+      projectName(slug),
+      "--env-file",
+      ".env.local",
+      "--progress",
+      "plain",
+      "pull"
+    ],
+    { cwd: root, reject: false, all: true }
+  );
+
+  let buf = "";
+  proc.all?.on("data", (b: Buffer) => {
+    buf += b.toString();
+    const lines = buf.split("\n");
+    buf = lines.pop() ?? "";
+    for (const l of lines) {
+      const trimmed = l.trim();
+      if (trimmed) onLine(trimmed);
+    }
+  });
+
+  const r = await proc;
+  if (r.exitCode !== 0) {
+    process.stderr.write(r.all?.toString() ?? "");
+    throw new Error(`docker compose pull failed (exit ${r.exitCode})`);
+  }
+}
+
 export async function stopStack(
   root: string,
   slug: string,
@@ -88,6 +132,34 @@ export async function listContainers(
     .split("\n")
     .filter(Boolean)
     .map((l) => JSON.parse(l) as Container);
+}
+
+// Names of services declared in the dev compose file, resolved via
+// `docker compose config --services` so we don't drift if services are added.
+export async function listComposeServices(
+  root: string,
+  slug: string
+): Promise<string[]> {
+  const r = await execa(
+    "docker",
+    [
+      "compose",
+      "-f",
+      COMPOSE_DEV_FILE,
+      "-p",
+      projectName(slug),
+      "--env-file",
+      ".env.local",
+      "config",
+      "--services"
+    ],
+    { cwd: root, reject: false }
+  );
+  if (r.exitCode !== 0) return [];
+  return (r.stdout ?? "")
+    .split("\n")
+    .map((s) => s.trim())
+    .filter(Boolean);
 }
 
 // Tail logs for a single compose service. Returns merged stdout/stderr —

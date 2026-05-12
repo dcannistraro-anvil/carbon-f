@@ -3,15 +3,29 @@ import { join } from "node:path";
 import { setTimeout as sleep } from "node:timers/promises";
 import { execa } from "execa";
 
-// Block until each tcp:<port> accepts on 127.0.0.1.
-export async function waitForTcp(targets: string[]) {
+// Block until each tcp:<port> accepts on 127.0.0.1. `onProgress` fires once
+// per port as it opens — caller streams these into a spinner subtitle so a
+// stuck service (e.g. inngest pulling its container) is visible instead of a
+// 60s silent hang.
+export async function waitForTcp(
+  targets: string[],
+  opts: { onProgress?: (line: string) => void } = {}
+) {
   const ports = targets.map((t) => {
     const m = t.match(/^tcp:(\d+)$/);
     if (!m)
       throw new Error(`waitForTcp: bad target "${t}" (expected tcp:<port>)`);
     return Number(m[1]);
   });
-  await Promise.all(ports.map((p) => waitForPort(p, 60_000)));
+  const total = ports.length;
+  let opened = 0;
+  await Promise.all(
+    ports.map(async (p) => {
+      await waitForPort(p, 60_000);
+      opened += 1;
+      opts.onProgress?.(`tcp:${p} open (${opened}/${total})`);
+    })
+  );
 }
 
 async function waitForPort(
@@ -50,28 +64,41 @@ function tryConnect(host: string, port: number): Promise<boolean> {
 // state / logs without leaking compose-project knowledge into this module.
 export async function waitForStorageTables(
   port: number,
-  opts: { onTimeout?: () => Promise<void> } = {}
+  opts: {
+    onTimeout?: () => Promise<void>;
+    onProgress?: (line: string) => void;
+  } = {}
 ) {
   const url = `postgresql://postgres:postgres@localhost:${port}/postgres`;
   const env = { ...process.env, PGSSLMODE: "disable" };
   const deadline = Date.now() + 180_000;
+  const start = Date.now();
+  const elapsed = () => Math.floor((Date.now() - start) / 1000);
 
+  opts.onProgress?.("waiting for postgres to accept queries");
   while (Date.now() < deadline) {
     const r = await execa("psql", [url, "-tAc", "SELECT 1"], {
       env,
       reject: false
     });
-    if (r.exitCode === 0 && r.stdout?.trim() === "1") break;
+    if (r.exitCode === 0 && r.stdout?.trim() === "1") {
+      opts.onProgress?.(`postgres ready (${elapsed()}s)`);
+      break;
+    }
     await sleep(1000);
   }
 
+  opts.onProgress?.("waiting for storage-api to create storage.buckets");
   while (Date.now() < deadline) {
     const r = await execa(
       "psql",
       [url, "-tAc", "SELECT to_regclass('storage.buckets')"],
       { env, reject: false }
     );
-    if (r.exitCode === 0 && r.stdout?.trim() === "storage.buckets") return;
+    if (r.exitCode === 0 && r.stdout?.trim() === "storage.buckets") {
+      opts.onProgress?.(`storage.buckets ready (${elapsed()}s)`);
+      return;
+    }
     await sleep(1000);
   }
 

@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import { box, intro, log, outro, tasks } from "@clack/prompts";
+import { box, intro, log, outro, progress, tasks } from "@clack/prompts";
 import { config as loadDotenv } from "dotenv";
 import { execa } from "execa";
 import { currentBranch, isLinkedWorktree } from "../lib/git.js";
@@ -25,7 +25,9 @@ import {
 import {
   bootSharedRedis,
   bootStack,
+  listComposeServices,
   listContainers,
+  pullStack,
   tailServiceLogs
 } from "../services/compose.js";
 import {
@@ -136,48 +138,85 @@ export async function up(
         await bootSharedRedis(root);
         return `shared redis on :${SHARED_REDIS_PORT} (index ${redisDb})`;
       }
-    },
+    }
+  ]);
+
+  // Pull images outside `tasks()` so we can use clack's progress bar (one
+  // tick per `<service> Pulled` event). Spinner subtitle inside `tasks()`
+  // can't render a bar, only a single line of text.
+  {
+    const services = await listComposeServices(root, slug);
+    const max = Math.max(services.length, 1);
+    const bar = progress({ style: "heavy", max });
+    bar.start("Pulling docker images");
+    try {
+      await pullStack(root, slug, (line) => {
+        bar.message(line.slice(0, 80));
+        if (/ Pulled$/.test(line)) bar.advance(1);
+      });
+      bar.stop("images up to date");
+    } catch (err) {
+      bar.stop("pull failed");
+      throw err;
+    }
+  }
+
+  await tasks([
     {
       title: "Boot docker compose stack",
       task: async (msg) => {
-        msg("pulling/starting 12 services");
+        msg("starting 12 services");
         await bootStack(root, slug);
         return "containers up";
       }
-    },
-    {
-      title: "Wait for services",
-      task: async (msg) => {
-        msg("postgres + kong + inngest");
-        await waitForTcp([
+    }
+  ]);
+
+  // Wait for services via clack progress bar: 3 TCP ports + 1 for the
+  // storage.buckets gate. `waitForStorageTables` updates the subtitle as it
+  // polls; the final advance fires only once the table actually appears.
+  {
+    const bar = progress({ style: "heavy", max: 4 });
+    bar.start("Waiting for services");
+    try {
+      await waitForTcp(
+        [
           `tcp:${ports.PORT_DB}`,
           `tcp:${ports.PORT_API}`,
           `tcp:${ports.PORT_INNGEST}`
-        ]);
-        msg("storage tables");
-        await waitForStorageTables(ports.PORT_DB, {
-          onTimeout: async () => {
-            const containers = await listContainers(root, slug);
-            const out: string[] = ["", "--- container state ---"];
-            for (const name of ["postgres", "storage"]) {
-              const c = containers.find((x) => x.Service === name);
-              out.push(
-                c
-                  ? `${name.padEnd(10)} state=${c.State} health=${c.Health ?? "n/a"}  ${c.Status}`
-                  : `${name.padEnd(10)} (not found)`
-              );
-            }
-            out.push("", "--- storage logs (last 50) ---");
-            out.push(await tailServiceLogs(root, slug, "storage", 50));
-            out.push("", "--- postgres logs (last 20) ---");
-            out.push(await tailServiceLogs(root, slug, "postgres", 20));
-            out.push("");
-            process.stderr.write(out.join("\n") + "\n");
+        ],
+        { onProgress: (line) => bar.advance(1, line.slice(0, 80)) }
+      );
+      await waitForStorageTables(ports.PORT_DB, {
+        onProgress: (line) => bar.message(line.slice(0, 80)),
+        onTimeout: async () => {
+          const containers = await listContainers(root, slug);
+          const out: string[] = ["", "--- container state ---"];
+          for (const name of ["postgres", "storage"]) {
+            const c = containers.find((x) => x.Service === name);
+            out.push(
+              c
+                ? `${name.padEnd(10)} state=${c.State} health=${c.Health ?? "n/a"}  ${c.Status}`
+                : `${name.padEnd(10)} (not found)`
+            );
           }
-        });
-        return "all services responding";
-      }
-    },
+          out.push("", "--- storage logs (last 50) ---");
+          out.push(await tailServiceLogs(root, slug, "storage", 50));
+          out.push("", "--- postgres logs (last 20) ---");
+          out.push(await tailServiceLogs(root, slug, "postgres", 20));
+          out.push("");
+          process.stderr.write(out.join("\n") + "\n");
+        }
+      });
+      bar.advance(1, "storage.buckets ready");
+      bar.stop("all services responding");
+    } catch (err) {
+      bar.stop("services not ready");
+      throw err;
+    }
+  }
+
+  await tasks([
     ...(shouldMigrate
       ? [
           {
