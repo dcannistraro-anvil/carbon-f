@@ -1,7 +1,7 @@
-import { existsSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { type ExecaChildProcess, execa } from "execa";
 import pc from "picocolors";
+import { isAtLeastAsNew, onShutdown, readLines } from "../helpers.js";
 
 const APP_COLORS: Record<string, (s: string) => string> = {
   erp: pc.cyan,
@@ -47,22 +47,10 @@ export function spawnApps(opts: {
       sink: NodeJS.WriteStream
     ) => {
       if (!stream) return;
-      let buf = "";
-      stream.on("data", (chunk) => {
+      readLines(stream, (line) => {
         // Mute shutdown noise (EPIPE, ELIFECYCLE 143, esbuild "stopped").
-        if (shuttingDown) return;
-        buf += chunk.toString();
-        const lines = buf.split("\n");
-        buf = lines.pop() ?? "";
-        for (const line of lines) {
-          if (isNoiseLine(line)) continue;
-          sink.write(`${prefix}${line}\n`);
-        }
-      });
-      stream.on("end", () => {
-        if (!shuttingDown && buf.length > 0 && !isNoiseLine(buf)) {
-          sink.write(`${prefix}${buf}\n`);
-        }
+        if (shuttingDown || isNoiseLine(line)) return;
+        sink.write(`${prefix}${line}\n`);
       });
     };
     pipe(child.stdout, process.stdout);
@@ -99,20 +87,19 @@ export function spawnApps(opts: {
     killTimer = setTimeout(() => shutdown("SIGKILL"), 3_000);
   };
 
-  const SIGNALS = ["SIGINT", "SIGTERM", "SIGHUP", "SIGBREAK"] as const;
-  for (const s of SIGNALS) process.on(s, onSignal);
+  const detach = onShutdown(onSignal);
 
   return Promise.all(children)
     .then(() => undefined)
     .catch(() => undefined)
     .finally(() => {
       if (killTimer) clearTimeout(killTimer);
-      for (const s of SIGNALS) process.off(s, onSignal);
+      detach();
     });
 }
 
 export function spawnStripeListener(root: string) {
-  execa("npm", ["run", "dev:stripe"], {
+  execa("pnpm", ["run", "dev:stripe"], {
     cwd: root,
     detached: true,
     stdio: "ignore"
@@ -139,12 +126,7 @@ export async function installDeps(root: string): Promise<boolean> {
 function depsInSync(root: string): boolean {
   const lockfile = join(root, "pnpm-lock.yaml");
   const marker = join(root, "node_modules", ".modules.yaml");
-  if (!existsSync(lockfile) || !existsSync(marker)) return false;
-  try {
-    return statSync(marker).mtimeMs >= statSync(lockfile).mtimeMs;
-  } catch {
-    return false;
-  }
+  return isAtLeastAsNew(marker, lockfile);
 }
 
 export async function syncEnvSymlinks(root: string) {

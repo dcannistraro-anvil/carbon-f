@@ -11,8 +11,8 @@ import {
   text
 } from "@clack/prompts";
 import pc from "picocolors";
-import { APP_CHOICES, type AppId } from "../constants.js";
-import { branchExists, deleteBranch, listWorktrees } from "../lib/git.js";
+import { APP_CHOICES, type AppId } from "./constants.js";
+import { branchExists, deleteBranch, listWorktrees } from "./git.js";
 
 // git-check-ref-format(1) rules.
 const INVALID_BRANCH_RE =
@@ -82,9 +82,10 @@ export async function promptBranch(): Promise<string> {
       });
       if (isCancel(recreate)) abort();
       if (!recreate) continue;
-      const del = await deleteBranch(trimmed);
-      if (!del.ok) {
-        log.error(`Failed to delete branch: ${del.error}`);
+      try {
+        await deleteBranch(trimmed);
+      } catch (err) {
+        log.error(`Failed to delete branch: ${(err as Error).message}`);
         continue;
       }
       log.success(`Deleted branch '${trimmed}'`);

@@ -1888,9 +1888,9 @@ importers:
       execa:
         specifier: ^8.0.1
         version: 8.0.1
-      get-port-please:
-        specifier: ^3.2.0
-        version: 3.2.0
+      pg:
+        specifier: 8.20.0
+        version: 8.20.0
       picocolors:
         specifier: ^1.1.1
         version: 1.1.1
@@ -1901,6 +1901,9 @@ importers:
       '@types/node':
         specifier: 20.19.39
         version: 20.19.39
+      '@types/pg':
+        specifier: ^8.11.6
+        version: 8.15.6
       rimraf:
         specifier: 5.0.10
         version: 5.0.10
@@ -9272,9 +9275,6 @@ packages:
   get-nonce@1.0.1:
     resolution: {integrity: sha512-FJhYRoDaiatfEkUK8HKlicmu/3SGFD51q3itKDGoSTysQJBnfOcxU5GxnhE1E6soB76MbT0MBtnKJuXyAx+96Q==}
     engines: {node: '>=6'}
-
-  get-port-please@3.2.0:
-    resolution: {integrity: sha512-I9QVvBw5U/hw3RmWpYKRumUeaDgxTPd401x364rLmWBJcOQ753eov1eTgzDqRG9bqFIfDc7gfzcQEWrUri3o1A==}
 
   get-port@5.1.1:
     resolution: {integrity: sha512-g/Q1aTSDOxFpchXC4i8ZWvxA1lnPqx/JHqcpIw0/LX9T8x/GBbi6YnlN5nhaKIFkT8oFsscUKgDJYxfwfS6QsQ==}
@@ -20145,8 +20145,6 @@ snapshots:
       math-intrinsics: 1.1.0
 
   get-nonce@1.0.1: {}
-
-  get-port-please@3.2.0: {}
 
   get-port@5.1.1: {}
 

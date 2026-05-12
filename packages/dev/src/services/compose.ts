@@ -1,23 +1,32 @@
 import { log } from "@clack/prompts";
 import { execa } from "execa";
 import { COMPOSE_DEV_FILE, COMPOSE_SHARED_FILE } from "../constants.js";
-import { SHARED_REDIS_PORT } from "../lib/ports.js";
-import { projectName } from "../lib/slug.js";
+import { readLines } from "../helpers.js";
+import { projectName } from "../worktree.js";
+
+type Publisher = { PublishedPort: number; TargetPort: number };
+
+// Normalized shape. `parseContainer` ensures Health is always string|null and
+// Publishers is always an array — downstream code (ui.ts) doesn't have to
+// re-check for null/undefined, and the V8 hidden class stays stable across
+// every parsed entry.
+export type Container = {
+  Service: string;
+  Name: string;
+  State: string;
+  Status: string;
+  Health: string | null;
+  Publishers: Publisher[];
+};
+
+// ---------------------------------------------------------------------------
+// Lifecycle
+// ---------------------------------------------------------------------------
 
 export async function bootStack(root: string, slug: string) {
   await execStrict(
     "docker",
-    [
-      "compose",
-      "-f",
-      COMPOSE_DEV_FILE,
-      "-p",
-      projectName(slug),
-      "--env-file",
-      ".env.local",
-      "up",
-      "-d"
-    ],
+    devArgs(slug, "--env-file", ".env.local", "up", "-d"),
     root
   );
 }
@@ -31,19 +40,11 @@ export async function restartServices(
   services: string[]
 ) {
   if (services.length === 0) return;
-  await execa(
-    "docker",
-    [
-      "compose",
-      "-f",
-      COMPOSE_DEV_FILE,
-      "-p",
-      projectName(slug),
-      "restart",
-      ...services
-    ],
-    { cwd: root, reject: false, stdio: "ignore" }
-  );
+  await execa("docker", devArgs(slug, "restart", ...services), {
+    cwd: root,
+    reject: false,
+    stdio: "ignore"
+  });
 }
 
 // Pull all images before `up -d` so `bootStack` doesn't block silently behind
@@ -57,31 +58,16 @@ export async function pullStack(
 ) {
   const proc = execa(
     "docker",
-    [
-      "compose",
-      "-f",
-      COMPOSE_DEV_FILE,
-      "-p",
-      projectName(slug),
-      "--env-file",
-      ".env.local",
-      "--progress",
-      "plain",
-      "pull"
-    ],
+    devArgs(slug, "--env-file", ".env.local", "--progress", "plain", "pull"),
     { cwd: root, reject: false, all: true }
   );
 
-  let buf = "";
-  proc.all?.on("data", (b: Buffer) => {
-    buf += b.toString();
-    const lines = buf.split("\n");
-    buf = lines.pop() ?? "";
-    for (const l of lines) {
-      const trimmed = l.trim();
+  if (proc.all) {
+    readLines(proc.all, (line) => {
+      const trimmed = line.trim();
       if (trimmed) onLine(trimmed);
-    }
-  });
+    });
+  }
 
   const r = await proc;
   if (r.exitCode !== 0) {
@@ -95,14 +81,7 @@ export async function stopStack(
   slug: string,
   withVolumes: boolean
 ) {
-  const args = [
-    "compose",
-    "-f",
-    COMPOSE_DEV_FILE,
-    "-p",
-    projectName(slug),
-    "down"
-  ];
+  const args = devArgs(slug, "down");
   if (withVolumes) args.push("-v");
   await execa("docker", args, { cwd: root, stdio: "ignore", reject: false });
 }
@@ -132,30 +111,67 @@ export async function destroyProjectVolumes(cwd: string, project: string) {
   );
 }
 
+// ---------------------------------------------------------------------------
+// Inspection
+// ---------------------------------------------------------------------------
+
 export async function listContainers(
   root: string,
   slug: string
 ): Promise<Container[]> {
   const r = await execa(
     "docker",
-    [
-      "compose",
-      "-f",
-      COMPOSE_DEV_FILE,
-      "-p",
-      projectName(slug),
-      "ps",
-      "-a",
-      "--format",
-      "json"
-    ],
+    devArgs(slug, "ps", "-a", "--format", "json"),
     { cwd: root, reject: false }
   );
   if (r.exitCode !== 0 || !r.stdout?.trim()) return [];
-  return r.stdout
-    .split("\n")
-    .filter(Boolean)
-    .map((l) => JSON.parse(l) as Container);
+  const out: Container[] = [];
+  for (const line of r.stdout.split("\n")) {
+    if (!line) continue;
+    let raw: unknown;
+    try {
+      raw = JSON.parse(line);
+    } catch {
+      continue;
+    }
+    const c = parseContainer(raw);
+    if (c) out.push(c);
+  }
+  return out;
+}
+
+function parseContainer(raw: unknown): Container | null {
+  if (!raw || typeof raw !== "object") return null;
+  const r = raw as Record<string, unknown>;
+  if (
+    typeof r.Service !== "string" ||
+    typeof r.Name !== "string" ||
+    typeof r.State !== "string" ||
+    typeof r.Status !== "string"
+  ) {
+    return null;
+  }
+  return {
+    Service: r.Service,
+    Name: r.Name,
+    State: r.State,
+    Status: r.Status,
+    Health: typeof r.Health === "string" ? r.Health : null,
+    Publishers: parsePublishers(r.Publishers)
+  };
+}
+
+function parsePublishers(raw: unknown): Publisher[] {
+  if (!Array.isArray(raw)) return [];
+  const out: Publisher[] = [];
+  for (const p of raw) {
+    if (!p || typeof p !== "object") continue;
+    const pp = (p as Record<string, unknown>).PublishedPort;
+    const tp = (p as Record<string, unknown>).TargetPort;
+    if (typeof pp !== "number" || typeof tp !== "number") continue;
+    out.push({ PublishedPort: pp, TargetPort: tp });
+  }
+  return out;
 }
 
 // Names of services declared in the dev compose file, resolved via
@@ -166,17 +182,7 @@ export async function listComposeServices(
 ): Promise<string[]> {
   const r = await execa(
     "docker",
-    [
-      "compose",
-      "-f",
-      COMPOSE_DEV_FILE,
-      "-p",
-      projectName(slug),
-      "--env-file",
-      ".env.local",
-      "config",
-      "--services"
-    ],
+    devArgs(slug, "--env-file", ".env.local", "config", "--services"),
     { cwd: root, reject: false }
   );
   if (r.exitCode !== 0) return [];
@@ -197,18 +203,7 @@ export async function tailServiceLogs(
 ): Promise<string> {
   const r = await execa(
     "docker",
-    [
-      "compose",
-      "-f",
-      COMPOSE_DEV_FILE,
-      "-p",
-      projectName(slug),
-      "logs",
-      "--tail",
-      String(lines),
-      "--no-color",
-      service
-    ],
+    devArgs(slug, "logs", "--tail", String(lines), "--no-color", service),
     { cwd: root, reject: false }
   );
   return ((r.stdout ?? "") + (r.stderr ?? "")).trim();
@@ -235,40 +230,29 @@ export async function dockerProjectStates(): Promise<Map<string, string>> {
   return out;
 }
 
-export type Container = {
-  Service: string;
-  Name: string;
-  State: string;
-  Status: string;
-  Health?: string;
-  Publishers?: { PublishedPort: number; TargetPort: number }[] | null;
-};
+// ---------------------------------------------------------------------------
+// Utility
+// ---------------------------------------------------------------------------
 
-// Wipe one logical DB on shared redis. Host redis-cli, fallback docker exec.
+// Wipe one logical DB on shared redis via the container's bundled redis-cli —
+// avoids requiring a host `redis-cli` install.
 export async function flushDb(db: number) {
-  let r = await execa(
-    "redis-cli",
-    [
-      "-h",
-      "localhost",
-      "-p",
-      String(SHARED_REDIS_PORT),
-      "-n",
-      String(db),
-      "FLUSHDB"
-    ],
+  const r = await execa(
+    "docker",
+    ["exec", "carbon-redis", "redis-cli", "-n", String(db), "FLUSHDB"],
     { reject: false, stdio: "ignore" }
   );
   if (r.exitCode !== 0) {
-    r = await execa(
-      "docker",
-      ["exec", "carbon-redis", "redis-cli", "-n", String(db), "FLUSHDB"],
-      { reject: false, stdio: "ignore" }
-    );
-  }
-  if (r.exitCode !== 0) {
     log.warn(`redis flush of db ${db} failed (skipped)`);
   }
+}
+
+// ---------------------------------------------------------------------------
+// Private helpers
+// ---------------------------------------------------------------------------
+
+function devArgs(slug: string, ...rest: string[]): string[] {
+  return ["compose", "-f", COMPOSE_DEV_FILE, "-p", projectName(slug), ...rest];
 }
 
 async function execStrict(cmd: string, args: string[], cwd: string) {

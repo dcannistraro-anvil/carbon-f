@@ -9,7 +9,7 @@ import {
   type AppId,
   PORTLESS_MIN_VERSION
 } from "../constants.js";
-import type { PortMap } from "../lib/ports.js";
+import type { PortMap } from "../worktree.js";
 
 // Strip npm_* / PNPM_* so portless doesn't refuse with "should not be run via
 // npx or pnpm dlx" when invoked from `pnpm exec tsx`. Pair with

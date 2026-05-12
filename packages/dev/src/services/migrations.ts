@@ -1,8 +1,13 @@
 import { readFileSync } from "node:fs";
-import net from "node:net";
 import { join } from "node:path";
 import { setTimeout as sleep } from "node:timers/promises";
 import { execa } from "execa";
+import pg from "pg";
+import { waitForPort } from "../helpers.js";
+
+// ---------------------------------------------------------------------------
+// Readiness gates
+// ---------------------------------------------------------------------------
 
 // Block until each tcp:<port> accepts on 127.0.0.1. `onProgress` fires once
 // per port as it opens — caller streams these into a spinner subtitle so a
@@ -29,128 +34,56 @@ export async function waitForTcp(
   );
 }
 
-async function waitForPort(
-  port: number,
-  timeoutMs: number,
-  host = "127.0.0.1"
-) {
-  const deadline = Date.now() + timeoutMs;
-  while (Date.now() < deadline) {
-    const ok = await tryConnect(host, port);
-    if (ok) return;
-    await sleep(500);
-  }
-  throw new Error(`timed out waiting for tcp:${port} after ${timeoutMs}ms`);
-}
-
-function tryConnect(host: string, port: number): Promise<boolean> {
-  return new Promise((resolve) => {
-    const socket = net.connect({ host, port });
-    const done = (ok: boolean) => {
-      socket.removeAllListeners();
-      socket.destroy();
-      resolve(ok);
-    };
-    socket.once("connect", () => done(true));
-    socket.once("error", () => done(false));
-    socket.setTimeout(2000, () => done(false));
-  });
-}
-
 // Block until postgres accepts queries (TCP-open ≠ ready — init scripts run
-// after the port opens). Standalone so callers can re-apply bootstrap SQL or
-// restart dependents between this gate and `waitForStorageTables`.
+// after the port opens).
 export async function waitForPostgres(port: number, timeoutMs = 60_000) {
-  const url = `postgresql://postgres:postgres@localhost:${port}/postgres`;
-  const env = { ...process.env, PGSSLMODE: "disable" };
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
-    const r = await execa("psql", [url, "-tAc", "SELECT 1"], {
-      env,
-      reject: false
-    });
-    if (r.exitCode === 0 && r.stdout?.trim() === "1") return;
+    try {
+      await withClient(port, (c) => c.query("SELECT 1"));
+      return;
+    } catch {
+      // postgres still initializing — retry until deadline
+    }
     await sleep(1000);
   }
   throw new Error(`postgres did not accept queries within ${timeoutMs}ms`);
 }
 
-// Single-shot check used by the heal path to decide whether storage-api has
-// already bootstrapped its schema.
-export async function storageBucketsExists(port: number): Promise<boolean> {
-  const url = `postgresql://postgres:postgres@localhost:${port}/postgres`;
-  const r = await execa(
-    "psql",
-    [url, "-tAc", "SELECT to_regclass('storage.buckets')"],
-    { env: { ...process.env, PGSSLMODE: "disable" }, reject: false }
-  );
-  return r.exitCode === 0 && r.stdout?.trim() === "storage.buckets";
-}
-
-// Re-apply `packages/dev/docker/init.sql` over psql as the superuser.
-// `docker-entrypoint-initdb.d` only runs on a fresh pgdata volume — a worktree
-// with a pre-existing volume from before init.sql evolved keeps the old role
-// passwords forever, so storage-api / gotrue / postgrest auth-fail on every
-// boot. Re-applying is idempotent (`ALTER USER ... PASSWORD`, `CREATE SCHEMA
-// IF NOT EXISTS`).
-export async function applyBootstrapSql(root: string, port: number) {
-  const sql = readFileSync(join(root, "packages/dev/docker/init.sql"), "utf8");
-  const url = `postgresql://postgres:postgres@localhost:${port}/postgres`;
-  const r = await execa("psql", [url, "-v", "ON_ERROR_STOP=1"], {
-    input: sql,
-    env: { ...process.env, PGSSLMODE: "disable" },
-    reject: false
-  });
-  if (r.exitCode !== 0) {
-    process.stderr.write(r.stderr?.toString() ?? "");
-    throw new Error(`init.sql apply failed (exit ${r.exitCode})`);
-  }
-}
-
-// Block until postgres accepts queries, then until supabase storage-api
-// bootstraps `storage.buckets`. Postgres opens its TCP port well before init
-// scripts finish — querying `SELECT 1` is the real readiness signal. Storage
-// only starts its bootstrap once postgres is healthy, so both gates share one
-// budget. `onTimeout` runs before the throw so callers can surface container
-// state / logs without leaking compose-project knowledge into this module.
-export async function waitForStorageTables(
+/**
+ * Block until supabase storage-api has bootstrapped `storage.buckets`. Probes
+ * for 30s first; if missing, invokes `onHeal` (re-apply init.sql + restart
+ * dependent services) then polls again with a 150s budget.
+ *
+ * The heal path recovers worktrees whose pgdata volume predates the current
+ * init.sql — Docker only runs init scripts on a fresh data dir, so role
+ * passwords drift and storage-api auth-fails forever otherwise.
+ */
+export async function waitForStorageReady(
   port: number,
   opts: {
-    onTimeout?: () => Promise<void>;
+    onHeal?: () => Promise<void>;
     onProgress?: (line: string) => void;
+    onTimeout?: () => Promise<void>;
   } = {}
 ) {
-  const url = `postgresql://postgres:postgres@localhost:${port}/postgres`;
-  const env = { ...process.env, PGSSLMODE: "disable" };
-  const deadline = Date.now() + 180_000;
   const start = Date.now();
   const elapsed = () => Math.floor((Date.now() - start) / 1000);
 
-  opts.onProgress?.("waiting for postgres to accept queries");
-  while (Date.now() < deadline) {
-    const r = await execa("psql", [url, "-tAc", "SELECT 1"], {
-      env,
-      reject: false
-    });
-    if (r.exitCode === 0 && r.stdout?.trim() === "1") {
-      opts.onProgress?.(`postgres ready (${elapsed()}s)`);
-      break;
-    }
-    await sleep(1000);
+  opts.onProgress?.("waiting for storage.buckets");
+  if (await pollBuckets(port, start + 30_000)) {
+    opts.onProgress?.(`storage.buckets ready (${elapsed()}s)`);
+    return;
   }
 
-  opts.onProgress?.("waiting for storage-api to create storage.buckets");
-  while (Date.now() < deadline) {
-    const r = await execa(
-      "psql",
-      [url, "-tAc", "SELECT to_regclass('storage.buckets')"],
-      { env, reject: false }
-    );
-    if (r.exitCode === 0 && r.stdout?.trim() === "storage.buckets") {
-      opts.onProgress?.(`storage.buckets ready (${elapsed()}s)`);
-      return;
-    }
-    await sleep(1000);
+  if (opts.onHeal) {
+    opts.onProgress?.("storage stuck — running heal");
+    await opts.onHeal();
+  }
+
+  if (await pollBuckets(port, start + 180_000)) {
+    opts.onProgress?.(`storage.buckets ready (${elapsed()}s)`);
+    return;
   }
 
   if (opts.onTimeout) {
@@ -162,6 +95,21 @@ export async function waitForStorageTables(
   }
   throw new Error("storage.buckets did not appear within 180s");
 }
+
+// Re-apply `packages/dev/docker/init.sql` as the superuser. Docker's
+// `docker-entrypoint-initdb.d` only runs on a fresh pgdata volume — a worktree
+// with a pre-existing volume from before init.sql evolved keeps the old role
+// passwords forever, so storage-api / gotrue / postgrest auth-fail on every
+// boot. Re-applying is idempotent (`ALTER USER ... PASSWORD`, `CREATE SCHEMA
+// IF NOT EXISTS`).
+export async function applyBootstrapSql(root: string, port: number) {
+  const sql = readFileSync(join(root, "packages/dev/docker/init.sql"), "utf8");
+  await withClient(port, (c) => c.query(sql));
+}
+
+// ---------------------------------------------------------------------------
+// Schema migrations
+// ---------------------------------------------------------------------------
 
 // --include-all: supabase bootstrap inserts a sentinel into schema_migrations
 // that makes earlier-timestamp migrations look "out of order" without it.
@@ -193,4 +141,50 @@ export async function applyMigrations(
   // migration; absent that, the schema was already current.
   const applied = /Applying migration/i.test(r.stdout ?? "");
   return { applied };
+}
+
+// ---------------------------------------------------------------------------
+// Private helpers
+// ---------------------------------------------------------------------------
+
+// Host-side superuser connection. `pg` avoids a host `psql` install —
+// previously a hidden requirement that bit at least one engineer.
+async function withClient<T>(
+  port: number,
+  fn: (c: pg.Client) => Promise<T>
+): Promise<T> {
+  const client = new pg.Client({
+    host: "127.0.0.1",
+    port,
+    user: "postgres",
+    password: "postgres",
+    database: "postgres"
+  });
+  await client.connect();
+  try {
+    return await fn(client);
+  } finally {
+    await client.end();
+  }
+}
+
+async function pollBuckets(port: number, deadline: number): Promise<boolean> {
+  while (Date.now() < deadline) {
+    if (await storageBucketsExists(port)) return true;
+    await sleep(1000);
+  }
+  return false;
+}
+
+async function storageBucketsExists(port: number): Promise<boolean> {
+  try {
+    return await withClient(port, async (c) => {
+      const r = await c.query<{ regclass: string | null }>(
+        "SELECT to_regclass('storage.buckets')::text AS regclass"
+      );
+      return r.rows[0]?.regclass === "storage.buckets";
+    });
+  } catch {
+    return false;
+  }
 }
