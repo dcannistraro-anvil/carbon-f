@@ -1,10 +1,34 @@
-import { copyFileSync, existsSync, readFileSync } from "node:fs";
+import { copyFileSync, existsSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { intro, log, outro } from "@clack/prompts";
 import pc from "picocolors";
 import { mainCheckoutRoot } from "../lib/git.js";
 
 const DEFAULT_INCLUDES = [".env"];
+
+// Auto-heal stale copy files: when main checkout's `.env` (or any file listed
+// in package.json#crbn.copy) is newer than the worktree's, refresh it.
+// `crbn checkout <existing-branch>` fast-paths past `do_post_create`, so
+// existing worktrees never re-run `crbn copy` and drift from main when new
+// env vars/secrets land there. Returns the list of files actually copied.
+export async function syncStaleCopyFiles(cwd: string): Promise<string[]> {
+  const mainRoot = await mainCheckoutRoot(cwd);
+  if (mainRoot === cwd) return [];
+
+  const includes = readIncludes(mainRoot);
+  const copied: string[] = [];
+  for (const rel of includes) {
+    const src = join(mainRoot, rel);
+    const dest = join(cwd, rel);
+    if (!existsSync(src)) continue;
+    const srcMtime = statSync(src).mtimeMs;
+    const destMtime = existsSync(dest) ? statSync(dest).mtimeMs : 0;
+    if (destMtime >= srcMtime) continue;
+    copyFileSync(src, dest);
+    copied.push(rel);
+  }
+  return copied;
+}
 
 // Copy files listed in package.json#crbn.copy from main checkout into cwd.
 export async function copy() {

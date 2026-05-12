@@ -43,6 +43,7 @@ import {
 } from "../services/portless.js";
 import { pickApps } from "../ui/prompts.js";
 import { summaryLines } from "../ui/summary.js";
+import { syncStaleCopyFiles } from "./copy.js";
 import { down } from "./down.js";
 
 export async function up(opts: { migrate?: boolean; regen?: boolean } = {}) {
@@ -62,6 +63,18 @@ export async function up(opts: { migrate?: boolean; regen?: boolean } = {}) {
   await ensureSlugAvailable(slug, root);
   persistSlug(root, slug);
   log.info(`worktree: ${slug}  (project ${projectName(slug)})`);
+
+  // Auto-heal stale `.env` (and other package.json#crbn.copy entries) from
+  // main checkout. `crbn checkout <existing-branch>` skips do_post_create →
+  // worktrees drift from main when new env vars land. Mtime-gated, so
+  // unchanged files are untouched and local edits made *after* main's last
+  // change are preserved.
+  const refreshed = await syncStaleCopyFiles(root);
+  if (refreshed.length > 0) {
+    log.info(
+      `refreshed ${refreshed.join(", ")} from main checkout (stale vs main)`
+    );
+  }
 
   // Outside `tasks` so pnpm progress streams directly when install runs.
   const ran = await installDeps(root);

@@ -292,6 +292,26 @@ EOF
   fi
 
   ok "portless LaunchDaemon installed; proxy starts at boot"
+
+  run_portless_trust
+}
+
+# LaunchDaemon plist runs with --skip-trust, and the CLI's ensureProxyPrivileges
+# only triggers trust as a side-effect of fixing a privilege issue — neither
+# path runs trust on its own. Users who pre-installed portless never end up
+# with the CA in their keychain, so *.dev TLS fails in the browser.
+# `portless trust` is idempotent.
+run_portless_trust() {
+  if [[ "$(uname -s)" != "Darwin" ]]; then
+    return 0
+  fi
+  hdr "Trust portless CA"
+  info "Installs root CA into system keychain so *.dev TLS is trusted."
+  if ! sudo "HOME=$HOME" portless trust; then
+    warn "portless trust failed — browsers may show cert warnings until you run \`sudo portless trust\` manually."
+    return 0
+  fi
+  ok "portless CA trusted"
 }
 
 uninstall_proxy_daemon() {
