@@ -23,6 +23,29 @@ function portlessEnv(): NodeJS.ProcessEnv {
   return out;
 }
 
+type SudoArgsOptions = {
+  platform?: NodeJS.Platform;
+  home?: string;
+};
+
+// Builds the privileged command for a portless invocation. On POSIX we
+// shell out to `sudo` (preserving HOME so portless state lands in the
+// user's ~/.portless rather than /var/root/.portless). On Windows there
+// is no `sudo` binary — the terminal itself must be elevated — so we
+// run `portless` directly. If the user isn't elevated, portless will
+// surface its own UAC / permission error, which is the right signal.
+export function portlessPrivilegedCmd(
+  args: string[],
+  options: SudoArgsOptions = {}
+): { file: string; args: string[] } {
+  const platform = options.platform ?? process.platform;
+  if (platform === "win32") {
+    return { file: "portless", args };
+  }
+  const home = options.home ?? homedir();
+  return { file: "sudo", args: [`HOME=${home}`, "portless", ...args] };
+}
+
 export async function ensurePortlessInstalled() {
   const installed = await detectPortlessVersion();
   if (installed && cmpSemver(installed, PORTLESS_MIN_VERSION) >= 0) return;
@@ -172,46 +195,57 @@ export async function ensureProxyPrivileges() {
     ].join("\n")
   );
 
+  const isWin = process.platform === "win32";
   const proceed = await confirm({
-    message:
-      "Set it up now? Will run sudo to bind :443, install the local CA, and write /etc/hosts entries.",
+    message: isWin
+      ? "Set it up now? Will run portless to bind :443, install the local CA, and write the hosts file. Terminal must be elevated (Run as Administrator)."
+      : "Set it up now? Will run sudo to bind :443, install the local CA, and write /etc/hosts entries.",
     initialValue: true
   });
   if (isCancel(proceed) || !proceed) {
     throw new Error(
-      "Aborted. Run manually: `sudo portless proxy stop && sudo portless proxy start --tld dev && sudo portless trust`. Then re-run `crbn up`."
+      isWin
+        ? "Aborted. From an elevated terminal run: `portless proxy stop && portless proxy start --tld dev && portless trust`. Then re-run `crbn up`."
+        : "Aborted. Run manually: `sudo portless proxy stop && sudo portless proxy start --tld dev && sudo portless trust`. Then re-run `crbn up`."
     );
   }
 
-  log.info("running sudo commands — you'll be prompted for your password");
+  if (process.platform === "win32") {
+    log.info(
+      "running portless commands — terminal must be elevated (Run as Administrator)"
+    );
+  } else {
+    log.info("running sudo commands — you'll be prompted for your password");
+  }
 
-  // Preserve user HOME — sudo resets to root's HOME otherwise, sending
-  // portless state (~/.portless) into /var/root/.portless.
-  const sudoEnvArg = `HOME=${homedir()}`;
-
-  await execa("sudo", [sudoEnvArg, "portless", "proxy", "stop"], {
+  const stopCmd = portlessPrivilegedCmd(["proxy", "stop"]);
+  await execa(stopCmd.file, stopCmd.args, {
     stdio: "inherit",
     reject: false
   });
 
-  const start = await execa(
-    "sudo",
-    [sudoEnvArg, "portless", "proxy", "start", "--tld", PORTLESS_TLD],
-    { stdio: "inherit", reject: false }
-  );
+  const startCmd = portlessPrivilegedCmd([
+    "proxy",
+    "start",
+    "--tld",
+    PORTLESS_TLD
+  ]);
+  const start = await execa(startCmd.file, startCmd.args, {
+    stdio: "inherit",
+    reject: false
+  });
   if (start.exitCode !== 0) {
-    throw new Error(
-      `sudo portless proxy start failed (exit ${start.exitCode})`
-    );
+    throw new Error(`portless proxy start failed (exit ${start.exitCode})`);
   }
 
-  const trust = await execa("sudo", [sudoEnvArg, "portless", "trust"], {
+  const trustCmd = portlessPrivilegedCmd(["trust"]);
+  const trust = await execa(trustCmd.file, trustCmd.args, {
     stdio: "inherit",
     reject: false
   });
   if (trust.exitCode !== 0) {
     log.warn(
-      `sudo portless trust failed (exit ${trust.exitCode}); browsers may show cert warnings until you run it manually.`
+      `portless trust failed (exit ${trust.exitCode}); browsers may show cert warnings until you run it manually.`
     );
   }
 
@@ -227,11 +261,11 @@ export async function ensureProxyPrivileges() {
 
 // Push registered routes into /etc/hosts. Needs sudo; idempotent.
 export async function syncHostsFile() {
-  const r = await execa(
-    "sudo",
-    [`HOME=${homedir()}`, "portless", "hosts", "sync"],
-    { stdio: "inherit", reject: false }
-  );
+  const hostsCmd = portlessPrivilegedCmd(["hosts", "sync"]);
+  const r = await execa(hostsCmd.file, hostsCmd.args, {
+    stdio: "inherit",
+    reject: false
+  });
   if (r.exitCode !== 0) {
     throw new Error(
       `sudo portless hosts sync failed (exit ${r.exitCode}). Run it manually to fix DNS.`

@@ -8,7 +8,10 @@
   },
   "scripts": {
     "clean": "rimraf node_modules .turbo",
-    "lint": "biome lint --write"
+    "lint": "biome lint --write",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsgo --noEmit"
   },
   "dependencies": {
     "@bomb.sh/tab": "^0.0.15",
@@ -25,6 +28,7 @@
     "@types/node": "20.19.39",
     "rimraf": "5.0.10",
     "tsx": "4.21.0",
-    "typescript": "5.8.3"
+    "typescript": "5.8.3",
+    "vitest": "catalog:"
   }
 }
