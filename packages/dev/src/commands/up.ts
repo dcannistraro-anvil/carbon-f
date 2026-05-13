@@ -1,7 +1,7 @@
-import { join } from "node:path";
 import { box, intro, log, outro, progress, tasks } from "@clack/prompts";
 import { config as loadDotenv } from "dotenv";
 import { execa } from "execa";
+import { join } from "pathe";
 import type { AppId } from "../constants.js";
 import { renderEnv, syncAppPortlessConfigs, writeEnv } from "../env.js";
 import { currentBranch, isLinkedWorktree } from "../git.js";
@@ -101,7 +101,7 @@ export async function up(opts: UpOpts = {}) {
   await waitForServices(ctx);
   await runDatabaseMigrations(ctx, { shouldMigrate, shouldRegen });
   await setupPortless(ctx, selectedApps);
-  ensureHostsFile();
+  await ensureHostsFile();
 
   if (process.env.CARBON_EDITION === "cloud") {
     spawnStripeListener(root);
@@ -339,7 +339,7 @@ async function setupPortless(ctx: Ctx, selectedApps: AppId[]) {
 }
 
 // Skip sudo sync when root daemon already auto-syncs, or hosts unchanged.
-function ensureHostsFile() {
+async function ensureHostsFile() {
   if (proxyRunsAsRoot()) {
     log.info("/etc/hosts auto-synced by root proxy daemon");
     return;
@@ -349,7 +349,7 @@ function ensureHostsFile() {
     return;
   }
   log.step("sudo portless hosts sync");
-  return syncHostsFile();
+  await syncHostsFile();
 }
 
 async function runAppsThenTeardown(root: string, selectedApps: AppId[]) {

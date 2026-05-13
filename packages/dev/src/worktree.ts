@@ -1,9 +1,15 @@
 import { createHmac, randomBytes } from "node:crypto";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  realpathSync,
+  writeFileSync
+} from "node:fs";
 import net from "node:net";
 import { homedir } from "node:os";
-import { basename, dirname, join } from "node:path";
 import { execa } from "execa";
+import { basename, dirname, join, normalize } from "pathe";
 
 // ---------------------------------------------------------------------------
 // Types & constants
@@ -67,6 +73,22 @@ export function projectName(slug: string): string {
   return `carbon-${slug}`;
 }
 
+// Resolve symlinks + normalize separators / trailing slashes so two strings
+// pointing at the same worktree compare equal (e.g. /tmp/x vs symlinked path).
+function canonicalWorktreePath(input: string): string {
+  let p = input.trim();
+  try {
+    p = realpathSync.native(p);
+  } catch {
+    // Best-effort: fall through to string normalization.
+  }
+  return normalize(p).replace(/\/+$/, "");
+}
+
+export function sameWorktreePath(a: string, b: string): boolean {
+  return canonicalWorktreePath(a) === canonicalWorktreePath(b);
+}
+
 export async function ensureSlugAvailable(slug: string, worktreeRoot: string) {
   const project = projectName(slug);
   let runningPath: string | null = null;
@@ -87,7 +109,7 @@ export async function ensureSlugAvailable(slug: string, worktreeRoot: string) {
   } catch {
     return;
   }
-  if (runningPath && runningPath !== worktreeRoot) {
+  if (runningPath && !sameWorktreePath(runningPath, worktreeRoot)) {
     throw new Error(
       `Slug "${slug}" is already in use by another worktree at:\n  ${runningPath}\n\nSet CARBON_WORKTREE to a unique slug for this worktree, or stop the other stack.`
     );
@@ -114,7 +136,7 @@ export async function resolveSlot(
   const existing = registry[slug];
 
   // Fast path: registry entry is valid and points at this worktree.
-  if (existing && existing.worktreeRoot === worktreeRoot) {
+  if (existing && sameWorktreePath(existing.worktreeRoot, worktreeRoot)) {
     return {
       ports: existing.ports,
       redisDb: existing.redisDb,

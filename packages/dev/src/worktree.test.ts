@@ -1,5 +1,8 @@
-import { describe, expect, it } from "vitest";
-import { slugify } from "./worktree.js";
+import { mkdtempSync, rmSync, symlinkSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "pathe";
+import { afterAll, describe, expect, it } from "vitest";
+import { sameWorktreePath, slugify } from "./worktree.js";
 
 describe("slugify", () => {
   it("lowercases", () => {
@@ -31,5 +34,28 @@ describe("slugify", () => {
   it("returns empty string when input is empty or all-symbol", () => {
     expect(slugify("")).toBe("");
     expect(slugify("///")).toBe("");
+  });
+});
+
+describe("sameWorktreePath", () => {
+  const real = mkdtempSync(join(tmpdir(), "carbon-worktree-"));
+  const link = `${real}-link`;
+  symlinkSync(real, link);
+
+  afterAll(() => {
+    rmSync(link, { force: true });
+    rmSync(real, { recursive: true, force: true });
+  });
+
+  it("treats a symlink and its real path as the same worktree", () => {
+    expect(sameWorktreePath(real, link)).toBe(true);
+  });
+
+  it("ignores trailing slashes", () => {
+    expect(sameWorktreePath(`${real}/`, real)).toBe(true);
+  });
+
+  it("distinguishes unrelated paths", () => {
+    expect(sameWorktreePath(real, tmpdir())).toBe(false);
   });
 });
