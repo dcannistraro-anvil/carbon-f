@@ -6856,7 +6856,7 @@ msgid "Shipping:"
 msgstr "शिपिंग:"
 
 msgid "Shop Floor"
-msgstr "शॉप फ्लोर"
+msgstr ""
 
 msgid "Short Description"
 msgstr "संक्षिप्त विवरण"
