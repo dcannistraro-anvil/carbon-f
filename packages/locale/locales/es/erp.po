@@ -228,13 +228,13 @@ msgid "Activate Process"
 msgstr "Activar Proceso"
 
 msgid "Activate Work Center"
-msgstr "Activar Centro de Trabajo"
+msgstr "Activar Centro de Trabajo<<<<<<< HEAD"
 
 msgid "Active"
 msgstr "Activo"
 
 msgid "Active Jobs"
-msgstr "Trabajos Activos"
+msgstr "Trabajos Activos<<<<<<< HEAD"
 
 msgid "Active Statuses"
 msgstr "Estados Activos"
@@ -1065,10 +1065,10 @@ msgid "Bulk Import"
 msgstr "ImportaciÃƒÆ’Ã‚Â³n masiva"
 
 msgid "Bulk Jobs"
-msgstr "Trabajos en Lote"
+msgstr "Trabajos en Lote<<<<<<< HEAD"
 
 msgid "Buy"
-msgstr "Comprar"
+msgstr "Comprar>>>>>>> c21833efacf4135b612d5852486afc364f322f36"
 
 msgid "Buy and Make"
 msgstr "Comprar y Fabricar"
@@ -1245,7 +1245,7 @@ msgid "Clear All"
 msgstr "Limpiar todo"
 
 msgid "Clear due date"
-msgstr "Borrar fecha de vencimiento"
+msgstr "Borrar fecha de vencimiento<<<<<<< HEAD"
 
 msgid "Clear Filters"
 msgstr "Limpiar filtros"
@@ -2031,7 +2031,7 @@ msgid "Date Range"
 msgstr "Rango de Fechas"
 
 msgid "Dates"
-msgstr "Fechas"
+msgstr "Fechas<<<<<<< HEAD"
 
 msgid "Days"
 msgstr "DÃƒÆ’Ã‚Â­as"
@@ -2374,7 +2374,7 @@ msgid "Delivery Location"
 msgstr "UbicaciÃƒÆ’Ã‚Â³n de Entrega"
 
 msgid "Demand"
-msgstr "Demanda"
+msgstr "Demanda<<<<<<< HEAD"
 
 msgid "Demand Forecast"
 msgstr "PronÃƒÆ’Ã‚Â³stico de Demanda"
@@ -2413,7 +2413,7 @@ msgid "Digital Quote"
 msgstr "CotizaciÃƒÆ’Ã‚Â³n Digital"
 
 msgid "Digital Quotes"
-msgstr "Cotizaciones Digitales"
+msgstr "Cotizaciones Digitales<<<<<<< HEAD"
 
 msgid "Dimension"
 msgstr "DimensiÃƒÆ’Ã‚Â³n"
@@ -2609,7 +2609,7 @@ msgid "Edit Employee Type"
 msgstr "Editar Tipo de Empleado"
 
 msgid "Edit expiration date"
-msgstr "Editar fecha de vencimiento"
+msgstr "Editar fecha de vencimiento<<<<<<< HEAD"
 
 msgid "Edit Expiry"
 msgstr "Editar Vencimiento"
@@ -3453,7 +3453,7 @@ msgid "File type not supported. Please use JPG, PNG, WebP, or GIF."
 msgstr "Tipo de archivo no compatible. Por favor, usa JPG, PNG, WebP o GIF."
 
 msgid "Files"
-msgstr "Archivos"
+msgstr "Archivos<<<<<<< HEAD"
 
 msgid "Filter"
 msgstr "Filtro"
@@ -3462,7 +3462,7 @@ msgid "Filtering"
 msgstr "Filtrado"
 
 msgid "Finalize"
-msgstr "Finalizar"
+msgstr "Finalizar<<<<<<< HEAD"
 
 msgid "Finish"
 msgstr "Acabado"
@@ -3585,7 +3585,7 @@ msgid "Good morning, {0}"
 msgstr "Buenos dÃƒÆ’Ã‚Â­as, {0}"
 
 msgid "Google Places API key not configured"
-msgstr "Clave de API de Google Places no configurada"
+msgstr "Clave de API de Google Places no configurada<<<<<<< HEAD"
 
 msgid "Grade"
 msgstr "Grado"
@@ -3804,7 +3804,7 @@ msgid "Internal Notes"
 msgstr "Notas Internas"
 
 msgid "Invalid Invite"
-msgstr "InvitaciÃƒÆ’Ã‚Â³n InvÃƒÆ’Ã‚Â¡lida"
+msgstr "InvitaciÃƒÆ’Ã‚Â³n InvÃƒÆ’Ã‚Â¡lida<<<<<<< HEAD"
 
 msgid "Inventory"
 msgstr "Inventario"
@@ -3879,10 +3879,10 @@ msgid "Invoiced Statuses"
 msgstr "Estados Facturados"
 
 msgid "Invoices"
-msgstr "Facturas"
+msgstr "Facturas<<<<<<< HEAD"
 
 msgid "is"
-msgstr "es"
+msgstr "es>>>>>>> c21833efacf4135b612d5852486afc364f322f36"
 
 msgid "is any of"
 msgstr "es cualquiera de"
@@ -3942,7 +3942,7 @@ msgid "Item Group"
 msgstr "Grupo de ArtÃƒÆ’Ã‚Â­culos"
 
 msgid "Item Groups"
-msgstr "Grupos de ArtÃƒÆ’Ã‚Â­culos"
+msgstr "Grupos de ArtÃƒÆ’Ã‚Â­culos<<<<<<< HEAD"
 
 msgid "Item ID"
 msgstr "ID de ArtÃƒÆ’Ã‚Â­culo"
@@ -3954,7 +3954,7 @@ msgid "Item Rules"
 msgstr "Reglas de ArtÃƒÆ’Ã‚Â­culos"
 
 msgid "Item Scope"
-msgstr "Alcance de ArtÃƒÆ’Ã‚Â­culos"
+msgstr "Alcance de ArtÃƒÆ’Ã‚Â­culos<<<<<<< HEAD"
 
 msgid "Item Type"
 msgstr "Tipo de ArtÃƒÆ’Ã‚Â­culo"
@@ -4083,7 +4083,7 @@ msgid "Last synced: {0}"
 msgstr "ÃƒÆ’Ã…Â¡ltima sincronizaciÃƒÆ’Ã‚Â³n: {0}"
 
 msgid "Last updated: {formattedDate}"
-msgstr "ÃƒÆ’Ã…Â¡ltima actualizaciÃƒÆ’Ã‚Â³n: {formattedDate}"
+msgstr "ÃƒÆ’Ã…Â¡ltima actualizaciÃƒÆ’Ã‚Â³n: {formattedDate}<<<<<<< HEAD"
 
 msgid "Lead Time"
 msgstr "Tiempo de Entrega"
@@ -4181,7 +4181,7 @@ msgid "Loader"
 msgstr "Cargador"
 
 msgid "Loading item details..."
-msgstr "Cargando detalles del artÃƒÆ’Ã‚Â­culo..."
+msgstr "Cargando detalles del artÃƒÆ’Ã‚Â­culo...<<<<<<< HEAD"
 
 msgid "Loading..."
 msgstr "Cargando..."
@@ -4263,7 +4263,7 @@ msgid "Maintenance Scheduling"
 msgstr "ProgramaciÃƒÆ’Ã‚Â³n de Mantenimiento"
 
 msgid "Maintenance Type"
-msgstr "Tipo de Mantenimiento"
+msgstr "Tipo de Mantenimiento<<<<<<< HEAD"
 
 msgid "Make"
 msgstr "Fabricar"
@@ -4364,7 +4364,7 @@ msgid "Match any"
 msgstr "Coincidir con cualquiera"
 
 msgid "Match none"
-msgstr "No coincide ninguno"
+msgstr "No coincide ninguno<<<<<<< HEAD"
 
 msgid "matches"
 msgstr "coincide"
@@ -4600,7 +4600,7 @@ msgstr "Mover a la papelera"
 #. placeholder {0}: file.name
 #. placeholder {1}: targetBucket === "parts" ? "Parts" : "Opportunity"
 msgid "Moved {0} to {1} bucket"
-msgstr "Movido {0} al bucket {1}"
+msgstr "Movido {0} al bucket {1}<<<<<<< HEAD"
 
 msgid "MRP runs automatically every 3 hours, but you can run it manually here."
 msgstr "MRP se ejecuta automÃƒÆ’Ã‚Â¡ticamente cada 3 horas, pero puedes ejecutarlo manualmente aquÃƒÆ’Ã‚Â­."
@@ -4908,7 +4908,7 @@ msgstr "No se encontraron direcciones"
 
 #. placeholder {0}: auditConfig.retentionDays
 msgid "No archived logs yet. Logs older than {0} days will be automatically archived and available for download here."
-msgstr "No hay registros archivados aÃƒÆ’Ã‚Âºn. Los registros mÃƒÆ’Ã‚Â¡s antiguos de {0} dÃƒÆ’Ã‚Â­as se archivarÃƒÆ’Ã‚Â¡n automÃƒÆ’Ã‚Â¡ticamente y estarÃƒÆ’Ã‚Â¡n disponibles para descargar aquÃƒÆ’Ã‚Â­."
+msgstr "No hay registros archivados aÃƒÆ’Ã‚Âºn. Los registros mÃƒÆ’Ã‚Â¡s antiguos de {0} dÃƒÆ’Ã‚Â­as se archivarÃƒÆ’Ã‚Â¡n automÃƒÆ’Ã‚Â¡ticamente y estarÃƒÆ’Ã‚Â¡n disponibles para descargar aquÃƒÆ’Ã‚Â­.<<<<<<< HEAD"
 
 msgid "No available filters"
 msgstr "No hay filtros disponibles"
@@ -5004,7 +5004,7 @@ msgid "No operators."
 msgstr "Sin operadores."
 
 msgid "No option found."
-msgstr "No se encontrÃƒÆ’Ã‚Â³ ninguna opciÃƒÆ’Ã‚Â³n."
+msgstr "No se encontrÃƒÆ’Ã‚Â³ ninguna opciÃƒÆ’Ã‚Â³n.<<<<<<< HEAD"
 
 msgid "No options found."
 msgstr "No se encontraron opciones."
@@ -5139,19 +5139,19 @@ msgid "of"
 msgstr "de"
 
 msgid "OK"
-msgstr "Aceptar"
+msgstr "Aceptar<<<<<<< HEAD"
 
 msgid "On Hand"
 msgstr "En Stock"
 
 msgid "On Hold"
-msgstr "En Espera"
+msgstr "En Espera<<<<<<< HEAD"
 
 msgid "On Jobs"
 msgstr "En Trabajos"
 
 msgid "On Purchase Order"
-msgstr "En Orden de Compra"
+msgstr "En Orden de Compra>>>>>>> c21833efacf4135b612d5852486afc364f322f36"
 
 msgid "On Sales Order"
 msgstr "En Orden de Venta"
@@ -5941,7 +5941,7 @@ msgid "Reasons"
 msgstr "Razones"
 
 msgid "Reassign specific tracked entities from this row to another disposition row."
-msgstr "Reasignar entidades rastreadas especÃƒÆ’Ã‚Â­ficas de esta fila a otra fila de disposiciÃƒÆ’Ã‚Â³n."
+msgstr "Reasignar entidades rastreadas especÃƒÆ’Ã‚Â­ficas de esta fila a otra fila de disposiciÃƒÆ’Ã‚Â³n.<<<<<<< HEAD"
 
 msgid "Recalculate"
 msgstr "Recalcular"
@@ -6063,7 +6063,7 @@ msgid "Remove attachment"
 msgstr "Eliminar adjunto"
 
 msgid "Remove condition"
-msgstr "Eliminar condiciÃƒÆ’Ã‚Â³n"
+msgstr "Eliminar condiciÃƒÆ’Ã‚Â³n<<<<<<< HEAD"
 
 msgid "Remove filter"
 msgstr "Eliminar filtro"
@@ -6114,7 +6114,7 @@ msgid "Reorder Point"
 msgstr "Punto de Reorden"
 
 msgid "Reorder Point:"
-msgstr "Punto de reorden:"
+msgstr "Punto de reorden:<<<<<<< HEAD"
 
 msgid "Reorder Policy"
 msgstr "PolÃƒÆ’Ã‚Â­tica de Reorden"
@@ -6135,7 +6135,7 @@ msgid "Reordering Policy"
 msgstr "PolÃƒÆ’Ã‚Â­tica de Reorden"
 
 msgid "Replace existing pricing with source values"
-msgstr "Reemplazar precios existentes con valores de origen"
+msgstr "Reemplazar precios existentes con valores de origen<<<<<<< HEAD"
 
 msgid "Replenishment"
 msgstr "Reabastecimiento"
@@ -6526,7 +6526,7 @@ msgstr "Buscar proveedores..."
 
 #. js-lingui-explicit-id
 msgid "Search the web"
-msgstr "Buscar en la web"
+msgstr "Buscar en la web<<<<<<< HEAD"
 
 msgid "Search..."
 msgstr "Buscar..."
@@ -6763,7 +6763,7 @@ msgid "Severities"
 msgstr "Severidades"
 
 msgid "Severity"
-msgstr "Gravedad"
+msgstr "Gravedad<<<<<<< HEAD"
 
 msgid "Shape"
 msgstr "Forma"
@@ -7093,7 +7093,7 @@ msgid "Stock Transfer Wizard"
 msgstr "Asistente de Transferencia de Inventario"
 
 msgid "Stock Transfers"
-msgstr "Transferencias de Inventario"
+msgstr "Transferencias de Inventario<<<<<<< HEAD"
 
 msgid "Storage Type"
 msgstr "Tipo de Almacenamiento"
@@ -7102,7 +7102,7 @@ msgid "Storage Types"
 msgstr "Tipos de Almacenamiento"
 
 msgid "Storage Unit"
-msgstr "Unidad de Almacenamiento"
+msgstr "Unidad de Almacenamiento>>>>>>> c21833efacf4135b612d5852486afc364f322f36"
 
 msgid "Storage Units"
 msgstr "Unidades de Almacenamiento"
@@ -7144,7 +7144,7 @@ msgid "Submitted By"
 msgstr "Enviado por"
 
 msgid "Subscribe to changes"
-msgstr "Suscribirse a cambios"
+msgstr "Suscribirse a cambios<<<<<<< HEAD"
 
 msgid "Substance"
 msgstr "Sustancia"
@@ -7304,7 +7304,7 @@ msgid "Table"
 msgstr "Tabla"
 
 msgid "Table actions"
-msgstr "Acciones de tabla"
+msgstr "Acciones de tabla<<<<<<< HEAD"
 
 msgid "Tags"
 msgstr "Etiquetas"
@@ -7650,7 +7650,7 @@ msgid "Track every change to your orders, invoices, customers, suppliers, and mo
 msgstr "Realiza un seguimiento de cada cambio en tus pedidos, facturas, clientes, proveedores y mÃƒÆ’Ã‚Â¡s."
 
 msgid "Track when batches or serials of this item expire."
-msgstr "Realiza un seguimiento de cuÃƒÆ’Ã‚Â¡ndo vencen los lotes o nÃƒÆ’Ã‚Âºmeros de serie de este artÃƒÆ’Ã‚Â­culo."
+msgstr "Realiza un seguimiento de cuÃƒÆ’Ã‚Â¡ndo vencen los lotes o nÃƒÆ’Ã‚Âºmeros de serie de este artÃƒÆ’Ã‚Â­culo.<<<<<<< HEAD"
 
 msgid "Tracked Entities"
 msgstr "Entidades Rastreadas"
@@ -7728,7 +7728,7 @@ msgid "Trial Balance"
 msgstr "Balance de ComprobaciÃƒÆ’Ã‚Â³n"
 
 msgid "Tuesday"
-msgstr "Martes"
+msgstr "Martes<<<<<<< HEAD"
 
 msgid "Type"
 msgstr "Tipo"
@@ -7770,7 +7770,7 @@ msgid "Unit"
 msgstr "Unidad"
 
 msgid "Unit Cost"
-msgstr "Costo Unitario"
+msgstr "Costo Unitario<<<<<<< HEAD"
 
 msgid "Unit of Measure"
 msgstr "Unidad de Medida"
@@ -7904,10 +7904,10 @@ msgid "Uploading {fileName}"
 msgstr "Cargando {fileName}"
 
 msgid "Upon clicking Convert, parts will be created with the following internal part numbers:"
-msgstr "Al hacer clic en Convertir, se crearÃƒÆ’Ã‚Â¡n piezas con los siguientes nÃƒÆ’Ã‚Âºmeros de pieza internos:"
+msgstr "Al hacer clic en Convertir, se crearÃƒÆ’Ã‚Â¡n piezas con los siguientes nÃƒÆ’Ã‚Âºmeros de pieza internos:<<<<<<< HEAD"
 
 msgid "Usage/Day (30d)"
-msgstr "Uso/DÃƒÆ’Ã‚Â­a (30d)"
+msgstr "Uso/DÃƒÆ’Ã‚Â­a (30d)<<<<<<< HEAD"
 
 msgid "Usage/Day (90d)"
 msgstr "Uso/DÃƒÆ’Ã‚Â­a (90d)"
