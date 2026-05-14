@@ -1068,7 +1068,7 @@ msgid "Bulk Jobs"
 msgstr "Lavori in Blocco"
 
 msgid "Buy"
-msgstr "Acquista>>>>>>> c21833efacf4135b612d5852486afc364f322f36"
+msgstr "Acquista"
 
 msgid "Buy and Make"
 msgstr "Acquista e Produci"
@@ -5151,7 +5151,7 @@ msgid "On Jobs"
 msgstr "Su Lavori"
 
 msgid "On Purchase Order"
-msgstr "In Ordine di Acquisto>>>>>>> c21833efacf4135b612d5852486afc364f322f36"
+msgstr "In Ordine di Acquisto"
 
 msgid "On Sales Order"
 msgstr "Su Ordine di Vendita"
@@ -7099,7 +7099,7 @@ msgid "Storage Type"
 msgstr "Tipo di Archiviazione"
 
 msgid "Storage Types"
-msgstr "Tipi di Archiviazione>>>>>>> c21833efacf4135b612d5852486afc364f322f36"
+msgstr "Tipi di Archiviazione"
 
 msgid "Storage Unit"
 msgstr "UnitÃƒÆ’Ã‚Â  di Stoccaggio"
@@ -7907,7 +7907,7 @@ msgid "Upon clicking Convert, parts will be created with the following internal 
 msgstr "Facendo clic su Converti, le parti verranno create con i seguenti numeri di parte interni:"
 
 msgid "Usage/Day (30d)"
-msgstr "Utilizzo/Giorno (30g)>>>>>>> c21833efacf4135b612d5852486afc364f322f36"
+msgstr "Utilizzo/Giorno (30g)"
 
 msgid "Usage/Day (90d)"
 msgstr "Utilizzo/Giorno (90g)"

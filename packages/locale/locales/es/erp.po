@@ -1068,7 +1068,7 @@ msgid "Bulk Jobs"
 msgstr "Trabajos en Lote"
 
 msgid "Buy"
-msgstr "Comprar>>>>>>> c21833efacf4135b612d5852486afc364f322f36"
+msgstr "Comprar"
 
 msgid "Buy and Make"
 msgstr "Comprar y Fabricar"
@@ -3882,7 +3882,7 @@ msgid "Invoices"
 msgstr "Facturas"
 
 msgid "is"
-msgstr "es>>>>>>> c21833efacf4135b612d5852486afc364f322f36"
+msgstr "es"
 
 msgid "is any of"
 msgstr "es cualquiera de"
@@ -5151,7 +5151,7 @@ msgid "On Jobs"
 msgstr "En Trabajos"
 
 msgid "On Purchase Order"
-msgstr "En Orden de Compra>>>>>>> c21833efacf4135b612d5852486afc364f322f36"
+msgstr "En Orden de Compra"
 
 msgid "On Sales Order"
 msgstr "En Orden de Venta"
@@ -7102,7 +7102,7 @@ msgid "Storage Types"
 msgstr "Tipos de Almacenamiento"
 
 msgid "Storage Unit"
-msgstr "Unidad de Almacenamiento>>>>>>> c21833efacf4135b612d5852486afc364f322f36"
+msgstr "Unidad de Almacenamiento"
 
 msgid "Storage Units"
 msgstr "Unidades de Almacenamiento"

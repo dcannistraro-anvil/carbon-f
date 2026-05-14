@@ -1068,7 +1068,7 @@ msgid "Bulk Jobs"
 msgstr "MassenauftrÃƒÆ’Ã‚Â¤ge"
 
 msgid "Buy"
-msgstr "Kaufen>>>>>>> c21833efacf4135b612d5852486afc364f322f36"
+msgstr "Kaufen"
 
 msgid "Buy and Make"
 msgstr "Kaufen und Herstellen"
@@ -3882,7 +3882,7 @@ msgid "Invoices"
 msgstr "Rechnungen"
 
 msgid "is"
-msgstr "ist>>>>>>> c21833efacf4135b612d5852486afc364f322f36"
+msgstr "ist"
 
 msgid "is any of"
 msgstr "ist einer von"
@@ -5151,7 +5151,7 @@ msgid "On Jobs"
 msgstr "In AuftrÃƒÆ’Ã‚Â¤gen"
 
 msgid "On Purchase Order"
-msgstr "In Bestellung>>>>>>> c21833efacf4135b612d5852486afc364f322f36"
+msgstr "In Bestellung"
 
 msgid "On Sales Order"
 msgstr "In Verkaufsauftrag"
@@ -7102,7 +7102,7 @@ msgid "Storage Types"
 msgstr "Speichertypen"
 
 msgid "Storage Unit"
-msgstr "Lagereinheit>>>>>>> c21833efacf4135b612d5852486afc364f322f36"
+msgstr "Lagereinheit"
 
 msgid "Storage Units"
 msgstr "Lagereinheiten"
@@ -7907,7 +7907,7 @@ msgid "Upon clicking Convert, parts will be created with the following internal 
 msgstr "Beim Klicken auf ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Konvertieren\" werden Teile mit den folgenden internen Teilenummern erstellt:"
 
 msgid "Usage/Day (30d)"
-msgstr "Verbrauch/Tag (30d)>>>>>>> c21833efacf4135b612d5852486afc364f322f36"
+msgstr "Verbrauch/Tag (30d)"
 
 msgid "Usage/Day (90d)"
 msgstr "Verbrauch/Tag (90d)"

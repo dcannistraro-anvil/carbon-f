@@ -1068,7 +1068,7 @@ msgid "Bulk Jobs"
 msgstr "Bulk Jobs"
 
 msgid "Buy"
-msgstr "Buy>>>>>>> c21833efacf4135b612d5852486afc364f322f36"
+msgstr "Buy"
 
 msgid "Buy and Make"
 msgstr "Buy and Make"
@@ -3882,7 +3882,7 @@ msgid "Invoices"
 msgstr "Invoices"
 
 msgid "is"
-msgstr "is>>>>>>> c21833efacf4135b612d5852486afc364f322f36"
+msgstr "is"
 
 msgid "is any of"
 msgstr "is any of"
@@ -5151,7 +5151,7 @@ msgid "On Jobs"
 msgstr "On Jobs"
 
 msgid "On Purchase Order"
-msgstr "On Purchase Order>>>>>>> c21833efacf4135b612d5852486afc364f322f36"
+msgstr "On Purchase Order"
 
 msgid "On Sales Order"
 msgstr "On Sales Order"
@@ -7102,7 +7102,7 @@ msgid "Storage Types"
 msgstr "Storage Types"
 
 msgid "Storage Unit"
-msgstr "Storage Unit>>>>>>> c21833efacf4135b612d5852486afc364f322f36"
+msgstr "Storage Unit"
 
 msgid "Storage Units"
 msgstr "Storage Units"
@@ -7907,7 +7907,7 @@ msgid "Upon clicking Convert, parts will be created with the following internal 
 msgstr "Upon clicking Convert, parts will be created with the following internal part numbers:"
 
 msgid "Usage/Day (30d)"
-msgstr "Usage/Day (30d)>>>>>>> c21833efacf4135b612d5852486afc364f322f36"
+msgstr "Usage/Day (30d)"
 
 msgid "Usage/Day (90d)"
 msgstr "Usage/Day (90d)"
